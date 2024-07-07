@@ -6,6 +6,9 @@
 //
 
 import SwiftUI
+import OSLog
+
+let logger = Logger(subsystem: "com.ramsaycons.DSKY", category: "")
 
 @main
 struct DSKYApp: App {

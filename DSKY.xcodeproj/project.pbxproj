@@ -7,13 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		864BD6092C3B2B9900D4C896 /* KeyPadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864BD6082C3B2B9900D4C896 /* KeyPadView.swift */; };
+		864BD60B2C3B333D00D4C896 /* PanelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864BD60A2C3B333D00D4C896 /* PanelsView.swift */; };
 		867EBD682C3A1E29004C4DDD /* DSKYApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD672C3A1E29004C4DDD /* DSKYApp.swift */; };
 		867EBD6A2C3A1E29004C4DDD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD692C3A1E29004C4DDD /* ContentView.swift */; };
-		867EBD6C2C3A1E2A004C4DDD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 867EBD6B2C3A1E2A004C4DDD /* Assets.xcassets */; };
 		867EBD702C3A1E2A004C4DDD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 867EBD6F2C3A1E2A004C4DDD /* Preview Assets.xcassets */; };
 		867EBD7A2C3A1E2A004C4DDD /* DSKYTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD792C3A1E2A004C4DDD /* DSKYTests.swift */; };
 		867EBD842C3A1E2A004C4DDD /* DSKYUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD832C3A1E2A004C4DDD /* DSKYUITests.swift */; };
 		867EBD862C3A1E2A004C4DDD /* DSKYUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD852C3A1E2A004C4DDD /* DSKYUITestsLaunchTests.swift */; };
+		867EBD932C3A5348004C4DDD /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 867EBD922C3A5348004C4DDD /* Media.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,10 +36,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		864BD6082C3B2B9900D4C896 /* KeyPadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPadView.swift; sourceTree = "<group>"; };
+		864BD60A2C3B333D00D4C896 /* PanelsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelsView.swift; sourceTree = "<group>"; };
 		867EBD642C3A1E29004C4DDD /* DSKY.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DSKY.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		867EBD672C3A1E29004C4DDD /* DSKYApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSKYApp.swift; sourceTree = "<group>"; };
 		867EBD692C3A1E29004C4DDD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		867EBD6B2C3A1E2A004C4DDD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		867EBD6D2C3A1E2A004C4DDD /* DSKY.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DSKY.entitlements; sourceTree = "<group>"; };
 		867EBD6F2C3A1E2A004C4DDD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		867EBD752C3A1E2A004C4DDD /* DSKYTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DSKYTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -45,6 +48,7 @@
 		867EBD7F2C3A1E2A004C4DDD /* DSKYUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DSKYUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		867EBD832C3A1E2A004C4DDD /* DSKYUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSKYUITests.swift; sourceTree = "<group>"; };
 		867EBD852C3A1E2A004C4DDD /* DSKYUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSKYUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		867EBD922C3A5348004C4DDD /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,7 +101,9 @@
 			children = (
 				867EBD672C3A1E29004C4DDD /* DSKYApp.swift */,
 				867EBD692C3A1E29004C4DDD /* ContentView.swift */,
-				867EBD6B2C3A1E2A004C4DDD /* Assets.xcassets */,
+				864BD6082C3B2B9900D4C896 /* KeyPadView.swift */,
+				864BD60A2C3B333D00D4C896 /* PanelsView.swift */,
+				867EBD922C3A5348004C4DDD /* Media.xcassets */,
 				867EBD6D2C3A1E2A004C4DDD /* DSKY.entitlements */,
 				867EBD6E2C3A1E2A004C4DDD /* Preview Content */,
 			);
@@ -233,8 +239,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				867EBD932C3A5348004C4DDD /* Media.xcassets in Resources */,
 				867EBD702C3A1E2A004C4DDD /* Preview Assets.xcassets in Resources */,
-				867EBD6C2C3A1E2A004C4DDD /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -260,6 +266,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				867EBD6A2C3A1E29004C4DDD /* ContentView.swift in Sources */,
+				864BD6092C3B2B9900D4C896 /* KeyPadView.swift in Sources */,
+				864BD60B2C3B333D00D4C896 /* PanelsView.swift in Sources */,
 				867EBD682C3A1E29004C4DDD /* DSKYApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
