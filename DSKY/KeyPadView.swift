@@ -58,13 +58,21 @@ struct KeyPadKey: View {
     var symbol: String
 
     var body: some View {
-        Button(symbol) { button0() }
-            .frame(width: keyPadSize, height: keyPadSize)
-            .background(Color(.lightGray))
+        Button(symbol) { log(symbol) }
+            .font(/*@START_MENU_TOKEN@*/.title2/*@END_MENU_TOKEN@*/)
+            .foregroundColor(Color(keyText))
+            .frame(width: keyPadSize,
+                   height: keyPadSize)
+            .background(Color(.darkGray))
             .padding(.all, keyPadding)
+            .cornerRadius(keyCorner)
     }
 }
 
 #Preview {
     KeyPadKey(symbol: "Z")
+}
+
+func log(_ symbol: String) {
+    logger.log("KeyPad: \(symbol)")
 }

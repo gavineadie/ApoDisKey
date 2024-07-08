@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		864BD6092C3B2B9900D4C896 /* KeyPadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864BD6082C3B2B9900D4C896 /* KeyPadView.swift */; };
 		864BD60B2C3B333D00D4C896 /* PanelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864BD60A2C3B333D00D4C896 /* PanelsView.swift */; };
+		864BD60F2C3B416D00D4C896 /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864BD60E2C3B416D00D4C896 /* StatusView.swift */; };
+		864BD6112C3B42DF00D4C896 /* DisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864BD6102C3B42DF00D4C896 /* DisplayView.swift */; };
+		864BD6132C3B728400D4C896 /* Zerlina.otf in Resources */ = {isa = PBXBuildFile; fileRef = 864BD6122C3B728400D4C896 /* Zerlina.otf */; };
+		864BD6192C3BD69700D4C896 /* Gorton-Condensed.otf in Resources */ = {isa = PBXBuildFile; fileRef = 864BD6162C3BD69700D4C896 /* Gorton-Condensed.otf */; };
+		864BD61A2C3BD69700D4C896 /* Gorton-Normal-120.otf in Resources */ = {isa = PBXBuildFile; fileRef = 864BD6172C3BD69700D4C896 /* Gorton-Normal-120.otf */; };
+		864BD61B2C3BD69700D4C896 /* Gorton-Normal-180.otf in Resources */ = {isa = PBXBuildFile; fileRef = 864BD6182C3BD69700D4C896 /* Gorton-Normal-180.otf */; };
 		867EBD682C3A1E29004C4DDD /* DSKYApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD672C3A1E29004C4DDD /* DSKYApp.swift */; };
 		867EBD6A2C3A1E29004C4DDD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD692C3A1E29004C4DDD /* ContentView.swift */; };
 		867EBD702C3A1E2A004C4DDD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 867EBD6F2C3A1E2A004C4DDD /* Preview Assets.xcassets */; };
@@ -38,6 +44,13 @@
 /* Begin PBXFileReference section */
 		864BD6082C3B2B9900D4C896 /* KeyPadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPadView.swift; sourceTree = "<group>"; };
 		864BD60A2C3B333D00D4C896 /* PanelsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelsView.swift; sourceTree = "<group>"; };
+		864BD60E2C3B416D00D4C896 /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
+		864BD6102C3B42DF00D4C896 /* DisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayView.swift; sourceTree = "<group>"; };
+		864BD6122C3B728400D4C896 /* Zerlina.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zerlina.otf; sourceTree = "<group>"; };
+		864BD6142C3B771A00D4C896 /* DSKY.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = DSKY.plist; sourceTree = "<group>"; };
+		864BD6162C3BD69700D4C896 /* Gorton-Condensed.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gorton-Condensed.otf"; sourceTree = "<group>"; };
+		864BD6172C3BD69700D4C896 /* Gorton-Normal-120.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gorton-Normal-120.otf"; sourceTree = "<group>"; };
+		864BD6182C3BD69700D4C896 /* Gorton-Normal-180.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gorton-Normal-180.otf"; sourceTree = "<group>"; };
 		867EBD642C3A1E29004C4DDD /* DSKY.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DSKY.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		867EBD672C3A1E29004C4DDD /* DSKYApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSKYApp.swift; sourceTree = "<group>"; };
 		867EBD692C3A1E29004C4DDD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -103,8 +116,15 @@
 				867EBD692C3A1E29004C4DDD /* ContentView.swift */,
 				864BD6082C3B2B9900D4C896 /* KeyPadView.swift */,
 				864BD60A2C3B333D00D4C896 /* PanelsView.swift */,
+				864BD60E2C3B416D00D4C896 /* StatusView.swift */,
+				864BD6102C3B42DF00D4C896 /* DisplayView.swift */,
 				867EBD922C3A5348004C4DDD /* Media.xcassets */,
+				864BD6122C3B728400D4C896 /* Zerlina.otf */,
+				864BD6162C3BD69700D4C896 /* Gorton-Condensed.otf */,
+				864BD6172C3BD69700D4C896 /* Gorton-Normal-120.otf */,
+				864BD6182C3BD69700D4C896 /* Gorton-Normal-180.otf */,
 				867EBD6D2C3A1E2A004C4DDD /* DSKY.entitlements */,
+				864BD6142C3B771A00D4C896 /* DSKY.plist */,
 				867EBD6E2C3A1E2A004C4DDD /* Preview Content */,
 			);
 			path = DSKY;
@@ -239,8 +259,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				864BD6192C3BD69700D4C896 /* Gorton-Condensed.otf in Resources */,
 				867EBD932C3A5348004C4DDD /* Media.xcassets in Resources */,
 				867EBD702C3A1E2A004C4DDD /* Preview Assets.xcassets in Resources */,
+				864BD6132C3B728400D4C896 /* Zerlina.otf in Resources */,
+				864BD61A2C3BD69700D4C896 /* Gorton-Normal-120.otf in Resources */,
+				864BD61B2C3BD69700D4C896 /* Gorton-Normal-180.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,7 +292,9 @@
 				867EBD6A2C3A1E29004C4DDD /* ContentView.swift in Sources */,
 				864BD6092C3B2B9900D4C896 /* KeyPadView.swift in Sources */,
 				864BD60B2C3B333D00D4C896 /* PanelsView.swift in Sources */,
+				864BD6112C3B42DF00D4C896 /* DisplayView.swift in Sources */,
 				867EBD682C3A1E29004C4DDD /* DSKYApp.swift in Sources */,
+				864BD60F2C3B416D00D4C896 /* StatusView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,6 +365,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 100;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -357,10 +384,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = DSKY/DSKY.plist;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 0.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = DSKY;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -400,6 +430,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 100;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -412,9 +443,12 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = DSKY/DSKY.plist;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 0.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = DSKY;
 				SWIFT_COMPILATION_MODE = wholemodule;
 			};
 			name = Release;

@@ -8,13 +8,22 @@
 import SwiftUI
 
 struct PanelsView: View {
+    var interiorFill: Color = panelInColor
+    
     var body: some View {
-        RoundedRectangle(cornerRadius: 5)
-            .fill(Color(.systemMint))
-            .frame(width: panelSizeW, height: panelSizeH)
+        ZStack {
+            RoundedRectangle(cornerRadius: panelExCorner)
+                .fill(Color(panelExColor))
+                .frame(width: panelExSizeW, height: panelExSizeH)
+
+            RoundedRectangle(cornerRadius: panelInCorner)
+                .fill(Color(interiorFill))
+                .frame(width: panelExSizeW-panelInset,
+                       height: panelExSizeH-panelInset)
+        }
     }
 }
 
 #Preview {
-    PanelsView()
+    PanelsView(interiorFill: .pink)
 }
