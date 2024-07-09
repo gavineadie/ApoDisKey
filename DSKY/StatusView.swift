@@ -19,7 +19,7 @@ struct StatusView: View {
                 }
 
                 GridRow {
-                    StatusLightView(words: "NO ATT")
+                    StatusLightView(words: "NO  ATT")
                     StatusLightView(words: "GIMBAL\nLOCK")
                 }
 
@@ -29,12 +29,12 @@ struct StatusView: View {
                 }
 
                 GridRow {
-                    StatusLightView(words: "KEY REL")
+                    StatusLightView(words: "KEY  REL")
                     StatusLightView(words: "RESTART")
                 }
 
                 GridRow {
-                    StatusLightView(words: "OPR ERR")
+                    StatusLightView(words: "OPR  ERR")
                     StatusLightView(words: "TRACKER")
                 }
 
@@ -63,17 +63,17 @@ struct StatusLightView: View {
         ZStack {
             RoundedRectangle(cornerRadius: statusCorner)
                 .fill(Color(.white))
-                .border(Color(statusBorder), width: /*@START_MENU_TOKEN@*/1/*@END_MENU_TOKEN@*/)
-                .frame(width: statusWidth, 
+                .border(Color(statusBorder), width: 1)
+                .frame(width: statusWidth,
                        height: statusHeight)
 
             Text(words)
-                .font(/*@START_MENU_TOKEN@*/.subheadline/*@END_MENU_TOKEN@*/)
-                .fontWeight(.medium)
+                .font(.custom("Gorton-Normal-180",
+                              fixedSize: 12))
                 .foregroundColor(Color(.black))
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
-                .lineSpacing(-4.0)
+                .lineSpacing(4.0)
         }
     }
 }

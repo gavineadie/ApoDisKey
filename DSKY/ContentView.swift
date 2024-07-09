@@ -21,7 +21,7 @@ let panelInCorner: CGFloat = 8
 let panelDigitSize: CGFloat = 37
 
 let statusWidth: CGFloat = 90
-let statusHeight: CGFloat = 40
+let statusHeight: CGFloat = 44
 let statusCorner: CGFloat = 6
 
 #if os(iOS)
@@ -35,6 +35,10 @@ let panelInColor = Color(#colorLiteral(red: 0.8039215803, green: 0.8039215803, b
 let statusBorder: Color = .gray
 let statusText: Color = .black
 #endif
+
+let zerlinaFixedSize: CGFloat = 46.0
+let zerlinaTracking: CGFloat = 4.0
+
 
 struct ContentView: View {
 

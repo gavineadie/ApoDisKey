@@ -22,6 +22,8 @@
 		867EBD842C3A1E2A004C4DDD /* DSKYUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD832C3A1E2A004C4DDD /* DSKYUITests.swift */; };
 		867EBD862C3A1E2A004C4DDD /* DSKYUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD852C3A1E2A004C4DDD /* DSKYUITestsLaunchTests.swift */; };
 		867EBD932C3A5348004C4DDD /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 867EBD922C3A5348004C4DDD /* Media.xcassets */; };
+		86E838902C3CE61700E7C573 /* SandboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E8388F2C3CE61700E7C573 /* SandboxView.swift */; };
+		86E838922C3CF06400E7C573 /* DecorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E838912C3CF06400E7C573 /* DecorView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +64,8 @@
 		867EBD832C3A1E2A004C4DDD /* DSKYUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSKYUITests.swift; sourceTree = "<group>"; };
 		867EBD852C3A1E2A004C4DDD /* DSKYUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSKYUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		867EBD922C3A5348004C4DDD /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		86E8388F2C3CE61700E7C573 /* SandboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SandboxView.swift; sourceTree = "<group>"; };
+		86E838912C3CF06400E7C573 /* DecorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +122,8 @@
 				864BD60A2C3B333D00D4C896 /* PanelsView.swift */,
 				864BD60E2C3B416D00D4C896 /* StatusView.swift */,
 				864BD6102C3B42DF00D4C896 /* DisplayView.swift */,
+				86E838912C3CF06400E7C573 /* DecorView.swift */,
+				86E8388F2C3CE61700E7C573 /* SandboxView.swift */,
 				867EBD922C3A5348004C4DDD /* Media.xcassets */,
 				864BD6122C3B728400D4C896 /* Zerlina.otf */,
 				864BD6162C3BD69700D4C896 /* Gorton-Condensed.otf */,
@@ -291,6 +297,8 @@
 			files = (
 				867EBD6A2C3A1E29004C4DDD /* ContentView.swift in Sources */,
 				864BD6092C3B2B9900D4C896 /* KeyPadView.swift in Sources */,
+				86E838922C3CF06400E7C573 /* DecorView.swift in Sources */,
+				86E838902C3CE61700E7C573 /* SandboxView.swift in Sources */,
 				864BD60B2C3B333D00D4C896 /* PanelsView.swift in Sources */,
 				864BD6112C3B42DF00D4C896 /* DisplayView.swift in Sources */,
 				867EBD682C3A1E29004C4DDD /* DSKYApp.swift in Sources */,

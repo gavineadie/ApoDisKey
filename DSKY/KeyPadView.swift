@@ -58,14 +58,25 @@ struct KeyPadKey: View {
     var symbol: String
 
     var body: some View {
-        Button(symbol) { log(symbol) }
-            .font(/*@START_MENU_TOKEN@*/.title2/*@END_MENU_TOKEN@*/)
+        let fontSize: CGFloat = (symbol.count == 1) ? 28 : 12
+
+        Text(symbol)
+            .font(.custom("Gorton-Normal-120",
+                          fixedSize: fontSize))
+            .tracking(2.0)
             .foregroundColor(Color(keyText))
+            .multilineTextAlignment(.center)
+            .lineLimit(2)
+            .lineSpacing(4.0)
             .frame(width: keyPadSize,
                    height: keyPadSize)
             .background(Color(.darkGray))
             .padding(.all, keyPadding)
             .cornerRadius(keyCorner)
+            .onTapGesture {
+                log(symbol)
+            }
+
     }
 }
 

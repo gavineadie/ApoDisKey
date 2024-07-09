@@ -9,5 +9,7 @@
 		<string>Gorton-Normal-180.otf</string>
 		<string>Gorton-Normal-120.otf</string>
 	</array>
+	<key>ATSApplicationFontsPath</key>
+	<string>.</string>
 </dict>
 </plist>

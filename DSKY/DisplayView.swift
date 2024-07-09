@@ -9,58 +9,74 @@ import SwiftUI
 
 struct DisplayView: View {
     var body: some View {
-
         ZStack {
             PanelsView(interiorFill: .black)
-      //      Image("Display").cornerRadius(8.0)
+ //           Image("Display").cornerRadius(8.0)
 
             VStack {
-
-                HStack(alignment: .top) {
-
-                    VStack {
-                        DisplayGreenText(word: "COMP\nACTY", height: 60.0)
-                        DisplayText(words: "  ")
-                    }
-
-//                    LittleWhiteCircle()
-
-                    VStack {
-                        DisplayGreenText(word: "PROG")
-                        DisplayText(words: "00")
-                    }
-                }
-//                .padding(.top, 60.0)
-                .padding(/*@START_MENU_TOKEN@*/.bottom, 0.0/*@END_MENU_TOKEN@*/)
-                
-
-                HStack {
-                    VStack {
-                        DisplayGreenText(word: "VERB")
-                        DisplayText(words: "00")
-                    }
-
-//                    LittleWhiteCircle()
-
-                    VStack {
-                        DisplayGreenText(word: "NOUN")
-                        DisplayText(words: "01")
-                    }
-                }
-
-                DisplayText(words: "+60228")
-
-                DisplayText(words: "-00001")
-
+                Row1(prog: "11")
+                Spacer().frame(height: 12.0)
+                Row2(verb: "06", noun: "62")
+                DisplayText(words: "+01344")
+                DisplayText(words: "+00085")
                 DisplayText(words: "+00001")
             }
         }
-
     }
 }
 
 #Preview {
     DisplayView()
+}
+
+struct Row1: View {
+    var comp: String = "  "
+    var prog: String = "--"
+
+    var body: some View {
+        HStack(alignment: .top) {
+            VStack {
+                DisplayGreenText(word: "COMP\nACTY",
+                                 height: 60.0,
+                                 green: false)
+                DisplayText(words: comp)
+            }
+
+            VStack {
+                DisplayGreenText(word: "PROG")
+                DisplayText(words: prog)
+            }
+        }
+        .padding(.bottom, 6.0)
+    }
+}
+
+#Preview {
+    Row1()
+}
+
+struct Row2: View {
+    var verb: String = "--"
+    var noun: String = "--"
+
+    var body: some View {
+        HStack {
+            VStack {
+                DisplayGreenText(word: "VERB")
+                DisplayText(words: verb)
+            }
+
+            VStack {
+                DisplayGreenText(word: "NOUN")
+                DisplayText(words: noun)
+            }
+        }
+        .padding(.bottom, 6.0)
+    }
+}
+
+#Preview {
+    Row2()
 }
 
 struct DisplayText: View {
@@ -74,9 +90,10 @@ struct DisplayText: View {
                     DisplaySeparator()
 
                     Text(words)
-                        .font(.custom("Zerlina", fixedSize: 48))
+                        .font(.custom("Zerlina",
+                                      fixedSize: zerlinaFixedSize))
                         .padding(.all, -10.0)
-                        .tracking(2.0)
+                        .tracking(zerlinaTracking)
                         .foregroundColor(.green)
                         .frame(width: 190.0,
                                height: panelDigitSize)
@@ -87,74 +104,62 @@ struct DisplayText: View {
                         .frame(width: 95.0, height: 2.0)
                 } else {
                     Text(words)
-                        .font(.custom("Zerlina", fixedSize: 48))
-                        .tracking(2.0)
+                        .font(.custom("Zerlina",
+                                      fixedSize: zerlinaFixedSize))
+                        .padding(.top, 8.0)
+                        .tracking(zerlinaTracking)
                         .foregroundColor(.green)
-                        .frame(width: 95.0, 
+                        .frame(width: 95.0,
                                height: panelDigitSize)
                 }
             default:
                 Text("ERROR")
-                    .font(.custom("Zerlina", fixedSize: 48))
-                    .tracking(2.0)
+                    .font(.custom("Zerlina",
+                                  fixedSize: zerlinaFixedSize))
+                    .tracking(zerlinaTracking)
                     .foregroundColor(.green)
-                    .frame(width: 190.0, 
+                    .frame(width: 190.0,
                            height: panelDigitSize)
         }
     }
 }
 
 #Preview {
-    DisplayText(words: "XXXX")
+    DisplayText(words: "614121")
 }
 
 struct DisplayGreenText: View {
     var word: String
-    var height: CGFloat = 20.0
+    var height: CGFloat = 18.0
+    var green: Bool = true
 
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 4.0)
-                .frame(width: 74.0, height: height)
-                .foregroundColor(.green)
+            if green {
+                RoundedRectangle(cornerRadius: 4.0)
+                    .frame(width: 74.0, height: height)
+                    .foregroundColor(.green)
 
-            Text(word)
-                .multilineTextAlignment(.center)
-                .lineLimit(2)
-                .lineSpacing(-4.0)
+                Text(word)
+                    .font(.custom("Gorton-Normal-180",
+                                  fixedSize: 10))
+                    .foregroundColor(.black)
+            } else {
+                RoundedRectangle(cornerRadius: 4.0)
+                    .frame(width: 74.0, height: height)
+                    .foregroundColor(.clear)
+
+                Text(word)
+                    .font(.custom("Gorton-Normal-180",
+                                  fixedSize: 12))
+                    .foregroundColor(.white)
+                    .multilineTextAlignment(.center)
+                    .lineSpacing(4.0)
+            }
         }
     }
 }
 
 #Preview {
     DisplayGreenText(word: "WORD")
-}
-
-struct DisplaySeparator: View {
-    var body: some View {
-        HStack {
-            LittleWhiteCircle()
-
-            Rectangle()
-                .frame(width: 150, 
-                       height: 4)
-                .foregroundColor(.green)
-
-            LittleWhiteCircle()
-        }
-
-    }
-}
-
-#Preview {
-    DisplaySeparator()
-}
-
-struct LittleWhiteCircle: View {
-    var body: some View {
-        RoundedRectangle(cornerRadius: 4.0)
-            .frame(width: 10.0, height: 8.0)
-            .foregroundColor(.white)
-            .clipShape(Circle())
-    }
 }
