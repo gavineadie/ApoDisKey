@@ -63,6 +63,7 @@ struct KeyPadKey: View {
         Text(symbol)
             .font(.custom("Gorton-Normal-120",
                           fixedSize: fontSize))
+            .baselineOffset(-4.0)
             .tracking(2.0)
             .foregroundColor(Color(keyText))
             .multilineTextAlignment(.center)
@@ -81,7 +82,11 @@ struct KeyPadKey: View {
 }
 
 #Preview {
-    KeyPadKey(symbol: "Z")
+    KeyPadKey(symbol: "6")
+}
+
+#Preview {
+    KeyPadKey(symbol: "ZASO")
 }
 
 func log(_ symbol: String) {

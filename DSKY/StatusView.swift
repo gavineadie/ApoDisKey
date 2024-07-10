@@ -70,6 +70,7 @@ struct StatusLightView: View {
             Text(words)
                 .font(.custom("Gorton-Normal-180",
                               fixedSize: 12))
+                .baselineOffset(-2.0)
                 .foregroundColor(Color(.black))
                 .multilineTextAlignment(.center)
                 .lineLimit(2)

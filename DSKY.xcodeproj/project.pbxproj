@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		864BD6092C3B2B9900D4C896 /* KeyPadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864BD6082C3B2B9900D4C896 /* KeyPadView.swift */; };
-		864BD60B2C3B333D00D4C896 /* PanelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864BD60A2C3B333D00D4C896 /* PanelsView.swift */; };
 		864BD60F2C3B416D00D4C896 /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864BD60E2C3B416D00D4C896 /* StatusView.swift */; };
 		864BD6112C3B42DF00D4C896 /* DisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864BD6102C3B42DF00D4C896 /* DisplayView.swift */; };
 		864BD6132C3B728400D4C896 /* Zerlina.otf in Resources */ = {isa = PBXBuildFile; fileRef = 864BD6122C3B728400D4C896 /* Zerlina.otf */; };
@@ -45,7 +44,6 @@
 
 /* Begin PBXFileReference section */
 		864BD6082C3B2B9900D4C896 /* KeyPadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPadView.swift; sourceTree = "<group>"; };
-		864BD60A2C3B333D00D4C896 /* PanelsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelsView.swift; sourceTree = "<group>"; };
 		864BD60E2C3B416D00D4C896 /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
 		864BD6102C3B42DF00D4C896 /* DisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayView.swift; sourceTree = "<group>"; };
 		864BD6122C3B728400D4C896 /* Zerlina.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zerlina.otf; sourceTree = "<group>"; };
@@ -64,6 +62,8 @@
 		867EBD832C3A1E2A004C4DDD /* DSKYUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSKYUITests.swift; sourceTree = "<group>"; };
 		867EBD852C3A1E2A004C4DDD /* DSKYUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSKYUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		867EBD922C3A5348004C4DDD /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		869F39942C3F21A7002DD6B7 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		869F39952C3F2204002DD6B7 /* BURKEY.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = BURKEY.md; sourceTree = "<group>"; };
 		86E8388F2C3CE61700E7C573 /* SandboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SandboxView.swift; sourceTree = "<group>"; };
 		86E838912C3CF06400E7C573 /* DecorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -96,6 +96,8 @@
 		867EBD5B2C3A1E29004C4DDD = {
 			isa = PBXGroup;
 			children = (
+				869F39942C3F21A7002DD6B7 /* README.md */,
+				869F39952C3F2204002DD6B7 /* BURKEY.md */,
 				867EBD662C3A1E29004C4DDD /* DSKY */,
 				867EBD782C3A1E2A004C4DDD /* DSKYTests */,
 				867EBD822C3A1E2A004C4DDD /* DSKYUITests */,
@@ -119,7 +121,6 @@
 				867EBD672C3A1E29004C4DDD /* DSKYApp.swift */,
 				867EBD692C3A1E29004C4DDD /* ContentView.swift */,
 				864BD6082C3B2B9900D4C896 /* KeyPadView.swift */,
-				864BD60A2C3B333D00D4C896 /* PanelsView.swift */,
 				864BD60E2C3B416D00D4C896 /* StatusView.swift */,
 				864BD6102C3B42DF00D4C896 /* DisplayView.swift */,
 				86E838912C3CF06400E7C573 /* DecorView.swift */,
@@ -299,7 +300,6 @@
 				864BD6092C3B2B9900D4C896 /* KeyPadView.swift in Sources */,
 				86E838922C3CF06400E7C573 /* DecorView.swift in Sources */,
 				86E838902C3CE61700E7C573 /* SandboxView.swift in Sources */,
-				864BD60B2C3B333D00D4C896 /* PanelsView.swift in Sources */,
 				864BD6112C3B42DF00D4C896 /* DisplayView.swift in Sources */,
 				867EBD682C3A1E29004C4DDD /* DSKYApp.swift in Sources */,
 				864BD60F2C3B416D00D4C896 /* StatusView.swift in Sources */,
