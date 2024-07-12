@@ -12,9 +12,18 @@ let logger = Logger(subsystem: "com.ramsaycons.DSKY", category: "")
 
 @main
 struct DSKYApp: App {
+    init() {
+        dskySetup()
+    }
+
     var body: some Scene {
         WindowGroup {
             ContentView()
         }
     }
+
+    func dskySetup() {
+        logger.log("\(#function) ..")
+    }
 }
+

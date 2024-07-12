@@ -53,7 +53,6 @@ struct KeyPadView: View {
     KeyPadView()
 }
 
-
 struct KeyPadKey: View {
     var symbol: String
 

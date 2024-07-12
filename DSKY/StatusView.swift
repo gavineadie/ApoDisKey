@@ -58,11 +58,14 @@ struct StatusView: View {
 
 struct StatusLightView: View {
     var words: String
+    var light: Bool = false
 
     var body: some View {
+        let color: Color = light ? .yellow : .white
+
         ZStack {
             RoundedRectangle(cornerRadius: statusCorner)
-                .fill(Color(.white))
+                .fill(color)
                 .border(Color(statusBorder), width: 1)
                 .frame(width: statusWidth,
                        height: statusHeight)
@@ -81,4 +84,8 @@ struct StatusLightView: View {
 
 #Preview {
     StatusLightView(words: "WORDS")
+}
+
+#Preview {
+    StatusLightView(words: "WORDS", light: true)
 }

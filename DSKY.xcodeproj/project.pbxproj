@@ -21,6 +21,7 @@
 		867EBD842C3A1E2A004C4DDD /* DSKYUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD832C3A1E2A004C4DDD /* DSKYUITests.swift */; };
 		867EBD862C3A1E2A004C4DDD /* DSKYUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD852C3A1E2A004C4DDD /* DSKYUITestsLaunchTests.swift */; };
 		867EBD932C3A5348004C4DDD /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 867EBD922C3A5348004C4DDD /* Media.xcassets */; };
+		86A055072C405BB3007996B7 /* StatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A055062C405BB3007996B7 /* StatusModel.swift */; };
 		86E838902C3CE61700E7C573 /* SandboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E8388F2C3CE61700E7C573 /* SandboxView.swift */; };
 		86E838922C3CF06400E7C573 /* DecorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E838912C3CF06400E7C573 /* DecorView.swift */; };
 /* End PBXBuildFile section */
@@ -63,6 +64,7 @@
 		867EBD852C3A1E2A004C4DDD /* DSKYUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSKYUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		867EBD922C3A5348004C4DDD /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		869F39962C3F337E002DD6B7 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		86A055062C405BB3007996B7 /* StatusModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusModel.swift; sourceTree = "<group>"; };
 		86E8388F2C3CE61700E7C573 /* SandboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SandboxView.swift; sourceTree = "<group>"; };
 		86E838912C3CF06400E7C573 /* DecorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -118,9 +120,10 @@
 			children = (
 				867EBD672C3A1E29004C4DDD /* DSKYApp.swift */,
 				867EBD692C3A1E29004C4DDD /* ContentView.swift */,
-				864BD6082C3B2B9900D4C896 /* KeyPadView.swift */,
 				864BD60E2C3B416D00D4C896 /* StatusView.swift */,
+				86A055062C405BB3007996B7 /* StatusModel.swift */,
 				864BD6102C3B42DF00D4C896 /* DisplayView.swift */,
+				864BD6082C3B2B9900D4C896 /* KeyPadView.swift */,
 				86E838912C3CF06400E7C573 /* DecorView.swift */,
 				86E8388F2C3CE61700E7C573 /* SandboxView.swift */,
 				867EBD922C3A5348004C4DDD /* Media.xcassets */,
@@ -295,6 +298,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				867EBD6A2C3A1E29004C4DDD /* ContentView.swift in Sources */,
+				86A055072C405BB3007996B7 /* StatusModel.swift in Sources */,
 				864BD6092C3B2B9900D4C896 /* KeyPadView.swift in Sources */,
 				86E838922C3CF06400E7C573 /* DecorView.swift in Sources */,
 				86E838902C3CE61700E7C573 /* SandboxView.swift in Sources */,

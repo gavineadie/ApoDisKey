@@ -17,9 +17,9 @@ struct DisplayView: View {
                 Row1(prog: "11")
                 Spacer().frame(height: 12.0)
                 Row2(verb: "06", noun: "62")
-                DisplayText(words: "+01344")
-                DisplayText(words: "+00085")
-                DisplayText(words: "+00001")
+                Register1(digits: "+01344")
+                Register2(digits: " 01234")
+                Register3(digits: "-56789")
             }
         }
     }
@@ -29,23 +29,102 @@ struct DisplayView: View {
     DisplayView()
 }
 
+struct Comp: View {
+    var digits: String
+
+    var body: some View {
+        VStack {
+            DisplayGreenText(word: "COMP\nACTY",
+                             height: 60.0,
+                             green: false)
+            DisplayText(words: "  ")
+        }
+    }
+}
+
+struct Prog: View {
+    var digits: String
+
+    var body: some View {
+        VStack {
+            DisplayGreenText(word: "PROG")
+            DisplayText(words: digits)
+        }
+    }
+}
+
+struct Verb: View {
+    var digits: String
+
+    var body: some View {
+        VStack {
+            DisplayGreenText(word: "VERB")
+            DisplayText(words: digits)
+        }
+    }
+}
+
+struct Noun: View {
+    var digits: String
+
+    var body: some View {
+        VStack {
+            DisplayGreenText(word: "NOUN")
+            DisplayText(words: digits)
+        }
+    }
+}
+
+struct Register1: View {
+    var digits: String
+
+    var body: some View {
+        DisplayText(words: digits)
+    }
+}
+
+#Preview {
+    ZStack {
+        PanelsView(interiorFill: .black)
+
+        Rectangle()
+            .border(Color.white, width: 1)
+            .padding(8.0)
+            .frame(width: 204,
+                   height: 140)
+            .foregroundColor(.clear)
+
+        VStack {
+            Register1(digits: "+88888")
+            Register2(digits: " 88888")
+        }
+    }
+}
+
+struct Register2: View {
+    var digits: String
+
+    var body: some View {
+        DisplayText(words: digits)
+    }
+}
+
+struct Register3: View {
+    var digits: String
+
+    var body: some View {
+        DisplayText(words: digits)
+    }
+}
+
 struct Row1: View {
     var comp: String = "  "
     var prog: String = "--"
 
     var body: some View {
         HStack(alignment: .top) {
-            VStack {
-                DisplayGreenText(word: "COMP\nACTY",
-                                 height: 60.0,
-                                 green: false)
-                DisplayText(words: comp)
-            }
-
-            VStack {
-                DisplayGreenText(word: "PROG")
-                DisplayText(words: prog)
-            }
+            Comp(digits: "  ")
+            Prog(digits: prog)
         }
         .padding(.bottom, 6.0)
     }
@@ -61,15 +140,8 @@ struct Row2: View {
 
     var body: some View {
         HStack {
-            VStack {
-                DisplayGreenText(word: "VERB")
-                DisplayText(words: verb)
-            }
-
-            VStack {
-                DisplayGreenText(word: "NOUN")
-                DisplayText(words: noun)
-            }
+            Verb(digits: verb)
+            Noun(digits: noun)
         }
         .padding(.bottom, 6.0)
     }
@@ -77,55 +149,6 @@ struct Row2: View {
 
 #Preview {
     Row2()
-}
-
-struct DisplayText: View {
-    var words: String
-
-    var body: some View {
-
-        switch words.count {
-            case 6:
-                VStack {
-                    DisplaySeparator()
-
-                    Text(words)
-                        .font(.custom("Zerlina",
-                                      fixedSize: zerlinaFixedSize))
-                        .padding(.all, -10.0)
-                        .tracking(zerlinaTracking)
-                        .foregroundColor(.green)
-                        .frame(width: 190.0,
-                               height: panelDigitSize)
-                }
-            case 2:
-                if words == "  " {
-                    Text(words)
-                        .frame(width: 95.0, height: 2.0)
-                } else {
-                    Text(words)
-                        .font(.custom("Zerlina",
-                                      fixedSize: zerlinaFixedSize))
-                        .padding(.top, 8.0)
-                        .tracking(zerlinaTracking)
-                        .foregroundColor(.green)
-                        .frame(width: 95.0,
-                               height: panelDigitSize)
-                }
-            default:
-                Text("ERROR")
-                    .font(.custom("Zerlina",
-                                  fixedSize: zerlinaFixedSize))
-                    .tracking(zerlinaTracking)
-                    .foregroundColor(.green)
-                    .frame(width: 190.0,
-                           height: panelDigitSize)
-        }
-    }
-}
-
-#Preview {
-    DisplayText(words: "614121")
 }
 
 struct DisplayGreenText: View {

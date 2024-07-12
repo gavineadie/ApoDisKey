@@ -58,3 +58,67 @@ struct LittleWhiteCircle: View {
             .clipShape(Circle())
     }
 }
+
+struct DisplayText: View {
+    var words: String
+
+    var body: some View {
+
+        switch words.count {
+            case 6:
+                VStack {
+                    DisplaySeparator()
+
+                    if words.starts(with: " ") {
+                        Text(words.dropFirst())
+                            .font(.custom("Zerlina",
+                                          fixedSize: zerlinaFixedSize))
+                            .padding([.top, 
+                                .bottom,
+                                .trailing], -10.0)
+                            .padding(.leading, 10.5)
+                            .tracking(zerlinaTracking)
+                            .foregroundColor(.green)
+                            .frame(width: 190.0,
+                                   height: panelDigitSize)
+                    } else {
+                        Text(words)
+                            .font(.custom("Zerlina",
+                                          fixedSize: zerlinaFixedSize))
+                            .padding(.all, -10.0)
+                            .tracking(zerlinaTracking)
+                            .foregroundColor(.green)
+                            .frame(width: 190.0,
+                                   height: panelDigitSize)
+                    }
+                }
+            case 2:
+                if words == "  " {
+                    Text(words)
+                        .frame(width: 95.0, height: 2.0)
+                } else {
+                    Text(words)
+                        .font(.custom("Zerlina",
+                                      fixedSize: zerlinaFixedSize))
+                        .padding(.top, 8.0)
+                        .tracking(zerlinaTracking)
+                        .foregroundColor(.green)
+                        .frame(width: 95.0,
+                               height: panelDigitSize)
+                }
+            default:
+                Text("ERROR")
+                    .font(.custom("Zerlina",
+                                  fixedSize: zerlinaFixedSize))
+                    .tracking(zerlinaTracking)
+                    .foregroundColor(.green)
+                    .frame(width: 190.0,
+                           height: panelDigitSize)
+        }
+    }
+}
+
+#Preview {
+    DisplayText(words: "614121")
+}
+
