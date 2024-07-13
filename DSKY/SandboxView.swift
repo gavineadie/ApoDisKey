@@ -14,7 +14,7 @@ struct SandboxView: View {
             .font(.custom("Zerlina", 
                           fixedSize: zerlinaFixedSize))
             .tracking(zerlinaTracking)
-            .foregroundColor(.green)
+            .foregroundColor(displayElectro)
             .frame(width: 190.0,
                    height: 37.0)
     }

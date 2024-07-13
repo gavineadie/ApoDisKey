@@ -44,6 +44,9 @@ struct KeyPadView: View {
             VStack {
                 KeyPadKey(symbol: "ENTR")
                 KeyPadKey(symbol: "RSET")
+                    .onTapGesture {
+                        allOn()
+                    }
             }
         }
     }
@@ -64,13 +67,13 @@ struct KeyPadKey: View {
                           fixedSize: fontSize))
             .baselineOffset(-4.0)
             .tracking(2.0)
-            .foregroundColor(Color(keyText))
+            .foregroundColor(keyTextColor)
             .multilineTextAlignment(.center)
             .lineLimit(2)
             .lineSpacing(4.0)
             .frame(width: keyPadSize,
                    height: keyPadSize)
-            .background(Color(.darkGray))
+            .background(keyPadColor)
             .padding(.all, keyPadding)
             .cornerRadius(keyCorner)
             .onTapGesture {

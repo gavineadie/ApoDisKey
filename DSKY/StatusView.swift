@@ -14,38 +14,38 @@ struct StatusView: View {
 
             Grid {
                 GridRow {
-                    StatusLightView(words: "UPLINK\nACTY")
-                    StatusLightView(words: "TEMP")
+                    StatusLight(light: statusArray[0])
+                    StatusLight(light: statusArray[5])
                 }
 
                 GridRow {
-                    StatusLightView(words: "NO  ATT")
-                    StatusLightView(words: "GIMBAL\nLOCK")
+                    StatusLight(light: statusArray[1])
+                    StatusLight(light: statusArray[6])
                 }
 
                 GridRow {
-                    StatusLightView(words: "STBY")
-                    StatusLightView(words: "PROG")
+                    StatusLight(light: statusArray[2])
+                    StatusLight(light: statusArray[7])
                 }
 
                 GridRow {
-                    StatusLightView(words: "KEY  REL")
-                    StatusLightView(words: "RESTART")
+                    StatusLight(light: statusArray[3])
+                    StatusLight(light: statusArray[8])
                 }
 
                 GridRow {
-                    StatusLightView(words: "OPR  ERR")
-                    StatusLightView(words: "TRACKER")
+                    StatusLight(light: statusArray[4])
+                    StatusLight(light: statusArray[9])
                 }
 
                 GridRow {
-                    StatusLightView(words: "")
-                    StatusLightView(words: "ALT")
+                    StatusLight(light: ("", .off))
+                    StatusLight(light: statusArray[10])
                 }
 
                 GridRow {
-                    StatusLightView(words: "")
-                    StatusLightView(words: "VEL")
+                    StatusLight(light: ("", .off))
+                    StatusLight(light: statusArray[11])
                 }
             }
         }
@@ -56,25 +56,22 @@ struct StatusView: View {
     StatusView()
 }
 
-struct StatusLightView: View {
-    var words: String
-    var light: Bool = false
+struct StatusLight: View {
+    var light: (String, BackColor)
 
     var body: some View {
-        let color: Color = light ? .yellow : .white
-
         ZStack {
             RoundedRectangle(cornerRadius: statusCorner)
-                .fill(color)
+                .fill(back(light))
                 .border(Color(statusBorder), width: 1)
                 .frame(width: statusWidth,
                        height: statusHeight)
 
-            Text(words)
+            Text(text(light))
                 .font(.custom("Gorton-Normal-180",
                               fixedSize: 12))
                 .baselineOffset(-2.0)
-                .foregroundColor(Color(.black))
+                .foregroundColor(statusText)
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
                 .lineSpacing(4.0)
@@ -83,9 +80,22 @@ struct StatusLightView: View {
 }
 
 #Preview {
-    StatusLightView(words: "WORDS")
+    StatusLight(light: ("WORDS", .off))
 }
 
 #Preview {
-    StatusLightView(words: "WORDS", light: true)
+    StatusLight(light: ("WORDS", .orange))
+}
+
+private func back(_ input: (String, BackColor)) -> Color {
+    switch input.1 {
+        case .on:
+            return .white
+        default:
+            return .gray
+    }
+}
+
+private func text(_ input: (String, BackColor)) -> String {
+    input.0
 }

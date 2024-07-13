@@ -24,6 +24,6 @@ struct DSKYApp: App {
 
     func dskySetup() {
         logger.log("\(#function) ..")
+//        allOn()
     }
 }
-
