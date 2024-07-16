@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -22,6 +22,8 @@
 		867EBD862C3A1E2A004C4DDD /* DSKYUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD852C3A1E2A004C4DDD /* DSKYUITestsLaunchTests.swift */; };
 		867EBD932C3A5348004C4DDD /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 867EBD922C3A5348004C4DDD /* Media.xcassets */; };
 		86A055072C405BB3007996B7 /* StatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A055062C405BB3007996B7 /* StatusModel.swift */; };
+		86CB9B5C2C45F82800968C20 /* TCPLib in Frameworks */ = {isa = PBXBuildFile; productRef = 86CB9B5B2C45F82800968C20 /* TCPLib */; };
+		86CB9B5E2C45F94400968C20 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86CB9B5D2C45F94400968C20 /* Network.swift */; };
 		86E838902C3CE61700E7C573 /* SandboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E8388F2C3CE61700E7C573 /* SandboxView.swift */; };
 		86E838922C3CF06400E7C573 /* DecorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E838912C3CF06400E7C573 /* DecorView.swift */; };
 /* End PBXBuildFile section */
@@ -65,6 +67,7 @@
 		867EBD922C3A5348004C4DDD /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
 		869F39962C3F337E002DD6B7 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		86A055062C405BB3007996B7 /* StatusModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusModel.swift; sourceTree = "<group>"; };
+		86CB9B5D2C45F94400968C20 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		86E8388F2C3CE61700E7C573 /* SandboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SandboxView.swift; sourceTree = "<group>"; };
 		86E838912C3CF06400E7C573 /* DecorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -74,6 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				86CB9B5C2C45F82800968C20 /* TCPLib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -126,6 +130,7 @@
 				864BD6082C3B2B9900D4C896 /* KeyPadView.swift */,
 				86E838912C3CF06400E7C573 /* DecorView.swift */,
 				86E8388F2C3CE61700E7C573 /* SandboxView.swift */,
+				86CB9B5D2C45F94400968C20 /* Network.swift */,
 				867EBD922C3A5348004C4DDD /* Media.xcassets */,
 				864BD6122C3B728400D4C896 /* Zerlina.otf */,
 				864BD6162C3BD69700D4C896 /* Gorton-Condensed.otf */,
@@ -179,6 +184,9 @@
 			dependencies = (
 			);
 			name = DSKY;
+			packageProductDependencies = (
+				86CB9B5B2C45F82800968C20 /* TCPLib */,
+			);
 			productName = DSKY;
 			productReference = 867EBD642C3A1E29004C4DDD /* DSKY.app */;
 			productType = "com.apple.product-type.application";
@@ -251,6 +259,9 @@
 				Base,
 			);
 			mainGroup = 867EBD5B2C3A1E29004C4DDD;
+			packageReferences = (
+				86CB9B5A2C45F82800968C20 /* XCLocalSwiftPackageReference "../TCPLib" */,
+			);
 			productRefGroup = 867EBD652C3A1E29004C4DDD /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -302,6 +313,7 @@
 				864BD6092C3B2B9900D4C896 /* KeyPadView.swift in Sources */,
 				86E838922C3CF06400E7C573 /* DecorView.swift in Sources */,
 				86E838902C3CE61700E7C573 /* SandboxView.swift in Sources */,
+				86CB9B5E2C45F94400968C20 /* Network.swift in Sources */,
 				864BD6112C3B42DF00D4C896 /* DisplayView.swift in Sources */,
 				867EBD682C3A1E29004C4DDD /* DSKYApp.swift in Sources */,
 				864BD60F2C3B416D00D4C896 /* StatusView.swift in Sources */,
@@ -669,6 +681,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		86CB9B5A2C45F82800968C20 /* XCLocalSwiftPackageReference "../TCPLib" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../TCPLib;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		86CB9B5B2C45F82800968C20 /* TCPLib */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TCPLib;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 867EBD5C2C3A1E29004C4DDD /* Project object */;
 }
