@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -23,7 +23,6 @@
 		867EBD862C3A1E2A004C4DDD /* DSKYUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD852C3A1E2A004C4DDD /* DSKYUITestsLaunchTests.swift */; };
 		867EBD932C3A5348004C4DDD /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 867EBD922C3A5348004C4DDD /* Media.xcassets */; };
 		86A055072C405BB3007996B7 /* StatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A055062C405BB3007996B7 /* StatusModel.swift */; };
-		86CB9B5C2C45F82800968C20 /* TCPLib in Frameworks */ = {isa = PBXBuildFile; productRef = 86CB9B5B2C45F82800968C20 /* TCPLib */; };
 		86CB9B5E2C45F94400968C20 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86CB9B5D2C45F94400968C20 /* Network.swift */; };
 		86E838902C3CE61700E7C573 /* SandboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E8388F2C3CE61700E7C573 /* SandboxView.swift */; };
 		86E838922C3CF06400E7C573 /* DecorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E838912C3CF06400E7C573 /* DecorView.swift */; };
@@ -85,7 +84,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				86CB9B5C2C45F82800968C20 /* TCPLib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -205,7 +203,6 @@
 			);
 			name = DSKY;
 			packageProductDependencies = (
-				86CB9B5B2C45F82800968C20 /* TCPLib */,
 			);
 			productName = DSKY;
 			productReference = 867EBD642C3A1E29004C4DDD /* DSKY.app */;
@@ -280,7 +277,6 @@
 			);
 			mainGroup = 867EBD5B2C3A1E29004C4DDD;
 			packageReferences = (
-				86CB9B5A2C45F82800968C20 /* XCLocalSwiftPackageReference "../TCPLib" */,
 			);
 			productRefGroup = 867EBD652C3A1E29004C4DDD /* Products */;
 			projectDirPath = "";
@@ -709,20 +705,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCLocalSwiftPackageReference section */
-		86CB9B5A2C45F82800968C20 /* XCLocalSwiftPackageReference "../TCPLib" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ../TCPLib;
-		};
-/* End XCLocalSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		86CB9B5B2C45F82800968C20 /* TCPLib */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = TCPLib;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 867EBD5C2C3A1E29004C4DDD /* Project object */;
 }

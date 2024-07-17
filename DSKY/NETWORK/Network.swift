@@ -7,92 +7,99 @@
 
 import Foundation
 import Network
-import TCPLib
 
 struct Network {
 
-//    public var comm: NWConnection
-//
-//    public func open(_ host: NWEndpoint) throws {
-//
-//    }
-//
-//    public func send(_ packet: Data) throws {
-//
-//    }
-//
-//    public func recv() throws -> Data {
-//
-//        Data()
-//
-//    }
+    let connection: NWConnection
+    let didStopCallback: ((Error?) -> Void)?
 
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-    let client: Client
+    init(_ host: String = "127.0.0.1", _ port: UInt16 = 12345) {
 
-    init() {
-        client = Client("127.0.0.1", 19697)
-        client.connection.start()
-
-        setupReceive()
-    }
-
-    func sendPacket(_ packet: Data) {
-        logger.log("<<< \(prettyString(packet))")
-        client.connection.send(data: packet)
-    }
-
-    func setupReceive() {
-        client.nwConnection.receive(minimumIncompleteLength: 1,
-                                    maximumLength: 4) { (content, _, isComplete, error) in
-
-            if let data = content, !data.isEmpty {
-//              prettyPrint(data)
-                if let _ = parseIoPacket(data) {
-//                  logger.log("    channel \(triple.0, format: .octal(minDigits: 15) ): \(ZeroPadWord(triple.1, to: 15))")
-                }
-            }
-            if isComplete {
-                client.connection.connectionDidEnd()
-            } else if let error = error {
-                client.connection.connectionDidFail(error: error)
-            }  else {
-                setupReceive()
-            }
+        self.didStopCallback = { error in
+            exit( error == nil ? EXIT_SUCCESS : EXIT_FAILURE )
         }
-    }
-}
-
-public struct Client {
-
-    public var connection: Connection
-    public let nwConnection: NWConnection
-
-    public init(_ host: NWEndpoint.Host = "127.0.0.1",
-                _ port: NWEndpoint.Port = 12345) {
 
         let tcpOptions = NWProtocolTCP.Options()
         tcpOptions.connectionTimeout = 10
 
-        self.nwConnection = NWConnection(host: host,
-                                         port: port,
-                                         using: NWParameters(tls: nil, tcp: tcpOptions))
-        
-        self.connection = Connection(nwConnection: nwConnection)
+        self.connection = NWConnection(host: NWEndpoint.Host(host),
+                                       port: NWEndpoint.Port(rawValue: port)!,
+                                       using: NWParameters(tls: nil,
+                                                           tcp: tcpOptions))
+        self.connection.stateUpdateHandler = self.stateDidChange(to:)
+
+        self.connection.start(queue: .main)
     }
 
-    func start() {
-        self.connection.didStopCallback = self.didStopCallback(error:)
-        self.connection.start()
-    }
-
-    func didStopCallback(error: Error?) {
-        if error == nil {
-            exit(EXIT_SUCCESS)
-        } else {
-            exit(EXIT_FAILURE)
+    private func stateDidChange(to state: NWConnection.State) {
+        switch state {
+            case .setup:
+                print("connection .setup")
+                break
+            case .waiting(let error):
+                print("connection .waiting: \(error)")
+            case .preparing:
+                print("connection .preparing")
+                break
+            case .ready:
+                print("connection .ready")
+            case .failed(let error):
+                print("connection .failed")
+                self.connectionDidFail(error: error)
+            case .cancelled:
+                print("connection .cancelled")
+                break
+            default:
+                print("connection .default")
+                break
         }
     }
 
+    private func connectionDidFail(error: Error) {
+        print("connection did fail, error: \(error)")
+        self.stop(error: error)
+    }
+
+    private func stop(error: Error?) {
+        print("... \(#function)")
+        self.connection.stateUpdateHandler = nil
+        self.connection.cancel()
+        if let didStopCallback = self.didStopCallback {
+            didStopCallback(error)
+        }
+    }
+
+    public func send(data: Data) {
+        print("... \(#function)")
+        self.connection.send(content: data,
+                             completion: .contentProcessed( { error in
+            if let error = error {
+                self.connectionDidFail(error: error)
+                return
+            }
+        }))
+    }
+
+    func sendPacket(_ packet: Data) {
+        logger.log("<<< \(prettyString(packet))")
+        send(data: packet)
+    }
+
+    func recv() {
+        connection.receive(minimumIncompleteLength: 1,
+                           maximumLength: 4) { (content, _, connectionEnded, error) in
+
+            if let data = content, !data.isEmpty { _ = parseIoPacket(data) }
+
+            if connectionEnded {
+                print("connection did end")
+                self.stop(error: nil)
+            } else if let error = error {
+                connectionDidFail(error: error)
+            } else {
+                recv()
+            }
+        }
+    }
 }
+
