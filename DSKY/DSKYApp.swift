@@ -14,7 +14,7 @@ let logger = Logger(subsystem: "com.ramsaycons.DSKY", category: "")
 struct DSKYApp: App {
     init() {
         dskySetup()
-        let client = Network()
+        let _ = Network()
     }
 
     var body: some Scene {

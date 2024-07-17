@@ -77,7 +77,7 @@ struct KeyPadKey: View {
             .padding(.all, keyPadding)
             .cornerRadius(keyCorner)
             .onTapGesture {
-                log(symbol)
+                record(symbol)
             }
 
     }
@@ -91,6 +91,6 @@ struct KeyPadKey: View {
     KeyPadKey(symbol: "ZASO")
 }
 
-func log(_ symbol: String) {
+func record(_ symbol: String) {
     logger.log("KeyPad: \(symbol)")
 }
