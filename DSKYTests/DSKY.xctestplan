@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "6FD8899C-E050-4476-843A-51390D045FA9",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:DSKY.xcodeproj",
+        "identifier" : "867EBD742C3A1E2A004C4DDD",
+        "name" : "DSKYTests"
+      }
+    }
+  ],
+  "version" : 1
+}

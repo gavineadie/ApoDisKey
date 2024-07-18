@@ -42,6 +42,14 @@ func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
 
     let byte = [UInt8](data)
 
+    if ((byte[0] == 0xff) &&
+        (byte[1] == 0xff) &&
+        (byte[2] == 0xff) &&
+        (byte[3] == 0xff)) {
+        logger.log("       111111111 111111111111111")
+        return nil
+    }
+
     if (byte[0] / 64) != 0 || (byte[1] / 64) != 1 ||
        (byte[2] / 64) != 2 || (byte[3] / 64) != 3 {
         logger.log("\(#function): prefix bits wrong [\(prettyString(data))]")
@@ -65,11 +73,16 @@ func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
              0o014:                 // CM and LM Gyro celection ..
             logger.log("    channel \(channel, format: .octal(minDigits: 3)): \(ZeroPadWord(value))")
 
+        case 0o005...0o006, 0o015...0o035:
+//            logger.log("»»» fiction \(channel, format: .octal(minDigits: 3)): \(ZeroPadWord(value))")
+            break
+
         case 0o163...0o177:
             logger.log("»»» fiction \(channel, format: .octal(minDigits: 3)): \(ZeroPadWord(value))")
 
         default:
             logger.log("••• channel \(channel, format: .octal(minDigits: 3)): \(ZeroPadWord(value))")
+
     }
 
     return (channel, value, (byte[0] & 0b00100000) > 0)
@@ -120,6 +133,8 @@ func dskyInterpretation(_ code: UInt16) {
                 \(ZeroPadWord(code).dropFirst(10)) \
                 (\(aStr) ±\(BBBBB == 0 ? "↓" : "↑") "\(cStr)\(dStr)\"
                 """)
+
+            //ApolloDisKey.shared.lightsPanel = 8
     }
 
     return

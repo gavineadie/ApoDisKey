@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum BackColor {
+public enum BackColor {
     case off
     case on
     case white
@@ -16,48 +16,95 @@ enum BackColor {
     case orange
 }
 
-var statusArray: [(String, BackColor)] = [ 
-    ("UPLINK\nACTY", .off),             // #0
-    ("NO  ATT", .off),                  // #1
-    ("STBY", .off),                     // #2
-    ("KEY  REL", .off),                 // #3
-    ("OPR  ERR", .off),                 // #4
+typealias Light = (String, BackColor)
 
-    ("TEMP", .on),                      // #5
-    ("GIMBAL\nLOCK", .off),             // #6
-    ("PROG", .off),                     // #7
-    ("RESTART", .off),                  // #8
-    ("TRACKER", .off),                  // #9
-    ("ALT", .off),                      // #10
-    ("VEL", .off)                       // #11
-]
+@Observable
+class DisKeyModel {
 
-func allOn() {
-    logger.log("\(#function) ..")
-    for index in 0..<statusArray.count {
-        statusArray[index].1 = .on
+    public var lights: [Int: Light]
+
+    static let shared = DisKeyModel()
+
+    private init() {
+
+        lights = [ 11: ("", .off),
+                   12: ("", .off),
+                   13: ("", .off),
+                   14: ("", .off),
+                   15: ("", .off),
+                   16: ("", .off),
+                   17: ("", .off),
+
+                   21: ("", .off),
+                   22: ("", .off),
+                   23: ("", .off),
+                   24: ("", .off),
+                   25: ("", .off),
+                   26: ("", .off),
+                   27: ("", .off)
+        ]
+
     }
-}
 
-struct DSKY {
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+
+    func luminary099() {
+        lights[11] = ("UPLINK\nACTY", .off)
+        lights[12] = ("NO  ATT", .off)
+        lights[13] = ("STBY", .off)
+        lights[14] = ("KEY  REL", .off)
+        lights[15] = ("OPR  ERR", .off)
+        lights[16] = ("", .off)
+        lights[17] = ("", .off)
+
+        lights[21] = ("TEMP", .on)
+        lights[22] = ("GIMBAL\nLOCK", .off)
+        lights[23] = ("PROG", .off)
+        lights[24] = ("RESTART", .off)
+        lights[25] = ("TRACKER", .off)
+        lights[26] = ("ALT", .off)
+        lights[27] = ("VEL", .off)
+    }
+
+    func allOff() {
+        lights = [ 11: ("", BackColor.off),
+                   12: ("", BackColor.off),
+                   13: ("", BackColor.off),
+                   14: ("", BackColor.off),
+                   15: ("", BackColor.off),
+                   16: ("", BackColor.off),
+                   17: ("", BackColor.off),
+
+                   21: ("", BackColor.off),
+                   22: ("", BackColor.off),
+                   23: ("", BackColor.off),
+                   24: ("", BackColor.off),
+                   25: ("", BackColor.off),
+                   26: ("", BackColor.off),
+                   27: ("", BackColor.off)
+        ]
+    }
+
+    func allOn() {
+        for (index, _) in lights { lights[index] = ("YELLOW", .yellow) }
+    }
+
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+    public var display = 0
+
+
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+    the KeyPad has no lights or colors
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+    public var keyPad = 0
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
     Network (singleton) - only one AGC per mission
         AGC_Communication_Channel
             Open, Send, Revc .. four-byte packets
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-    let agcComm = Network()
-
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-    let lightsPanel = 0
-
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-    let displayPanel = 1
-
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-    let keypadPanel = 2
+//  let agcComm = Network()
 
 }

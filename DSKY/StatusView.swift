@@ -8,44 +8,43 @@
 import SwiftUI
 
 struct StatusView: View {
+    let model = DisKeyModel.shared
+
     var body: some View {
         ZStack {
             PanelsView()
 
             Grid {
                 GridRow {
-                    StatusLight(light: statusArray[0])
-                    StatusLight(light: statusArray[5])
+                    StatusLight(light: model.lights[11]!)
+                    StatusLight(light: model.lights[21]!)
                 }
 
                 GridRow {
-                    StatusLight(light: statusArray[1])
-                    StatusLight(light: statusArray[6])
+                    StatusLight(light: model.lights[12]!)
+                    StatusLight(light: model.lights[22]!)
                 }
 
                 GridRow {
-                    StatusLight(light: statusArray[2])
-                    StatusLight(light: statusArray[7])
+                    StatusLight(light: model.lights[13]!)
+                    StatusLight(light: model.lights[23]!)
+                }
+                GridRow {
+                    StatusLight(light: model.lights[14]!)
+                    StatusLight(light: model.lights[24]!)
+                }
+                GridRow {
+                    StatusLight(light: model.lights[15]!)
+                    StatusLight(light: model.lights[25]!)
+                }
+                GridRow {
+                    StatusLight(light: model.lights[16]!)
+                    StatusLight(light: model.lights[26]!)
                 }
 
                 GridRow {
-                    StatusLight(light: statusArray[3])
-                    StatusLight(light: statusArray[8])
-                }
-
-                GridRow {
-                    StatusLight(light: statusArray[4])
-                    StatusLight(light: statusArray[9])
-                }
-
-                GridRow {
-                    StatusLight(light: ("", .off))
-                    StatusLight(light: statusArray[10])
-                }
-
-                GridRow {
-                    StatusLight(light: ("", .off))
-                    StatusLight(light: statusArray[11])
+                    StatusLight(light: model.lights[17]!)
+                    StatusLight(light: model.lights[27]!)
                 }
             }
         }
@@ -56,8 +55,9 @@ struct StatusView: View {
     StatusView()
 }
 
+
 struct StatusLight: View {
-    var light: (String, BackColor)
+    var light: Light
 
     var body: some View {
         ZStack {

@@ -30,7 +30,7 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <TestPlans>
          <TestPlanReference
-            reference = "container:../../Desktop/DSKY.xctestplan"
+            reference = "container:DSKYTests/DSKY.xctestplan"
             default = "YES">
          </TestPlanReference>
       </TestPlans>
@@ -79,18 +79,6 @@
             ReferencedContainer = "container:DSKY.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <EnvironmentVariables>
-         <EnvironmentVariable
-            key = "IDEPreferLogStreaming"
-            value = "yes"
-            isEnabled = "YES">
-         </EnvironmentVariable>
-         <EnvironmentVariable
-            key = "IDELogRedirectionPolicy"
-            value = "oslogToStdio"
-            isEnabled = "YES">
-         </EnvironmentVariable>
-      </EnvironmentVariables>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
