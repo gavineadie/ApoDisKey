@@ -59,3 +59,21 @@ struct LittleWhiteCircle: View {
             .clipShape(Circle())
     }
 }
+
+func adjustDisplay(_ text: String) -> AttributedString {
+
+    var attrText = AttributedString()
+
+    for byte in text {
+        var attrByte = AttributedString(String(byte))
+        if byte == " " {
+            attrByte = AttributedString("8")
+            attrByte.foregroundColor = panelInColor
+        } else {
+            attrByte.foregroundColor = displayElectro
+        }
+        attrText += attrByte
+    }
+
+    return attrText
+}

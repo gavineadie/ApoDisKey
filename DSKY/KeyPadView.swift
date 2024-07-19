@@ -8,45 +8,44 @@
 import SwiftUI
 
 struct KeyPadView: View {
+    let model = DisKeyModel.shared
+
     var body: some View {
         HStack {
             VStack {
-                KeyPadKey(symbol: "VERB")
-                KeyPadKey(symbol: "NOUN")
+                KeyPadKey(keyCode: 17) // "VERB"
+                KeyPadKey(keyCode: 31) // "NOUN"
             }
 
             VStack {
                 HStack {
-                    KeyPadKey(symbol: "+")
-                    KeyPadKey(symbol: "7")
-                    KeyPadKey(symbol: "8")
-                    KeyPadKey(symbol: "9")
-                    KeyPadKey(symbol: "CLR")
+                    KeyPadKey(keyCode: 26) //  "+"
+                    KeyPadKey(keyCode: 07) //  "7"
+                    KeyPadKey(keyCode: 08) //  "8"
+                    KeyPadKey(keyCode: 09) //  "9"
+                    KeyPadKey(keyCode: 30) //  "CLR"
                 }
 
                 HStack {
-                    KeyPadKey(symbol: "-")
-                    KeyPadKey(symbol: "4")
-                    KeyPadKey(symbol: "5")
-                    KeyPadKey(symbol: "6")
-                    KeyPadKey(symbol: "PRO")
+                    KeyPadKey(keyCode: 27) //  "-"
+                    KeyPadKey(keyCode: 04) //  "4"
+                    KeyPadKey(keyCode: 05) //  "5"
+                    KeyPadKey(keyCode: 06) //  "6"
+                    KeyPadKey(keyCode: 99) //  "PRO"
                 }
 
                 HStack {
-                    KeyPadKey(symbol: "0")
-                    KeyPadKey(symbol: "1")
-                    KeyPadKey(symbol: "2")
-                    KeyPadKey(symbol: "3")
-                    KeyPadKey(symbol: "KEY\nREL")
+                    KeyPadKey(keyCode: 15) //  "0"
+                    KeyPadKey(keyCode: 01) //  "1"
+                    KeyPadKey(keyCode: 02) //  "2"
+                    KeyPadKey(keyCode: 03) //  "3"
+                    KeyPadKey(keyCode: 25) //  "KEY REL"
                 }
             }
 
             VStack {
-                KeyPadKey(symbol: "ENTR")
-                KeyPadKey(symbol: "RSET")
-                    .onTapGesture {
-                        allOn()
-                    }
+                KeyPadKey(keyCode: 28) // "ENTR"
+                KeyPadKey(keyCode: 18) // "RSET"
             }
         }
     }
@@ -57,12 +56,15 @@ struct KeyPadView: View {
 }
 
 struct KeyPadKey: View {
-    var symbol: String
+    let model = DisKeyModel.shared
+    
+    var keyCode: UInt16
 
     var body: some View {
-        let fontSize: CGFloat = (symbol.count == 1) ? 28 : 12
+        let fontSize: CGFloat = (1...16).contains(keyCode) ||
+                               (26...27).contains(keyCode) ? 28 : 12
 
-        Text(symbol)
+        Text(keyText(keyCode))
             .font(.custom("Gorton-Normal-120",
                           fixedSize: fontSize))
             .baselineOffset(-4.0)
@@ -77,20 +79,42 @@ struct KeyPadKey: View {
             .padding(.all, keyPadding)
             .cornerRadius(keyCorner)
             .onTapGesture {
-                record(symbol)
+                record(keyCode)
+                model.network.send(data: formIoPacket(0o015, keyCode))
             }
-
     }
 }
 
 #Preview {
-    KeyPadKey(symbol: "6")
+    KeyPadKey(keyCode: 6)
 }
 
 #Preview {
-    KeyPadKey(symbol: "ZASO")
+    KeyPadKey(keyCode: 255)
 }
 
-func record(_ symbol: String) {
-    logger.log("KeyPad: \(symbol)")
+func record(_ keyCode: UInt16) {
+    logger.log("KeyPad: \(keyText(keyCode)) (\(keyCode))")
+}
+
+func keyText(_ code: UInt16) -> String {
+    [17: "VERB",
+     31: "NOUN",
+     26:  "+",
+     07:  "7",
+     08:  "8",
+     09:  "9",
+     30:  "CLR",
+     27:  "-",
+     04:  "4",
+     05:  "5",
+     06:  "6",
+     99:  "PRO",
+     15:  "0",
+     01:  "1",
+     02:  "2",
+     03:  "3",
+     25:  "KEY REL",
+     28: "ENTR",
+     18: "RSET"][code] ?? "ERROR"
 }

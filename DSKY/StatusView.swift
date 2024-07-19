@@ -71,7 +71,7 @@ struct StatusLight: View {
                 .font(.custom("Gorton-Normal-180",
                               fixedSize: 12))
                 .baselineOffset(-2.0)
-                .foregroundColor(statusText)
+                .foregroundColor(light.1 == .off ? .gray : statusText)
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
                 .lineSpacing(4.0)
@@ -91,6 +91,12 @@ private func back(_ input: (String, BackColor)) -> Color {
     switch input.1 {
         case .on:
             return .white
+        case .white:
+            return .white
+        case .yellow:
+            return .yellow
+        case .orange:
+            return .orange
         default:
             return .gray
     }

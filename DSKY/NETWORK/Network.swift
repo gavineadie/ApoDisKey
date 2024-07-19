@@ -70,7 +70,6 @@ struct Network {
     }
 
     public func send(data: Data) {
-        print("... \(#function)")
         self.connection.send(content: data,
                              completion: .contentProcessed( { error in
             if let error = error {
@@ -78,11 +77,6 @@ struct Network {
                 return
             }
         }))
-    }
-
-    func sendPacket(_ packet: Data) {
-        logger.log("<<< \(prettyString(packet))")
-        send(data: packet)
     }
 
     func recv() {

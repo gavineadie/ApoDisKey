@@ -17,9 +17,14 @@ struct DSKYApp: App {
         let model = DisKeyModel.shared
         model.luminary099()
 
-        let network = Network("127.0.0.1", 19697)
-//      let network = Network("192.168.1.100", 19697)       // remote
-        network.recv()
+//        let _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+//            let timeString = String(String(Date.timeIntervalSinceReferenceDate)
+//                .dropFirst(4)
+//                .prefix(5))
+//            model.register3 = ("+\(timeString)", true)
+//        }
+
+        model.network.recv()
 
     }
 

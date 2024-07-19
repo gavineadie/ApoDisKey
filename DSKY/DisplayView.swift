@@ -8,18 +8,20 @@
 import SwiftUI
 
 struct DisplayView: View {
+    let model = DisKeyModel.shared
+
     var body: some View {
         ZStack {
             PanelsView()
- //           Image("Display").cornerRadius(8.0)
+//            Image("Display").cornerRadius(8.0)
 
             VStack {
-                Row1(prog: "11")
+                Row1(comp: model.comp, prog: model.prog.0)
                 Spacer().frame(height: 12.0)
-                Row2(verb: "06", noun: "62")
-                Register1(digits: "+01344")
-                Register2(digits: " 01234")
-                Register3(digits: "-56789")
+                Row2(verb: model.verb.0, noun: model.noun.0)
+                Register1(digits: model.register1.0)
+                Register2(digits: model.register2.0)
+                Register3(digits: model.register3.0)
             }
         }
     }
@@ -30,10 +32,11 @@ struct DisplayView: View {
 }
 
 struct Comp: View {
+    var state: Display
     var body: some View {
         VStack {
             DisplayLight(label: "COMP\nACTY",
-                         green: false, 
+                         green: state.1,
                          height: 60.0)
             DisplayValue(value: "  ")
         }
@@ -101,30 +104,29 @@ struct DisplayValue: View {
     var value: String
 
     var body: some View {
+
         switch value.count {
             case 6:
                 VStack {
                     DisplaySeparator()
 
                     if value.starts(with: " ") {
-                        Text(value.dropFirst())
+                        Text(adjustDisplay(String(value.dropFirst())))
                             .font(.custom("Zerlina",
                                           fixedSize: zerlinaFixedSize))
                             .padding([.top,
-                                .bottom,
+                                      .bottom,
                                       .trailing], -10.0)
                             .padding(.leading, 10.5)
                             .tracking(zerlinaTracking)
-                            .foregroundColor(displayElectro)
                             .frame(width: 190.0,
                                    height: panelDigitSize)
                     } else {
-                        Text(value)
+                        Text(adjustDisplay(String(value)))
                             .font(.custom("Zerlina",
                                           fixedSize: zerlinaFixedSize))
                             .padding(.all, -10.0)
                             .tracking(zerlinaTracking)
-                            .foregroundColor(displayElectro)
                             .frame(width: 190.0,
                                    height: panelDigitSize)
                     }
@@ -134,12 +136,11 @@ struct DisplayValue: View {
                     Text(value)
                         .frame(width: 95.0, height: 2.0)
                 } else {
-                    Text(value)
+                    Text(adjustDisplay(String(value)))
                         .font(.custom("Zerlina",
                                       fixedSize: zerlinaFixedSize))
                         .padding(.top, 8.0)
                         .tracking(zerlinaTracking)
-                        .foregroundColor(displayElectro)
                         .frame(width: 95.0,
                                height: panelDigitSize)
                 }
@@ -161,12 +162,12 @@ struct DisplayValue: View {
 
 
 struct Row1: View {
-    var comp: String = "  "
+    var comp: Display = ("  ", false)
     var prog: String = "--"
 
     var body: some View {
         HStack(alignment: .top) {
-            Comp()
+            Comp(state: comp)
             Prog(digits: prog)
         }
         .padding(.bottom, 6.0)
