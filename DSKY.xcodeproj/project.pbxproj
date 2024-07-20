@@ -11,6 +11,8 @@
 		862A1D272C48230500AD4352 /* PacketSend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86ECA4DE2C47602F0025545C /* PacketSend.swift */; };
 		862A1D282C48230500AD4352 /* PacketRecv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86ECA4E02C4760400025545C /* PacketRecv.swift */; };
 		862A1D2A2C48249A00AD4352 /* PacketUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86ECA4E22C4760660025545C /* PacketUtil.swift */; };
+		864143C42C4AE78300EEC7EB /* Initiialize.txt in Resources */ = {isa = PBXBuildFile; fileRef = 864143C32C4AE78300EEC7EB /* Initiialize.txt */; };
+		864143C72C4B60DD00EEC7EB /* DisKeyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A055062C405BB3007996B7 /* DisKeyModel.swift */; };
 		864BD6092C3B2B9900D4C896 /* KeyPadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864BD6082C3B2B9900D4C896 /* KeyPadView.swift */; };
 		864BD60F2C3B416D00D4C896 /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864BD60E2C3B416D00D4C896 /* StatusView.swift */; };
 		864BD6112C3B42DF00D4C896 /* DisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864BD6102C3B42DF00D4C896 /* DisplayView.swift */; };
@@ -22,8 +24,6 @@
 		867EBD6A2C3A1E29004C4DDD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD692C3A1E29004C4DDD /* ContentView.swift */; };
 		867EBD702C3A1E2A004C4DDD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 867EBD6F2C3A1E2A004C4DDD /* Preview Assets.xcassets */; };
 		867EBD7A2C3A1E2A004C4DDD /* DSKYTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD792C3A1E2A004C4DDD /* DSKYTests.swift */; };
-		867EBD842C3A1E2A004C4DDD /* DSKYUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD832C3A1E2A004C4DDD /* DSKYUITests.swift */; };
-		867EBD862C3A1E2A004C4DDD /* DSKYUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD852C3A1E2A004C4DDD /* DSKYUITestsLaunchTests.swift */; };
 		867EBD932C3A5348004C4DDD /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 867EBD922C3A5348004C4DDD /* Media.xcassets */; };
 		86A055072C405BB3007996B7 /* DisKeyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A055062C405BB3007996B7 /* DisKeyModel.swift */; };
 		86CB9B5E2C45F94400968C20 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86CB9B5D2C45F94400968C20 /* Network.swift */; };
@@ -42,17 +42,12 @@
 			remoteGlobalIDString = 867EBD632C3A1E29004C4DDD;
 			remoteInfo = DSKY;
 		};
-		867EBD802C3A1E2A004C4DDD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 867EBD5C2C3A1E29004C4DDD /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 867EBD632C3A1E29004C4DDD;
-			remoteInfo = DSKY;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		862A1D292C48236A00AD4352 /* DSKY.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = DSKY.xctestplan; sourceTree = "<group>"; };
+		864143C32C4AE78300EEC7EB /* Initiialize.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Initiialize.txt; sourceTree = "<group>"; };
+		864906BD2C4C365D00BD22DA /* CHANGES.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGES.md; sourceTree = "<group>"; };
 		864BD6082C3B2B9900D4C896 /* KeyPadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPadView.swift; sourceTree = "<group>"; };
 		864BD60E2C3B416D00D4C896 /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
 		864BD6102C3B42DF00D4C896 /* DisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayView.swift; sourceTree = "<group>"; };
@@ -68,7 +63,6 @@
 		867EBD6F2C3A1E2A004C4DDD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		867EBD752C3A1E2A004C4DDD /* DSKYTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DSKYTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		867EBD792C3A1E2A004C4DDD /* DSKYTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSKYTests.swift; sourceTree = "<group>"; };
-		867EBD7F2C3A1E2A004C4DDD /* DSKYUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DSKYUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		867EBD832C3A1E2A004C4DDD /* DSKYUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSKYUITests.swift; sourceTree = "<group>"; };
 		867EBD852C3A1E2A004C4DDD /* DSKYUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSKYUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		867EBD922C3A5348004C4DDD /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
@@ -97,16 +91,28 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		867EBD7C2C3A1E2A004C4DDD /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		864143C22C4AD27300EEC7EB /* FONTS */ = {
+			isa = PBXGroup;
+			children = (
+				864BD6122C3B728400D4C896 /* Zerlina.otf */,
+				864BD6162C3BD69700D4C896 /* Gorton-Condensed.otf */,
+				864BD6172C3BD69700D4C896 /* Gorton-Normal-120.otf */,
+				864BD6182C3BD69700D4C896 /* Gorton-Normal-180.otf */,
+			);
+			path = FONTS;
+			sourceTree = "<group>";
+		};
+		864143C52C4AE79800EEC7EB /* RESOURCES */ = {
+			isa = PBXGroup;
+			children = (
+				864143C32C4AE78300EEC7EB /* Initiialize.txt */,
+			);
+			path = RESOURCES;
+			sourceTree = "<group>";
+		};
 		867D86222C489F43007CDD48 /* MODEL */ = {
 			isa = PBXGroup;
 			children = (
@@ -119,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				869F39962C3F337E002DD6B7 /* README.md */,
+				864906BD2C4C365D00BD22DA /* CHANGES.md */,
 				867EBD662C3A1E29004C4DDD /* DSKY */,
 				867EBD782C3A1E2A004C4DDD /* DSKYTests */,
 				867EBD822C3A1E2A004C4DDD /* DSKYUITests */,
@@ -131,7 +138,6 @@
 			children = (
 				867EBD642C3A1E29004C4DDD /* DSKY.app */,
 				867EBD752C3A1E2A004C4DDD /* DSKYTests.xctest */,
-				867EBD7F2C3A1E2A004C4DDD /* DSKYUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -149,10 +155,8 @@
 				867D86222C489F43007CDD48 /* MODEL */,
 				86ECA4E42C4763E70025545C /* NETWORK */,
 				867EBD922C3A5348004C4DDD /* Media.xcassets */,
-				864BD6122C3B728400D4C896 /* Zerlina.otf */,
-				864BD6162C3BD69700D4C896 /* Gorton-Condensed.otf */,
-				864BD6172C3BD69700D4C896 /* Gorton-Normal-120.otf */,
-				864BD6182C3BD69700D4C896 /* Gorton-Normal-180.otf */,
+				864143C52C4AE79800EEC7EB /* RESOURCES */,
+				864143C22C4AD27300EEC7EB /* FONTS */,
 				867EBD6D2C3A1E2A004C4DDD /* DSKY.entitlements */,
 				864BD6142C3B771A00D4C896 /* DSKY.plist */,
 				867EBD6E2C3A1E2A004C4DDD /* Preview Content */,
@@ -237,24 +241,6 @@
 			productReference = 867EBD752C3A1E2A004C4DDD /* DSKYTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		867EBD7E2C3A1E2A004C4DDD /* DSKYUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 867EBD8F2C3A1E2A004C4DDD /* Build configuration list for PBXNativeTarget "DSKYUITests" */;
-			buildPhases = (
-				867EBD7B2C3A1E2A004C4DDD /* Sources */,
-				867EBD7C2C3A1E2A004C4DDD /* Frameworks */,
-				867EBD7D2C3A1E2A004C4DDD /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				867EBD812C3A1E2A004C4DDD /* PBXTargetDependency */,
-			);
-			name = DSKYUITests;
-			productName = DSKYUITests;
-			productReference = 867EBD7F2C3A1E2A004C4DDD /* DSKYUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -269,10 +255,6 @@
 						CreatedOnToolsVersion = 15.4;
 					};
 					867EBD742C3A1E2A004C4DDD = {
-						CreatedOnToolsVersion = 15.4;
-						TestTargetID = 867EBD632C3A1E29004C4DDD;
-					};
-					867EBD7E2C3A1E2A004C4DDD = {
 						CreatedOnToolsVersion = 15.4;
 						TestTargetID = 867EBD632C3A1E29004C4DDD;
 					};
@@ -295,7 +277,6 @@
 			targets = (
 				867EBD632C3A1E29004C4DDD /* DSKY */,
 				867EBD742C3A1E2A004C4DDD /* DSKYTests */,
-				867EBD7E2C3A1E2A004C4DDD /* DSKYUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -307,6 +288,7 @@
 			files = (
 				864BD6192C3BD69700D4C896 /* Gorton-Condensed.otf in Resources */,
 				867EBD932C3A5348004C4DDD /* Media.xcassets in Resources */,
+				864143C42C4AE78300EEC7EB /* Initiialize.txt in Resources */,
 				867EBD702C3A1E2A004C4DDD /* Preview Assets.xcassets in Resources */,
 				864BD6132C3B728400D4C896 /* Zerlina.otf in Resources */,
 				864BD61A2C3BD69700D4C896 /* Gorton-Normal-120.otf in Resources */,
@@ -315,13 +297,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		867EBD732C3A1E2A004C4DDD /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		867EBD7D2C3A1E2A004C4DDD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -355,19 +330,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				861754F92C471ABB0080D82B /* Network.swift in Sources */,
+				864143C72C4B60DD00EEC7EB /* DisKeyModel.swift in Sources */,
 				862A1D2A2C48249A00AD4352 /* PacketUtil.swift in Sources */,
 				867EBD7A2C3A1E2A004C4DDD /* DSKYTests.swift in Sources */,
 				862A1D272C48230500AD4352 /* PacketSend.swift in Sources */,
 				862A1D282C48230500AD4352 /* PacketRecv.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		867EBD7B2C3A1E2A004C4DDD /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				867EBD842C3A1E2A004C4DDD /* DSKYUITests.swift in Sources */,
-				867EBD862C3A1E2A004C4DDD /* DSKYUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -378,11 +345,6 @@
 			isa = PBXTargetDependency;
 			target = 867EBD632C3A1E29004C4DDD /* DSKY */;
 			targetProxy = 867EBD762C3A1E2A004C4DDD /* PBXContainerItemProxy */;
-		};
-		867EBD812C3A1E2A004C4DDD /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 867EBD632C3A1E29004C4DDD /* DSKY */;
-			targetProxy = 867EBD802C3A1E2A004C4DDD /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -448,7 +410,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_NAME = DSKY;
+				PRODUCT_NAME = ApoDisKey;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -508,7 +470,7 @@
 				MARKETING_VERSION = 0.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_NAME = DSKY;
+				PRODUCT_NAME = ApoDisKey;
 				SWIFT_COMPILATION_MODE = wholemodule;
 			};
 			name = Release;
@@ -520,12 +482,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = DSKY/DSKY.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 100;
 				DEVELOPMENT_ASSET_PATHS = "\"DSKY/Preview Content\"";
 				DEVELOPMENT_TEAM = CXE9ZR7J3U;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -540,8 +503,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.5;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ramsaycons.DSKY;
+				MARKETING_VERSION = 0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ramsaycons.ApoDisKey;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -558,12 +521,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = DSKY/DSKY.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 100;
 				DEVELOPMENT_ASSET_PATHS = "\"DSKY/Preview Content\"";
 				DEVELOPMENT_TEAM = CXE9ZR7J3U;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -578,8 +542,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.5;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ramsaycons.DSKY;
+				MARKETING_VERSION = 0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ramsaycons.ApoDisKey;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -635,50 +599,6 @@
 			};
 			name = Release;
 		};
-		867EBD902C3A1E2A004C4DDD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = CXE9ZR7J3U;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
-				MACOSX_DEPLOYMENT_TARGET = 14.5;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ramsaycons.DSKYUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = DSKY;
-			};
-			name = Debug;
-		};
-		867EBD912C3A1E2A004C4DDD /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = CXE9ZR7J3U;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
-				MACOSX_DEPLOYMENT_TARGET = 14.5;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ramsaycons.DSKYUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = DSKY;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -705,15 +625,6 @@
 			buildConfigurations = (
 				867EBD8D2C3A1E2A004C4DDD /* Debug */,
 				867EBD8E2C3A1E2A004C4DDD /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		867EBD8F2C3A1E2A004C4DDD /* Build configuration list for PBXNativeTarget "DSKYUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				867EBD902C3A1E2A004C4DDD /* Debug */,
-				867EBD912C3A1E2A004C4DDD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

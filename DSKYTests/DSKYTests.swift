@@ -54,14 +54,13 @@ final class DSKYTests: XCTestCase {
             }
         }
 
-
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        measure {
-            // Put the code you want to measure the time of here.
-        }
+    func testT_F() {
+        XCTAssertTrue(plu_min((true, true)) == "-", "true, true fail")
+        XCTAssertTrue(plu_min((true, false)) == "+", "")
+        XCTAssertTrue(plu_min((false, true)) == "-", "")
+        XCTAssertTrue(plu_min((false, false)) == " ", "")
     }
 
 }

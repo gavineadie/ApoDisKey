@@ -67,11 +67,11 @@ struct StatusLight: View {
                 .frame(width: statusWidth,
                        height: statusHeight)
 
-            Text(text(light))
+            Text(light.0)
                 .font(.custom("Gorton-Normal-180",
                               fixedSize: 12))
                 .baselineOffset(-2.0)
-                .foregroundColor(light.1 == .off ? .gray : statusText)
+                .foregroundColor(light.1 == .off ? .black : statusText)
                 .multilineTextAlignment(.center)
                 .lineLimit(2)
                 .lineSpacing(4.0)
@@ -100,8 +100,4 @@ private func back(_ input: (String, BackColor)) -> Color {
         default:
             return .gray
     }
-}
-
-private func text(_ input: (String, BackColor)) -> String {
-    input.0
 }

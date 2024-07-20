@@ -48,7 +48,7 @@ func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
         (byte[1] == 0xff) &&
         (byte[2] == 0xff) &&
         (byte[3] == 0xff)) {
-        logger.log("       111111111 111111111111111")
+//        logger.log("       111111111 111111111111111")
         return nil
     }
 
@@ -70,12 +70,24 @@ func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
             dskyInterpretation(value)
 
         case 0o011:                 // flags for indicator lamps
-            logger.log("»»» display \(ZeroPadWord(value, to: 8)) bits")
-            model.comp = ("", value & 0x02 > 0)
+//            logger.log("»»» display \(ZeroPadWord(value, to: 8)) bits")
+            model.comp.1 = value & 0x02 > 0                             // "COMP ACTY"
+            model.verb.1 = value & 0x20 > 0                             // flash "VERB"
+            model.noun.1 = value & 0x20 > 0                             // flash "NOUN"
 
-        case 0o012,                 // CM and LM actions ..
-             0o013,                 // DSKY lamp tests ..
-             0o014:                 // CM and LM Gyro celection ..
+            model.lights[11]?.1 = (value & 0x04 > 0) ? .white : .off    // "UPLINK
+            model.lights[14]?.1 = (value & 0x40 > 0) ? .white : .off    // "OPR ERR"
+
+            model.lights[21]?.1 = (value & 0x08 > 0) ? .yellow : .off   // "TEMP"
+            model.lights[24]?.1 = (value & 0x10 > 0) ? .yellow : .off   // "KEY REL"
+
+        case 0o012:                 // CM and LM actions ..
+            break
+
+        case 0o013:                 // DSKY lamp tests ..
+            model.lights[13]?.1 = (value & 0x0200 > 0) ? .white : .off  // "STBY"
+
+        case 0o014:                 // CM and LM Gyro celection ..
 //            logger.log("    channel \(channel, format: .octal(minDigits: 3)): \(ZeroPadWord(value))")
             break
 
@@ -86,7 +98,26 @@ func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
         case 0o163:
             logger.log("»»» DSKY163 \(ZeroPadWord(value, to: 10)) bits")
 
-        case 0o164...0o177:
+//          model.lights[xx]?.1 = (value & 0x0001 > 0) ? .yellow : .off // Bit 1: AGC
+
+            model.lights[13]?.1 = (value & 0x0100 > 0) ? .white : .off  // Bit 9: STBY lamp
+            model.lights[14]?.1 = (value & 0x0010 > 0) ? .white : .off  // Bit 5: KEY REL lamp
+            model.lights[15]?.1 = (value & 0x0040 > 0) ? .white : .off  // Bit 7: OPER ERR lamp
+
+            model.lights[21]?.1 = (value & 0x0008 > 0) ? .yellow : .off // Bit 4: TEMP lamp
+
+            model.verb.1 = value & 0x10 > 0                             // flash "VERB"
+            model.noun.1 = value & 0x10 > 0                             // flash "NOUN"
+
+//          model.lights[xx]?.1 = (value & 0x0010 > 0) ? .yellow : .off // Bit 6: VERB/NOUN flash
+            model.lights[24]?.1 = (value & 0x0080 > 0) ? .yellow : .off // Bit 8: RESTART lamp
+//          model.lights[xx]?.1 = (value & 0x0200 > 0) ? .white : .off  // Bit 9: EL lamp
+
+                                                                        // Bit 10: EL off
+        case 0o165:
+            logger.log("»»» DSKY165 \(ZeroPadWord(value)) TIME1")
+
+        case 0o164, 0o166...0o177:
             logger.log("»»» fiction \(channel, format: .octal(minDigits: 3)): \(ZeroPadWord(value))")
 
         default:
@@ -117,7 +148,7 @@ func dskyInterpretation(_ code: UInt16) {
             logger.log("""
                 ***    DSKY 010: \(ZeroPadWord(code).prefix(5))   \
                 \(ZeroPadWord(code).dropFirst(5)) \
-                lights \(ZeroPadWord((code & 0b0000_0111_1111_1111), to: 9))
+                lights \(ZeroPadWord((code & 0b0000_0_00_111111111), to: 9))
                 """)
 
         case 0:
@@ -133,52 +164,171 @@ func dskyInterpretation(_ code: UInt16) {
 //                """)
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-                                  -AAAA B CCCCC DDDDD
+  ┆                               -AAAA B CCCCC DDDDD                                                ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-            let BBBBB = (code & 0b00000_1_00000_00000) >> 10
-            let CCCCC = (code & 0b0000_0011_1110_0000) >> 5
-            let DDDDD = (code & 0b0000_0000_0001_1111) >> 0
+            let bBit = (code & 0b00000_1_00000_00000) >  0
+            let cInt = (code & 0b00000_0_11111_00000) >> 5
+            let dInt = (code & 0b00000_0_00000_11111) >> 0
 
             var aStr = "????"
             if rowCode < symbolArray.count {
                 aStr = symbolArray[Int(rowCode)]
             }
-            let cStr = digitXlate(CCCCC)
-            let dStr = digitXlate(DDDDD)
+
+            let cStr = digitXlate(cInt)
+            let dStr = digitXlate(dInt)
 
             logger.log("""
                 >>>    DSKY 010: \(ZeroPadWord(code).prefix(4)) \
                 \(ZeroPadWord(code).prefix(5).suffix(1)) \
                 \(ZeroPadWord(code).dropFirst(5).dropLast(5)) \
                 \(ZeroPadWord(code).dropFirst(10)) \
-                (\(aStr) ±\(BBBBB == 0 ? "↓" : "↑") "\(cStr)\(dStr)\"
+                (\(aStr)) ±\(bBit ? "↑" : "↓") "\(cStr)\(dStr)\"
                 """)
 
             switch rowCode {
-                case 1:         // "3435"
-                    model.register3.0 = model.register3.0.dropLast(2) + cStr + dStr
-                case 2:         // "3233"
-                    model.register3.0 = model.register3.0.prefix(2) + cStr + dStr + model.register3.0.suffix(2)
-                case 3:         // "2531"
-                    model.register2.0 = model.register2.0.dropLast(1 ) + cStr
-                    model.register3.0 = model.register3.0.prefix(1) + dStr + model.register3.0.suffix(4)
-                case 4:         // "2324"
-                    model.register2.0 = model.register2.0.prefix(3) + cStr + dStr + model.register2.0.suffix(1)
-                case 5:         // "2122"
-                    model.register2.0 = model.register2.0.prefix(1) + cStr + dStr + model.register3.0.suffix(3)
-                case 6:         // "1415"
-                    model.register1.0 = model.register1.0.dropLast(2) + cStr + dStr
-                case 7:         // "1213"
-                    model.register1.0 = model.register1.0.prefix(2) + cStr + dStr + model.register1.0.suffix(2)
-                case 8:         // "..11"           //TODO: fix stuck top digit ..
-                    model.register1.0 = model.register1.0.prefix(1) + dStr + cStr + model.register1.0.suffix(3)
-
                 case 9:         // NOUN
                     model.noun.0 = cStr + dStr
                 case 10:        // VERB
                     model.verb.0 = cStr + dStr
                 case 11:        // PROG
                     model.prog.0 = cStr + dStr
+                default:
+                    break
+            }
+
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ these are " " or "+" or "-" ..                                                                   ┆
+  ┆                                                                                                  ┆
+  ┆ B sets or resets a +/- sign                                                                      ┆
+  ┆                                                                                                  ┆
+  ┆ It is unclear to me how the +/- signs can be blanked, using the commands outlined below. It      ┆
+  ┆ seems as though it would involve sending two output-channel commands, (say) with both 1+ and     ┆
+  ┆ 1- bits zeroed.                                                                                  ┆
+  ┆                                                                                                  ┆
+  ┆ (That is the approach taken in yaDSKY: for each sign bit, the most recent 1+ and 1- flags are    ┆
+  ┆ saved. If both are 0, then the +/- sign is blank; if 1+ is set and 1- is not, then the '+' sign  ┆
+  ┆ is displayed; if just the 1- flag is set, or if both 1+ and 1- flags are set, the '-' sign is    ┆
+  ┆ displayed.)                                                                                      ┆
+  ┆                                                                                                  ┆
+  ┆ +↑ = "+"                                                                                         ┆
+  ┆       +↓ = "+" (+↓ means don't change)                                                           ┆
+  ┆       -↓ = " " (-↓ after +↓ = " ")                                                               ┆
+  ┆                                                                                                  ┆
+  ┆ -↑ = "-"                                                                                         ┆
+  ┆       -↓ = leave the "-"                                                                         ┆
+  ┆       +↓ = " " (+↓ after -↓ = " ")                                                               ┆
+  ┆                                                                                                  ┆
+  ┆                                                                                                  ┆
+  ┆ "-" +     THIS IS PRETTY HORRIBLE .. THERE MUST BE A BETTER WAY                                  ┆
+  ┆                                                                                                  ┆
+  ┆ from: https://www.ibiblio.org/apollo/Documents/R-693-GSOP-Skylark1-Section2-DataLinks.pdf        ┆
+  ┆                                                                                                  ┆
+  ┆     Bit 11 of some of the DSPTABs contains discrete information, a one indicating that the       ┆
+  ┆     discrete is on. For example, a one in bit 11 of DSPTAB+1 indicates that R3 has a plus sign.  ┆
+  ┆                                                                                                  ┆
+  ┆     If the sign bits associated with a given register are both zeros, then the content of that   ┆
+  ┆     particular register is octal; if either is set, the register content is decimal data.        ┆
+  ┆                                                                                                  ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+
+            var reg1Bytes = model.register1.0.map { String($0) }
+            var reg2Bytes = model.register2.0.map { String($0) }
+            var reg3Bytes = model.register3.0.map { String($0) }
+
+            precondition(reg1Bytes.count == 6 && [" ", "+", "-"].contains(reg1Bytes[0]))
+            precondition(reg2Bytes.count == 6 && [" ", "+", "-"].contains(reg2Bytes[0]))
+            precondition(reg3Bytes.count == 6 && [" ", "+", "-"].contains(reg3Bytes[0]))
+
+            switch rowCode {
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ no sign bit setting ..                                                                           ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+                case 8:         // "..11"
+                    reg1Bytes[1] = dStr
+                    model.register1.0 = reg1Bytes.joined()
+
+                case 3:         // "2531"
+                    reg2Bytes[5] = cStr
+                    model.register2.0 = reg2Bytes.joined()
+                    reg3Bytes[1] = dStr
+                    model.register3.0 = reg3Bytes.joined()
+
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ sign bit manipulation ..                                                                         ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+                case 7:         // "1213" & "R1+"
+                    model.reg1PlusMinus.0 = bBit
+                    switch model.reg1PlusMinus {
+                        case (false, false): reg1Bytes[0] = " "
+                        case (true, false): reg1Bytes[0] = "+"
+                        case (false, true): reg1Bytes[0] = "-"
+                        case (true, true): reg1Bytes[0] = "+"           // TODO: Really?
+                    }
+                    reg1Bytes[2] = cStr
+                    reg1Bytes[3] = dStr
+                    model.register1.0 = reg1Bytes.joined()
+
+                case 6:         // "1415" & "R1-"
+                    model.reg1PlusMinus.1 = bBit
+                    switch model.reg1PlusMinus {
+                        case (false, false): reg1Bytes[0] = " "
+                        case (true, false): reg1Bytes[0] = "+"
+                        case (false, true): reg1Bytes[0] = "-"
+                        case (true, true): reg1Bytes[0] = "+"           // TODO: Really?
+                    }
+                    reg1Bytes[4] = cStr
+                    reg1Bytes[5] = dStr
+                    model.register1.0 = reg1Bytes.joined()
+
+                case 5:         // "2122" & "R2+"
+                    model.reg2PlusMinus.0 = bBit
+                    switch model.reg2PlusMinus {
+                        case (false, false): reg2Bytes[0] = " "
+                        case (true, false): reg2Bytes[0] = "+"
+                        case (false, true): reg2Bytes[0] = "-"
+                        case (true, true): reg2Bytes[0] = "+"           // TODO: Really?
+                    }
+                    reg2Bytes[1] = cStr
+                    reg2Bytes[2] = dStr
+                    model.register2.0 = reg2Bytes.joined()
+
+                case 4:         // "2324" & "R2-"
+                    model.reg2PlusMinus.1 = bBit
+                    switch model.reg2PlusMinus {
+                        case (false, false): reg2Bytes[0] = " "
+                        case (true, false): reg2Bytes[0] = "+"
+                        case (false, true): reg2Bytes[0] = "-"
+                        case (true, true): reg2Bytes[0] = "+"           // TODO: Really?
+                    }
+                    reg2Bytes[3] = cStr
+                    reg2Bytes[4] = dStr
+                    model.register2.0 = reg2Bytes.joined()
+
+                case 2:         // "3233" & "R3+"
+                    model.reg3PlusMinus.0 = bBit
+                    switch model.reg3PlusMinus {
+                        case (false, false): reg3Bytes[0] = " "
+                        case (true, false): reg3Bytes[0] = "+"
+                        case (false, true): reg3Bytes[0] = "-"
+                        case (true, true): reg3Bytes[0] = "+"           // TODO: Really?
+                    }
+                    reg3Bytes[2] = cStr
+                    reg3Bytes[3] = dStr
+                    model.register3.0 = reg3Bytes.joined()
+
+                case 1:         // "3435" & "R3-"
+                    model.reg3PlusMinus.1 = bBit
+                    switch model.reg3PlusMinus {
+                        case (false, false): reg3Bytes[0] = " "
+                        case (true, false): reg3Bytes[0] = "+"
+                        case (false, true): reg3Bytes[0] = "-"
+                        case (true, true): reg3Bytes[0] = "+"           // TODO: Really?
+                    }
+                    reg3Bytes[4] = cStr
+                    reg3Bytes[5] = dStr
+                    model.register3.0 = reg3Bytes.joined()
+
                 default:
                     break
             }
