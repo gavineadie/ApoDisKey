@@ -19,6 +19,7 @@
 		864BD6192C3BD69700D4C896 /* Gorton-Condensed.otf in Resources */ = {isa = PBXBuildFile; fileRef = 864BD6162C3BD69700D4C896 /* Gorton-Condensed.otf */; };
 		864BD61A2C3BD69700D4C896 /* Gorton-Normal-120.otf in Resources */ = {isa = PBXBuildFile; fileRef = 864BD6172C3BD69700D4C896 /* Gorton-Normal-120.otf */; };
 		864BD61B2C3BD69700D4C896 /* Gorton-Normal-180.otf in Resources */ = {isa = PBXBuildFile; fileRef = 864BD6182C3BD69700D4C896 /* Gorton-Normal-180.otf */; };
+		866E64CE2C4D87BB00A25FF1 /* DSKY.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 866E64CD2C4D87BB00A25FF1 /* DSKY.iconset */; };
 		867EBD682C3A1E29004C4DDD /* DSKYApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD672C3A1E29004C4DDD /* DSKYApp.swift */; };
 		867EBD6A2C3A1E29004C4DDD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD692C3A1E29004C4DDD /* ContentView.swift */; };
 		867EBD7A2C3A1E2A004C4DDD /* DSKYTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD792C3A1E2A004C4DDD /* DSKYTests.swift */; };
@@ -56,6 +57,7 @@
 		864BD6162C3BD69700D4C896 /* Gorton-Condensed.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gorton-Condensed.otf"; sourceTree = "<group>"; };
 		864BD6172C3BD69700D4C896 /* Gorton-Normal-120.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gorton-Normal-120.otf"; sourceTree = "<group>"; };
 		864BD6182C3BD69700D4C896 /* Gorton-Normal-180.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gorton-Normal-180.otf"; sourceTree = "<group>"; };
+		866E64CD2C4D87BB00A25FF1 /* DSKY.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = DSKY.iconset; sourceTree = "<group>"; };
 		867EBD642C3A1E29004C4DDD /* DSKY.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DSKY.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		867EBD672C3A1E29004C4DDD /* DSKYApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSKYApp.swift; sourceTree = "<group>"; };
 		867EBD692C3A1E29004C4DDD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 		867EBD662C3A1E29004C4DDD /* DSKY */ = {
 			isa = PBXGroup;
 			children = (
+				866E64CD2C4D87BB00A25FF1 /* DSKY.iconset */,
 				867EBD672C3A1E29004C4DDD /* DSKYApp.swift */,
 				867EBD692C3A1E29004C4DDD /* ContentView.swift */,
 				864BD60E2C3B416D00D4C896 /* StatusView.swift */,
@@ -268,6 +271,7 @@
 			files = (
 				864BD6192C3BD69700D4C896 /* Gorton-Condensed.otf in Resources */,
 				867EBD932C3A5348004C4DDD /* Debug.xcassets in Resources */,
+				866E64CE2C4D87BB00A25FF1 /* DSKY.iconset in Resources */,
 				864143C42C4AE78300EEC7EB /* Initiialize.txt in Resources */,
 				864BD6132C3B728400D4C896 /* Zerlina.otf in Resources */,
 				864BD61A2C3BD69700D4C896 /* Gorton-Normal-120.otf in Resources */,
