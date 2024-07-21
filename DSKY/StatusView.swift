@@ -93,10 +93,14 @@ private func back(_ input: (String, BackColor)) -> Color {
             return .white
         case .white:
             return .white
+        case .green:
+            return .green
         case .yellow:
             return .yellow
         case .orange:
             return .orange
+        case .red:
+            return .red
         default:
             return .gray
     }

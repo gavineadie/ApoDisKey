@@ -65,6 +65,10 @@ struct ContentView: View {
             }
             .padding(.top, 5.0)
         }
+
+        Text(DisKeyModel.shared.statusFooter)
+            .font(.footnote)
+            .foregroundColor(Color.red)
     }
 }
 

@@ -69,8 +69,23 @@ func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
         case 0o010:                 // DSKY
             dskyInterpretation(value)
 
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ All LATCHES                                                                                      ┆
+  ┆                                                                                                  ┆
+  ┆          Bit 2: Lights the "COMP ACTY" indicator.                                                ┆
+  ┆          Bit 3: Lights the "UPLINK ACTY" indicator.                                              ┆
+  ┆          Bit 4: Lights the "TEMP" indicator.                                                     ┆
+  ┆          Bit 5: Lights the "KEY REL" indicator.                                                  ┆
+  ┆          Bit 6: Flashes the VERB/NOUN display areas.                                             ┆
+  ┆                 This means to flash the digits in the NOUN and VERB areas.                       ┆
+  ┆          Bit 7: Lights the "OPR ERR" indicator.                                                  ┆
+  ┆                                                                                                  ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
         case 0o011:                 // flags for indicator lamps
-//            logger.log("»»» display \(ZeroPadWord(value, to: 8)) bits")
+            logger.log("""
+                »»» DSKY011 \(ZeroPadWord(value, to: 8)) bits                          \
+                :: \(prettyCh011(value)) [011]
+                """)
             model.comp.1 = value & 0x02 > 0                             // "COMP ACTY"
             model.verb.1 = value & 0x20 > 0                             // flash "VERB"
             model.noun.1 = value & 0x20 > 0                             // flash "NOUN"
@@ -95,24 +110,47 @@ func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
 //            logger.log("»»» fiction \(channel, format: .octal(minDigits: 3)): \(ZeroPadWord(value))")
             break
 
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ This channel provides correct handling of signals which, due to hardware-implementation factors, ┆
+  ┆ are not provided to the DSKY precisely according to the values the AGC writes to the associated  ┆
+  ┆ output channels (011 and 013).  In other words, it accounts for hardware handling of the signals ┆
+  ┆ after leaving the AGC's output registers.  For example, channel 10 has KEY REL and OPER ERR bits ┆
+  ┆ that tell whether the KEY REL and OPER ERR signals are logically active or not, but don't        ┆
+  ┆ account for the fact that in addition to the logical state of the signals, they are modulated    ┆
+  ┆ by a square wave (to induce flashing) before reaching the DSKY.                                  ┆
+  ┆                                                                                                  ┆
+  ┆ Channel 163 models this flashing.                                                                ┆
+  ┆                                                                                                  ┆
+  ┆          Bit 1: AGC warning                                                                      ┆
+  ┆          Bits 2-3 ..                                                                             ┆
+  ┆          Bit 4: TEMP lamp                                                                        ┆
+  ┆          Bit 5: KEY REL lamp                                                                     ┆
+  ┆          Bit 6: VERB/NOUN flash                                                                  ┆
+  ┆          Bit 7: OPER ERR lamp                                                                    ┆
+  ┆          Bit 8: RESTART lamp                                                                     ┆
+  ┆          Bit 9: STBY lamp                                                                        ┆
+  ┆          Bit 10: EL off                                                                          ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
         case 0o163:
-            logger.log("»»» DSKY163 \(ZeroPadWord(value, to: 10)) bits")
+            logger.log("""
+                »»» DSKY163       bits = \(ZeroPadWord(value, to: 10))                \
+                :: \(prettyCh163(value)) [163]
+                """)
 
 //          model.lights[xx]?.1 = (value & 0x0001 > 0) ? .yellow : .off // Bit 1: AGC
 
-            model.lights[13]?.1 = (value & 0x0100 > 0) ? .white : .off  // Bit 9: STBY lamp
-            model.lights[14]?.1 = (value & 0x0010 > 0) ? .white : .off  // Bit 5: KEY REL lamp
-            model.lights[15]?.1 = (value & 0x0040 > 0) ? .white : .off  // Bit 7: OPER ERR lamp
+            model.lights[13]?.1 = (value & bit9 > 0) ? .white : .off    // Bit 9: STBY lamp
+            model.lights[14]?.1 = (value & bit5 > 0) ? .white : .off    // Bit 5: KEY REL lamp
+            model.lights[15]?.1 = (value & bit7 > 0) ? .white : .off    // Bit 7: OPER ERR lamp
 
-            model.lights[21]?.1 = (value & 0x0008 > 0) ? .yellow : .off // Bit 4: TEMP lamp
+            model.lights[21]?.1 = (value & bit4 > 0) ? .yellow : .off   // Bit 4: TEMP lamp
 
             model.verb.1 = value & 0x10 > 0                             // flash "VERB"
             model.noun.1 = value & 0x10 > 0                             // flash "NOUN"
 
-//          model.lights[xx]?.1 = (value & 0x0010 > 0) ? .yellow : .off // Bit 6: VERB/NOUN flash
-            model.lights[24]?.1 = (value & 0x0080 > 0) ? .yellow : .off // Bit 8: RESTART lamp
-//          model.lights[xx]?.1 = (value & 0x0200 > 0) ? .white : .off  // Bit 9: EL lamp
-
+//          model.lights[xx]?.1 = (value & bit6 > 0) ? .yellow : .off   // Bit 6: VERB/NOUN flash
+            model.lights[24]?.1 = (value & bit8 > 0) ? .yellow : .off   // Bit 8: RESTART lamp
+//          model.lights[xx]?.1 = (value & bit9 > 0) ? .white : .off    // Bit 9: STBY lamp
                                                                         // Bit 10: EL off
         case 0o165:
             logger.log("»»» DSKY165 \(ZeroPadWord(value)) TIME1")
@@ -129,6 +167,77 @@ func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
 }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆          __________                                                                              ┆
+  ┆          Bit 1:               AGC warning                                                        ┆
+  ┆          _                                                                                       ┆
+  ┆          _                                                                                       ┆
+  ┆          Bit 4:            TEMP lamp                                                             ┆
+  ┆          Bit 5:           KEY REL lamp                                                           ┆
+  ┆          Bit 6:          VERB/NOUN flash                                                         ┆
+  ┆          Bit 7:         OPER ERR lamp                                                            ┆
+  ┆          Bit 8:        RESTART lamp                                                              ┆
+  ┆          Bit 9:       STBY lamp                                                                  ┆
+  ┆          Bit 10:     EL off                                                                      ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+func prettyCh163(_ code: UInt16) -> String {
+
+    let labs = ["  Z  ",
+                " EL↑ ",    // b9
+                "RSRT ",    // b8
+                "OPER ",    // b7
+                "V//N ",    // b6
+                "KREL ",    // b5
+                "TEMP ",    // b4
+                "  3  ",    // b3
+                "  2  ",    // b2
+                " AGC ",    // b1
+                "  A  "]
+
+    let bitArray = ZeroPadWord(code, to: 10).split(separator: "")
+    var catString = ""
+
+    for index in 0..<bitArray.count {
+        catString += (bitArray[index] == "0") ? "  ↓  " : labs[index]
+    }
+
+    return catString
+}
+
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ All LATCHES                                                                                      ┆
+  ┆                                                                                                  ┆
+  ┆          Bit 2: Lights the "COMP ACTY" indicator.                                                ┆
+  ┆          Bit 3: Lights the "UPLINK ACTY" indicator.                                              ┆
+  ┆          Bit 4: Lights the "TEMP" indicator.                                                     ┆
+  ┆          Bit 5: Lights the "KEY REL" indicator.                                                  ┆
+  ┆          Bit 6: Flashes the VERB/NOUN display areas.                                             ┆
+  ┆                 This means to flash the digits in the NOUN and VERB areas.                       ┆
+  ┆          Bit 7: Lights the "OPR ERR" indicator.                                                  ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+func prettyCh011(_ code: UInt16) -> String {
+
+    let labs = ["  Z  ",
+                "  9  ",    // b9
+                "  8  ",    // b8
+                "OPER ",    // b7
+                " V+N ",    // b6
+                "KREL ",    // b5
+                "TEMP ",    // b4
+                "UPLK ",    // b3
+                "COMP ",    // b2
+                "  1  ",    // b1
+                "  A  "]
+
+    let bitArray = ZeroPadWord(code, to: 10).split(separator: "")
+    var catString = ""
+
+    for index in 0..<bitArray.count {
+        catString += (bitArray[index] == "0") ? "  ↓  " : labs[index]
+    }
+
+    return catString
+}
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 let symbolArray = ["----",
                    "3435", "3233", "2531", "2324", "2122",
@@ -138,18 +247,77 @@ let digitsDict = [  0: "_",
                     21: "0",  3: "1", 25: "2", 27: "3", 15: "4",
                     30: "5", 28: "6", 19: "7", 29: "8", 31: "9"]
 
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆          Bit 1 lights the "PRIO DISP" indicator       -- ?                                       ┆
+  ┆          Bit 2 lights the "NO DAP" indicator          -- ?                                       ┆
+  ┆          Bit 3 lights the "VEL" indicator.                                                       ┆
+  ┆          Bit 4 lights the "NO ATT" indicator          -- in left column                          ┆
+  ┆          Bit 5 lights the "ALT" indicator.                                                       ┆
+  ┆          Bit 6 lights the "GIMBAL LOCK" indicator.                                               ┆
+  ┆          Bit 7                                        -- ?                                       ┆
+  ┆          Bit 8 lights the "TRACKER" indicator.                                                   ┆
+  ┆          Bit 9 lights the "PROG" indicator.                                                      ┆
+  ┆                                                                                                  ┆
+  ┆ Note:                     "TEMP" and                                                             ┆
+  ┆                           "RESTART" are not controlled here                                      ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+func prettyCh010(_ code: UInt16) -> String {
+
+    let labs = ["  Z  ",
+                "PROG ",    // b9
+                "TRAK ",    // b8
+                " b7? ",    // b7
+                "GMBL ",    // b6
+                " ALT ",    // b5
+                "AOAT ",    // b4
+                " VEL ",    // b3
+                "NODP ",    // b2
+                "PRIO ",    // b1
+                "  A  "]
+
+    let bitArray = ZeroPadWord(code, to: 10).split(separator: "")
+    var catString = ""
+
+    for index in 0..<bitArray.count {
+        catString += (bitArray[index] == "0") ? "  ↓  " : labs[index]
+    }
+
+    return catString
+}
+
 func dskyInterpretation(_ code: UInt16) {
     let model = DisKeyModel.shared
 
     let  rowCode = (code & 0b01111_0_00000_00000) >> 11
 
     switch rowCode {
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆          Bit 1 lights the "PRIO DISP" indicator.                                                 ┆
+  ┆          Bit 2 lights the "NO DAP" indicator.                                                    ┆
+  ┆          Bit 3 lights the "VEL" indicator.                                                       ┆
+  ┆          Bit 4 lights the "NO ATT" indicator.                                                    ┆
+  ┆          Bit 5 lights the "ALT" indicator.                                                       ┆
+  ┆          Bit 6 lights the "GIMBAL LOCK" indicator.                                               ┆
+  ┆          Bit 7 . . .                                                                             ┆
+  ┆          Bit 8 lights the "TRACKER" indicator.                                                   ┆
+  ┆          Bit 9 lights the "PROG" indicator.                                                      ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
         case 12:
             logger.log("""
                 ***    DSKY 010: \(ZeroPadWord(code).prefix(5))   \
                 \(ZeroPadWord(code).dropFirst(5)) \
-                lights \(ZeroPadWord((code & 0b0000_0_00_111111111), to: 9))
+                lights         :: \(prettyCh010(code & 0b0000000_111111111)) [010]
                 """)
+
+            model.lights[12]?.1 = (code & bit4 > 0) ?  .white : .off   // 4: NO ATT
+
+            model.lights[17]?.1 = (code & bit7 > 0) ?    .red : .off   // 7: ?
+
+            model.lights[22]?.1 = (code & bit6 > 0) ? .yellow : .off   // 6: GIMBAL LOCK
+            model.lights[23]?.1 = (code & bit9 > 0) ? .yellow : .off   // 9: PROG
+            model.lights[25]?.1 = (code & bit8 > 0) ? .yellow : .off   // 8: TRACKER
+            model.lights[27]?.1 = (code & bit3 > 0) ? .yellow : .off   // 3: VEL
+            model.lights[26]?.1 = (code & bit5 > 0) ? .yellow : .off   // 5: ALT
 
         case 0:
             return // logger.log("ooo    DSKY 010: \(ZeroPadWord(code))")

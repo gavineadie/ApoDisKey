@@ -16,7 +16,7 @@ struct Network {
     init(_ host: String = "127.0.0.1", _ port: UInt16 = 12345) {
 
         self.didStopCallback = { error in
-            exit( error == nil ? EXIT_SUCCESS : EXIT_FAILURE )
+            exit( error == nil ? EXIT_SUCCESS : EXIT_SUCCESS )
         }
 
         let tcpOptions = NWProtocolTCP.Options()
@@ -35,12 +35,12 @@ struct Network {
         switch state {
             case .setup:
                 print("connection .setup")
-                break
             case .waiting(let error):
-                print("connection .waiting: \(error)")
+                print("connection .waiting: \(error.localizedDescription)")
+                DisKeyModel.shared.netFailCode = error.errorCode
+                DisKeyModel.shared.statusFooter = error.localizedDescription
             case .preparing:
                 print("connection .preparing")
-                break
             case .ready:
                 print("connection .ready")
             case .failed(let error):
@@ -48,10 +48,8 @@ struct Network {
                 self.connectionDidFail(error: error)
             case .cancelled:
                 print("connection .cancelled")
-                break
             default:
                 print("connection .default")
-                break
         }
     }
 
@@ -83,15 +81,17 @@ struct Network {
         connection.receive(minimumIncompleteLength: 1,
                            maximumLength: 4) { (content, _, connectionEnded, error) in
 
-            if let data = content, !data.isEmpty { _ = parseIoPacket(data) }
+            if let data = content, !data.isEmpty {
+                _ = parseIoPacket(data)
+
+                recv()
+            }
 
             if connectionEnded {
-                print("connection did end")
-                self.stop(error: nil)
+                print("... \(#function) - connection did end")
             } else if let error = error {
-                connectionDidFail(error: error)
-            } else {
-                recv()
+                print(".. \(#function) - connection did fail, error: \(error)")
+                self.stop(error: error)
             }
         }
     }

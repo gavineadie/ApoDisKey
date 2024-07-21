@@ -8,7 +8,7 @@
 import SwiftUI
 import OSLog
 
-let logger = Logger(subsystem: "com.ramsaycons.DSKY", category: "")
+let logger = Logger(subsystem: "com.ramsaycons.ApoDisKey", category: "")
 
 @main
 struct DSKYApp: App {

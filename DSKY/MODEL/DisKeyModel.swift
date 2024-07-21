@@ -14,6 +14,7 @@ public enum BackColor {
     case yellow
     case green
     case orange
+    case red
 }
 
 typealias Light = (String, BackColor)
@@ -22,6 +23,7 @@ typealias Display = (String, Bool)
 @Observable
 class DisKeyModel {
 
+    public var statusFooter = " ••• "
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ Network (singleton) - only one AGC per mission                                                   ┆
   ┆     AGC_Communication_Channel                                                                    ┆
@@ -30,6 +32,7 @@ class DisKeyModel {
     public let filesBase: URL
 
     public let network: Network
+    public var netFailCode = 0
 
     public var lights: [Int: Light]
 
@@ -38,6 +41,14 @@ class DisKeyModel {
     private init() {
 
         filesBase = establishDirectory()
+
+#if os(iOS) || os(tvOS)
+        network = Network("192.168.1.232", 19697) // .. Ubuntu
+//      network = Network("192.168.1.100", 19697) // .. MaxBook
+#else
+//      network = Network("192.168.1.232", 19697) // .. Ubuntu
+        network = Network("127.0.0.1", 19697)
+#endif
 
         lights = [ 11: ("", .off),
                    12: ("", .off),
@@ -55,14 +66,6 @@ class DisKeyModel {
                    26: ("", .off),
                    27: ("", .off)
         ]
-
-#if os(iOS) || os(tvOS)
-        network = Network("192.168.1.232", 19697) // .. Ubuntu
-//      network = Network("192.168.1.100", 19697) // .. MaxBook
-#else
-//      network = Network("192.168.1.232", 19697) // .. Ubuntu
-        network = Network("127.0.0.1", 19697)
-#endif
     }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -88,22 +91,7 @@ class DisKeyModel {
 
     func statusAllOff() {
         logger.log("... \(#function)")
-        lights = [ 11: ("X", .off),
-                   12: ("X", .off),
-                   13: ("X", .off),
-                   14: ("X", .off),
-                   15: ("X", .off),
-                   16: ("X", .off),
-                   17: ("X", .off),
-
-                   21: ("X", .off),
-                   22: ("X", .off),
-                   23: ("X", .off),
-                   24: ("X", .off),
-                   25: ("X", .off),
-                   26: ("X", .off),
-                   27: ("X", .off)
-        ]
+        for (key, _) in lights { lights[key] = ("« OFF »", .off) }
     }
 
     func statusAllOn() {
@@ -141,12 +129,12 @@ class DisKeyModel {
 
 func establishDirectory() -> URL {
 
-    let bundleMain = Bundle.main.infoDictionary
+    let _ = Bundle.main.infoDictionary
 
     if let path = Bundle.main.path(forResource: "Initiialize", ofType: "txt"){
         do {
             let initContent = try String(contentsOfFile: path, encoding: .utf8)
-            let initRecords = initContent.components(separatedBy: .newlines)
+            let _ = initContent.components(separatedBy: .newlines)
         } catch {
             print(error)
         }
@@ -167,47 +155,4 @@ func readInitializing(_ fileName: String) {
         print(error.localizedDescription)
     }
 
-}
-
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆                                                                                                  ┆
-  ┆ The sign (or blank) characters, which can be "+" or "-" or " " is based of the 0/1 values of     ┆
-  ┆ the "+" and "-" bits if the command sent to the DSKY.  The book says:                            ┆
-  ┆                                                                                                  ┆
-  ┆     .. bit 11 contains discrete information, a "1" (true) indicating that the discrete is on.    ┆
-  ┆                                                                                                  ┆
-  ┆     A one in bit 11 of DSPTAB+1 indicates that R3 has a plus sign.                               ┆
-  ┆     If the sign bits associated with a given register are both zeros, then the content of        ┆
-  ┆     that particular register is octal; if either of the bits is set, the register content is     ┆
-  ┆     decimal data.                                                                                ┆
-  ┆                                                                                                  ┆
-  ┆ or:                                                                                              ┆
-  ┆                                                                                                  ┆
-  ┆     .. it is unclear to me how the +/- signs can be blanked, using the commands outlined below.  ┆
-  ┆     It seems as though it would involve sending two output-channel commands, (say) with both     ┆
-  ┆     1+ and 1- bits zeroed.                                                                       ┆
-  ┆                                                                                                  ┆
-  ┆     .. the most recent 1+ and 1- flags are saved. If both are 0, then the +/- sign is blank;     ┆
-  ┆     if 1+ is set and 1- is not, then the '+' sign is displayed; if just the 1- flag is set,      ┆
-  ┆     or if both 1+ and 1- flags are set, the '-' sign is displayed                                ┆
-  ┆                                                                                                  ┆
-  ┆                                                                                                  ┆
-  ┆                                           +1    +0                                               ┆
-  ┆                                         +-----+-----+                                            ┆
-  ┆                                         |     |     |                                            ┆
-  ┆                                     -1  | "-" | "-" |                                            ┆
-  ┆                                         |     |     |                                            ┆
-  ┆                                         +-----+-----+                                            ┆
-  ┆                                         |     |     |                                            ┆
-  ┆                                     -0  | "+" | " " |                                            ┆
-  ┆                                         |     |     |                                            ┆
-  ┆                                         +-----+-----+                                            ┆
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-public func plu_min(_ pm: (Bool, Bool)) -> String {
-    switch pm {
-        case (false, false): return " "
-        case (true, false): return "+"
-        case (false, true): return "-"
-        case (true, true): return "-"
-    }
 }
