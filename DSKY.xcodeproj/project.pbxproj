@@ -19,6 +19,7 @@
 		864BD6192C3BD69700D4C896 /* Gorton-Condensed.otf in Resources */ = {isa = PBXBuildFile; fileRef = 864BD6162C3BD69700D4C896 /* Gorton-Condensed.otf */; };
 		864BD61A2C3BD69700D4C896 /* Gorton-Normal-120.otf in Resources */ = {isa = PBXBuildFile; fileRef = 864BD6172C3BD69700D4C896 /* Gorton-Normal-120.otf */; };
 		864BD61B2C3BD69700D4C896 /* Gorton-Normal-180.otf in Resources */ = {isa = PBXBuildFile; fileRef = 864BD6182C3BD69700D4C896 /* Gorton-Normal-180.otf */; };
+		86756B382C4DA92900F609B4 /* DSKY.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 86756B372C4DA92900F609B4 /* DSKY.iconset */; };
 		867EBD682C3A1E29004C4DDD /* DSKYApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD672C3A1E29004C4DDD /* DSKYApp.swift */; };
 		867EBD6A2C3A1E29004C4DDD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD692C3A1E29004C4DDD /* ContentView.swift */; };
 		867EBD7A2C3A1E2A004C4DDD /* DSKYTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD792C3A1E2A004C4DDD /* DSKYTests.swift */; };
@@ -52,11 +53,12 @@
 		864BD60E2C3B416D00D4C896 /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
 		864BD6102C3B42DF00D4C896 /* DisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayView.swift; sourceTree = "<group>"; };
 		864BD6122C3B728400D4C896 /* Zerlina.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zerlina.otf; sourceTree = "<group>"; };
-		864BD6142C3B771A00D4C896 /* DSKY.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = DSKY.plist; sourceTree = "<group>"; };
+		864BD6142C3B771A00D4C896 /* Fonts.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Fonts.plist; sourceTree = "<group>"; };
 		864BD6162C3BD69700D4C896 /* Gorton-Condensed.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gorton-Condensed.otf"; sourceTree = "<group>"; };
 		864BD6172C3BD69700D4C896 /* Gorton-Normal-120.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gorton-Normal-120.otf"; sourceTree = "<group>"; };
 		864BD6182C3BD69700D4C896 /* Gorton-Normal-180.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gorton-Normal-180.otf"; sourceTree = "<group>"; };
-		867EBD642C3A1E29004C4DDD /* DSKY.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DSKY.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		86756B372C4DA92900F609B4 /* DSKY.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = DSKY.iconset; sourceTree = "<group>"; };
+		867EBD642C3A1E29004C4DDD /* ApoDisKey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ApoDisKey.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		867EBD672C3A1E29004C4DDD /* DSKYApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSKYApp.swift; sourceTree = "<group>"; };
 		867EBD692C3A1E29004C4DDD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		867EBD6D2C3A1E2A004C4DDD /* DSKY.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DSKY.entitlements; sourceTree = "<group>"; };
@@ -134,7 +136,7 @@
 		867EBD652C3A1E29004C4DDD /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				867EBD642C3A1E29004C4DDD /* DSKY.app */,
+				867EBD642C3A1E29004C4DDD /* ApoDisKey.app */,
 				867EBD752C3A1E2A004C4DDD /* DSKYTests.xctest */,
 			);
 			name = Products;
@@ -155,9 +157,10 @@
 				867EBD922C3A5348004C4DDD /* Debug.xcassets */,
 				86C4C5BF2C4CE79900A4DEA1 /* Assets.xcassets */,
 				864143C52C4AE79800EEC7EB /* RESOURCES */,
+				864BD6142C3B771A00D4C896 /* Fonts.plist */,
 				864143C22C4AD27300EEC7EB /* FONTS */,
+				86756B372C4DA92900F609B4 /* DSKY.iconset */,
 				867EBD6D2C3A1E2A004C4DDD /* DSKY.entitlements */,
-				864BD6142C3B771A00D4C896 /* DSKY.plist */,
 			);
 			path = DSKY;
 			sourceTree = "<group>";
@@ -200,7 +203,7 @@
 			packageProductDependencies = (
 			);
 			productName = DSKY;
-			productReference = 867EBD642C3A1E29004C4DDD /* DSKY.app */;
+			productReference = 867EBD642C3A1E29004C4DDD /* ApoDisKey.app */;
 			productType = "com.apple.product-type.application";
 		};
 		867EBD742C3A1E2A004C4DDD /* DSKYTests */ = {
@@ -268,6 +271,7 @@
 			files = (
 				864BD6192C3BD69700D4C896 /* Gorton-Condensed.otf in Resources */,
 				867EBD932C3A5348004C4DDD /* Debug.xcassets in Resources */,
+				86756B382C4DA92900F609B4 /* DSKY.iconset in Resources */,
 				864143C42C4AE78300EEC7EB /* Initiialize.txt in Resources */,
 				864BD6132C3B728400D4C896 /* Zerlina.otf in Resources */,
 				864BD61A2C3BD69700D4C896 /* Gorton-Normal-120.otf in Resources */,
@@ -333,6 +337,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = DSKY;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -382,7 +387,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = DSKY/DSKY.plist;
+				INFOPLIST_FILE = DSKY/Fonts.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
@@ -390,6 +395,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ramsaycons.ApoDisKey;
 				PRODUCT_NAME = ApoDisKey;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -400,6 +406,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = DSKY;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -443,13 +450,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = DSKY/DSKY.plist;
+				INFOPLIST_FILE = DSKY/Fonts.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MARKETING_VERSION = 0.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ramsaycons.ApoDisKey;
 				PRODUCT_NAME = ApoDisKey;
 				SWIFT_COMPILATION_MODE = wholemodule;
 			};
@@ -458,7 +466,6 @@
 		867EBD8A2C3A1E2A004C4DDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = DSKY/DSKY.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -485,7 +492,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 14.5;
 				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ramsaycons.ApoDisKey;
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -497,7 +503,6 @@
 		867EBD8B2C3A1E2A004C4DDD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = DSKY/DSKY.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -524,7 +529,6 @@
 				MACOSX_DEPLOYMENT_TARGET = 14.5;
 				MARKETING_VERSION = 0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ramsaycons.ApoDisKey;
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = YES;

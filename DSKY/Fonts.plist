@@ -11,5 +11,9 @@
 	</array>
 	<key>ATSApplicationFontsPath</key>
 	<string>.</string>
+	<key>CFBundleIconFile</key>
+	<string>DSKY</string>
+	<key>CFBundleIconName</key>
+	<string>DSKY</string>
 </dict>
 </plist>
