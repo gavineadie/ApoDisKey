@@ -26,8 +26,7 @@
 		86A055072C405BB3007996B7 /* DisKeyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A055062C405BB3007996B7 /* DisKeyModel.swift */; };
 		86B26DB92C4CD3020021E594 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B26DB82C4CD3020021E594 /* Extensions.swift */; };
 		86B26DBA2C4CD30A0021E594 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B26DB82C4CD3020021E594 /* Extensions.swift */; };
-		86C3D5402C4CFDDE007C8987 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 86C3D53F2C4CFDDE007C8987 /* icon.icns */; };
-		86C4C5C02C4CE79900A4DEA1 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86C4C5BF2C4CE79900A4DEA1 /* Media.xcassets */; };
+		86C4C5C02C4CE79900A4DEA1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86C4C5BF2C4CE79900A4DEA1 /* Assets.xcassets */; };
 		86CB9B5E2C45F94400968C20 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86CB9B5D2C45F94400968C20 /* Network.swift */; };
 		86E838902C3CE61700E7C573 /* SandboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E8388F2C3CE61700E7C573 /* SandboxView.swift */; };
 		86E838922C3CF06400E7C573 /* DecorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E838912C3CF06400E7C573 /* DecorView.swift */; };
@@ -67,8 +66,7 @@
 		869F39962C3F337E002DD6B7 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		86A055062C405BB3007996B7 /* DisKeyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisKeyModel.swift; sourceTree = "<group>"; };
 		86B26DB82C4CD3020021E594 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
-		86C3D53F2C4CFDDE007C8987 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
-		86C4C5BF2C4CE79900A4DEA1 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		86C4C5BF2C4CE79900A4DEA1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		86CB9B5D2C45F94400968C20 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		86E8388F2C3CE61700E7C573 /* SandboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SandboxView.swift; sourceTree = "<group>"; };
 		86E838912C3CF06400E7C573 /* DecorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecorView.swift; sourceTree = "<group>"; };
@@ -155,8 +153,7 @@
 				867D86222C489F43007CDD48 /* MODEL */,
 				86ECA4E42C4763E70025545C /* NETWORK */,
 				867EBD922C3A5348004C4DDD /* Debug.xcassets */,
-				86C4C5BF2C4CE79900A4DEA1 /* Media.xcassets */,
-				86C3D53F2C4CFDDE007C8987 /* icon.icns */,
+				86C4C5BF2C4CE79900A4DEA1 /* Assets.xcassets */,
 				864143C52C4AE79800EEC7EB /* RESOURCES */,
 				864143C22C4AD27300EEC7EB /* FONTS */,
 				867EBD6D2C3A1E2A004C4DDD /* DSKY.entitlements */,
@@ -274,8 +271,7 @@
 				864143C42C4AE78300EEC7EB /* Initiialize.txt in Resources */,
 				864BD6132C3B728400D4C896 /* Zerlina.otf in Resources */,
 				864BD61A2C3BD69700D4C896 /* Gorton-Normal-120.otf in Resources */,
-				86C3D5402C4CFDDE007C8987 /* icon.icns in Resources */,
-				86C4C5C02C4CE79900A4DEA1 /* Media.xcassets in Resources */,
+				86C4C5C02C4CE79900A4DEA1 /* Assets.xcassets in Resources */,
 				864BD61B2C3BD69700D4C896 /* Gorton-Normal-180.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
