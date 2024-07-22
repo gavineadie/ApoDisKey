@@ -19,7 +19,6 @@
 		864BD6192C3BD69700D4C896 /* Gorton-Condensed.otf in Resources */ = {isa = PBXBuildFile; fileRef = 864BD6162C3BD69700D4C896 /* Gorton-Condensed.otf */; };
 		864BD61A2C3BD69700D4C896 /* Gorton-Normal-120.otf in Resources */ = {isa = PBXBuildFile; fileRef = 864BD6172C3BD69700D4C896 /* Gorton-Normal-120.otf */; };
 		864BD61B2C3BD69700D4C896 /* Gorton-Normal-180.otf in Resources */ = {isa = PBXBuildFile; fileRef = 864BD6182C3BD69700D4C896 /* Gorton-Normal-180.otf */; };
-		86756B382C4DA92900F609B4 /* DSKY.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 86756B372C4DA92900F609B4 /* DSKY.iconset */; };
 		867EBD682C3A1E29004C4DDD /* DSKYApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD672C3A1E29004C4DDD /* DSKYApp.swift */; };
 		867EBD6A2C3A1E29004C4DDD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD692C3A1E29004C4DDD /* ContentView.swift */; };
 		867EBD7A2C3A1E2A004C4DDD /* DSKYTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD792C3A1E2A004C4DDD /* DSKYTests.swift */; };
@@ -57,7 +56,6 @@
 		864BD6162C3BD69700D4C896 /* Gorton-Condensed.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gorton-Condensed.otf"; sourceTree = "<group>"; };
 		864BD6172C3BD69700D4C896 /* Gorton-Normal-120.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gorton-Normal-120.otf"; sourceTree = "<group>"; };
 		864BD6182C3BD69700D4C896 /* Gorton-Normal-180.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gorton-Normal-180.otf"; sourceTree = "<group>"; };
-		86756B372C4DA92900F609B4 /* DSKY.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = DSKY.iconset; sourceTree = "<group>"; };
 		867EBD642C3A1E29004C4DDD /* ApoDisKey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ApoDisKey.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		867EBD672C3A1E29004C4DDD /* DSKYApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSKYApp.swift; sourceTree = "<group>"; };
 		867EBD692C3A1E29004C4DDD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -159,7 +157,6 @@
 				864143C52C4AE79800EEC7EB /* RESOURCES */,
 				864BD6142C3B771A00D4C896 /* Fonts.plist */,
 				864143C22C4AD27300EEC7EB /* FONTS */,
-				86756B372C4DA92900F609B4 /* DSKY.iconset */,
 				867EBD6D2C3A1E2A004C4DDD /* DSKY.entitlements */,
 			);
 			path = DSKY;
@@ -271,7 +268,6 @@
 			files = (
 				864BD6192C3BD69700D4C896 /* Gorton-Condensed.otf in Resources */,
 				867EBD932C3A5348004C4DDD /* Debug.xcassets in Resources */,
-				86756B382C4DA92900F609B4 /* DSKY.iconset in Resources */,
 				864143C42C4AE78300EEC7EB /* Initiialize.txt in Resources */,
 				864BD6132C3B728400D4C896 /* Zerlina.otf in Resources */,
 				864BD61A2C3BD69700D4C896 /* Gorton-Normal-120.otf in Resources */,
@@ -337,7 +333,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -406,7 +401,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
@@ -466,7 +460,7 @@
 		867EBD8A2C3A1E2A004C4DDD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = DSKY/DSKY.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -504,7 +498,7 @@
 		867EBD8B2C3A1E2A004C4DDD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = DSKY/DSKY.entitlements;
 				CODE_SIGN_STYLE = Automatic;

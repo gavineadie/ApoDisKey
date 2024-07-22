@@ -16,7 +16,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "867EBD632C3A1E29004C4DDD"
-               BuildableName = "DSKY.app"
+               BuildableName = "ApoDisKey.app"
                BlueprintName = "DSKY"
                ReferencedContainer = "container:DSKY.xcodeproj">
             </BuildableReference>
@@ -74,7 +74,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "867EBD632C3A1E29004C4DDD"
-            BuildableName = "DSKY.app"
+            BuildableName = "ApoDisKey.app"
             BlueprintName = "DSKY"
             ReferencedContainer = "container:DSKY.xcodeproj">
          </BuildableReference>
@@ -91,7 +91,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "867EBD632C3A1E29004C4DDD"
-            BuildableName = "DSKY.app"
+            BuildableName = "ApoDisKey.app"
             BlueprintName = "DSKY"
             ReferencedContainer = "container:DSKY.xcodeproj">
          </BuildableReference>
