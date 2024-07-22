@@ -4,20 +4,13 @@
     <img src="https://ramsaycons.com/pix/macOS-DSKY-UL134A.png" width="800"  />
 </p>
 
-### TO DO . . .
-
-* LOTS !
-
-* 
-
 ### ApoDisKey
 
-(the name "DSKY" is taken)
+(the name "DSKY" is taken in the Apple Store)
 
 * It looks like the "separator" lines illuminate.  Purpose?
 
 * channel 165 (octal) hasn’t been silent for a long time [expecting at least 164 second repeat?)
-
 _____________________________
 
 .. and one question: Where is the "AGC Warning” [channel 163 — Bit 1: AGC] .. on another panel, audible?

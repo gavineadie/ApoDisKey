@@ -10,3 +10,6 @@
 * fixed lamp test selections ..
 
 * network failure doesn't exit the program ..
+
+* v0.2 (...) validates for TestFlight ..
+
