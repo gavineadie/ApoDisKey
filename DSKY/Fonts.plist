@@ -2,6 +2,14 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>ATSApplicationFontsPath</key>
+	<string>.</string>
+	<key>CFBundleIconFile</key>
+	<string>DSKY</string>
+	<key>CFBundleIconName</key>
+	<string>DSKY</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Zerlina.otf</string>
@@ -9,11 +17,5 @@
 		<string>Gorton-Normal-180.otf</string>
 		<string>Gorton-Normal-120.otf</string>
 	</array>
-	<key>ATSApplicationFontsPath</key>
-	<string>.</string>
-	<key>CFBundleIconFile</key>
-	<string>DSKY</string>
-	<key>CFBundleIconName</key>
-	<string>DSKY</string>
 </dict>
 </plist>

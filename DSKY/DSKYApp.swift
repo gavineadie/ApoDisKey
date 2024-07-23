@@ -20,14 +20,10 @@ struct DSKYApp: App {
     .. make network connection
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
         let model = DisKeyModel.shared
+
         model.luminary099()
 
-//      let _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
-//          let timeString = String(String(Date.timeIntervalSinceReferenceDate)
-//              .dropFirst(4)
-//              .prefix(5))
-//          model.register3 = ("+\(timeString)", true)
-//      }
+        model.statusAlphaOn()
 
         model.network.recv()
     }

@@ -86,15 +86,15 @@ func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
                 »»» DSKY011 \(ZeroPadWord(value, to: 8)) bits                          \
                 :: \(prettyCh011(value)) [011]
                 """)
-            model.comp.1 = value & 0x02 > 0                             // "COMP ACTY"
-            model.verb.1 = value & 0x20 > 0                             // flash "VERB"
-            model.noun.1 = value & 0x20 > 0                             // flash "NOUN"
+            model.comp.1 = value & bit2 > 0                             // "COMP ACTY"
+            model.verb.1 = value & bit6 > 0                             // flash "VERB"
+            model.noun.1 = value & bit6 > 0                             // flash "NOUN"
 
-            model.lights[11]?.1 = (value & 0x04 > 0) ? .white : .off    // "UPLINK
-            model.lights[14]?.1 = (value & 0x40 > 0) ? .white : .off    // "OPR ERR"
+            model.lights[11]?.1 = (value & bit3 > 0) ? .white : .off    // "UPLINK
+            model.lights[14]?.1 = (value & bit7 > 0) ? .white : .off    // "OPR ERR"
 
-            model.lights[21]?.1 = (value & 0x08 > 0) ? .yellow : .off   // "TEMP"
-            model.lights[24]?.1 = (value & 0x10 > 0) ? .yellow : .off   // "KEY REL"
+            model.lights[21]?.1 = (value & bit4 > 0) ? .yellow : .off   // "TEMP"
+            model.lights[24]?.1 = (value & bit5 > 0) ? .yellow : .off   // "KEY REL"
 
         case 0o012:                 // CM and LM actions ..
             break
@@ -166,131 +166,13 @@ func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
     return (channel, value, (byte[0] & 0b00100000) > 0)
 }
 
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆          __________                                                                              ┆
-  ┆          Bit 1:               AGC warning                                                        ┆
-  ┆          _                                                                                       ┆
-  ┆          _                                                                                       ┆
-  ┆          Bit 4:            TEMP lamp                                                             ┆
-  ┆          Bit 5:           KEY REL lamp                                                           ┆
-  ┆          Bit 6:          VERB/NOUN flash                                                         ┆
-  ┆          Bit 7:         OPER ERR lamp                                                            ┆
-  ┆          Bit 8:        RESTART lamp                                                              ┆
-  ┆          Bit 9:       STBY lamp                                                                  ┆
-  ┆          Bit 10:     EL off                                                                      ┆
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-func prettyCh163(_ code: UInt16) -> String {
-
-    let labs = ["  Z  ",
-                " EL↑ ",    // b9
-                "RSRT ",    // b8
-                "OPER ",    // b7
-                "V//N ",    // b6
-                "KREL ",    // b5
-                "TEMP ",    // b4
-                "  3  ",    // b3
-                "  2  ",    // b2
-                " AGC ",    // b1
-                "  A  "]
-
-    let bitArray = ZeroPadWord(code, to: 10).split(separator: "")
-    var catString = ""
-
-    for index in 0..<bitArray.count {
-        catString += (bitArray[index] == "0") ? "  ↓  " : labs[index]
-    }
-
-    return catString
-}
-
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ All LATCHES                                                                                      ┆
-  ┆                                                                                                  ┆
-  ┆          Bit 2: Lights the "COMP ACTY" indicator.                                                ┆
-  ┆          Bit 3: Lights the "UPLINK ACTY" indicator.                                              ┆
-  ┆          Bit 4: Lights the "TEMP" indicator.                                                     ┆
-  ┆          Bit 5: Lights the "KEY REL" indicator.                                                  ┆
-  ┆          Bit 6: Flashes the VERB/NOUN display areas.                                             ┆
-  ┆                 This means to flash the digits in the NOUN and VERB areas.                       ┆
-  ┆          Bit 7: Lights the "OPR ERR" indicator.                                                  ┆
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-func prettyCh011(_ code: UInt16) -> String {
-
-    let labs = ["  Z  ",
-                "  9  ",    // b9
-                "  8  ",    // b8
-                "OPER ",    // b7
-                " V+N ",    // b6
-                "KREL ",    // b5
-                "TEMP ",    // b4
-                "UPLK ",    // b3
-                "COMP ",    // b2
-                "  1  ",    // b1
-                "  A  "]
-
-    let bitArray = ZeroPadWord(code, to: 10).split(separator: "")
-    var catString = ""
-
-    for index in 0..<bitArray.count {
-        catString += (bitArray[index] == "0") ? "  ↓  " : labs[index]
-    }
-
-    return catString
-}
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-let symbolArray = ["----",
-                   "3435", "3233", "2531", "2324", "2122",
-                   "1415", "1213", "..11", "N1N2", "V1V2", "M1M2"]
-
-let digitsDict = [  0: "_",
-                    21: "0",  3: "1", 25: "2", 27: "3", 15: "4",
-                    30: "5", 28: "6", 19: "7", 29: "8", 31: "9"]
-
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆          Bit 1 lights the "PRIO DISP" indicator       -- ?                                       ┆
-  ┆          Bit 2 lights the "NO DAP" indicator          -- ?                                       ┆
-  ┆          Bit 3 lights the "VEL" indicator.                                                       ┆
-  ┆          Bit 4 lights the "NO ATT" indicator          -- in left column                          ┆
-  ┆          Bit 5 lights the "ALT" indicator.                                                       ┆
-  ┆          Bit 6 lights the "GIMBAL LOCK" indicator.                                               ┆
-  ┆          Bit 7                                        -- ?                                       ┆
-  ┆          Bit 8 lights the "TRACKER" indicator.                                                   ┆
-  ┆          Bit 9 lights the "PROG" indicator.                                                      ┆
-  ┆                                                                                                  ┆
-  ┆ Note:                     "TEMP" and                                                             ┆
-  ┆                           "RESTART" are not controlled here                                      ┆
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-func prettyCh010(_ code: UInt16) -> String {
-
-    let labs = ["  Z  ",
-                "PROG ",    // b9
-                "TRAK ",    // b8
-                " b7? ",    // b7
-                "GMBL ",    // b6
-                " ALT ",    // b5
-                "AOAT ",    // b4
-                " VEL ",    // b3
-                "NODP ",    // b2
-                "PRIO ",    // b1
-                "  A  "]
-
-    let bitArray = ZeroPadWord(code, to: 10).split(separator: "")
-    var catString = ""
-
-    for index in 0..<bitArray.count {
-        catString += (bitArray[index] == "0") ? "  ↓  " : labs[index]
-    }
-
-    return catString
-}
-
 func dskyInterpretation(_ code: UInt16) {
     let model = DisKeyModel.shared
 
     let  rowCode = (code & 0b01111_0_00000_00000) >> 11
 
     switch rowCode {
+        case 12:
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆          Bit 1 lights the "PRIO DISP" indicator.                                                 ┆
   ┆          Bit 2 lights the "NO DAP" indicator.                                                    ┆
@@ -302,16 +184,15 @@ func dskyInterpretation(_ code: UInt16) {
   ┆          Bit 8 lights the "TRACKER" indicator.                                                   ┆
   ┆          Bit 9 lights the "PROG" indicator.                                                      ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-        case 12:
             logger.log("""
                 ***    DSKY 010: \(ZeroPadWord(code).prefix(5))   \
                 \(ZeroPadWord(code).dropFirst(5)) \
-                lights         :: \(prettyCh010(code & 0b0000000_111111111)) [010]
+                LIGHTS         :: \(prettyCh010(code & 0b0000000_111111111)) [010]
                 """)
 
             model.lights[12]?.1 = (code & bit4 > 0) ?  .white : .off   // 4: NO ATT
 
-            model.lights[17]?.1 = (code & bit7 > 0) ?    .red : .off   // 7: ?
+//          model.lights[17]?.1 = (code & bit7 > 0) ?    .red : .off   // 7: ?
 
             model.lights[22]?.1 = (code & bit6 > 0) ? .yellow : .off   // 6: GIMBAL LOCK
             model.lights[23]?.1 = (code & bit9 > 0) ? .yellow : .off   // 9: PROG
@@ -427,12 +308,13 @@ func dskyInterpretation(_ code: UInt16) {
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
                 case 7:         // "1213" & "R1+"
                     model.reg1PlusMinus.0 = bBit
-                    switch model.reg1PlusMinus {
-                        case (false, false): reg1Bytes[0] = " "
-                        case (true, false): reg1Bytes[0] = "+"
-                        case (false, true): reg1Bytes[0] = "-"
-                        case (true, true): reg1Bytes[0] = "+"           // TODO: Really?
-                    }
+//                    switch model.reg1PlusMinus {
+//                        case (false, false): reg1Bytes[0] = " "
+//                        case (true, false): reg1Bytes[0] = "+"
+//                        case (false, true): reg1Bytes[0] = "-"
+//                        case (true, true): reg1Bytes[0] = "+"           // TODO: Really?
+//                    }
+                    reg1Bytes[0] = plu_min(model.reg1PlusMinus)
                     reg1Bytes[2] = cStr
                     reg1Bytes[3] = dStr
                     model.register1.0 = reg1Bytes.joined()

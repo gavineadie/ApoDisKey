@@ -95,5 +95,9 @@ struct Network {
             }
         }
     }
-}
 
+    func recvFile() {
+        // get the file
+        // read the file
+    }
+}

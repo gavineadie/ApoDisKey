@@ -29,7 +29,9 @@ class DisKeyModel {
   ┆     AGC_Communication_Channel                                                                    ┆
   ┆         Open, Send, Revc .. four-byte packets                                                    ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-    public let filesBase: URL
+
+//    public let mainBundle = Bundle.main
+//    public let filesBase: URL
 
     public let network: Network
     public var netFailCode = 0
@@ -40,7 +42,7 @@ class DisKeyModel {
 
     private init() {
 
-        filesBase = establishDirectory()
+//        filesBase = establishDirectory()
 
 #if os(iOS) || os(tvOS)
         network = Network("192.168.1.232", 19697) // .. Ubuntu
@@ -92,12 +94,19 @@ class DisKeyModel {
     func statusAllOff() {
         logger.log("... \(#function)")
         for (key, _) in lights { lights[key] = ("« OFF »", .off) }
+        lights[17] = ("ALPHA\nTEST 2", .red)
     }
 
     func statusAllOn() {
         logger.log("... \(#function)")
         for (key, _) in lights { lights[key] = ("YELLOW", .yellow) }
     }
+
+    func statusAlphaOn() {
+        lights[16] = ("ALPHA\nTEST 1", .red)
+        lights[17] = ("ALPHA\nTEST 2", .red)
+    }
+
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ .. the initial values don't mean anything, and the AGC sets them when the DSKY connects          ┆
@@ -121,38 +130,84 @@ class DisKeyModel {
   ┆ the KeyPad has no lights or colors                                                               ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
     public var keyPad = 0
-
 }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+    File stuff ..
+    .. establishDirectory:
+    .. readInitializing:
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 
 func establishDirectory() -> URL {
+    return URL(fileURLWithPath: "~/DSKY")
+}
 
-    let _ = Bundle.main.infoDictionary
+func readInitializing() {
 
-    if let path = Bundle.main.path(forResource: "Initiialize", ofType: "txt"){
+    if let path = Bundle.main.path(forResource: "Initialize", ofType: "txt"){
         do {
             let initContent = try String(contentsOfFile: path, encoding: .utf8)
-            let _ = initContent.components(separatedBy: .newlines)
+            let lineArray = initContent.components(separatedBy: .newlines)
+            for line in lineArray {
+                logger.log("INIT: \(line)")
+            }
         } catch {
             print(error)
         }
     }
 
-    return URL(fileURLWithPath: "~/DSKY")
+}
+
+func readCanned() -> [Data] {
+
+    var packetArray = [Data]()
+    
+    if let path = Bundle.main.path(forResource: "Apollo11-landing", ofType: "canned"){
+        do {
+            let initContent = try String(contentsOfFile: path, encoding: .utf8)
+            let lineArray = initContent.components(separatedBy: .newlines)
+
+            for line in lineArray {
+                if line.isEmpty || "!# ".contains(line.first!) { continue }
+                let words = line.components(separatedBy: .whitespaces)
+                if words.count > 2 {
+                //   let milliSec = Int(words[0])!
+
+                    packetArray.append(formIoPacket(UInt16(words[1], radix: 8)!,
+                                                    UInt16(words[2], radix: 8)!))
+                }
+            }
+        } catch {
+            print(error)
+        }
+    }
+
+    return packetArray
+}
+
+
+func cycleSecondsInR3() {
+    
+    let _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+        let timeString = String(String(Date.timeIntervalSinceReferenceDate)
+            .dropFirst(4)
+            .prefix(5))
+        DisKeyModel.shared.register3 = ("+\(timeString)", true)
+    }
 
 }
 
-func readInitializing(_ fileName: String) {
+func cycleCanned() {
 
-    let initURL = establishDirectory().appending(path: fileName)
+    let packets = readCanned()
+    var packetIndex = 0
 
-    do {
-        let contents = try String(contentsOf: initURL)
-        print(contents)
-    } catch {
-        print(error.localizedDescription)
+    let _ = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { timer in
+        if packetIndex < packets.count {
+            logger.log("\(packetIndex): \(prettyString(packets[packetIndex]))")
+            let bytes = parseIoPacket(packets[packetIndex])
+            packetIndex += 1
+        }
     }
 
 }

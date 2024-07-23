@@ -39,11 +39,13 @@ struct StatusView: View {
                 }
                 GridRow {
                     StatusLight(light: model.lights[16]!)
+                        .onTapGesture { model.statusAllOff() }
                     StatusLight(light: model.lights[26]!)
                 }
 
                 GridRow {
                     StatusLight(light: model.lights[17]!)
+                        .onTapGesture { cycleCanned() } // readCanned() }
                     StatusLight(light: model.lights[27]!)
                 }
             }
