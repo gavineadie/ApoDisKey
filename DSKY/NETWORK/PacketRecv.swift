@@ -83,10 +83,20 @@ func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
         case 0o011:                 // flags for indicator lamps
             logger.log("""
-                »»» DSKY011 \(ZeroPadWord(value, to: 8)) bits                          \
+                »»»    DSKY 011:           \(ZeroPadWord(value, to: 8)) BITS (8)       \
                 :: \(prettyCh011(value)) [011]
                 """)
             model.comp.1 = value & bit2 > 0                             // "COMP ACTY"
+
+//            if value & bit6 > 0 {
+//                model.flasher = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { timer in
+//                    model.verb.1.toggle()
+//                    model.noun.1.toggle()
+//                }
+//            } else {
+//                model.flasher.invalidate()
+//            }
+
             model.verb.1 = value & bit6 > 0                             // flash "VERB"
             model.noun.1 = value & bit6 > 0                             // flash "NOUN"
 
@@ -133,7 +143,7 @@ func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
         case 0o163:
             logger.log("""
-                »»» DSKY163       bits = \(ZeroPadWord(value, to: 10))                \
+                »»»    DSKY 163:         \(ZeroPadWord(value, to: 10)) BITS (10)      \
                 :: \(prettyCh163(value)) [163]
                 """)
 
@@ -187,7 +197,7 @@ func dskyInterpretation(_ code: UInt16) {
             logger.log("""
                 ***    DSKY 010: \(ZeroPadWord(code).prefix(5))   \
                 \(ZeroPadWord(code).dropFirst(5)) \
-                LIGHTS         :: \(prettyCh010(code & 0b0000000_111111111)) [010]
+                LIGHTS (10)     :: \(prettyCh010(code & 0b0000000_111111111)) [010]
                 """)
 
             model.lights[12]?.1 = (code & bit4 > 0) ?  .white : .off   // 4: NO ATT
@@ -308,12 +318,6 @@ func dskyInterpretation(_ code: UInt16) {
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
                 case 7:         // "1213" & "R1+"
                     model.reg1PlusMinus.0 = bBit
-//                    switch model.reg1PlusMinus {
-//                        case (false, false): reg1Bytes[0] = " "
-//                        case (true, false): reg1Bytes[0] = "+"
-//                        case (false, true): reg1Bytes[0] = "-"
-//                        case (true, true): reg1Bytes[0] = "+"           // TODO: Really?
-//                    }
                     reg1Bytes[0] = plu_min(model.reg1PlusMinus)
                     reg1Bytes[2] = cStr
                     reg1Bytes[3] = dStr
@@ -321,60 +325,35 @@ func dskyInterpretation(_ code: UInt16) {
 
                 case 6:         // "1415" & "R1-"
                     model.reg1PlusMinus.1 = bBit
-                    switch model.reg1PlusMinus {
-                        case (false, false): reg1Bytes[0] = " "
-                        case (true, false): reg1Bytes[0] = "+"
-                        case (false, true): reg1Bytes[0] = "-"
-                        case (true, true): reg1Bytes[0] = "+"           // TODO: Really?
-                    }
+                    reg1Bytes[0] = plu_min(model.reg1PlusMinus)
                     reg1Bytes[4] = cStr
                     reg1Bytes[5] = dStr
                     model.register1.0 = reg1Bytes.joined()
 
                 case 5:         // "2122" & "R2+"
                     model.reg2PlusMinus.0 = bBit
-                    switch model.reg2PlusMinus {
-                        case (false, false): reg2Bytes[0] = " "
-                        case (true, false): reg2Bytes[0] = "+"
-                        case (false, true): reg2Bytes[0] = "-"
-                        case (true, true): reg2Bytes[0] = "+"           // TODO: Really?
-                    }
+                    reg2Bytes[0] = plu_min(model.reg2PlusMinus)
                     reg2Bytes[1] = cStr
                     reg2Bytes[2] = dStr
                     model.register2.0 = reg2Bytes.joined()
 
                 case 4:         // "2324" & "R2-"
                     model.reg2PlusMinus.1 = bBit
-                    switch model.reg2PlusMinus {
-                        case (false, false): reg2Bytes[0] = " "
-                        case (true, false): reg2Bytes[0] = "+"
-                        case (false, true): reg2Bytes[0] = "-"
-                        case (true, true): reg2Bytes[0] = "+"           // TODO: Really?
-                    }
+                    reg2Bytes[0] = plu_min(model.reg2PlusMinus)
                     reg2Bytes[3] = cStr
                     reg2Bytes[4] = dStr
                     model.register2.0 = reg2Bytes.joined()
 
                 case 2:         // "3233" & "R3+"
                     model.reg3PlusMinus.0 = bBit
-                    switch model.reg3PlusMinus {
-                        case (false, false): reg3Bytes[0] = " "
-                        case (true, false): reg3Bytes[0] = "+"
-                        case (false, true): reg3Bytes[0] = "-"
-                        case (true, true): reg3Bytes[0] = "+"           // TODO: Really?
-                    }
+                    reg3Bytes[0] = plu_min(model.reg3PlusMinus)
                     reg3Bytes[2] = cStr
                     reg3Bytes[3] = dStr
                     model.register3.0 = reg3Bytes.joined()
 
                 case 1:         // "3435" & "R3-"
                     model.reg3PlusMinus.1 = bBit
-                    switch model.reg3PlusMinus {
-                        case (false, false): reg3Bytes[0] = " "
-                        case (true, false): reg3Bytes[0] = "+"
-                        case (false, true): reg3Bytes[0] = "-"
-                        case (true, true): reg3Bytes[0] = "+"           // TODO: Really?
-                    }
+                    reg3Bytes[0] = plu_min(model.reg3PlusMinus)
                     reg3Bytes[4] = cStr
                     reg3Bytes[5] = dStr
                     model.register3.0 = reg3Bytes.joined()

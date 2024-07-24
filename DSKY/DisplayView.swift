@@ -7,6 +7,14 @@
 
 import SwiftUI
 
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ Row1                                                                                             ┆
+  ┆ Spacer(12)                                                                                       ┆
+  ┆ Row2                                                                                             ┆
+  ┆ Reg1                                                                                             ┆
+  ┆ Reg2                                                                                             ┆
+  ┆ Reg3                                                                                             ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 struct DisplayView: View {
     let model = DisKeyModel.shared
 
@@ -16,9 +24,11 @@ struct DisplayView: View {
 //            Image("Display").cornerRadius(8.0)
 
             VStack {
-                Row1(comp: model.comp, prog: model.prog.0)
+                Row1(comp: model.comp, 
+                     prog: model.prog)
                 Spacer().frame(height: 12.0)
-                Row2(verb: model.verb.0, noun: model.noun.0)
+                Row2(verb: model.verb,
+                     noun: model.noun)
                 Register1(digits: model.register1.0)
                 Register2(digits: model.register2.0)
                 Register3(digits: model.register3.0)
@@ -31,14 +41,49 @@ struct DisplayView: View {
     DisplayView()
 }
 
+/*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ ROW1                                                                                             │
+  └──────────────────────────────────────────────────────────────────────────────────────────────────┘*/
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ +---------------------------+                                                                    ┆
+  ┆ |  +--------+ | +--------+  |                                                                    ┆
+  ┆ |  | "COMP" | | | "PROG" |  |  <-- placard: ("WORD", off/on)                                     ┆
+  ┆ |  +--------+ | +--------+  |                                                                    ┆
+  ┆ |  +--------+ | +--------+  |                                                                    ┆
+  ┆ |  |        | | |        |  |  <-- numbers: ( "99" , off/on, height)                             ┆
+  ┆ |  |   99   | | |   99   |  |                                                                    ┆
+  ┆ |  |        | | |        |  |                                                                    ┆
+  ┆ |  +--------+ | +--------+  |                                                                    ┆
+  ┆ |  +---------------------+  |                                                                    ┆
+  ┆ |  | padding (6)         |  |                                                                    ┆
+  ┆ |  +---------------------+  |                                                                    ┆
+  ┆ +---------------------------+                                                                    ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+struct Row1: View {
+    var comp: Display = ("  ", false)
+    var prog: Display = ("  ", false)
+
+    var body: some View {
+        HStack(alignment: .top) {
+            Comp(state: comp)
+            Prog(digits: prog.0)
+        }
+        .padding(.bottom, 6.0)
+    }
+}
+
+#Preview {
+    Row1()
+}
+
 struct Comp: View {
     var state: Display
     var body: some View {
         VStack {
-            DisplayLight(label: "COMP\nACTY",
-                         green: state.1,
-                         height: 60.0)
-            DisplayValue(value: "  ")
+            DisplayPlacard(label: "COMP\nACTY",
+                           green: state.1,
+                           height: 60.0)
+            DisplayNumbers(value: "  ")
         }
     }
 }
@@ -48,59 +93,175 @@ struct Prog: View {
 
     var body: some View {
         VStack {
-            DisplayLight(label: "PROG")
-            DisplayValue(value: digits)
+            DisplayPlacard(label: "PROG")
+            DisplayNumbers(value: digits)
         }
     }
 }
 
+/*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ ROW2                                                                                             │
+  └──────────────────────────────────────────────────────────────────────────────────────────────────┘*/
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ +---------------------------+                                                                    ┆
+  ┆ |  +--------+ | +--------+  |                                                                    ┆
+  ┆ |  | "VERB" | | | "NOUN" |  |  <-- placard: ("WORD", off/on)                                     ┆
+  ┆ |  +--------+ | +--------+  |                                                                    ┆
+  ┆ |  +--------+ | +--------+  |                                                                    ┆
+  ┆ |  |        | | |        |  |  <-- numbers: ( "99" , off/on, height)                             ┆
+  ┆ |  |   99   | | |   99   |  |                                                                    ┆
+  ┆ |  |        | | |        |  |                                                                    ┆
+  ┆ |  +--------+ | +--------+  |                                                                    ┆
+  ┆ |  +---------------------+  |                                                                    ┆
+  ┆ |  | padding (6)         |  |                                                                    ┆
+  ┆ |  +---------------------+  |                                                                    ┆
+  ┆ +---------------------------+                                                                    ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+struct Row2: View {
+    var verb: Display = ("--", false)
+    var noun: Display = ("--", false)
+
+//    private let timer = Timer.publish(every: 0.5,
+//                                      on: .main,
+//                                      in: .common).autoconnect()
+
+    var body: some View {
+        HStack {
+            Verb(state: verb)
+            Noun(state: noun)
+        }
+        .padding(.bottom, 6.0)
+    }
+}
+
+#Preview {
+    Row2()
+}
+
 struct Verb: View {
-    var digits: String
+    var state: Display
 
     var body: some View {
         VStack {
-            DisplayLight(label: "VERB")
-            DisplayValue(value: digits)
+            DisplayPlacard(label: "VERB", green: state.1)
+            DisplayNumbers(value: state.0)
         }
     }
 }
 
 struct Noun: View {
-    var digits: String
+    var state: Display
 
     var body: some View {
         VStack {
-            DisplayLight(label: "NOUN")
-            DisplayValue(value: digits)
+            DisplayPlacard(label: "NOUN", green: state.1)
+            DisplayNumbers(value: state.0)
         }
     }
 }
 
+/*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ REGISTER1                                                                                        │
+  └──────────────────────────────────────────────────────────────────────────────────────────────────┘*/
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ +---------------------------+                                                                    ┆
+  ┆ |  +---------------------+  |                                                                    ┆
+  ┆ |  +--------+ | +--------+  |                                                                    ┆
+  ┆ |  |        | | |        |  |                                                                    ┆
+  ┆ |  | +77777 | | | +77777 |  |  <-- numbers: ( "99" , off/on, height)                             ┆
+  ┆ |  |        | | |        |  |                                                                    ┆
+  ┆ |  +--------+ | +--------+  |                                                                    ┆
+  ┆ +---------------------------+                                                                    ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 struct Register1: View {
     var digits: String
 
     var body: some View {
-        DisplayValue(value: digits)
+        DisplayNumbers(value: digits)
     }
 }
 
+/*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ REGISTER2                                                                                        │
+  └──────────────────────────────────────────────────────────────────────────────────────────────────┘*/
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ +---------------------------+                                                                    ┆
+  ┆ |  +---------------------+  |                                                                    ┆
+  ┆ |  +--------+ | +--------+  |                                                                    ┆
+  ┆ |  |        | | |        |  |                                                                    ┆
+  ┆ |  | +77777 | | | +77777 |  |  <-- numbers: ( "99" , off/on, height)                             ┆
+  ┆ |  |        | | |        |  |                                                                    ┆
+  ┆ |  +--------+ | +--------+  |                                                                    ┆
+  ┆ +---------------------------+                                                                    ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 struct Register2: View {
     var digits: String
 
     var body: some View {
-        DisplayValue(value: digits)
+        DisplayNumbers(value: digits)
     }
 }
 
+/*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ REGISTER3                                                                                        │
+  └──────────────────────────────────────────────────────────────────────────────────────────────────┘*/
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ +---------------------------+                                                                    ┆
+  ┆ |  +---------------------+  |                                                                    ┆
+  ┆ |  +--------+ | +--------+  |                                                                    ┆
+  ┆ |  |        | | |        |  |                                                                    ┆
+  ┆ |  | +77777 | | | +77777 |  |  <-- numbers: ( "99" , off/on, height)                             ┆
+  ┆ |  |        | | |        |  |                                                                    ┆
+  ┆ |  +--------+ | +--------+  |                                                                    ┆
+  ┆ +---------------------------+                                                                    ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 struct Register3: View {
     var digits: String
 
     var body: some View {
-        DisplayValue(value: digits)
+        DisplayNumbers(value: digits)
     }
 }
 
-struct DisplayValue: View {
+struct DisplayPlacard: View {
+    var label: String
+    var green: Bool = true
+    var height: CGFloat = 18.0
+
+    var body: some View {
+        ZStack {
+            if green {
+                RoundedRectangle(cornerRadius: 4.0)
+                    .frame(width: 74.0, height: height)
+                    .foregroundColor(displayElectro)
+
+                Text(label)
+                    .font(.custom("Gorton-Normal-180",
+                                  fixedSize: 10))
+                    .foregroundColor(.black)
+                    .multilineTextAlignment(.center)
+                    .lineSpacing(4.0)
+            } else {
+                RoundedRectangle(cornerRadius: 4.0)
+                    .frame(width: 74.0, height: height)
+                    .foregroundColor(.clear)
+
+                Text(label)
+                    .font(.custom("Gorton-Normal-180",
+                                  fixedSize: 12))
+                    .foregroundColor(.black)
+                    .multilineTextAlignment(.center)
+                    .lineSpacing(4.0)
+            }
+        }
+    }
+}
+
+#Preview {
+    DisplayPlacard(label: "WORD")
+}
+
+struct DisplayNumbers: View {
     var value: String
 
     var body: some View {
@@ -157,80 +318,7 @@ struct DisplayValue: View {
 }
 
 #Preview {
-    DisplayValue(value: "614121")
-}
-
-
-struct Row1: View {
-    var comp: Display = ("  ", false)
-    var prog: String = "--"
-
-    var body: some View {
-        HStack(alignment: .top) {
-            Comp(state: comp)
-            Prog(digits: prog)
-        }
-        .padding(.bottom, 6.0)
-    }
-}
-
-#Preview {
-    Row1()
-}
-
-struct Row2: View {
-    var verb: String = "--"
-    var noun: String = "--"
-
-    var body: some View {
-        HStack {
-            Verb(digits: verb)
-            Noun(digits: noun)
-        }
-        .padding(.bottom, 6.0)
-    }
-}
-
-#Preview {
-    Row2()
-}
-
-struct DisplayLight: View {
-    var label: String
-    var green: Bool = true
-    var height: CGFloat = 18.0
-
-    var body: some View {
-        ZStack {
-            if green {
-                RoundedRectangle(cornerRadius: 4.0)
-                    .frame(width: 74.0, height: height)
-                    .foregroundColor(displayElectro)
-
-                Text(label)
-                    .font(.custom("Gorton-Normal-180",
-                                  fixedSize: 10))
-                    .foregroundColor(.black)
-                    .multilineTextAlignment(.center)
-                    .lineSpacing(4.0)
-            } else {
-                RoundedRectangle(cornerRadius: 4.0)
-                    .frame(width: 74.0, height: height)
-                    .foregroundColor(.clear)
-
-                Text(label)
-                    .font(.custom("Gorton-Normal-180",
-                                  fixedSize: 12))
-                    .foregroundColor(.black)
-                    .multilineTextAlignment(.center)
-                    .lineSpacing(4.0)
-            }
-        }
-    }
-}
-
-#Preview {
-    DisplayLight(label: "WORD")
+    DisplayNumbers(value: "614121")
 }
 
 #Preview {

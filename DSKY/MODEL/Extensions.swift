@@ -109,77 +109,6 @@ func ZeroPadWord(_ code: UInt16, to length: Int = 15) -> String {
 }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆          __________                                                                              ┆
-  ┆          Bit 1:               AGC warning                                                        ┆
-  ┆          _                                                                                       ┆
-  ┆          _                                                                                       ┆
-  ┆          Bit 4:            TEMP lamp                                                             ┆
-  ┆          Bit 5:           KEY REL lamp                                                           ┆
-  ┆          Bit 6:          VERB/NOUN flash                                                         ┆
-  ┆          Bit 7:         OPER ERR lamp                                                            ┆
-  ┆          Bit 8:        RESTART lamp                                                              ┆
-  ┆          Bit 9:       STBY lamp                                                                  ┆
-  ┆          Bit 10:     EL off                                                                      ┆
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-func prettyCh163(_ code: UInt16) -> String {
-
-    let labs = ["  Z  ",
-                " EL↑ ",    // b9
-                "RSRT ",    // b8
-                "OPER ",    // b7
-                "V//N ",    // b6
-                "KREL ",    // b5
-                "TEMP ",    // b4
-                "  3  ",    // b3
-                "  2  ",    // b2
-                " AGC ",    // b1
-                "  A  "]
-
-    let bitArray = ZeroPadWord(code, to: 10).split(separator: "")
-    var catString = ""
-
-    for index in 0..<bitArray.count {
-        catString += (bitArray[index] == "0") ? "  ↓  " : labs[index]
-    }
-
-    return catString
-}
-
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ All LATCHES                                                                                      ┆
-  ┆                                                                                                  ┆
-  ┆          Bit 2: Lights the "COMP ACTY" indicator.                                                ┆
-  ┆          Bit 3: Lights the "UPLINK ACTY" indicator.                                              ┆
-  ┆          Bit 4: Lights the "TEMP" indicator.                                                     ┆
-  ┆          Bit 5: Lights the "KEY REL" indicator.                                                  ┆
-  ┆          Bit 6: Flashes the VERB/NOUN display areas.                                             ┆
-  ┆                 This means to flash the digits in the NOUN and VERB areas.                       ┆
-  ┆          Bit 7: Lights the "OPR ERR" indicator.                                                  ┆
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-func prettyCh011(_ code: UInt16) -> String {
-
-    let labs = ["  Z  ",
-                "  9  ",    // b9
-                "  8  ",    // b8
-                "OPER ",    // b7
-                " V+N ",    // b6
-                "KREL ",    // b5
-                "TEMP ",    // b4
-                "UPLK ",    // b3
-                "COMP ",    // b2
-                "  1  ",    // b1
-                "  A  "]
-
-    let bitArray = ZeroPadWord(code, to: 10).split(separator: "")
-    var catString = ""
-
-    for index in 0..<bitArray.count {
-        catString += (bitArray[index] == "0") ? "  ↓  " : labs[index]
-    }
-
-    return catString
-}
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 let symbolArray = ["----",
                    "3435", "3233", "2531", "2324", "2122",
@@ -205,7 +134,7 @@ let digitsDict = [  0: "_",
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 func prettyCh010(_ code: UInt16) -> String {
 
-    let labs = ["  Z  ",
+    let labs = [" ??? ",
                 "PROG ",    // b9
                 "TRAK ",    // b8
                 " b7? ",    // b7
@@ -215,7 +144,7 @@ func prettyCh010(_ code: UInt16) -> String {
                 " VEL ",    // b3
                 "NODP ",    // b2
                 "PRIO ",    // b1
-                "  A  "]
+                "NEVER"]
 
     let bitArray = ZeroPadWord(code, to: 10).split(separator: "")
     var catString = ""
@@ -227,3 +156,73 @@ func prettyCh010(_ code: UInt16) -> String {
     return catString
 }
 
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ All LATCHES                                                                                      ┆
+  ┆                                                                                                  ┆
+  ┆          Bit 1:                                                                                  ┆
+  ┆          Bit 2: Lights the "COMP ACTY" indicator.                                                ┆
+  ┆          Bit 3: Lights the "UPLINK ACTY" indicator.                                              ┆
+  ┆          Bit 4: Lights the "TEMP" indicator.                                                     ┆
+  ┆          Bit 5: Lights the "KEY REL" indicator.                                                  ┆
+  ┆          Bit 6: Flashes the VERB/NOUN display areas.                                             ┆
+  ┆                 This means to flash the digits in the NOUN and VERB areas.                       ┆
+  ┆          Bit 7: Lights the "OPR ERR" indicator.                                                  ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+func prettyCh011(_ code: UInt16) -> String {
+
+    let labs = [" ??? ",    // b8
+                "OPER ",    // b7
+                "V+N↕︎ ",    // b6
+                "KREL ",    // b5
+                "TEMP ",    // b4
+                "UPLK ",    // b3
+                "COMP ",    // b2
+                " ??? ",    // b1
+                "NEVER"]
+
+    let bitArray = ZeroPadWord(code, to: 8).split(separator: "")
+    var catString = "          "
+
+    for index in 0..<bitArray.count {
+        catString += (bitArray[index] == "0") ? "  ↓  " : labs[index]
+    }
+
+    return catString
+}
+
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆                                                                                                  ┆
+  ┆          Bit 1:               AGC warning                                                        ┆
+  ┆          _                                                                                       ┆
+  ┆          _                                                                                       ┆
+  ┆          Bit 4:            TEMP lamp                                                             ┆
+  ┆          Bit 5:           KEY REL lamp                                                           ┆
+  ┆          Bit 6:          VERB/NOUN flash                                                         ┆
+  ┆          Bit 7:         OPER ERR lamp                                                            ┆
+  ┆          Bit 8:        RESTART lamp                                                              ┆
+  ┆          Bit 9:       STBY lamp                                                                  ┆
+  ┆          Bit 10:     EL off                                                                      ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+func prettyCh163(_ code: UInt16) -> String {
+
+    let labs = [" ??? ",
+                " EL↓ ",    // b9
+                "RSRT ",    // b8
+                "OPER ",    // b7
+                "V+N↕︎ ",    // b6
+                "KREL ",    // b5
+                "TEMP ",    // b4
+                "  3  ",    // b3
+                "  2  ",    // b2
+                " AGC ",    // b1
+                "NEVER"]
+
+    let bitArray = ZeroPadWord(code, to: 10).split(separator: "")
+    var catString = ""
+
+    for index in 0..<bitArray.count {
+        catString += (bitArray[index] == "0") ? "  ↓  " : labs[index]
+    }
+
+    return catString
+}

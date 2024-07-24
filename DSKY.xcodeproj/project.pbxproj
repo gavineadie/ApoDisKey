@@ -28,7 +28,6 @@
 		86B26DBA2C4CD30A0021E594 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B26DB82C4CD3020021E594 /* Extensions.swift */; };
 		86C4C5C02C4CE79900A4DEA1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86C4C5BF2C4CE79900A4DEA1 /* Assets.xcassets */; };
 		86C85A1B2C4F46A1002BE367 /* testLights.canned in Resources */ = {isa = PBXBuildFile; fileRef = 86C85A1A2C4F46A1002BE367 /* testLights.canned */; };
-		86C85A1D2C4F72F7002BE367 /* Apollo11-landing.canned in Resources */ = {isa = PBXBuildFile; fileRef = 86C85A1C2C4F72F7002BE367 /* Apollo11-landing.canned */; };
 		86CB9B5E2C45F94400968C20 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86CB9B5D2C45F94400968C20 /* Network.swift */; };
 		86E838902C3CE61700E7C573 /* SandboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E8388F2C3CE61700E7C573 /* SandboxView.swift */; };
 		86E838922C3CF06400E7C573 /* DecorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E838912C3CF06400E7C573 /* DecorView.swift */; };
@@ -70,7 +69,6 @@
 		86B26DB82C4CD3020021E594 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		86C4C5BF2C4CE79900A4DEA1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		86C85A1A2C4F46A1002BE367 /* testLights.canned */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testLights.canned; sourceTree = "<group>"; };
-		86C85A1C2C4F72F7002BE367 /* Apollo11-landing.canned */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Apollo11-landing.canned"; sourceTree = "<group>"; };
 		86CB9B5D2C45F94400968C20 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		86E8388F2C3CE61700E7C573 /* SandboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SandboxView.swift; sourceTree = "<group>"; };
 		86E838912C3CF06400E7C573 /* DecorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecorView.swift; sourceTree = "<group>"; };
@@ -112,7 +110,6 @@
 			children = (
 				864143C32C4AE78300EEC7EB /* Initialize.txt */,
 				86C85A1A2C4F46A1002BE367 /* testLights.canned */,
-				86C85A1C2C4F72F7002BE367 /* Apollo11-landing.canned */,
 			);
 			path = RESOURCES;
 			sourceTree = "<group>";
@@ -277,7 +274,6 @@
 				864143C42C4AE78300EEC7EB /* Initialize.txt in Resources */,
 				86C85A1B2C4F46A1002BE367 /* testLights.canned in Resources */,
 				864BD6132C3B728400D4C896 /* Zerlina.otf in Resources */,
-				86C85A1D2C4F72F7002BE367 /* Apollo11-landing.canned in Resources */,
 				864BD61A2C3BD69700D4C896 /* Gorton-Normal-120.otf in Resources */,
 				86C4C5C02C4CE79900A4DEA1 /* Assets.xcassets in Resources */,
 				864BD61B2C3BD69700D4C896 /* Gorton-Normal-180.otf in Resources */,

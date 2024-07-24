@@ -113,16 +113,16 @@ class DisKeyModel {
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
     public typealias Display = (String, Bool)
 
-    public var comp: Display = ("00", false)
+    public var comp: Display = ("--", false)            // numbers (none for COMP), placard=dark
     public var prog: Display = ("19", true)
-    public var verb: Display = ("35", false)
+    public var verb: Display = ("35", true)             // numbers=53, placard=green
     public var noun: Display = ("77", true)
 
     public var register1: Display = (" 98765", true)
-    public var register2: Display = ("-12345", false)
+    public var register2: Display = ("-12345", false)   // what does "false" do here?
     public var register3: Display = ("+88888", true)
 
-    public var reg1PlusMinus = (false, false)
+    public var reg1PlusMinus = (false, false)           // blank prefix (± or blank)
     public var reg2PlusMinus = (false, false)
     public var reg3PlusMinus = (false, false)
 
@@ -162,7 +162,7 @@ func readCanned() -> [Data] {
 
     var packetArray = [Data]()
     
-    if let path = Bundle.main.path(forResource: "Apollo11-landing", ofType: "canned"){
+    if let path = Bundle.main.path(forResource: "testLights", ofType: "canned"){
         do {
             let initContent = try String(contentsOfFile: path, encoding: .utf8)
             let lineArray = initContent.components(separatedBy: .newlines)
@@ -205,7 +205,7 @@ func cycleCanned() {
     let _ = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { timer in
         if packetIndex < packets.count {
             logger.log("\(packetIndex): \(prettyString(packets[packetIndex]))")
-            let bytes = parseIoPacket(packets[packetIndex])
+            let _ = parseIoPacket(packets[packetIndex])
             packetIndex += 1
         }
     }

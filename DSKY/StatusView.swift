@@ -45,7 +45,7 @@ struct StatusView: View {
 
                 GridRow {
                     StatusLight(light: model.lights[17]!)
-                        .onTapGesture { cycleCanned() } // readCanned() }
+                        .onTapGesture { cycleCanned() }
                     StatusLight(light: model.lights[27]!)
                 }
             }

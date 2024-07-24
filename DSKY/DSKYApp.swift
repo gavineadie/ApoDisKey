@@ -23,9 +23,10 @@ struct DSKYApp: App {
 
         model.luminary099()
 
+        model.network.recv()
+
         model.statusAlphaOn()
 
-        model.network.recv()
     }
 
     var body: some Scene {

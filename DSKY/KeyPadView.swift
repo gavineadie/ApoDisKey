@@ -62,7 +62,7 @@ struct KeyPadKey: View {
 
     var body: some View {
         let fontSize: CGFloat = (1...16).contains(keyCode) ||
-                               (26...27).contains(keyCode) ? 28 : 12
+        (26...27).contains(keyCode) ? 28 : 12
 
         Text(keyText(keyCode))
             .font(.custom("Gorton-Normal-120",
@@ -79,9 +79,16 @@ struct KeyPadKey: View {
             .padding(.all, keyPadding)
             .cornerRadius(keyCorner)
             .onTapGesture {
-                record(keyCode)
-                model.network.send(data: formIoPacket(0o015, keyCode))
+                if keyCode < 99 {
+                    record(keyCode)
+                    model.network.send(data: formIoPacket(0o015, keyCode))
+                }
             }
+            .simultaneousGesture(LongPressGesture(minimumDuration: 1.0)
+                .onEnded { _ in
+                    record(keyCode)
+                    model.network.send(data: formIoPacket(0o015, keyCode))
+                })
     }
 }
 
@@ -94,7 +101,7 @@ struct KeyPadKey: View {
 }
 
 func record(_ keyCode: UInt16) {
-    logger.log("KeyPad: \(keyText(keyCode)) (\(keyCode))")
+    logger.log("Key:   \(keyText(keyCode)) (\(keyCode))")
 }
 
 func keyText(_ code: UInt16) -> String {
