@@ -155,8 +155,8 @@ func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
 
             model.lights[21]?.1 = (value & bit4 > 0) ? .yellow : .off   // Bit 4: TEMP lamp
 
-            model.verb.1 = value & 0x10 > 0                             // flash "VERB"
-            model.noun.1 = value & 0x10 > 0                             // flash "NOUN"
+            model.verb.1 = value & 0x10 == 0                            // flash "VERB"
+            model.noun.1 = value & 0x10 == 0                            // flash "NOUN"
 
 //          model.lights[xx]?.1 = (value & bit6 > 0) ? .yellow : .off   // Bit 6: VERB/NOUN flash
             model.lights[24]?.1 = (value & bit8 > 0) ? .yellow : .off   // Bit 8: RESTART lamp

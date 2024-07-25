@@ -82,7 +82,7 @@ struct Comp: View {
             DisplayPlacard(label: "COMP\nACTY",
                            illum: state.1,
                            height: 60.0)
-            DisplayNumbers(value: "  ")
+            DisplayNumbers(state: ("  ", false))
         }
     }
 }
@@ -93,7 +93,7 @@ struct Prog: View {
     var body: some View {
         VStack {
             DisplayPlacard(label: "PROG")
-            DisplayNumbers(value: state.0)
+            DisplayNumbers(state: state)
         }
     }
 }
@@ -141,8 +141,8 @@ struct Verb: View {
 
     var body: some View {
         VStack {
-            DisplayPlacard(label: "VERB", illum: state.1)
-            DisplayNumbers(value: state.0)
+            DisplayPlacard(label: "VERB")
+            DisplayNumbers(state: state)
         }
     }
 }
@@ -152,8 +152,8 @@ struct Noun: View {
 
     var body: some View {
         VStack {
-            DisplayPlacard(label: "NOUN", illum: state.1)
-            DisplayNumbers(value: state.0)
+            DisplayPlacard(label: "NOUN")
+            DisplayNumbers(state: state)
         }
     }
 }
@@ -175,7 +175,7 @@ struct Register1: View {
     var state: Display
 
     var body: some View {
-        DisplayNumbers(value: state.0)
+        DisplayNumbers(state: state)
     }
 }
 
@@ -196,7 +196,7 @@ struct Register2: View {
     var state: Display
 
     var body: some View {
-        DisplayNumbers(value: state.0)
+        DisplayNumbers(state: state)
     }
 }
 
@@ -217,7 +217,7 @@ struct Register3: View {
     var state: Display
 
     var body: some View {
-        DisplayNumbers(value: state.0)
+        DisplayNumbers(state: state)
     }
 }
 
@@ -260,17 +260,17 @@ struct DisplayPlacard: View {
 }
 
 struct DisplayNumbers: View {
-    var value: String
+    var state: Display
 
     var body: some View {
 
-        switch value.count {
+        switch state.0.count {
             case 6:
                 VStack {
                     DisplaySeparator()
 
-                    if value.starts(with: " ") {
-                        Text(adjustDisplay(String(value.dropFirst())))
+                    if state.0.starts(with: " ") {
+                        Text(adjustDisplay(String(state.0.dropFirst())))
                             .font(.custom("Zerlina",
                                           fixedSize: zerlinaFixedSize))
                             .padding([.top,
@@ -281,7 +281,7 @@ struct DisplayNumbers: View {
                             .frame(width: 190.0,
                                    height: panelDigitSize)
                     } else {
-                        Text(adjustDisplay(String(value)))
+                        Text(adjustDisplay(String(state.0)))
                             .font(.custom("Zerlina",
                                           fixedSize: zerlinaFixedSize))
                             .padding(.all, -10.0)
@@ -291,17 +291,29 @@ struct DisplayNumbers: View {
                     }
                 }
             case 2:
-                if value == "  " {
-                    Text(value)
+                if state.0 == "  " {
+                    Text(state.0)
                         .frame(width: 95.0, height: 2.0)
                 } else {
-                    Text(adjustDisplay(String(value)))
-                        .font(.custom("Zerlina",
-                                      fixedSize: zerlinaFixedSize))
-                        .padding(.top, 8.0)
-                        .tracking(zerlinaTracking)
-                        .frame(width: 95.0,
-                               height: panelDigitSize)
+
+                    if state.1 {
+                        Text(adjustDisplay(String(state.0)))
+                            .font(.custom("Zerlina",
+                                          fixedSize: zerlinaFixedSize))
+                            .padding(.top, 8.0)
+                            .tracking(zerlinaTracking)
+                            .frame(width: 95.0,
+                                   height: panelDigitSize)
+                    } else {
+                        Text(state.0)
+                            .font(.custom("Zerlina",
+                                          fixedSize: zerlinaFixedSize))
+                            .foregroundColor(panelInColor)
+                            .padding(.top, 8.0)
+                            .tracking(zerlinaTracking)
+                            .frame(width: 95.0,
+                                   height: panelDigitSize)
+                    }
                 }
             default:
                 Text("ERROR")
@@ -316,7 +328,7 @@ struct DisplayNumbers: View {
 }
 
 #Preview {
-    DisplayNumbers(value: "614121")
+    DisplayNumbers(state: ("614121", true))
 }
 
 #Preview {
