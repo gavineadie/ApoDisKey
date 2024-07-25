@@ -97,8 +97,8 @@ func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
 //                model.flasher.invalidate()
 //            }
 
-            model.verb.1 = value & bit6 > 0                             // flash "VERB"
-            model.noun.1 = value & bit6 > 0                             // flash "NOUN"
+//            model.verb.1 = value & bit6 > 0                             // flash "VERB"
+//            model.noun.1 = value & bit6 > 0                             // flash "NOUN"
 
             model.lights[11]?.1 = (value & bit3 > 0) ? .white : .off    // "UPLINK
             model.lights[14]?.1 = (value & bit7 > 0) ? .white : .off    // "OPR ERR"
@@ -197,7 +197,7 @@ func dskyInterpretation(_ code: UInt16) {
             logger.log("""
                 ***    DSKY 010: \(ZeroPadWord(code).prefix(5))   \
                 \(ZeroPadWord(code).dropFirst(5)) \
-                LIGHTS (10)     :: \(prettyCh010(code & 0b0000000_111111111)) [010]
+                LIGHTS (10)    :: \(prettyCh010(code & 0b0000000_111111111)) [010]
                 """)
 
             model.lights[12]?.1 = (code & bit4 > 0) ?  .white : .off   // 4: NO ATT

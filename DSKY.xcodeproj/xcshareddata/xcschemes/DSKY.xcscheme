@@ -46,17 +46,6 @@
                ReferencedContainer = "container:DSKY.xcodeproj">
             </BuildableReference>
          </TestableReference>
-         <TestableReference
-            skipped = "YES"
-            parallelizable = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "867EBD7E2C3A1E2A004C4DDD"
-               BuildableName = "DSKYUITests.xctest"
-               BlueprintName = "DSKYUITests"
-               ReferencedContainer = "container:DSKY.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

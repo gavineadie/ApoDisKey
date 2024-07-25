@@ -1,5 +1,3 @@
-# DifferentialTimeInMilliseconds AgcOutputChannelNumberInOctal AgcOutputChannelValueInOctal
-#
 # The differential time (usually an integer, but can be floating-point decimal) is simply
 # the time in milliseconds since the preceding line of the file.  (NASSP i/o-channel logs
 # have the same format, except that the initial field is the absolute simulation time, in
@@ -100,3 +98,69 @@
 100 15 22
 100 15 22
 100 15 22
+
+# LMA790-3-LM11-ApolloOperationsHandbookLunarModuleLM11AndSubsequent-Volume2-OperationalProcedures.pdf
+#
+# DSKY Light Test
+
+#  key "V35E"
+#
+#  Exit V35E, key RSET
+#
+#  UPLK 3↑
+#  AO ATT↑
+#  STBY↑
+#  KEY REL flas
+#  OP ERR flash
+#  PRIO DISP↑
+#  NO DAP↑
+#  TEMP↑
+#  GIMB↑
+#  PROG↑
+#  RESTART↑
+#  TRACKER↑
+#  ALT↑
+#  VEL↑
+#
+#  PROG 88
+#  VERB 88 (↕︎
+#  NOUN 88 (↕︎)
+#
+#  r1 +88888
+#  r2 +88888
+#  r3 +88888
+#
+#  ISS↑
+#  LGC↑
+#
+#  [[ five seconds ]]
+#
+#  UPLK 3↓
+#  AO ATT↓
+#
+#  key RSET
+#
+#  STBY↓
+#  KEY REL flas
+#  OP ERR flash
+#  PRIO DISP↓
+#  NO DAP↓
+#  TEMP↓
+#  GIMB↓
+#  PROG↓
+#  RESTART↓
+#  TRACKER↓
+#  ALT↓
+#  VEL↓
+#
+#  PROG 00
+#  VERB --
+#  NOUN --
+#
+#  r1 ------
+#  r2 ------
+#  r3 ------
+#
+#  ISS↓
+#  LGC↓
+

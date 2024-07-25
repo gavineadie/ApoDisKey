@@ -45,14 +45,14 @@ class DisKeyModel {
 //        filesBase = establishDirectory()
 
 #if os(iOS) || os(tvOS)
-        network = Network("192.168.1.232", 19697) // .. Ubuntu
-//      network = Network("192.168.1.100", 19697) // .. MaxBook
+//      network = Network("192.168.1.232", 19697)   // .. Ubuntu
+        network = Network("192.168.1.100", 19698)   // .. MaxBook
 #else
-//      network = Network("192.168.1.232", 19697) // .. Ubuntu
+//      network = Network("192.168.1.232", 19697)   // .. Ubuntu
         network = Network("127.0.0.1", 19697)
 #endif
 
-        lights = [ 11: ("", .off),
+        lights = [ 11: ("", .off),                  // initial state
                    12: ("", .off),
                    13: ("", .off),
                    14: ("", .off),
@@ -71,8 +71,8 @@ class DisKeyModel {
     }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ set light label texts for Apollo 11 • Lunar Module                                               ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-
     func luminary099() {
         lights[11] = ("UPLINK\nACTY", .off)
         lights[12] = ("NO  ATT", .off)
@@ -89,22 +89,31 @@ class DisKeyModel {
         lights[25] = ("TRACKER", .off)
         lights[26] = ("ALT", .off)
         lights[27] = ("VEL", .off)
+
+        statusFooter = "Apollo 11 • LM"
     }
 
-    func statusAllOff() {
-        logger.log("... \(#function)")
-        for (key, _) in lights { lights[key] = ("« OFF »", .off) }
-        lights[17] = ("ALPHA\nTEST 2", .red)
-    }
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆  set light label texts for Apollo 11 • Command Module                                            ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+    func comanche055() {
+        lights[11] = ("UPLINK\nACTY", .off)
+        lights[12] = ("NO  ATT", .off)
+        lights[13] = ("STBY", .on)
+        lights[14] = ("KEY  REL", .off)
+        lights[15] = ("OPR  ERR", .off)
+        lights[16] = ("PRIO\nDISP", .off)       // CM lights
+        lights[17] = ("NO DAP", .off)           // CM lights
 
-    func statusAllOn() {
-        logger.log("... \(#function)")
-        for (key, _) in lights { lights[key] = ("YELLOW", .yellow) }
-    }
+        lights[21] = ("TEMP", .off)
+        lights[22] = ("GIMBAL\nLOCK", .off)
+        lights[23] = ("PROG", .off)
+        lights[24] = ("RESTART", .off)
+        lights[25] = ("TRACKER", .off)
+        lights[26] = ("ALT", .off)
+        lights[27] = ("VEL", .off)
 
-    func statusAlphaOn() {
-        lights[16] = ("ALPHA\nTEST 1", .red)
-        lights[17] = ("ALPHA\nTEST 2", .red)
+        statusFooter = "Apollo 11 • CM"
     }
 
 
@@ -115,7 +124,7 @@ class DisKeyModel {
 
     public var comp: Display = ("--", false)            // numbers (none for COMP), placard=dark
     public var prog: Display = ("19", true)
-    public var verb: Display = ("35", true)             // numbers=53, placard=green
+    public var verb: Display = ("35", true)             // numbers=35, placard=green
     public var noun: Display = ("77", true)
 
     public var register1: Display = (" 98765", true)
@@ -133,9 +142,9 @@ class DisKeyModel {
 }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-    File stuff ..
-    .. establishDirectory:
-    .. readInitializing:
+  ┆ File stuff ..                                                                                    ┆
+  ┆ .. establishDirectory:                                                                           ┆
+  ┆ .. readInitializing:                                                                             ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 
 func establishDirectory() -> URL {

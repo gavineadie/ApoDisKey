@@ -24,14 +24,12 @@ struct DisplayView: View {
 //            Image("Display").cornerRadius(8.0)
 
             VStack {
-                Row1(comp: model.comp, 
-                     prog: model.prog)
+                Row1(comp: model.comp, prog: model.prog)
                 Spacer().frame(height: 12.0)
-                Row2(verb: model.verb,
-                     noun: model.noun)
-                Register1(digits: model.register1.0)
-                Register2(digits: model.register2.0)
-                Register3(digits: model.register3.0)
+                Row2(verb: model.verb, noun: model.noun)
+                Register1(state: model.register1)
+                Register2(state: model.register2)
+                Register3(state: model.register3)
             }
         }
     }
@@ -43,21 +41,21 @@ struct DisplayView: View {
 
 /*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
   │ ROW1                                                                                             │
+        "COMP"  default OFF, illuminated briefly by AGC
+                it has no NUMBER ..
+        "PROG"  default ON
   └──────────────────────────────────────────────────────────────────────────────────────────────────┘*/
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ +---------------------------+                                                                    ┆
-  ┆ |  +--------+ | +--------+  |                                                                    ┆
-  ┆ |  | "COMP" | | | "PROG" |  |  <-- placard: ("WORD", off/on)                                     ┆
-  ┆ |  +--------+ | +--------+  |                                                                    ┆
-  ┆ |  +--------+ | +--------+  |                                                                    ┆
-  ┆ |  |        | | |        |  |  <-- numbers: ( "99" , off/on, height)                             ┆
-  ┆ |  |   99   | | |   99   |  |                                                                    ┆
-  ┆ |  |        | | |        |  |                                                                    ┆
-  ┆ |  +--------+ | +--------+  |                                                                    ┆
-  ┆ |  +---------------------+  |                                                                    ┆
-  ┆ |  | padding (6)         |  |                                                                    ┆
-  ┆ |  +---------------------+  |                                                                    ┆
-  ┆ +---------------------------+                                                                    ┆
+  ┆                                                                                                  ┆
+  ┆    +--------+   +--------+                                                                       ┆
+  ┆    | "COMP" |   | "PROG" |     <-- placard: ("COMP", off at power-up - on under command)         ┆
+  ┆    |        |   +--------+                  ("PROG", on at power-up))                            ┆
+  ┆    |        |   +--------+                                                                       ┆
+  ┆    |        |   |        |     <-- numbers: ( "99" , off/on, height)                             ┆
+  ┆    |        |   |   99   |                                                                       ┆
+  ┆    |        |   |        |                                                                       ┆
+  ┆    +--------+   +--------+                                                                       ┆
+  ┆                                                                                                  ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 struct Row1: View {
     var comp: Display = ("  ", false)
@@ -66,7 +64,7 @@ struct Row1: View {
     var body: some View {
         HStack(alignment: .top) {
             Comp(state: comp)
-            Prog(digits: prog.0)
+            Prog(state: prog)
         }
         .padding(.bottom, 6.0)
     }
@@ -78,10 +76,11 @@ struct Row1: View {
 
 struct Comp: View {
     var state: Display
+
     var body: some View {
         VStack {
             DisplayPlacard(label: "COMP\nACTY",
-                           green: state.1,
+                           illum: state.1,
                            height: 60.0)
             DisplayNumbers(value: "  ")
         }
@@ -89,33 +88,32 @@ struct Comp: View {
 }
 
 struct Prog: View {
-    var digits: String
+    var state: Display
 
     var body: some View {
         VStack {
             DisplayPlacard(label: "PROG")
-            DisplayNumbers(value: digits)
+            DisplayNumbers(value: state.0)
         }
     }
 }
 
 /*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
   │ ROW2                                                                                             │
+        "VERB"  default ON, turned OFF (or flashed?) as an entry prompt
+        "NOUN"  default ON, turned OFF (or flashed?) as an entry prompt
   └──────────────────────────────────────────────────────────────────────────────────────────────────┘*/
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ +---------------------------+                                                                    ┆
-  ┆ |  +--------+ | +--------+  |                                                                    ┆
-  ┆ |  | "VERB" | | | "NOUN" |  |  <-- placard: ("WORD", off/on)                                     ┆
-  ┆ |  +--------+ | +--------+  |                                                                    ┆
-  ┆ |  +--------+ | +--------+  |                                                                    ┆
-  ┆ |  |        | | |        |  |  <-- numbers: ( "99" , off/on, height)                             ┆
-  ┆ |  |   99   | | |   99   |  |                                                                    ┆
-  ┆ |  |        | | |        |  |                                                                    ┆
-  ┆ |  +--------+ | +--------+  |                                                                    ┆
-  ┆ |  +---------------------+  |                                                                    ┆
-  ┆ |  | padding (6)         |  |                                                                    ┆
-  ┆ |  +---------------------+  |                                                                    ┆
-  ┆ +---------------------------+                                                                    ┆
+  ┆                                                                                                  ┆
+  ┆    +--------+   +--------+                                                                       ┆
+  ┆    | "VERB" |   | "NOUN" |     <-- placard: ("VERB", on at power-up, flash)                      ┆
+  ┆    +--------+   +--------+                  ("NOUN", on at power-up, flash)                      ┆
+  ┆    +--------+   +--------+                                                                       ┆
+  ┆    |        |   |        |     <-- numbers: ( "99" , off/on, height)                             ┆
+  ┆    |   99   |   |   99   |                           flash                                       ┆
+  ┆    |        |   |        |                                                                       ┆
+  ┆    +--------+   +--------+                                                                       ┆
+  ┆                                                                                                  ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 struct Row2: View {
     var verb: Display = ("--", false)
@@ -143,7 +141,7 @@ struct Verb: View {
 
     var body: some View {
         VStack {
-            DisplayPlacard(label: "VERB", green: state.1)
+            DisplayPlacard(label: "VERB", illum: state.1)
             DisplayNumbers(value: state.0)
         }
     }
@@ -154,7 +152,7 @@ struct Noun: View {
 
     var body: some View {
         VStack {
-            DisplayPlacard(label: "NOUN", green: state.1)
+            DisplayPlacard(label: "NOUN", illum: state.1)
             DisplayNumbers(value: state.0)
         }
     }
@@ -174,10 +172,10 @@ struct Noun: View {
   ┆ +---------------------------+                                                                    ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 struct Register1: View {
-    var digits: String
+    var state: Display
 
     var body: some View {
-        DisplayNumbers(value: digits)
+        DisplayNumbers(value: state.0)
     }
 }
 
@@ -195,10 +193,10 @@ struct Register1: View {
   ┆ +---------------------------+                                                                    ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 struct Register2: View {
-    var digits: String
+    var state: Display
 
     var body: some View {
-        DisplayNumbers(value: digits)
+        DisplayNumbers(value: state.0)
     }
 }
 
@@ -216,21 +214,21 @@ struct Register2: View {
   ┆ +---------------------------+                                                                    ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 struct Register3: View {
-    var digits: String
+    var state: Display
 
     var body: some View {
-        DisplayNumbers(value: digits)
+        DisplayNumbers(value: state.0)
     }
 }
 
 struct DisplayPlacard: View {
-    var label: String
-    var green: Bool = true
-    var height: CGFloat = 18.0
+    var label: String                   // placard label: "COMP", "PROG", "VERB", "NOUN"
+    var illum: Bool = true              // illuminate the background (green)
+    var height: CGFloat = 18.0          // the height of the placatf
 
     var body: some View {
         ZStack {
-            if green {
+            if illum {
                 RoundedRectangle(cornerRadius: 4.0)
                     .frame(width: 74.0, height: height)
                     .foregroundColor(displayElectro)
@@ -333,21 +331,8 @@ struct DisplayNumbers: View {
             .foregroundColor(.clear)
 
         VStack {
-            Register1(digits: "+88888")
-            Register2(digits: " 88888")
+            Register1(state: ("+88888", true))
+            Register2(state: ("-88888", false))
         }
     }
-}
-
-private func back(_ input: (String, BackColor)) -> Color {
-    switch input.1 {
-        case .on:
-            return .white
-        default:
-            return .gray
-    }
-}
-
-private func text(_ input: (String, BackColor)) -> String {
-    input.0
 }
