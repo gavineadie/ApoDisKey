@@ -90,7 +90,7 @@ class DisKeyModel {
         lights[26] = ("ALT", .off)
         lights[27] = ("VEL", .off)
 
-        statusFooter = "Apollo 11 • LM"
+        footerText("Apollo 11 • LM", reset: true)
     }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -113,7 +113,7 @@ class DisKeyModel {
         lights[26] = ("ALT", .off)
         lights[27] = ("VEL", .off)
 
-        statusFooter = "Apollo 11 • CM"
+        footerText("Apollo 11 • CM", reset: true)
     }
 
 

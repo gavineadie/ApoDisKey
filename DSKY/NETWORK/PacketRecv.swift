@@ -88,17 +88,8 @@ func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
                 """)
             model.comp.1 = value & bit2 > 0                             // "COMP ACTY"
 
-//            if value & bit6 > 0 {
-//                model.flasher = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { timer in
-//                    model.verb.1.toggle()
-//                    model.noun.1.toggle()
-//                }
-//            } else {
-//                model.flasher.invalidate()
-//            }
-
-//            model.verb.1 = value & bit6 > 0                             // flash "VERB"
-//            model.noun.1 = value & bit6 > 0                             // flash "NOUN"
+//          model.verb.1 = value & bit6 > 0                             // flash "VERB"
+//          model.noun.1 = value & bit6 > 0                             // flash "NOUN"
 
             model.lights[11]?.1 = (value & bit3 > 0) ? .white : .off    // "UPLINK
             model.lights[14]?.1 = (value & bit7 > 0) ? .white : .off    // "OPR ERR"
@@ -112,12 +103,12 @@ func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
         case 0o013:                 // DSKY lamp tests ..
             model.lights[13]?.1 = (value & 0x0200 > 0) ? .white : .off  // "STBY"
 
-        case 0o014:                 // CM and LM Gyro celection ..
-//            logger.log("    channel \(channel, format: .octal(minDigits: 3)): \(ZeroPadWord(value))")
+        case 0o014:                 // CM and LM Gyro selection ..
+//          logger.log("    channel \(channel, format: .octal(minDigits: 3)): \(ZeroPadWord(value))")
             break
 
         case 0o005...0o006, 0o015...0o035:
-//            logger.log("»»» fiction \(channel, format: .octal(minDigits: 3)): \(ZeroPadWord(value))")
+//          logger.log("»»» fiction \(channel, format: .octal(minDigits: 3)): \(ZeroPadWord(value))")
             break
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -155,12 +146,11 @@ func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
 
             model.lights[21]?.1 = (value & bit4 > 0) ? .yellow : .off   // Bit 4: TEMP lamp
 
-            model.verb.1 = value & 0x10 == 0                            // flash "VERB"
-            model.noun.1 = value & 0x10 == 0                            // flash "NOUN"
+            model.verb.1 = value & bit6 == 0                            // flash "VERB"
+            model.noun.1 = value & bit6 == 0                            // flash "NOUN"
 
-//          model.lights[xx]?.1 = (value & bit6 > 0) ? .yellow : .off   // Bit 6: VERB/NOUN flash
             model.lights[24]?.1 = (value & bit8 > 0) ? .yellow : .off   // Bit 8: RESTART lamp
-//          model.lights[xx]?.1 = (value & bit9 > 0) ? .white : .off    // Bit 9: STBY lamp
+            model.lights[13]?.1 = (value & bit9 > 0) ? .white : .off    // Bit 9: STBY lamp
                                                                         // Bit 10: EL off
         case 0o165:
             logger.log("»»» DSKY165 \(ZeroPadWord(value)) TIME1")

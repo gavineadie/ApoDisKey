@@ -226,3 +226,9 @@ func prettyCh163(_ code: UInt16) -> String {
 
     return catString
 }
+
+func footerText(_ text: String, reset: Bool = false) {
+    let existingText = DisKeyModel.shared.statusFooter
+    let newText = String((existingText + " >> " + text).suffix(80))
+    DisKeyModel.shared.statusFooter = reset ? text : newText
+}

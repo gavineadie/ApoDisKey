@@ -41,9 +41,9 @@ struct DisplayView: View {
 
 /*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
   │ ROW1                                                                                             │
-        "COMP"  default OFF, illuminated briefly by AGC
-                it has no NUMBER ..
-        "PROG"  default ON
+  │     "COMP"  default OFF, illuminated briefly by AGC                                              │
+  │             it has no NUMBER ..                                                                  │
+  │     "PROG"  default ON                                                                           │
   └──────────────────────────────────────────────────────────────────────────────────────────────────┘*/
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆                                                                                                  ┆
@@ -64,6 +64,7 @@ struct Row1: View {
     var body: some View {
         HStack(alignment: .top) {
             Comp(state: comp)
+                .padding(.trailing, 8.0)
             Prog(state: prog)
         }
         .padding(.bottom, 6.0)
@@ -81,7 +82,7 @@ struct Comp: View {
         VStack {
             DisplayPlacard(label: "COMP\nACTY",
                            illum: state.1,
-                           height: 60.0)
+                           placardHeight: 60.0)
             DisplayNumbers(state: ("  ", false))
         }
     }
@@ -100,8 +101,8 @@ struct Prog: View {
 
 /*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
   │ ROW2                                                                                             │
-        "VERB"  default ON, turned OFF (or flashed?) as an entry prompt
-        "NOUN"  default ON, turned OFF (or flashed?) as an entry prompt
+  │     "VERB"  default ON, turned OFF (or flashed?) as an entry prompt                              │
+  │     "NOUN"  default ON, turned OFF (or flashed?) as an entry prompt                              │
   └──────────────────────────────────────────────────────────────────────────────────────────────────┘*/
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆                                                                                                  ┆
@@ -116,16 +117,13 @@ struct Prog: View {
   ┆                                                                                                  ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 struct Row2: View {
-    var verb: Display = ("--", false)
-    var noun: Display = ("--", false)
-
-//    private let timer = Timer.publish(every: 0.5,
-//                                      on: .main,
-//                                      in: .common).autoconnect()
+    var verb: Display = ("88", false)
+    var noun: Display = ("44", true)
 
     var body: some View {
         HStack {
             Verb(state: verb)
+                .padding(.trailing, 8.0)
             Noun(state: noun)
         }
         .padding(.bottom, 6.0)
@@ -154,6 +152,7 @@ struct Noun: View {
         VStack {
             DisplayPlacard(label: "NOUN")
             DisplayNumbers(state: state)
+                .padding(.trailing, -1.0)
         }
     }
 }
@@ -224,33 +223,23 @@ struct Register3: View {
 struct DisplayPlacard: View {
     var label: String                   // placard label: "COMP", "PROG", "VERB", "NOUN"
     var illum: Bool = true              // illuminate the background (green)
-    var height: CGFloat = 18.0          // the height of the placatf
+    var placardHeight: CGFloat = 20.0   // the height of the placard
 
     var body: some View {
         ZStack {
-            if illum {
-                RoundedRectangle(cornerRadius: 4.0)
-                    .frame(width: 74.0, height: height)
-                    .foregroundColor(displayElectro)
+            let textColor = illum ? displayElectro : .clear
 
-                Text(label)
-                    .font(.custom("Gorton-Normal-180",
-                                  fixedSize: 10))
-                    .foregroundColor(.black)
-                    .multilineTextAlignment(.center)
-                    .lineSpacing(4.0)
-            } else {
-                RoundedRectangle(cornerRadius: 4.0)
-                    .frame(width: 74.0, height: height)
-                    .foregroundColor(.clear)
+            RoundedRectangle(cornerRadius: 4.0)
+                .frame(width: 74.0, height: placardHeight)
+                .foregroundColor(textColor)
 
-                Text(label)
-                    .font(.custom("Gorton-Normal-180",
-                                  fixedSize: 12))
-                    .foregroundColor(.black)
-                    .multilineTextAlignment(.center)
-                    .lineSpacing(4.0)
-            }
+            Text(label)
+                .font(.custom("Gorton-Normal-180",
+                              fixedSize: 12))
+                .foregroundColor(.black)
+                .multilineTextAlignment(.center)
+                .lineSpacing(4.0)
+
         }
     }
 }
@@ -300,7 +289,7 @@ struct DisplayNumbers: View {
                         Text(adjustDisplay(String(state.0)))
                             .font(.custom("Zerlina",
                                           fixedSize: zerlinaFixedSize))
-                            .padding(.top, 8.0)
+                            .padding(.top, 10.0)
                             .tracking(zerlinaTracking)
                             .frame(width: 95.0,
                                    height: panelDigitSize)
@@ -338,13 +327,13 @@ struct DisplayNumbers: View {
         Rectangle()
             .border(Color.white, width: 1)
             .padding(8.0)
-            .frame(width: 204,
-                   height: 140)
+            .frame(width: 204, height: 194)
             .foregroundColor(.clear)
 
         VStack {
             Register1(state: ("+88888", true))
             Register2(state: ("-88888", false))
+            Register2(state: (" 99999", false))
         }
     }
 }

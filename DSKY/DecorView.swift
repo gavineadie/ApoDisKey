@@ -32,7 +32,7 @@ let statusBorder = Color(white: 0.5)
 let statusText = Color(white: 0.0)
 
 let displayElectro = Color(red: 0.1, green: 0.8, blue: 0.1)
-let displayWhiteDot = Color(white: 0.9)
+let displayWhiteDot = Color(white: 0.7)
 
 let keyTextColor = Color(white: 0.9)
 let keyPadColor = Color(white: 0.25)
@@ -52,7 +52,7 @@ struct PanelsView: View {
                        height: panelExSizeH)
 
             RoundedRectangle(cornerRadius: panelInCorner)
-                .fill(panelInColor)
+                .fill(interiorFill)
                 .frame(width: panelExSizeW-panelInset,
                        height: panelExSizeH-panelInset)
         }
@@ -69,8 +69,8 @@ struct DisplaySeparator: View {
             LittleWhiteCircle()
 
             Rectangle()
-                .padding(.horizontal, -4.0)
-                .frame(width: 144,
+                .padding(.horizontal, -2.0)
+                .frame(width: 146,
                        height: 4)
                 .foregroundColor(displayElectro)
 
