@@ -140,15 +140,11 @@ func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
 
 //          model.lights[xx]?.1 = (value & 0x0001 > 0) ? .yellow : .off // Bit 1: AGC
 
-            model.lights[13]?.1 = (value & bit9 > 0) ? .white : .off    // Bit 9: STBY lamp
-            model.lights[14]?.1 = (value & bit5 > 0) ? .white : .off    // Bit 5: KEY REL lamp
-            model.lights[15]?.1 = (value & bit7 > 0) ? .white : .off    // Bit 7: OPER ERR lamp
-
             model.lights[21]?.1 = (value & bit4 > 0) ? .yellow : .off   // Bit 4: TEMP lamp
-
+            model.lights[14]?.1 = (value & bit5 > 0) ? .white : .off    // Bit 5: KEY REL lamp
             model.verb.1 = value & bit6 == 0                            // flash "VERB"
             model.noun.1 = value & bit6 == 0                            // flash "NOUN"
-
+            model.lights[15]?.1 = (value & bit7 > 0) ? .white : .off    // Bit 7: OPER ERR lamp
             model.lights[24]?.1 = (value & bit8 > 0) ? .yellow : .off   // Bit 8: RESTART lamp
             model.lights[13]?.1 = (value & bit9 > 0) ? .white : .off    // Bit 9: STBY lamp
                                                                         // Bit 10: EL off

@@ -13,10 +13,8 @@ let keyCorner: CGFloat = 3
 
 let panelExSizeW: CGFloat = 222
 let panelExSizeH: CGFloat = 374
-let panelExCorner: CGFloat = 10
 
 let panelInset: CGFloat = 26
-let panelInCorner: CGFloat = 8
 let panelDigitSize: CGFloat = 37
 
 let statusWidth: CGFloat = 90
@@ -32,7 +30,6 @@ let statusBorder = Color(white: 0.5)
 let statusText = Color(white: 0.0)
 
 let displayElectro = Color(red: 0.1, green: 0.8, blue: 0.1)
-let displayWhiteDot = Color(white: 0.7)
 
 let keyTextColor = Color(white: 0.9)
 let keyPadColor = Color(white: 0.25)
@@ -46,12 +43,12 @@ struct PanelsView: View {
 
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: panelExCorner)
+            RoundedRectangle(cornerRadius: 10)
                 .fill(panelExColor)
                 .frame(width: panelExSizeW, 
                        height: panelExSizeH)
 
-            RoundedRectangle(cornerRadius: panelInCorner)
+            RoundedRectangle(cornerRadius: 6)
                 .fill(interiorFill)
                 .frame(width: panelExSizeW-panelInset,
                        height: panelExSizeH-panelInset)
@@ -89,9 +86,12 @@ struct LittleWhiteCircle: View {
         RoundedRectangle(cornerRadius: 4.0)
             .padding(0.0)
             .frame(width: 8.0, height: 8.0)
-            .foregroundColor(displayWhiteDot)
-            .clipShape(Circle())
+            .foregroundColor(Color(white: 0.7))
     }
+}
+
+#Preview {
+    LittleWhiteCircle()
 }
 
 func adjustDisplay(_ text: String) -> AttributedString {

@@ -36,7 +36,22 @@ class DisKeyModel {
     public let network: Network
     public var netFailCode = 0
 
-    public var lights: [Int: Light]
+    public var lights = [ 11: ("", BackColor.off),                  // initial state
+                          12: ("", .off),
+                          13: ("", .off),
+                          14: ("", .off),
+                          15: ("", .off),
+                          16: ("", .off),
+                          17: ("", .off),
+
+                          21: ("", .off),
+                          22: ("", .off),
+                          23: ("", .off),
+                          24: ("", .off),
+                          25: ("", .off),
+                          26: ("", .off),
+                          27: ("", .off)
+    ]
 
     static let shared = DisKeyModel()
 
@@ -52,22 +67,6 @@ class DisKeyModel {
         network = Network("127.0.0.1", 19697)
 #endif
 
-        lights = [ 11: ("", .off),                  // initial state
-                   12: ("", .off),
-                   13: ("", .off),
-                   14: ("", .off),
-                   15: ("", .off),
-                   16: ("", .off),
-                   17: ("", .off),
-
-                   21: ("", .off),
-                   22: ("", .off),
-                   23: ("", .off),
-                   24: ("", .off),
-                   25: ("", .off),
-                   26: ("", .off),
-                   27: ("", .off)
-        ]
     }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -192,31 +191,4 @@ func readCanned() -> [Data] {
     }
 
     return packetArray
-}
-
-
-func cycleSecondsInR3() {
-    
-    let _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
-        let timeString = String(String(Date.timeIntervalSinceReferenceDate)
-            .dropFirst(4)
-            .prefix(5))
-        DisKeyModel.shared.register3 = ("+\(timeString)", true)
-    }
-
-}
-
-func cycleCanned() {
-
-    let packets = readCanned()
-    var packetIndex = 0
-
-    let _ = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { timer in
-        if packetIndex < packets.count {
-            logger.log("\(packetIndex): \(prettyString(packets[packetIndex]))")
-            let _ = parseIoPacket(packets[packetIndex])
-            packetIndex += 1
-        }
-    }
-
 }
