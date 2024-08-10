@@ -17,11 +17,6 @@ let bit7: UInt16 = 0b0000_0000_0100_0000
 let bit8: UInt16 = 0b0000_0000_1000_0000
 let bit9: UInt16 = 0b0000_0001_0000_0000
 
-let tt: (Bool, Bool) = (true, true)
-let tf: (Bool, Bool) = (true, false)
-let ft: (Bool, Bool) = (false, true)
-let ff: (Bool, Bool) = (false, false)
-
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆                                                                                                  ┆
   ┆ The sign (or blank) characters, which can be "+" or "-" or " " is based of the 0/1 values of     ┆
@@ -56,6 +51,12 @@ let ff: (Bool, Bool) = (false, false)
   ┆                                         |     |     |                                            ┆
   ┆                                         +-----+-----+                                            ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+
+let tt = (true, true)
+let tf = (true, false)
+let ft = (false, true)
+let ff = (false, false)
+
 public func plu_min(_ pm: (Bool, Bool)) -> String {
     switch pm {
         case (false, false): return " "
@@ -63,31 +64,6 @@ public func plu_min(_ pm: (Bool, Bool)) -> String {
         case (false, true): return "-"
         case (true, true): return "-"
     }
-}
-
-struct FourByte {
-    var byte_0: UInt8
-    var byte_1: UInt8
-    var byte_2: UInt8
-    var byte_3: UInt8
-
-    init(byte_0: UInt8, byte_1: UInt8, 
-         byte_2: UInt8, byte_3: UInt8) {
-        self.byte_0 = byte_0
-        self.byte_1 = byte_1
-        self.byte_2 = byte_2
-        self.byte_3 = byte_3
-    }
-
-    init(_ bytes: Data) {
-        self.init(byte_0: bytes[0], byte_1: bytes[2],
-                  byte_2: bytes[2], byte_3: bytes[3])
-    }
-
-    var packet: Data { Data([byte_0, byte_1, byte_2, byte_3]) }
-
-    var pretty: String { "\(ZeroPadByte(packet[0])) \(ZeroPadByte(packet[1])) " +
-                         "\(ZeroPadByte(packet[2])) \(ZeroPadByte(packet[3]))" }
 }
 
 
@@ -231,4 +207,60 @@ func footerText(_ text: String, reset: Bool = false) {
     let existingText = DisKeyModel.shared.statusFooter
     let newText = String((existingText + " >> " + text).suffix(80))
     DisKeyModel.shared.statusFooter = reset ? text : newText
+}
+
+
+
+
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ File stuff ..                                                                                    ┆
+  ┆ .. establishDirectory:                                                                           ┆
+  ┆ .. readInitializing:                                                                             ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+
+func establishDirectory() -> URL {
+    return URL(fileURLWithPath: "~/DSKY")
+}
+
+func readInitializing() {
+
+    if let path = Bundle.main.path(forResource: "Initialize", ofType: "txt"){
+        do {
+            let initContent = try String(contentsOfFile: path, encoding: .utf8)
+            let lineArray = initContent.components(separatedBy: .newlines)
+            for line in lineArray {
+                logger.log("INIT: \(line)")
+            }
+        } catch {
+            print(error)
+        }
+    }
+
+}
+
+func readCanned() -> [Data] {
+
+    var packetArray = [Data]()
+    
+    if let path = Bundle.main.path(forResource: "testLights", ofType: "canned"){
+        do {
+            let initContent = try String(contentsOfFile: path, encoding: .utf8)
+            let lineArray = initContent.components(separatedBy: .newlines)
+
+            for line in lineArray {
+                if line.isEmpty || "!# ".contains(line.first!) { continue }
+                let words = line.components(separatedBy: .whitespaces)
+                if words.count > 2 {
+                //   let milliSec = Int(words[0])!
+
+                    packetArray.append(formIoPacket(UInt16(words[1], radix: 8)!,
+                                                    UInt16(words[2], radix: 8)!))
+                }
+            }
+        } catch {
+            print(error)
+        }
+    }
+
+    return packetArray
 }

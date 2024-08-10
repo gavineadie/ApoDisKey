@@ -37,7 +37,6 @@ struct Network {
                 print("connection .setup")
             case .waiting(let error):
                 print("connection .waiting: \(error.localizedDescription)")
-                DisKeyModel.shared.netFailCode = error.errorCode
                 footerText(error.localizedDescription)
             case .preparing:
                 print("connection .preparing")

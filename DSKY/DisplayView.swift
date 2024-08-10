@@ -8,13 +8,34 @@
 import SwiftUI
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ Row1                                                                                             ┆
-  ┆ Spacer(12)                                                                                       ┆
-  ┆ Row2                                                                                             ┆
-  ┆ Reg1                                                                                             ┆
-  ┆ Reg2                                                                                             ┆
-  ┆ Reg3                                                                                             ┆
+  ┆                                                                                                  ┆
+  ┆         ┌───────────────────────┐                                                                ┆
+  ┆         │ ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮ │                                                                ┆
+  ┆         │ ┆ "COMP" ┆ ┆ "PROG" ┆ │                                                                ┆
+  ┆         │ ┆        ┆ ┆        ┆ │                                                                ┆
+  ┆         │ ┆        ┆ ┆        ┆ │                                                                ┆
+  ┆         │ ╰╌╌╌╌╌╌╌╌╯ ╰╌╌╌╌╌╌╌╌╯ │                                                                ┆
+  ┆         │ ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮ │                                                                ┆
+  ┆         │ ┆ "VERB" ┆ ┆ "NOUN" ┆ │                                                                ┆
+  ┆         │ ┆        ┆ ┆        ┆ │                                                                ┆
+  ┆         │ ┆        ┆ ┆        ┆ │                                                                ┆
+  ┆         │ ╰╌╌╌╌╌╌╌╌╯ ╰╌╌╌╌╌╌╌╌╯ │                                                                ┆
+  ┆         │ ╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮ │                                                                ┆
+  ┆         │ ┆ REGISTER1         ┆ │                                                                ┆
+  ┆         │ ┆                   ┆ │                                                                ┆
+  ┆         │ ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯ │                                                                ┆
+  ┆         │ ╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮ │                                                                ┆
+  ┆         │ ┆ REGISTER2         ┆ │                                                                ┆
+  ┆         │ ┆                   ┆ │                                                                ┆
+  ┆         │ ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯ │                                                                ┆
+  ┆         │ ╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮ │                                                                ┆
+  ┆         │ ┆ REGISTER3         ┆ │                                                                ┆
+  ┆         │ ┆                   ┆ │                                                                ┆
+  ┆         │ ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯ │                                                                ┆
+  ┆         └───────────────────────┘                                                                ┆
+  ┆                                                                                                  ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+
 struct DisplayView: View {
     let model = DisKeyModel.shared
 
@@ -27,9 +48,9 @@ struct DisplayView: View {
                 Row1(comp: model.comp, prog: model.prog)
                 Spacer().frame(height: 12.0)
                 Row2(verb: model.verb, noun: model.noun)
-                Register1(state: model.register1)
-                Register2(state: model.register2)
-                Register3(state: model.register3)
+                Register1(state: model.reg1)
+                Register2(state: model.reg2)
+                Register3(state: model.reg3)
             }
         }
     }

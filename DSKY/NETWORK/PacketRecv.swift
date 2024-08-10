@@ -66,6 +66,10 @@ func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
                           UInt16(byte[3] & UInt8(0b00111111))
 
     switch channel {
+        case 0o005...0o006:
+  //        logger.log("»»» channel \(channel, format: .octal(minDigits: 3)): \(ZeroPadWord(value))")
+            break
+
         case 0o010:                 // DSKY
             dskyInterpretation(value)
 
@@ -91,24 +95,24 @@ func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
 //          model.verb.1 = value & bit6 > 0                             // flash "VERB"
 //          model.noun.1 = value & bit6 > 0                             // flash "NOUN"
 
-            model.lights[11]?.1 = (value & bit3 > 0) ? .white : .off    // "UPLINK
-            model.lights[14]?.1 = (value & bit7 > 0) ? .white : .off    // "OPR ERR"
+            model.statusLights[11]?.1 = (value & bit3 > 0) ? .white : .off    // "UPLINK
+            model.statusLights[14]?.1 = (value & bit7 > 0) ? .white : .off    // "OPR ERR"
 
-            model.lights[21]?.1 = (value & bit4 > 0) ? .yellow : .off   // "TEMP"
-            model.lights[24]?.1 = (value & bit5 > 0) ? .yellow : .off   // "KEY REL"
+            model.statusLights[21]?.1 = (value & bit4 > 0) ? .yellow : .off   // "TEMP"
+            model.statusLights[24]?.1 = (value & bit5 > 0) ? .yellow : .off   // "KEY REL"
 
         case 0o012:                 // CM and LM actions ..
             break
 
         case 0o013:                 // DSKY lamp tests ..
-            model.lights[13]?.1 = (value & 0x0200 > 0) ? .white : .off  // "STBY"
+            model.statusLights[13]?.1 = (value & 0x0200 > 0) ? .white : .off  // "STBY"
 
         case 0o014:                 // CM and LM Gyro selection ..
 //          logger.log("    channel \(channel, format: .octal(minDigits: 3)): \(ZeroPadWord(value))")
             break
 
-        case 0o005...0o006, 0o015...0o035:
-//          logger.log("»»» fiction \(channel, format: .octal(minDigits: 3)): \(ZeroPadWord(value))")
+        case 0o015...0o035:         // CM and LM downlinks (ch 34, 35)
+//          logger.log("»»» channel \(channel, format: .octal(minDigits: 3)): \(ZeroPadWord(value))")
             break
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -140,13 +144,13 @@ func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
 
 //          model.lights[xx]?.1 = (value & 0x0001 > 0) ? .yellow : .off // Bit 1: AGC
 
-            model.lights[21]?.1 = (value & bit4 > 0) ? .yellow : .off   // Bit 4: TEMP lamp
-            model.lights[14]?.1 = (value & bit5 > 0) ? .white : .off    // Bit 5: KEY REL lamp
+            model.statusLights[21]?.1 = (value & bit4 > 0) ? .yellow : .off   // Bit 4: TEMP lamp
+            model.statusLights[14]?.1 = (value & bit5 > 0) ? .white : .off    // Bit 5: KEY REL lamp
             model.verb.1 = value & bit6 == 0                            // flash "VERB"
             model.noun.1 = value & bit6 == 0                            // flash "NOUN"
-            model.lights[15]?.1 = (value & bit7 > 0) ? .white : .off    // Bit 7: OPER ERR lamp
-            model.lights[24]?.1 = (value & bit8 > 0) ? .yellow : .off   // Bit 8: RESTART lamp
-            model.lights[13]?.1 = (value & bit9 > 0) ? .white : .off    // Bit 9: STBY lamp
+            model.statusLights[15]?.1 = (value & bit7 > 0) ? .white : .off    // Bit 7: OPER ERR lamp
+            model.statusLights[24]?.1 = (value & bit8 > 0) ? .yellow : .off   // Bit 8: RESTART lamp
+            model.statusLights[13]?.1 = (value & bit9 > 0) ? .white : .off    // Bit 9: STBY lamp
                                                                         // Bit 10: EL off
         case 0o165:
             logger.log("»»» DSKY165 \(ZeroPadWord(value)) TIME1")
@@ -186,15 +190,15 @@ func dskyInterpretation(_ code: UInt16) {
                 LIGHTS (10)    :: \(prettyCh010(code & 0b0000000_111111111)) [010]
                 """)
 
-            model.lights[12]?.1 = (code & bit4 > 0) ?  .white : .off   // 4: NO ATT
+            model.statusLights[12]?.1 = (code & bit4 > 0) ?  .white : .off   // 4: NO ATT
 
 //          model.lights[17]?.1 = (code & bit7 > 0) ?    .red : .off   // 7: ?
 
-            model.lights[22]?.1 = (code & bit6 > 0) ? .yellow : .off   // 6: GIMBAL LOCK
-            model.lights[23]?.1 = (code & bit9 > 0) ? .yellow : .off   // 9: PROG
-            model.lights[25]?.1 = (code & bit8 > 0) ? .yellow : .off   // 8: TRACKER
-            model.lights[27]?.1 = (code & bit3 > 0) ? .yellow : .off   // 3: VEL
-            model.lights[26]?.1 = (code & bit5 > 0) ? .yellow : .off   // 5: ALT
+            model.statusLights[22]?.1 = (code & bit6 > 0) ? .yellow : .off   // 6: GIMBAL LOCK
+            model.statusLights[23]?.1 = (code & bit9 > 0) ? .yellow : .off   // 9: PROG
+            model.statusLights[25]?.1 = (code & bit8 > 0) ? .yellow : .off   // 8: TRACKER
+            model.statusLights[27]?.1 = (code & bit3 > 0) ? .yellow : .off   // 3: VEL
+            model.statusLights[26]?.1 = (code & bit5 > 0) ? .yellow : .off   // 5: ALT
 
         case 0:
             return // logger.log("ooo    DSKY 010: \(ZeroPadWord(code))")
@@ -277,9 +281,9 @@ func dskyInterpretation(_ code: UInt16) {
   ┆                                                                                                  ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 
-            var reg1Bytes = model.register1.0.map { String($0) }
-            var reg2Bytes = model.register2.0.map { String($0) }
-            var reg3Bytes = model.register3.0.map { String($0) }
+            var reg1Bytes = model.reg1.0.map { String($0) }
+            var reg2Bytes = model.reg2.0.map { String($0) }
+            var reg3Bytes = model.reg3.0.map { String($0) }
 
             precondition(reg1Bytes.count == 6 && [" ", "+", "-"].contains(reg1Bytes[0]))
             precondition(reg2Bytes.count == 6 && [" ", "+", "-"].contains(reg2Bytes[0]))
@@ -291,58 +295,58 @@ func dskyInterpretation(_ code: UInt16) {
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
                 case 8:         // "..11"
                     reg1Bytes[1] = dStr
-                    model.register1.0 = reg1Bytes.joined()
+                    model.reg1.0 = reg1Bytes.joined()
 
                 case 3:         // "2531"
                     reg2Bytes[5] = cStr
-                    model.register2.0 = reg2Bytes.joined()
+                    model.reg2.0 = reg2Bytes.joined()
                     reg3Bytes[1] = dStr
-                    model.register3.0 = reg3Bytes.joined()
+                    model.reg3.0 = reg3Bytes.joined()
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ sign bit manipulation ..                                                                         ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
                 case 7:         // "1213" & "R1+"
-                    model.reg1PlusMinus.0 = bBit
-                    reg1Bytes[0] = plu_min(model.reg1PlusMinus)
+                    model.r1Sign.0 = bBit
+                    reg1Bytes[0] = plu_min(model.r1Sign)
                     reg1Bytes[2] = cStr
                     reg1Bytes[3] = dStr
-                    model.register1.0 = reg1Bytes.joined()
+                    model.reg1.0 = reg1Bytes.joined()
 
                 case 6:         // "1415" & "R1-"
-                    model.reg1PlusMinus.1 = bBit
-                    reg1Bytes[0] = plu_min(model.reg1PlusMinus)
+                    model.r1Sign.1 = bBit
+                    reg1Bytes[0] = plu_min(model.r1Sign)
                     reg1Bytes[4] = cStr
                     reg1Bytes[5] = dStr
-                    model.register1.0 = reg1Bytes.joined()
+                    model.reg1.0 = reg1Bytes.joined()
 
                 case 5:         // "2122" & "R2+"
-                    model.reg2PlusMinus.0 = bBit
-                    reg2Bytes[0] = plu_min(model.reg2PlusMinus)
+                    model.r2Sign.0 = bBit
+                    reg2Bytes[0] = plu_min(model.r2Sign)
                     reg2Bytes[1] = cStr
                     reg2Bytes[2] = dStr
-                    model.register2.0 = reg2Bytes.joined()
+                    model.reg2.0 = reg2Bytes.joined()
 
                 case 4:         // "2324" & "R2-"
-                    model.reg2PlusMinus.1 = bBit
-                    reg2Bytes[0] = plu_min(model.reg2PlusMinus)
+                    model.r2Sign.1 = bBit
+                    reg2Bytes[0] = plu_min(model.r2Sign)
                     reg2Bytes[3] = cStr
                     reg2Bytes[4] = dStr
-                    model.register2.0 = reg2Bytes.joined()
+                    model.reg2.0 = reg2Bytes.joined()
 
                 case 2:         // "3233" & "R3+"
-                    model.reg3PlusMinus.0 = bBit
-                    reg3Bytes[0] = plu_min(model.reg3PlusMinus)
+                    model.r3Sign.0 = bBit
+                    reg3Bytes[0] = plu_min(model.r3Sign)
                     reg3Bytes[2] = cStr
                     reg3Bytes[3] = dStr
-                    model.register3.0 = reg3Bytes.joined()
+                    model.reg3.0 = reg3Bytes.joined()
 
                 case 1:         // "3435" & "R3-"
-                    model.reg3PlusMinus.1 = bBit
-                    reg3Bytes[0] = plu_min(model.reg3PlusMinus)
+                    model.r3Sign.1 = bBit
+                    reg3Bytes[0] = plu_min(model.r3Sign)
                     reg3Bytes[4] = cStr
                     reg3Bytes[5] = dStr
-                    model.register3.0 = reg3Bytes.joined()
+                    model.reg3.0 = reg3Bytes.joined()
 
                 default:
                     break

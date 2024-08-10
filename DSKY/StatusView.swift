@@ -7,6 +7,35 @@
 
 import SwiftUI
 
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆                                                                                                  ┆
+  ┆         ┌───────────────────────┐                                                                ┆
+  ┆         │ ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮ │                                                                ┆
+  ┆         │ ┆        ┆ ┆        ┆ │                                                                ┆
+  ┆         │ ╰╌╌╌╌╌╌╌╌╯ ╰╌╌╌╌╌╌╌╌╯ │                                                                ┆
+  ┆         │ ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮ │                                                                ┆
+  ┆         │ ┆        ┆ ┆        ┆ │                                                                ┆
+  ┆         │ ╰╌╌╌╌╌╌╌╌╯ ╰╌╌╌╌╌╌╌╌╯ │                                                                ┆
+  ┆         │ ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮ │                                                                ┆
+  ┆         │ ┆        ┆ ┆        ┆ │                                                                ┆
+  ┆         │ ╰╌╌╌╌╌╌╌╌╯ ╰╌╌╌╌╌╌╌╌╯ │                                                                ┆
+  ┆         │ ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮ │                                                                ┆
+  ┆         │ ┆        ┆ ┆        ┆ │                                                                ┆
+  ┆         │ ╰╌╌╌╌╌╌╌╌╯ ╰╌╌╌╌╌╌╌╌╯ │                                                                ┆
+  ┆         │ ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮ │                                                                ┆
+  ┆         │ ┆        ┆ ┆        ┆ │                                                                ┆
+  ┆         │ ╰╌╌╌╌╌╌╌╌╯ ╰╌╌╌╌╌╌╌╌╯ │                                                                ┆
+  ┆         │ ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮ │                                                                ┆
+  ┆         │ ┆        ┆ ┆        ┆ │                                                                ┆
+  ┆         │ ╰╌╌╌╌╌╌╌╌╯ ╰╌╌╌╌╌╌╌╌╯ │                                                                ┆
+  ┆         │ ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮ │                                                                ┆
+  ┆         │ ┆        ┆ ┆        ┆ │                                                                ┆
+  ┆         │ ╰╌╌╌╌╌╌╌╌╯ ╰╌╌╌╌╌╌╌╌╯ │                                                                ┆
+  ┆         │                       │                                                                ┆
+  ┆         └───────────────────────┘                                                                ┆
+  ┆                                                                                                  ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+
 struct StatusView: View {
     let model = DisKeyModel.shared
 
@@ -16,37 +45,35 @@ struct StatusView: View {
 
             Grid {
                 GridRow {
-                    StatusLight(light: model.lights[11]!)
-                    StatusLight(light: model.lights[21]!)
+                    StatusLight(light: model.statusLights[11]!)
+                    StatusLight(light: model.statusLights[21]!)
                 }
 
                 GridRow {
-                    StatusLight(light: model.lights[12]!)
-                    StatusLight(light: model.lights[22]!)
+                    StatusLight(light: model.statusLights[12]!)
+                    StatusLight(light: model.statusLights[22]!)
                 }
 
                 GridRow {
-                    StatusLight(light: model.lights[13]!)
-                    StatusLight(light: model.lights[23]!)
+                    StatusLight(light: model.statusLights[13]!)
+                    StatusLight(light: model.statusLights[23]!)
                 }
                 GridRow {
-                    StatusLight(light: model.lights[14]!)
-                    StatusLight(light: model.lights[24]!)
+                    StatusLight(light: model.statusLights[14]!)
+                    StatusLight(light: model.statusLights[24]!)
                 }
                 GridRow {
-                    StatusLight(light: model.lights[15]!)
-                    StatusLight(light: model.lights[25]!)
+                    StatusLight(light: model.statusLights[15]!)
+                    StatusLight(light: model.statusLights[25]!)
                 }
                 GridRow {
-                    StatusLight(light: model.lights[16]!)
-//                        .onTapGesture { model.statusAllOff() }
-                    StatusLight(light: model.lights[26]!)
+                    StatusLight(light: model.statusLights[16]!)
+                    StatusLight(light: model.statusLights[26]!)
                 }
 
                 GridRow {
-                    StatusLight(light: model.lights[17]!)
-//                        .onTapGesture { cycleCanned() }
-                    StatusLight(light: model.lights[27]!)
+                    StatusLight(light: model.statusLights[17]!)
+                    StatusLight(light: model.statusLights[27]!)
                 }
             }
         }
