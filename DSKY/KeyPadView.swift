@@ -51,7 +51,7 @@ struct KeyPadView: View {
                 }
 
                 HStack {
-                    KeyView(keyCode: 15) //  "0"
+                    KeyView(keyCode: 16) //  "0"
                     KeyView(keyCode: 01) //  "1"
                     KeyView(keyCode: 02) //  "2"
                     KeyView(keyCode: 03) //  "3"
@@ -125,7 +125,7 @@ struct KeyView: View {
 private func keyText(_ code: UInt16) -> String {
     [17: "VERB",
      31: "NOUN",
-     15: "0",
+     16: "0",
      01: "1",
      02: "2",
      03: "3",
