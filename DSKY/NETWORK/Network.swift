@@ -11,7 +11,7 @@ import Network
 struct Network {
 
     let connection: NWConnection
-    let didStopCallback: ((Error?) -> Void)?
+    let didStopCallback: (Error?) -> Void
 
     init(_ host: String = "127.0.0.1", _ port: UInt16 = 12345) {
 
@@ -26,8 +26,8 @@ struct Network {
                                        port: NWEndpoint.Port(rawValue: port)!,
                                        using: NWParameters(tls: nil,
                                                            tcp: tcpOptions))
-        self.connection.stateUpdateHandler = self.stateDidChange(to:)
 
+        self.connection.stateUpdateHandler = self.stateDidChange(to:)
         self.connection.start(queue: .main)
     }
 
@@ -61,9 +61,7 @@ struct Network {
         print("... \(#function)")
         self.connection.stateUpdateHandler = nil
         self.connection.cancel()
-        if let didStopCallback = self.didStopCallback {
-            didStopCallback(error)
-        }
+        self.didStopCallback(error)
     }
 
     public func send(data: Data) {

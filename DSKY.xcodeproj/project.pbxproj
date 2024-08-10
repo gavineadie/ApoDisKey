@@ -19,8 +19,8 @@
 		864BD6192C3BD69700D4C896 /* Gorton-Condensed.otf in Resources */ = {isa = PBXBuildFile; fileRef = 864BD6162C3BD69700D4C896 /* Gorton-Condensed.otf */; };
 		864BD61A2C3BD69700D4C896 /* Gorton-Normal-120.otf in Resources */ = {isa = PBXBuildFile; fileRef = 864BD6172C3BD69700D4C896 /* Gorton-Normal-120.otf */; };
 		864BD61B2C3BD69700D4C896 /* Gorton-Normal-180.otf in Resources */ = {isa = PBXBuildFile; fileRef = 864BD6182C3BD69700D4C896 /* Gorton-Normal-180.otf */; };
-		867EBD682C3A1E29004C4DDD /* DSKYApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD672C3A1E29004C4DDD /* DSKYApp.swift */; };
-		867EBD6A2C3A1E29004C4DDD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD692C3A1E29004C4DDD /* ContentView.swift */; };
+		867EBD682C3A1E29004C4DDD /* DisKeyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD672C3A1E29004C4DDD /* DisKeyApp.swift */; };
+		867EBD6A2C3A1E29004C4DDD /* DisKeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD692C3A1E29004C4DDD /* DisKeyView.swift */; };
 		867EBD7A2C3A1E2A004C4DDD /* DSKYTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD792C3A1E2A004C4DDD /* DSKYTests.swift */; };
 		867EBD932C3A5348004C4DDD /* Debug.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 867EBD922C3A5348004C4DDD /* Debug.xcassets */; };
 		86A055072C405BB3007996B7 /* DisKeyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A055062C405BB3007996B7 /* DisKeyModel.swift */; };
@@ -57,8 +57,8 @@
 		864BD6172C3BD69700D4C896 /* Gorton-Normal-120.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gorton-Normal-120.otf"; sourceTree = "<group>"; };
 		864BD6182C3BD69700D4C896 /* Gorton-Normal-180.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gorton-Normal-180.otf"; sourceTree = "<group>"; };
 		867EBD642C3A1E29004C4DDD /* ApoDisKey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ApoDisKey.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		867EBD672C3A1E29004C4DDD /* DSKYApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSKYApp.swift; sourceTree = "<group>"; };
-		867EBD692C3A1E29004C4DDD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		867EBD672C3A1E29004C4DDD /* DisKeyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisKeyApp.swift; sourceTree = "<group>"; };
+		867EBD692C3A1E29004C4DDD /* DisKeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisKeyView.swift; sourceTree = "<group>"; };
 		867EBD6D2C3A1E2A004C4DDD /* DSKY.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DSKY.entitlements; sourceTree = "<group>"; };
 		867EBD752C3A1E2A004C4DDD /* DSKYTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DSKYTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		867EBD792C3A1E2A004C4DDD /* DSKYTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSKYTests.swift; sourceTree = "<group>"; };
@@ -144,8 +144,8 @@
 		867EBD662C3A1E29004C4DDD /* DSKY */ = {
 			isa = PBXGroup;
 			children = (
-				867EBD672C3A1E29004C4DDD /* DSKYApp.swift */,
-				867EBD692C3A1E29004C4DDD /* ContentView.swift */,
+				867EBD672C3A1E29004C4DDD /* DisKeyApp.swift */,
+				867EBD692C3A1E29004C4DDD /* DisKeyView.swift */,
 				864BD60E2C3B416D00D4C896 /* StatusView.swift */,
 				864BD6102C3B42DF00D4C896 /* DisplayView.swift */,
 				864BD6082C3B2B9900D4C896 /* KeyPadView.swift */,
@@ -291,7 +291,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				867EBD6A2C3A1E29004C4DDD /* ContentView.swift in Sources */,
+				867EBD6A2C3A1E29004C4DDD /* DisKeyView.swift in Sources */,
 				86A055072C405BB3007996B7 /* DisKeyModel.swift in Sources */,
 				864BD6092C3B2B9900D4C896 /* KeyPadView.swift in Sources */,
 				86E838922C3CF06400E7C573 /* DecorView.swift in Sources */,
@@ -300,7 +300,7 @@
 				86B26DB92C4CD3020021E594 /* Extensions.swift in Sources */,
 				86CB9B5E2C45F94400968C20 /* Network.swift in Sources */,
 				864BD6112C3B42DF00D4C896 /* DisplayView.swift in Sources */,
-				867EBD682C3A1E29004C4DDD /* DSKYApp.swift in Sources */,
+				867EBD682C3A1E29004C4DDD /* DisKeyApp.swift in Sources */,
 				864BD60F2C3B416D00D4C896 /* StatusView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

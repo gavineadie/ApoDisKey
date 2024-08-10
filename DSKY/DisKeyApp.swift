@@ -11,7 +11,7 @@ import OSLog
 let logger = Logger(subsystem: "com.ramsaycons.ApoDisKey", category: "")
 
 @main
-struct DSKYApp: App {
+struct DisKeyApp: App {
     init() {
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -38,7 +38,7 @@ struct DSKYApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            DisKeyView()
         }
     }
 }

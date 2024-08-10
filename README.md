@@ -10,7 +10,7 @@
 
 * It looks like the "separator" lines illuminate.  Purpose?
 
-* channel 165 (octal) hasn’t been silent for a long time [expecting at least 164 second repeat?)
+* channel 165 (octal) has been silent for a long time [expecting at least 164 second repeat?)
 _____________________________
 
 .. and one question: Where is the "AGC Warning” [channel 163 — Bit 1: AGC] .. on another panel, audible?
