@@ -50,10 +50,10 @@ class DisKeyModel {
     private init() {
 
 #if os(iOS) || os(tvOS)
-        //      network = Network("192.168.1.232", 19697)   // .. Ubuntu
+//      network = Network("192.168.1.232", 19697)   // .. Ubuntu
         network = Network("192.168.1.100", 19698)   // .. MaxBook
 #else
-        //      network = Network("192.168.1.232", 19697)   // .. Ubuntu
+//      network = Network("192.168.1.232", 19697)   // .. Ubuntu
         network = Network("127.0.0.1", 19697)
 #endif
 

@@ -47,10 +47,7 @@ func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
     if ((byte[0] == 0xff) &&
         (byte[1] == 0xff) &&
         (byte[2] == 0xff) &&
-        (byte[3] == 0xff)) {
-//        logger.log("       111111111 111111111111111")
-        return nil
-    }
+        (byte[3] == 0xff)) { return nil }
 
     if (byte[0] / 64) != 0 || (byte[1] / 64) != 1 ||
        (byte[2] / 64) != 2 || (byte[3] / 64) != 3 {
@@ -88,7 +85,7 @@ func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
         case 0o011:                 // flags for indicator lamps
             logger.log("""
                 »»»    DSKY 011:           \(ZeroPadWord(value, to: 8)) BITS (8)       \
-                :: \(prettyCh011(value)) [011]
+                :: \(prettyCh011(value))
                 """)
             model.comp.1 = value & bit2 > 0                             // "COMP ACTY"
 
@@ -139,7 +136,7 @@ func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
         case 0o163:
             logger.log("""
                 »»»    DSKY 163:         \(ZeroPadWord(value, to: 10)) BITS (10)      \
-                :: \(prettyCh163(value)) [163]
+                :: \(prettyCh163(value))
                 """)
 
 //          model.lights[xx]?.1 = (value & 0x0001 > 0) ? .yellow : .off // Bit 1: AGC
@@ -187,7 +184,7 @@ func dskyInterpretation(_ code: UInt16) {
             logger.log("""
                 ***    DSKY 010: \(ZeroPadWord(code).prefix(5))   \
                 \(ZeroPadWord(code).dropFirst(5)) \
-                LIGHTS (10)    :: \(prettyCh010(code & 0b0000000_111111111)) [010]
+                LIGHTS (10)    :: \(prettyCh010(code & 0b0000000_111111111))
                 """)
 
             model.statusLights[12]?.1 = (code & bit4 > 0) ?  .white : .off   // 4: NO ATT

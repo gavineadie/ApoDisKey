@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AVFoundation
 
 /*
             ┌────────────────────────────────────────────────────┐
@@ -103,6 +104,12 @@ struct KeyView: View {
             .onTapGesture {
                 if keyCode < 99 {
                     logger.log("Key:   \(keyText(keyCode)) (\(keyCode))")
+
+                    if let clickURL = Bundle.main.url(forResource: "dsky", withExtension: "aiff") {
+                        var clickSound: SystemSoundID = 0
+                        AudioServicesCreateSystemSoundID(clickURL as CFURL, &clickSound)
+                        AudioServicesPlaySystemSound(clickSound)
+                    }
                     model.network.send(data: formIoPacket(0o015, keyCode))
                 }
             }
