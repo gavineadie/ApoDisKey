@@ -129,24 +129,26 @@ struct KeyView: View {
     KeyView(keyCode: 255)
 }
 
-private func keyText(_ code: UInt16) -> String {
-    [17: "VERB",
-     31: "NOUN",
-     16: "0",
-     01: "1",
-     02: "2",
-     03: "3",
-     04: "4",
-     05: "5",
-     06: "6",
-     07: "7",
-     08: "8",
-     09: "9",
-     27: "-",
-     26: "+",
-     30: "CLR",
-     99: "PRO",
-     25: "KEY REL",
-     28: "ENTR",
-     18: "RSET"][code] ?? "ERROR"
-}
+private func keyText(_ code: UInt16) -> String { keyDict[code] ?? "ERROR" }
+
+let keyDict: [UInt16:String] = [
+    17: "VERB",
+    31: "NOUN",
+    16: "0",
+    01: "1",
+    02: "2",
+    03: "3",
+    04: "4",
+    05: "5",
+    06: "6",
+    07: "7",
+    08: "8",
+    09: "9",
+    27: "-",
+    26: "+",
+    30: "CLR",
+    99: "PRO",
+    25: "KEY REL",
+    28: "ENTR",
+    18: "RSET"
+]
