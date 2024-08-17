@@ -35,8 +35,6 @@ import Foundation
 /// A 4-byte packet representing yaAGC channel i/o can be converted to an integer channel-number and value.
 func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
 
-    let model = DisKeyModel.shared
-
     guard data.count == 4 else {
         logger.log("\(#function): not four bytes")
         return nil
@@ -61,6 +59,13 @@ func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
     let value: UInt16 =   UInt16(byte[1] & UInt8(0b00000111)) << 12 |
                           UInt16(byte[2] & UInt8(0b00111111)) << 6 |
                           UInt16(byte[3] & UInt8(0b00111111))
+
+    return (channel, value, (byte[0] & 0b00100000) > 0)
+}
+
+func channelAction(_ channel: UInt16, _ value: UInt16, _ tf: Bool = true) {
+
+    let model = DisKeyModel.shared
 
     switch channel {
         case 0o005...0o006:
@@ -159,8 +164,6 @@ func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
             logger.log("??? channel \(channel, format: .octal(minDigits: 3)): \(ZeroPadWord(value))")
 
     }
-
-    return (channel, value, (byte[0] & 0b00100000) > 0)
 }
 
 func dskyInterpretation(_ code: UInt16) {

@@ -5,44 +5,60 @@
 # as described on our developer page; for informational purposes, input channels that 
 # record keystrokes (outputs from the DSKY) are generally included as well.
 
-# Canned script for DSKY that simply turns on all of the digits and lamps
-# one after the other, at half-second intervals.
+# Canned script for DSKY that simply turns on all of the digits and lamps one after the other,
+# at half-second intervals.
 
 # Starting state ... all digits, signs, and lamps off.
-0	10	60000	# row12 - lights
+# DEC | OCT | OCT
 
-0	10	54000	# M1M2 (P1P2)
-0	10	50000	# V1V2
-0	10	44000	# N1N2
-0	10	40000	# ..11
-0	10	34000	# 1213
-0	10	30000	# 1415
-0	10	24000	# 2122
-0	10	20000	# 2324
-0	10	14000	# 2531
-0	10	10000	# 3233
-0	10	04000	# 3435
+500   010	60000	# row12 - lights
 
-0	11	00000	# channel 11 indicator lamps
-0	13	00000	# channel 13 DSKY lamp tests
-0	163 00000	# 
+250	010	54000	# M1M2 (P1P2)
+250	010	50000	# V1V2
+250	010	44000	# N1N2
+250	010	40000	# ..11
+250	010	34000	# 1213
+250	010	30000	# 1415
+250	010	24000	# 2122
+250	010	20000	# 2324
+250	010	14000	# 2531
+250	010	10000	# 3233
+250	010	04000	# 3435
 
-5000 10 00000
+500	011	00000	# channel 11 indicator lamps
+500	013	00000	# channel 13 DSKY lamp tests
+500	163 00000	# channel 163 ..
 
-# COMP
-500 11 00002    # Delay half a second, COMP ACTY on.
+5000 010 00000
 
-# PROG
-500 10 55640    # Delay half a second, left-hand PROG turns to 8.
-500 10 55675    # Delay half a second, right-hand PROG turns to 8.
+                # COMP
+500 011 00002   # Delay half a second, COMP ACTY on.
+500 011 00000   # Delay half a second, COMP ACTY off.
 
-# VERB ...
-500 10 51640
-500 10 51675
+50 011 00002   # Delay half a second, COMP ACTY on.
+50 011 00000   # Delay half a second, COMP ACTY off.
+50 011 00002   # Delay half a second, COMP ACTY on.
+50 011 00000   # Delay half a second, COMP ACTY off.
+50 011 00002   # Delay half a second, COMP ACTY on.
+50 011 00000   # Delay half a second, COMP ACTY off.
+50 011 00002   # Delay half a second, COMP ACTY on.
+50 011 00000   # Delay half a second, COMP ACTY off.
+50 011 00002   # Delay half a second, COMP ACTY on.
+50 011 00000   # Delay half a second, COMP ACTY off.
+50 011 00002   # Delay half a second, COMP ACTY on.
+50 011 00000   # Delay half a second, COMP ACTY off.
 
-# NOUN ...
-500 10 45640
-500 10 45675
+                # PROG
+1500 010 55640   # Delay half a second, left-hand PROG turns to 8.
+500 010 55675   # Delay half a second, right-hand PROG turns to 8.
+
+                # VERB ...
+1500 010 51640
+500 010 51675
+
+                # NOUN ...
+1500 010 45640
+500 010 45675
 
 # ------------------------------------------------------------------------------------------------------
 # R1
@@ -87,18 +103,19 @@
 500 163 00620	# RESTART
 500 163 00720	# OPER ERR
 500 10 60650	# TRACKER
-500 10 60651	# PRIO DISP
+# 500 10 60651	# PRIO DISP (CM ONLY)
 500 10 60671	# ALT
-500 10 60673	# NO DAP
+# 500 10 60673	# NO DAP (CM ONLY)
 500 10 60677	# VEL
 
-# Wait a while, and then 5 RSET's to quit ...
-5000 15 22
-100 15 22
-100 15 22
-100 15 22
-100 15 22
+# Wait a while, and then 5 RSET's to quit ... (WE DON'T DO THIS)
+# 5000 15 22
+# 100 15 22
+# 100 15 22
+# 100 15 22
+# 100 15 22
 
+# ------------------------------------------------------------------------------------------------------
 # LMA790-3-LM11-ApolloOperationsHandbookLunarModuleLM11AndSubsequent-Volume2-OperationalProcedures.pdf
 #
 # DSKY Light Test
@@ -110,7 +127,7 @@
 #  UPLK 3↑
 #  AO ATT↑
 #  STBY↑
-#  KEY REL flas
+#  KEY REL flash
 #  OP ERR flash
 #  PRIO DISP↑
 #  NO DAP↑

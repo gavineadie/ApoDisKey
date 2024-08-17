@@ -99,11 +99,11 @@ struct KeyView: View {
             .padding(.all, keyPadding)
             .cornerRadius(keyCorner)
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ the "PRO" key os a long press                                                                    ┆
+  ┆ the "PRO" key is a long press                                                                    ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
             .onTapGesture {
                 if keyCode < 99 {
-                    logger.log("Key:   \(keyText(keyCode)) (\(keyCode))")
+                    logger.log("<<<    \(keyText(keyCode)) (\(keyCode))")
 
                     if let clickURL = Bundle.main.url(forResource: "dsky", withExtension: "aiff") {
                         var clickSound: SystemSoundID = 0
@@ -115,7 +115,7 @@ struct KeyView: View {
             }
             .simultaneousGesture(LongPressGesture(minimumDuration: 1.0)
                 .onEnded { _ in
-                    logger.log("Key:   \(keyText(keyCode)) (\(keyCode))")
+                    logger.log("<<<    \(keyText(keyCode)) (\(keyCode))")
                     model.network.send(data: formIoPacket(0o015, keyCode))
                 })
     }
