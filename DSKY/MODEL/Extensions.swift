@@ -255,6 +255,7 @@ func readCanned() {
                     .components(separatedBy: .whitespaces)
                     .filter({!$0.isEmpty})
                 if words.isEmpty || words[0].starts(with: /!|#|--/) || words.count < 3 { continue }
+                if words[0].starts(with: /!|#|--/) { return }
 
                 let delaySecs = Double(Int(words[0]) ?? 0) / 1000.0
                 timerDeadline += delaySecs

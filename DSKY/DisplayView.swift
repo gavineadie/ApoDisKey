@@ -40,7 +40,6 @@ struct DisplayView: View {
     var body: some View {
         ZStack {
             PanelsView()
-//            Image("Display").cornerRadius(8.0)
 
             VStack {
                 Row1(comp: model.comp, prog: model.prog)
@@ -102,7 +101,7 @@ struct Comp: View {
             DisplayPlacard(label: "COMP\nACTY",
                            illum: state.1,
                            placardHeight: 60.0)
-            DisplayNumbers(state: ("  ", false))
+            DisplayNumbers(value: ("  ", false))
         }
     }
 }
@@ -113,7 +112,7 @@ struct Prog: View {
     var body: some View {
         VStack {
             DisplayPlacard(label: "PROG")
-            DisplayNumbers(state: state)
+            DisplayNumbers(value: state)
         }
     }
 }
@@ -153,13 +152,20 @@ struct Row2: View {
     Row2()
 }
 
+#Preview {
+    VStack {
+        Row1()
+        Row2()
+    }
+}
+
 struct Verb: View {
     var state: Display
 
     var body: some View {
         VStack {
             DisplayPlacard(label: "VERB")
-            DisplayNumbers(state: state)
+            DisplayNumbers(value: state)
         }
     }
 }
@@ -170,7 +176,7 @@ struct Noun: View {
     var body: some View {
         VStack {
             DisplayPlacard(label: "NOUN")
-            DisplayNumbers(state: state)
+            DisplayNumbers(value: state)
                 .padding(.trailing, -1.0)
         }
     }
@@ -193,7 +199,7 @@ struct Register1: View {
     var state: Display
 
     var body: some View {
-        DisplayNumbers(state: state)
+        DisplayNumbers(value: state)
     }
 }
 
@@ -214,7 +220,7 @@ struct Register2: View {
     var state: Display
 
     var body: some View {
-        DisplayNumbers(state: state)
+        DisplayNumbers(value: state)
     }
 }
 
@@ -235,7 +241,7 @@ struct Register3: View {
     var state: Display
 
     var body: some View {
-        DisplayNumbers(state: state)
+        DisplayNumbers(value: state)
     }
 }
 
@@ -268,17 +274,20 @@ struct DisplayPlacard: View {
 }
 
 struct DisplayNumbers: View {
-    var state: Display
+    var value: Display
 
     var body: some View {
 
-        switch state.0.count {
+        switch value.0.count {
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ REGISTER ..                                                                                      ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
             case 6:
                 VStack {
                     DisplaySeparator()
 
-                    if state.0.starts(with: " ") {
-                        Text(adjustDisplay(String(state.0.dropFirst())))
+                    if value.0.starts(with: " ") {
+                        Text(adjustDisplay(String(value.0.dropFirst())))
                             .font(.custom("Zerlina",
                                           fixedSize: zerlinaFixedSize))
                             .padding([.top,
@@ -289,7 +298,7 @@ struct DisplayNumbers: View {
                             .frame(width: 190.0,
                                    height: panelDigitSize)
                     } else {
-                        Text(adjustDisplay(String(state.0)))
+                        Text(adjustDisplay(String(value.0)))
                             .font(.custom("Zerlina",
                                           fixedSize: zerlinaFixedSize))
                             .padding(.all, -10.0)
@@ -299,13 +308,13 @@ struct DisplayNumbers: View {
                     }
                 }
             case 2:
-                if state.0 == "  " {
-                    Text(state.0)
+                if value.0 == "  " {
+                    Text(value.0)
                         .frame(width: 95.0, height: 2.0)
                 } else {
 
-                    if state.1 {
-                        Text(adjustDisplay(String(state.0)))
+                    if value.1 {
+                        Text(adjustDisplay(String(value.0)))
                             .font(.custom("Zerlina",
                                           fixedSize: zerlinaFixedSize))
                             .padding(.top, 10.0)
@@ -313,7 +322,7 @@ struct DisplayNumbers: View {
                             .frame(width: 95.0,
                                    height: panelDigitSize)
                     } else {
-                        Text(state.0)
+                        Text(value.0)
                             .font(.custom("Zerlina",
                                           fixedSize: zerlinaFixedSize))
                             .foregroundColor(panelInColor)
@@ -336,7 +345,7 @@ struct DisplayNumbers: View {
 }
 
 #Preview {
-    DisplayNumbers(state: ("614121", true))
+    DisplayNumbers(value: ("614121", true))
 }
 
 #Preview {
@@ -352,7 +361,7 @@ struct DisplayNumbers: View {
         VStack {
             Register1(state: ("+88888", true))
             Register2(state: ("-88888", false))
-            Register2(state: (" 99999", false))
+            Register3(state: (" 99999", false))
         }
     }
 }

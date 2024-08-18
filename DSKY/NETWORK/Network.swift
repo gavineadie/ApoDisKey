@@ -79,8 +79,9 @@ struct Network {
                            maximumLength: 4) { (content, _, connectionEnded, error) in
 
             if let data = content, !data.isEmpty {
-                let (channel, action, _) = parseIoPacket(data)!
-                channelAction(channel, action)
+                if let (channel, action, _) = parseIoPacket(data) {
+                    channelAction(channel, action)
+                }
 
                 recv()
             }

@@ -37,17 +37,6 @@ import Foundation
 /// A 4-byte packet representing yaAGC channel i/o can be converted to an integer channel-number and value.
 func formIoPacket(_ channel: UInt16, _ value: UInt16) -> Data {
 
-//    logger.log("0000000ccccccccc  0vvvvvvvvvvvvvvv \(#function)")
-//    logger.log("       \(ZeroPadWord(channel, to: 9))   \(ZeroPadWord(value, to: 15))")
-//    logger.log("                \(ZeroPadWord(channel, to: 9).dropFirst(6))")
-//    logger.log("""
-//                 __\(ZeroPadWord((0b000000111111111 & channel), to: 9).dropLast(3))
-//                          __\(ZeroPadWord((0b000000111111111 & channel), to: 9).dropFirst(6))---
-//                          __---\(ZeroPadWord((0b011111111111111 & value)).dropLast(12))
-//                                   __\(ZeroPadWord(value, to: 15).dropFirst(3).dropLast(6))
-//                                            __\(ZeroPadWord(value, to: 15).dropFirst(9))
-//            """)
-
     guard (0...0x1ff).contains(channel) else { fatalError("\(#function) channel (\(channel) out of range") }
     guard (0...0x7fff).contains(value) else { fatalError("\(#function) value (\(value) out of range") }
 
@@ -56,15 +45,6 @@ func formIoPacket(_ channel: UInt16, _ value: UInt16) -> Data {
                               UInt8((0b111000000000000 & value) >> 12)
     let byte2: UInt8 = 0x80 | UInt8((0b000111111000000 & value) >> 6)
     let byte3: UInt8 = 0xC0 | UInt8((0b000000000111111 & value))
-
-//    logger.log("""
-//                 __\(ZeroPadByte(byte0).dropFirst(2)) \
-//            __\(ZeroPadByte(byte1).dropFirst(2)) \
-//            __\(ZeroPadByte(byte2).dropFirst(2)) \
-//            __\(ZeroPadByte(byte3).dropFirst(2))
-//            """)
-
-//    logger.log("     \(ZeroPadByte(byte0)) \(ZeroPadByte(byte1)) \(ZeroPadByte(byte2)) \(ZeroPadByte(byte3))")
 
     return Data([byte0, byte1, byte2, byte3])
 }

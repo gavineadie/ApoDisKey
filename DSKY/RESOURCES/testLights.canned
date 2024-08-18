@@ -13,80 +13,80 @@
 
 500   010	60000	# row12 - lights
 
-250	010	54000	# M1M2 (P1P2)
-250	010	50000	# V1V2
-250	010	44000	# N1N2
-250	010	40000	# ..11
-250	010	34000	# 1213
-250	010	30000	# 1415
-250	010	24000	# 2122
-250	010	20000	# 2324
-250	010	14000	# 2531
-250	010	10000	# 3233
-250	010	04000	# 3435
+150	010	54000	# M1M2 (P1P2)
+150	010	50000	# V1V2
+150	010	44000	# N1N2
+150	010	40000	# ..11
+150	010	34000	# 1213
+150	010	30000	# 1415
+150	010	24000	# 2122
+150	010	20000	# 2324
+150	010	14000	# 2531
+150	010	10000	# 3233
+150	010	04000	# 3435
 
 500	011	00000	# channel 11 indicator lamps
 500	013	00000	# channel 13 DSKY lamp tests
 500	163 00000	# channel 163 ..
 
-5000 010 00000
+1000 010 00000
 
                 # COMP
 500 011 00002   # Delay half a second, COMP ACTY on.
 500 011 00000   # Delay half a second, COMP ACTY off.
 
-50 011 00002   # Delay half a second, COMP ACTY on.
-50 011 00000   # Delay half a second, COMP ACTY off.
-50 011 00002   # Delay half a second, COMP ACTY on.
-50 011 00000   # Delay half a second, COMP ACTY off.
-50 011 00002   # Delay half a second, COMP ACTY on.
-50 011 00000   # Delay half a second, COMP ACTY off.
-50 011 00002   # Delay half a second, COMP ACTY on.
-50 011 00000   # Delay half a second, COMP ACTY off.
-50 011 00002   # Delay half a second, COMP ACTY on.
-50 011 00000   # Delay half a second, COMP ACTY off.
-50 011 00002   # Delay half a second, COMP ACTY on.
-50 011 00000   # Delay half a second, COMP ACTY off.
+50 011 00002    # Delay half a second, COMP ACTY on.
+50 011 00000    # Delay half a second, COMP ACTY off.
+50 011 00002    # Delay half a second, COMP ACTY on.
+50 011 00000    # Delay half a second, COMP ACTY off.
+50 011 00002    # Delay half a second, COMP ACTY on.
+50 011 00000    # Delay half a second, COMP ACTY off.
+50 011 00002    # Delay half a second, COMP ACTY on.
+50 011 00000    # Delay half a second, COMP ACTY off.
+50 011 00002    # Delay half a second, COMP ACTY on.
+50 011 00000    # Delay half a second, COMP ACTY off.
+50 011 00002    # Delay half a second, COMP ACTY on.
+50 011 00000    # Delay half a second, COMP ACTY off.
 
                 # PROG
-1500 010 55640   # Delay half a second, left-hand PROG turns to 8.
-500 010 55675   # Delay half a second, right-hand PROG turns to 8.
+500 010 55640   # Delay half a second, left-hand PROG turns to 8.
+150 010 55675   # Delay half a second, right-hand PROG turns to 8.
 
                 # VERB ...
-1500 010 51640
-500 010 51675
+500 010 51640
+150 010 51675
 
                 # NOUN ...
-1500 010 45640
-500 010 45675
+500 010 45640
+150 010 45675
 
 # ------------------------------------------------------------------------------------------------------
 # R1
 500 10 36000    # SIGN + == 1111 0 0000 00000
 
-500 10 41035    # (41035) # Left digit 8
-500 10 37640
-500 10 37675
-500 10 31640
-500 10 31675    # Right digit 8
+150 10 41035    # (41035) # Left digit 8
+150 10 37640
+150 10 37675
+150 10 31640
+150 10 31675    # Right digit 8
 
 # R2
 500 10 26000
 
-500 10 27640
-500 10 27675
-500 10 21640
-500 10 21675
-500 10 15640
+150 10 27640
+150 10 27675
+150 10 21640
+150 10 21675
+150 10 15640
 
 # R3
 500 10 12000
 
-500 10 15675
-500 10 13640
-500 10 13675
-500 10 05640
-500 10 05675
+150 10 15675
+150 10 13640
+150 10 13675
+150 10 05640
+150 10 05675
 
 # UPLINK ACTY
 500 11 00006	# COMP↑  UPLINK↑
@@ -95,21 +95,23 @@
 500 11 00016	# TEMP↑
 
 # and so on with other lamps
-500 10 60010	# NO ATT
-500 10 60050	# GIMBAL LOCK
-500 163 00400	# STBY (TEMP↓ + 0o10 to restore)
-500 10 60450	# PROG
-500 163 00420	# KEY REL
-500 163 00620	# RESTART
-500 163 00720	# OPER ERR
-500 10 60650	# TRACKER
+150 10 60010	# NO ATT
+150 10 60050	# GIMBAL LOCK
+150 163 00400	# STBY (TEMP↓ + 0o10 to restore)
+150 10 60450	# PROG
+150 163 00420	# KEY REL
+150 163 00620	# RESTART
+150 163 00720	# OPER ERR
+150 10 60650	# TRACKER
 # 500 10 60651	# PRIO DISP (CM ONLY)
-500 10 60671	# ALT
+150 10 60671	# ALT
 # 500 10 60673	# NO DAP (CM ONLY)
-500 10 60677	# VEL
+150 10 60677	# VEL
 
-# Wait a while, and then 5 RSET's to quit ... (WE DON'T DO THIS)
-# 5000 15 22
+-end-of-file-
+
+# Wait a while, and then 5 RSET's to quit ...
+# 500 15 22
 # 100 15 22
 # 100 15 22
 # 100 15 22

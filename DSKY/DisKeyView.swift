@@ -55,7 +55,7 @@ struct DisKeyView: View {
         ZStack {
             Rectangle()
                 .fill(backgroundColor)
-                .padding(8.0)
+                .padding(-80.0)
 
             Image("BackGround")
                 .cornerRadius(18.0)
@@ -73,6 +73,9 @@ struct DisKeyView: View {
             }
             .padding(.top, 5.0)
         }
+#if os(iOS) || os(tvOS)
+        .scaleEffect(0.65)
+#endif
 
         HStack {
             Text("T1").background(Rectangle().stroke()).onTapGesture(perform: statusAllOff)

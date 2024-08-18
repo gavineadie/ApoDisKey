@@ -94,15 +94,18 @@ struct LittleWhiteCircle: View {
     LittleWhiteCircle()
 }
 
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ .. takes a string and converts "_" to faded "8" ..                                               ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 func adjustDisplay(_ text: String) -> AttributedString {
 
     var attrText = AttributedString()
 
     for byte in text {
         var attrByte = AttributedString(String(byte))
-        if byte == " " {
+        if byte == "_" {
             attrByte = AttributedString("8")
-            attrByte.foregroundColor = panelInColor
+            attrByte.foregroundColor = Color(white: 0.34)
         } else {
             attrByte.foregroundColor = displayElectro
         }
