@@ -78,6 +78,20 @@ class DisKeyModel {
     public var r2Sign = (false, false)
     public var r3Sign = (false, false)
 
+    func electroluminescentOff() {
+        comp = ("  ", false)
+        prog = ("  ", false)
+        verb = ("  ", false)
+        noun = ("  ", false)
+
+        reg1 = ("      ", false)
+        reg2 = ("      ", false)
+        reg3 = ("      ", false)
+
+        r1Sign = (false, false)
+        r2Sign = (false, false)
+        r3Sign = (false, false)
+    }
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ the KeyPad has no lights or colors                                                               ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
@@ -215,12 +229,14 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ tf: Bool = true) {
 
             model.statusLights[21]?.1 = (value & bit4 > 0) ? .yellow : .off     // Bit 4: TEMP lamp
             model.statusLights[14]?.1 = (value & bit5 > 0) ? .white : .off      // Bit 5: KEY REL lamp
-            model.verb.1 = value & bit6 == 0                                    // flash "VERB"
-            model.noun.1 = value & bit6 == 0                                    // flash "NOUN"
+            model.verb.1 = value & bit6 == 0                                    // Bit 6: flash "VERB"
+            model.noun.1 = value & bit6 == 0                                    // Bit 6: flash "NOUN"
             model.statusLights[15]?.1 = (value & bit7 > 0) ? .white : .off      // Bit 7: OPER ERR lamp
             model.statusLights[24]?.1 = (value & bit8 > 0) ? .yellow : .off     // Bit 8: RESTART lamp
             model.statusLights[13]?.1 = (value & bit9 > 0) ? .white : .off      // Bit 9: STBY lamp
-                                                                                // Bit 10: EL off
+
+            if value & bit10 > 0 { model.electroluminescentOff() }              // Bit 10: EL panel
+
         case 0o165:
             logger.log("»»» DSKY165 \(ZeroPadWord(value)) TIME1")
 

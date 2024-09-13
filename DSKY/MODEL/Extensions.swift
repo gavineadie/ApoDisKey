@@ -16,6 +16,7 @@ let bit6: UInt16 = 0b0000_0000_0010_0000
 let bit7: UInt16 = 0b0000_0000_0100_0000
 let bit8: UInt16 = 0b0000_0000_1000_0000
 let bit9: UInt16 = 0b0000_0001_0000_0000
+let bit10: UInt16 = 0b0000_0010_0000_0000
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆                                                                                                  ┆
@@ -108,25 +109,25 @@ let digitsDict = [  0: "_",
   ┆ Note:                     "TEMP" and                                                             ┆
   ┆                           "RESTART" are not controlled here                                      ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-func prettyCh010(_ code: UInt16) -> String {
+let ch010Labs = [" ??? ",
+                 "PROG ",    // b9
+                 "TRAK ",    // b8
+                 " b7? ",    // b7
+                 "GMBL ",    // b6
+                 " ALT ",    // b5
+                 "NOAT ",    // b4
+                 " VEL ",    // b3
+                 "NODP ",    // b2
+                 "PRIO ",    // b1
+                 "NEVER"]
 
-    let labs = [" ??? ",
-                "PROG ",    // b9
-                "TRAK ",    // b8
-                " b7? ",    // b7
-                "GMBL ",    // b6
-                " ALT ",    // b5
-                "AOAT ",    // b4
-                " VEL ",    // b3
-                "NODP ",    // b2
-                "PRIO ",    // b1
-                "NEVER"]
+func prettyCh010(_ code: UInt16) -> String {
 
     let bitArray = ZeroPadWord(code, to: 10).split(separator: "")
     var catString = ""
 
     for index in 0..<bitArray.count {
-        catString += (bitArray[index] == "0") ? "  ↓  " : labs[index]
+        catString += (bitArray[index] == "0") ? "  ↓  " : ch010Labs[index]
     }
 
     return catString
@@ -144,23 +145,23 @@ func prettyCh010(_ code: UInt16) -> String {
   ┆                 This means to flash the digits in the NOUN and VERB areas.                       ┆
   ┆          Bit 7: Lights the "OPR ERR" indicator.                                                  ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-func prettyCh011(_ code: UInt16) -> String {
+let ch011Labs = [" ??? ",    // b8
+                 "OPER ",    // b7
+                 "V+N↕︎ ",    // b6
+                 "KREL ",    // b5
+                 "TEMP ",    // b4
+                 "UPLK ",    // b3
+                 "COMP ",    // b2
+                 " ??? ",    // b1
+                 "NEVER"]
 
-    let labs = [" ??? ",    // b8
-                "OPER ",    // b7
-                "V+N↕︎ ",    // b6
-                "KREL ",    // b5
-                "TEMP ",    // b4
-                "UPLK ",    // b3
-                "COMP ",    // b2
-                " ??? ",    // b1
-                "NEVER"]
+func prettyCh011(_ code: UInt16) -> String {
 
     let bitArray = ZeroPadWord(code, to: 8).split(separator: "")
     var catString = "          "
 
     for index in 0..<bitArray.count {
-        catString += (bitArray[index] == "0") ? "  ↓  " : labs[index]
+        catString += (bitArray[index] == "0") ? "  ↓  " : ch011Labs[index]
     }
 
     return catString
@@ -179,25 +180,25 @@ func prettyCh011(_ code: UInt16) -> String {
   ┆          Bit 9:       STBY lamp                                                                  ┆
   ┆          Bit 10:     EL off                                                                      ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-func prettyCh163(_ code: UInt16) -> String {
+let ch163Labs = [" EL↓ ",    // b10
+                 "STBY ",    // b9
+                 "RSRT ",    // b8
+                 "OPER ",    // b7
+                 "V+N↕︎ ",    // b6
+                 "KREL ",    // b5
+                 "TEMP ",    // b4
+                 "  3  ",    // b3
+                 "  2  ",    // b2
+                 " AGC ",    // b1
+                 "NEVER"]
 
-    let labs = [" ??? ",
-                " EL↓ ",    // b9
-                "RSRT ",    // b8
-                "OPER ",    // b7
-                "V+N↕︎ ",    // b6
-                "KREL ",    // b5
-                "TEMP ",    // b4
-                "  3  ",    // b3
-                "  2  ",    // b2
-                " AGC ",    // b1
-                "NEVER"]
+func prettyCh163(_ code: UInt16) -> String {
 
     let bitArray = ZeroPadWord(code, to: 10).split(separator: "")
     var catString = ""
 
     for index in 0..<bitArray.count {
-        catString += (bitArray[index] == "0") ? "  ↓  " : labs[index]
+        catString += (bitArray[index] == "0") ? "  ↓  " : ch163Labs[index]
     }
 
     return catString
@@ -255,7 +256,7 @@ func readCanned() {
                     .components(separatedBy: .whitespaces)
                     .filter({!$0.isEmpty})
                 if words.isEmpty || words[0].starts(with: /!|#|--/) || words.count < 3 { continue }
-                if words[0].starts(with: /!|#|--/) { return }
+                if words[0].starts(with: "-end-of-file-") { return }
 
                 let delaySecs = Double(Int(words[0]) ?? 0) / 1000.0
                 timerDeadline += delaySecs
