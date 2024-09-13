@@ -27,7 +27,8 @@
 
 500	011	00000	# channel 11 indicator lamps
 500	013	00000	# channel 13 DSKY lamp tests
-500	163 00000	# channel 163 ..
+
+500	163 01000	# channel 163 EL power off
 
 1000 010 00000
 
@@ -103,9 +104,9 @@
 150 163 00620	# RESTART
 150 163 00720	# OPER ERR
 150 10 60650	# TRACKER
-# 500 10 60651	# PRIO DISP (CM ONLY)
+150 10 60651	# PRIO DISP (CM ONLY)
 150 10 60671	# ALT
-# 500 10 60673	# NO DAP (CM ONLY)
+150 10 60673	# NO DAP (CM ONLY)
 150 10 60677	# VEL
 
 -end-of-file-
@@ -127,7 +128,7 @@
 #  Exit V35E, key RSET
 #
 #  UPLK 3↑
-#  AO ATT↑
+#  NO ATT↑
 #  STBY↑
 #  KEY REL flash
 #  OP ERR flash
@@ -155,7 +156,7 @@
 #  [[ five seconds ]]
 #
 #  UPLK 3↓
-#  AO ATT↓
+#  NO ATT↓
 #
 #  key RSET
 #
