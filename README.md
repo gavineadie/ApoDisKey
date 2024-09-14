@@ -1,7 +1,7 @@
 #  DSKY
 
 <p align="center">
-    <img src="https://ramsaycons.com/pix/macOS-DSKY-UL134A.png" width="800"  />
+    <img src="https://ramsaycons.com/pix/macOS-DSKY-EP134B.png" width="800"  />
 </p>
 
 ### ApoDisKey

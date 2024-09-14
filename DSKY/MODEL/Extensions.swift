@@ -53,11 +53,6 @@ let bit10: UInt16 = 0b0000_0010_0000_0000
   ┆                                         +-----+-----+                                            ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 
-let tt = (true, true)
-let tf = (true, false)
-let ft = (false, true)
-let ff = (false, false)
-
 public func plu_min(_ pm: (Bool, Bool)) -> String {
     switch pm {
         case (false, false): return " "
@@ -77,7 +72,7 @@ func prettyString(_ data: Data) -> String {
 }
 
 
-func ZeroPadByte(_ code: UInt8, _ length: Int = 8) -> String {
+private func ZeroPadByte(_ code: UInt8, _ length: Int = 8) -> String {
     String(("000000000" + String(UInt16(code), radix: 2)).suffix(length))
 }
 
@@ -122,7 +117,6 @@ let ch010Labs = [" ??? ",
                  "NEVER"]
 
 func prettyCh010(_ code: UInt16) -> String {
-
     let bitArray = ZeroPadWord(code, to: 10).split(separator: "")
     var catString = ""
 
@@ -156,7 +150,6 @@ let ch011Labs = [" ??? ",    // b8
                  "NEVER"]
 
 func prettyCh011(_ code: UInt16) -> String {
-
     let bitArray = ZeroPadWord(code, to: 8).split(separator: "")
     var catString = "          "
 
@@ -168,7 +161,6 @@ func prettyCh011(_ code: UInt16) -> String {
 }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆                                                                                                  ┆
   ┆          Bit 1:               AGC warning                                                        ┆
   ┆          _                                                                                       ┆
   ┆          _                                                                                       ┆
@@ -193,7 +185,6 @@ let ch163Labs = [" EL↓ ",    // b10
                  "NEVER"]
 
 func prettyCh163(_ code: UInt16) -> String {
-
     let bitArray = ZeroPadWord(code, to: 10).split(separator: "")
     var catString = ""
 
