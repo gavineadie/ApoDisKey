@@ -11,6 +11,8 @@
 # Starting state ... all digits, signs, and lamps off.
 # DEC | OCT | OCT
 
+! Canned script starts
+
 500   010	60000	# row12 - lights
 
 150	010	54000	# M1M2 (P1P2)
@@ -28,7 +30,7 @@
 500	011	00000	# channel 11 indicator lamps
 500	013	00000	# channel 13 DSKY lamp tests
 
-500	163 01000	# channel 163 EL power off
+# 500	163 01000	# channel 163 EL power off
 
 1000 010 00000
 
@@ -36,18 +38,20 @@
 500 011 00002   # Delay half a second, COMP ACTY on.
 500 011 00000   # Delay half a second, COMP ACTY off.
 
-50 011 00002    # Delay half a second, COMP ACTY on.
-50 011 00000    # Delay half a second, COMP ACTY off.
-50 011 00002    # Delay half a second, COMP ACTY on.
-50 011 00000    # Delay half a second, COMP ACTY off.
-50 011 00002    # Delay half a second, COMP ACTY on.
-50 011 00000    # Delay half a second, COMP ACTY off.
-50 011 00002    # Delay half a second, COMP ACTY on.
-50 011 00000    # Delay half a second, COMP ACTY off.
-50 011 00002    # Delay half a second, COMP ACTY on.
-50 011 00000    # Delay half a second, COMP ACTY off.
-50 011 00002    # Delay half a second, COMP ACTY on.
-50 011 00000    # Delay half a second, COMP ACTY off.
+! flicker "COMP""
+
+50 011 00002    # COMP ACTY on.
+50 011 00000    # COMP ACTY off.
+50 011 00002    # COMP ACTY on.
+50 011 00000    # COMP ACTY off.
+50 011 00002    # COMP ACTY on.
+50 011 00000    # COMP ACTY off.
+50 011 00002    # COMP ACTY on.
+50 011 00000    # COMP ACTY off.
+50 011 00002    # COMP ACTY on.
+50 011 00000    # COMP ACTY off.
+50 011 00002    # COMP ACTY on.
+50 011 00000    # COMP ACTY off.
 
                 # PROG
 500 010 55640   # Delay half a second, left-hand PROG turns to 8.
@@ -109,6 +113,7 @@
 150 10 60673	# NO DAP (CM ONLY)
 150 10 60677	# VEL
 
+! Canned script ends
 -end-of-file-
 
 # Wait a while, and then 5 RSET's to quit ...

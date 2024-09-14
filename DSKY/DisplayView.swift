@@ -125,8 +125,8 @@ struct Prog: View {
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆                                                                                                  ┆
   ┆    +--------+   +--------+                                                                       ┆
-  ┆    | "VERB" |   | "NOUN" |     <-- placard: ("VERB", on at power-up, flash)                      ┆
-  ┆    +--------+   +--------+                  ("NOUN", on at power-up, flash)                      ┆
+  ┆    | "VERB" |   | "NOUN" |     <-- placard: ("VERB", on at power-up)                             ┆
+  ┆    +--------+   +--------+                  ("NOUN", on at power-up)                             ┆
   ┆    +--------+   +--------+                                                                       ┆
   ┆    |        |   |        |     <-- numbers: ( "99" , off/on, height)                             ┆
   ┆    |   99   |   |   99   |                           flash                                       ┆
@@ -252,11 +252,11 @@ struct DisplayPlacard: View {
 
     var body: some View {
         ZStack {
-            let textColor = illum ? displayElectro : .clear
+            let placardColor = illum ? displayElectro : .clear
 
             RoundedRectangle(cornerRadius: 4.0)
                 .frame(width: 74.0, height: placardHeight)
-                .foregroundColor(textColor)
+                .foregroundColor(placardColor)
 
             Text(label)
                 .font(.custom("Gorton-Normal-180",

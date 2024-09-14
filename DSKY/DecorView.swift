@@ -65,11 +65,11 @@ struct DisplaySeparator: View {
         HStack {
             LittleWhiteCircle()
 
-            Rectangle()
-                .padding(.horizontal, -2.0)
-                .frame(width: 146,
-                       height: 4)
-                .foregroundColor(displayElectro)
+                Rectangle()
+                    .padding(.horizontal, -2.0)
+                    .frame(width: 146,
+                           height: 4)
+                    .foregroundColor(DisKeyModel.shared.elPanelOff ? .clear : displayElectro)
 
             LittleWhiteCircle()
         }

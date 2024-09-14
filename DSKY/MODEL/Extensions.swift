@@ -242,41 +242,49 @@ func readInitializing() {
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ File stuff ..                                                                                    ┆
   ┆ .. readCanned: reads DSKY channel i/o actions from a file and injects them into the DSKY ..      ┆
+  ┆     "#" .. a comment (ignore)                                                                    ┆
+  ┆     "--" .. a comment (ignore)                                                                   ┆
+  ┆     "!" .. send remainer of the line to logger                                                   ┆
+  ┆     "-end-of-file-" .. stop reading the file                                                     ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-func readCanned() {
+func readCanned(path: String) {
+    logger.log("canned script: \(path)")
+    do {
+        var timerDeadline: TimeInterval = Date.now.timeIntervalSinceNow
+        let initContent = try String(contentsOfFile: path, encoding: .utf8)
+        let lineArray = initContent.components(separatedBy: .newlines)
 
-    if let path = Bundle.main.path(forResource: "testLights", ofType: "canned") {
-        do {
-            var timerDeadline: TimeInterval = Date.now.timeIntervalSinceNow
-            let initContent = try String(contentsOfFile: path, encoding: .utf8)
-            let lineArray = initContent.components(separatedBy: .newlines)
+        for line in lineArray {
+            let words = line
+                .components(separatedBy: .whitespaces)
+                .filter({!$0.isEmpty})
+            if words.isEmpty || words[0].starts(with: /#|--/) || words.count < 3 { continue }
+            if words[0].starts(with: "-end-of-file-") { return }
 
-            for line in lineArray {
-                let words = line
-                    .components(separatedBy: .whitespaces)
-                    .filter({!$0.isEmpty})
-                if words.isEmpty || words[0].starts(with: /!|#|--/) || words.count < 3 { continue }
-                if words[0].starts(with: "-end-of-file-") { return }
+            let delaySecs = Double(Int(words[0]) ?? 0) / 1000.0
+            timerDeadline += delaySecs
 
-                let delaySecs = Double(Int(words[0]) ?? 0) / 1000.0
-                timerDeadline += delaySecs
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 
-                Timer.scheduledTimer(withTimeInterval: timerDeadline, repeats: false) { _ in
+            Timer.scheduledTimer(withTimeInterval: timerDeadline, repeats: false) { _ in
 
+                if words[0].starts(with: "!") {
+                    logger.log("!!\(line)")
+                } else {
                     if let octal1 = UInt16(words[1], radix: 8),
                        let octal2 = UInt16(words[2], radix: 8) {
                         channelAction(octal1, octal2)
-                        logger.log("\(Date.now) wait: \(words[0]) -- \(words[1]) • \(words[2])")
+                        //                          logger.log("\(Date.now) wait: \(words[0]) -- chan:\(words[1]) • bits:\(words[2])")
                     } else {
                         logger.log("'\(line)' -- bad format")
                     }
-
                 }
 
-
             }
-        } catch {
-            print(error)
         }
+    } catch {
+        print(error)
     }
+
 }

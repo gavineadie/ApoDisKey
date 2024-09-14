@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import AVFoundation
 
 public enum BackColor {
     case off
@@ -23,11 +24,25 @@ typealias Display = (String, Bool)
 @Observable
 class DisKeyModel {
 
-    public var statusFooter = " ••• "
-    public var prepareToQuit = 4                   // countdown to QUIT
-
     public let network: Network
 
+    static let shared = DisKeyModel()
+
+    private init() {
+
+#if os(iOS) || os(tvOS)
+//      network = Network("192.168.1.232", 19697)   // .. Ubuntu
+        network = Network("192.168.1.100", 19698)   // .. MaxBook
+#else
+//      network = Network("192.168.1.232", 19697)   // .. Ubuntu
+        network = Network("127.0.0.1", 19697)
+#endif
+
+    }
+
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ .. the fourteen lights resentating status on the DSKY top-left ..                                ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
     public var statusLights = [
         11: ("", BackColor.off),                    // initial state
         12: ("", .off),
@@ -46,22 +61,8 @@ class DisKeyModel {
         27: ("", .off)
     ]
 
-    static let shared = DisKeyModel()
-
-    private init() {
-
-#if os(iOS) || os(tvOS)
-//      network = Network("192.168.1.232", 19697)   // .. Ubuntu
-        network = Network("192.168.1.100", 19698)   // .. MaxBook
-#else
-//      network = Network("192.168.1.232", 19697)   // .. Ubuntu
-        network = Network("127.0.0.1", 19697)
-#endif
-
-    }
-
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ .. the initial Display values don't mean anything; the AGC sets them when the DSKY connects      ┆
+  ┆ .. the electroluminescent DSKY top-right panel (initial values are cleared on startup) ..        ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
     public typealias Display = (String, Bool)
 
@@ -70,7 +71,7 @@ class DisKeyModel {
     public var verb: Display = ("35", true)             // numbers=35, placard=green
     public var noun: Display = ("77", true)
 
-    public var reg1: Display = (" 98765", true)
+    public var reg1: Display = (" 54321", true)
     public var reg2: Display = ("-12345", false)        // TODO: what does "false" do here?
     public var reg3: Display = ("+88888", true)
 
@@ -78,25 +79,14 @@ class DisKeyModel {
     public var r2Sign = (false, false)
     public var r3Sign = (false, false)
 
-    func electroluminescentOff() {
-        comp = ("  ", false)
-        prog = ("  ", false)
-        verb = ("  ", false)
-        noun = ("  ", false)
+    public var elPanelOff = false
 
-        reg1 = ("      ", false)
-        reg2 = ("      ", false)
-        reg3 = ("      ", false)
-
-        r1Sign = (false, false)
-        r2Sign = (false, false)
-        r3Sign = (false, false)
-    }
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ the KeyPad has no lights or colors                                                               ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
     public var keyPad = 0
 
+    public var statusFooter = " ••• "
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ set light label texts for Apollo 11 • Lunar Module                                               ┆
@@ -154,7 +144,7 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ tf: Bool = true) {
         case 0o005...0o006:
             break
 
-        case 0o010:                 // DSKY
+        case 0o010:                 // [OUTPUT] drives DSKY electroluminescent panel
             dskyInterpretation(value)
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -169,7 +159,7 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ tf: Bool = true) {
   ┆          Bit 7: Lights the "OPR ERR" indicator.                                                  ┆
   ┆                                                                                                  ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-        case 0o011:                 // flags for indicator lamps
+        case 0o011:                 // [OUTPUT] flags for indicator lamps etc
             logger.log("""
                 »»»    DSKY 011:           \(ZeroPadWord(value, to: 8)) BITS (8)       \
                 :: \(prettyCh011(value))
@@ -182,22 +172,37 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ tf: Bool = true) {
             model.statusLights[21]?.1 = (value & bit4 > 0) ? .yellow : .off     // "TEMP"
             model.statusLights[24]?.1 = (value & bit5 > 0) ? .yellow : .off     // "KEY REL"
 
-        case 0o012:                 // CM and LM actions ..
+        case 0o012:                 // [OUTPUT] CM and LM actions ..
             break
 
-        case 0o013:                 // DSKY lamp tests ..
+        case 0o013:                 // [OUTPUT] DSKY lamp tests ..
             model.statusLights[13]?.1 = (value & 0x0200 > 0) ? .white : .off    // "STBY"
 
         case 0o014:                 // CM and LM Gyro selection ..
             break
 
-        case 0o015:                 // "special cheat" (5 RSETs -> QUIT) ..
-            logger.log("    channel \(channel, format: .octal(minDigits: 3)): \(ZeroPadWord(value)) :: \(model.prepareToQuit)")
-            model.prepareToQuit -= 1
-            if model.prepareToQuit == 0 { exit(0) }
+        case 0o015:                 // [INPUT] Used for inputting keystrokes from the DSKY. ..
+            logger.log("""
+                »»»    DSKY 015:           \(ZeroPadWord(value, to: 8)) BITS (8)       \
+                :: \(value) = "\(keyText(value))"
+                """)
+
+            if let clickURL = Bundle.main.url(forResource: "dsky", withExtension: "aiff") {
+                var clickSound: SystemSoundID = 0
+                AudioServicesCreateSystemSoundID(clickURL as CFURL, &clickSound)
+                AudioServicesPlaySystemSound(clickSound)
+            }
+
+            if value == 18 { /* RSET */ }
             break
 
-        case 0o016...0o035:         // CM and LM downlinks (ch 34, 35)
+        case 0o016...0o031:         //
+            break
+
+        case 0o032:                 // [INPUT] Bit 14 UNSET indicates that the PRO key is pressed.
+            break
+
+        case 0o033...0o035:         // [OUTPUT] CM and LM downlinks (ch 34, 35)
             break
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -235,7 +240,7 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ tf: Bool = true) {
             model.statusLights[24]?.1 = (value & bit8 > 0) ? .yellow : .off     // Bit 8: RESTART lamp
             model.statusLights[13]?.1 = (value & bit9 > 0) ? .white : .off      // Bit 9: STBY lamp
 
-            if value & bit10 > 0 { model.electroluminescentOff() }              // Bit 10: EL panel
+            model.elPanelOff = value & bit10 > 0                                // Bit 10: EL panel
 
         case 0o165:
             logger.log("»»» DSKY165 \(ZeroPadWord(value)) TIME1")

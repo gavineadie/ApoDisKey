@@ -87,6 +87,14 @@ struct DisKeyView: View {
                 .font(.footnote)
                 .foregroundColor(Color.red)
         }
+        .dropDestination(for: URL.self) { urls, _ in
+            if let url = urls.first {
+                readCanned(path: url.path())
+                return true
+            } else {
+                return false
+            }
+        }
     }
 }
 
