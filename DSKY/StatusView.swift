@@ -34,8 +34,6 @@ import SwiftUI
 */
 
 struct StatusView: View {
-    let model = DisKeyModel.shared
-
     var body: some View {
         ZStack {
             PanelsView()

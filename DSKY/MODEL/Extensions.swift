@@ -195,12 +195,6 @@ func prettyCh163(_ code: UInt16) -> String {
     return catString
 }
 
-func footerText(_ text: String, reset: Bool = false) {
-    let existingText = DisKeyModel.shared.statusFooter
-    let newText = String((existingText + " >> " + text).suffix(80))
-    DisKeyModel.shared.statusFooter = reset ? text : newText
-}
-
 
 
 
@@ -266,7 +260,7 @@ func readCanned(path: String) {
                     if let octal1 = UInt16(words[1], radix: 8),
                        let octal2 = UInt16(words[2], radix: 8) {
                         channelAction(octal1, octal2)
-                        //                          logger.log("\(Date.now) wait: \(words[0]) -- chan:\(words[1]) • bits:\(words[2])")
+//                          logger.log("\(Date.now) wait: \(words[0]) -- chan:\(words[1]) • bits:\(words[2])")
                     } else {
                         logger.log("'\(line)' -- bad format")
                     }

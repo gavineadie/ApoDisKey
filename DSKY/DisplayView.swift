@@ -35,7 +35,7 @@ import SwiftUI
 */
 
 struct DisplayView: View {
-    let model = DisKeyModel.shared
+//    let model = DisKeyModel.shared
 
     var body: some View {
         ZStack {

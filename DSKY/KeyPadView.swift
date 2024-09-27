@@ -73,8 +73,6 @@ struct KeyPadView: View {
 }
 
 struct KeyView: View {
-    let model = DisKeyModel.shared
-    
     var keyCode: UInt16
 
     var body: some View {

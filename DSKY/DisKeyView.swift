@@ -49,8 +49,6 @@ import SwiftUI
 */
 
 struct DisKeyView: View {
-    let model = DisKeyModel.shared
-
     var body: some View {
         ZStack {
             Rectangle()
@@ -82,10 +80,6 @@ struct DisKeyView: View {
             Text("T2").background(Rectangle().stroke()).onTapGesture(perform: statusAllYellow)
             Text("T3").background(Rectangle().stroke()).onTapGesture(perform: model.luminary099)
             Text("T4").background(Rectangle().stroke()).onTapGesture(perform: model.comanche055)
-
-            Text(DisKeyModel.shared.statusFooter)
-                .font(.footnote)
-                .foregroundColor(Color.red)
         }
         .dropDestination(for: URL.self) { urls, _ in
             if let url = urls.first {
@@ -106,14 +100,12 @@ struct DisKeyView: View {
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ silly tests ..                                                                                   ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-func statusAllOff() {
-    let model = DisKeyModel.shared
+@MainActor func statusAllOff() {
     logger.log("... \(#function)")
     for (key, _) in model.statusLights { model.statusLights[key] = ("« OFF »", .off) }
 }
 
-func statusAllYellow() {
-    let model = DisKeyModel.shared
+@MainActor func statusAllYellow() {
     logger.log("... \(#function)")
     for (key, _) in model.statusLights { model.statusLights[key] = ("YELLOW", .yellow) }
 }

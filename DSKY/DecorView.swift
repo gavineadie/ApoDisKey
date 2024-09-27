@@ -69,7 +69,7 @@ struct DisplaySeparator: View {
                     .padding(.horizontal, -2.0)
                     .frame(width: 146,
                            height: 4)
-                    .foregroundColor(DisKeyModel.shared.elPanelOff ? .clear : displayElectro)
+                    .foregroundColor(model.elPanelOff ? .clear : displayElectro)
 
             LittleWhiteCircle()
         }
