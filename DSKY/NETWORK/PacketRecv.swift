@@ -27,12 +27,15 @@ import Foundation
   ┆                 This means to flash the digits in the NOUN and VERB areas.                       ┆
   ┆          Bit 7: Lights the "OPR ERR" indicator.                                                  ┆
   ┆                                                                                                  ┆
+//┆          NOTE: don't log command that only cycle the "COMP ACTY" indicator.                      ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
         case 0o011:                 // [OUTPUT] flags for indicator lamps etc
-            logger.log("""
+//            if value != 8192 && value != 8194 {
+                logger.log("""
                 »»»    DSKY 011:           \(ZeroPadWord(value, to: 8)) BITS (8)       \
                 :: \(prettyCh011(value))
                 """)
+//            }
             model.comp.1 = value & bit2 > 0                                     // "COMP ACTY"
 
             model.statusLights[11]?.1 = (value & bit3 > 0) ? .white : .off      // "UPLINK

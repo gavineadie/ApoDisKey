@@ -50,12 +50,13 @@ import SwiftUI
 
 struct DisKeyView: View {
     var body: some View {
+
         ZStack {
             Rectangle()
                 .fill(backgroundColor)
                 .padding(-80.0)
 
-            Image("BackGround")
+            Image("BackGround")         // width=656px
                 .cornerRadius(18.0)
 
             VStack {
@@ -71,15 +72,14 @@ struct DisKeyView: View {
             }
             .padding(.top, 5.0)
         }
-#if os(iOS) || os(tvOS)
-        .scaleEffect(0.65)
+
+#if os(iOS)
+        .scaleEffect(min(1.0, UIScreen.main.bounds.width/660.0))
 #endif
 
         HStack {
-            Text("T1").background(Rectangle().stroke()).onTapGesture(perform: statusAllOff)
-            Text("T2").background(Rectangle().stroke()).onTapGesture(perform: statusAllYellow)
-            Text("T3").background(Rectangle().stroke()).onTapGesture(perform: model.luminary099)
-            Text("T4").background(Rectangle().stroke()).onTapGesture(perform: model.comanche055)
+            Text("T1").background(Rectangle().stroke()).onTapGesture(perform: {model.statusLights = model.luminary099})
+            Text("T2").background(Rectangle().stroke()).onTapGesture(perform: {model.statusLights = model.comanche055})
         }
         .dropDestination(for: URL.self) { urls, _ in
             if let url = urls.first {
@@ -94,18 +94,4 @@ struct DisKeyView: View {
 
 #Preview {
     DisKeyView()
-}
-
-
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ silly tests ..                                                                                   ┆
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-@MainActor func statusAllOff() {
-    logger.log("... \(#function)")
-    for (key, _) in model.statusLights { model.statusLights[key] = ("« OFF »", .off) }
-}
-
-@MainActor func statusAllYellow() {
-    logger.log("... \(#function)")
-    for (key, _) in model.statusLights { model.statusLights[key] = ("YELLOW", .yellow) }
 }
