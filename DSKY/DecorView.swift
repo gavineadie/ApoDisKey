@@ -65,14 +65,15 @@ struct DisplaySeparator: View {
         HStack {
             LittleWhiteCircle()
 
-                Rectangle()
-                    .padding(.horizontal, -2.0)
-                    .frame(width: 146,
-                           height: 4)
+            RoundedRectangle(cornerRadius: 1)
+                    .padding(.horizontal, -4.0)
+                    .frame(height: 4.0)
                     .foregroundColor(model.elPanelOff ? .clear : displayElectro)
 
             LittleWhiteCircle()
         }
+        .frame(width: 192,
+               height: 5)
 
     }
 }
@@ -83,9 +84,9 @@ struct DisplaySeparator: View {
 
 struct LittleWhiteCircle: View {
     var body: some View {
-        RoundedRectangle(cornerRadius: 4.0)
+        RoundedRectangle(cornerRadius: 3.5)
             .padding(0.0)
-            .frame(width: 8.0, height: 8.0)
+            .frame(width: 7.0, height: 7.0)
             .foregroundColor(Color(white: 0.7))
     }
 }

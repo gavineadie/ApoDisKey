@@ -196,20 +196,16 @@ func prettyCh163(_ code: UInt16) -> String {
 }
 
 
+/*┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+  ┃ File stuff ..                                                                                    ┃
+  ┃──────────────────────────────────────────────────────────────────────────────────────────────────┃
+  ┃ .. establishDirectory:                                                                           ┃
+  ┃ .. readInitializing:                                                                             ┃
+  ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛*/
 
-
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ File stuff ..                                                                                    ┆
-  ┆ .. establishDirectory:                                                                           ┆
-  ┆ .. readInitializing:                                                                             ┆
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-
-func establishDirectory() -> URL {
-    return URL(fileURLWithPath: "~/DSKY")
-}
+func establishDirectory() -> URL { URL(fileURLWithPath: "~/DSKY") }
 
 func readInitializing() {
-
     if let path = Bundle.main.path(forResource: "Initialize", ofType: "txt"){
         do {
             let initContent = try String(contentsOfFile: path, encoding: .utf8)
@@ -221,7 +217,6 @@ func readInitializing() {
             print(error)
         }
     }
-
 }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -257,10 +252,9 @@ func readCanned(path: String) {
                 if words[0].starts(with: "!") {
                     logger.log("!!\(line)")
                 } else {
-                    if let octal1 = UInt16(words[1], radix: 8),
-                       let octal2 = UInt16(words[2], radix: 8) {
-                        channelAction(octal1, octal2)
-//                          logger.log("\(Date.now) wait: \(words[0]) -- chan:\(words[1]) • bits:\(words[2])")
+                    if let channel = UInt16(words[1], radix: 8),
+                       let action = UInt16(words[2], radix: 8) {
+                        channelAction(channel, action)
                     } else {
                         logger.log("'\(line)' -- bad format")
                     }

@@ -35,16 +35,29 @@ import SwiftUI
 */
 
 struct DisplayView: View {
-//    let model = DisKeyModel.shared
 
     var body: some View {
         ZStack {
             PanelsView()
 
             VStack {
-                Row1(comp: model.comp, prog: model.prog)
-                Spacer().frame(height: 12.0)
-                Row2(verb: model.verb, noun: model.noun)
+                ZStack {
+                    VStack {
+                        Row1(comp: model.comp, prog: model.prog)
+                        Spacer().frame(height: 12.0)
+                        Row2(verb: model.verb, noun: model.noun)
+                        Spacer().frame(height: 12.0)
+                    }
+                    VStack {
+                        Spacer().frame(height: 10)
+                        LittleWhiteCircle()
+                        Spacer().frame(height: 60)
+                        LittleWhiteCircle()
+                        Spacer().frame(height: 60)
+                        LittleWhiteCircle()
+                        Spacer().frame(height: 20)
+                    }
+                }
                 Register1(state: model.reg1)
                 Register2(state: model.reg2)
                 Register3(state: model.reg3)
@@ -82,7 +95,6 @@ struct Row1: View {
     var body: some View {
         HStack(alignment: .top) {
             Comp(state: comp)
-                .padding(.trailing, 8.0)
             Prog(state: prog)
         }
         .padding(.bottom, 6.0)
@@ -141,7 +153,6 @@ struct Row2: View {
     var body: some View {
         HStack {
             Verb(state: verb)
-                .padding(.trailing, 8.0)
             Noun(state: noun)
         }
         .padding(.bottom, 6.0)
@@ -254,7 +265,7 @@ struct DisplayPlacard: View {
         ZStack {
             let placardColor = illum ? displayElectro : .clear
 
-            RoundedRectangle(cornerRadius: 4.0)
+            RoundedRectangle(cornerRadius: 3.0)
                 .frame(width: 74.0, height: placardHeight)
                 .foregroundColor(placardColor)
 

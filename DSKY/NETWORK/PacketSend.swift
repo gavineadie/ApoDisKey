@@ -34,10 +34,10 @@ import Foundation
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 
 /// This function is the reverse of FormIoPacket:
-/// A 4-byte packet representing yaAGC channel i/o can be converted to an integer channel-number and value.
+/// Converts a yaAGC integer channel-number and value to a 4-byte channel i/o packet ..
 func formIoPacket(_ channel: UInt16, _ value: UInt16) -> Data {
 
-    guard (0...0x1ff).contains(channel) else { fatalError("\(#function) channel (\(channel) out of range") }
+    guard (0...0x01ff).contains(channel) else { fatalError("\(#function) channel (\(channel) out of range") }
     guard (0...0x7fff).contains(value) else { fatalError("\(#function) value (\(value) out of range") }
 
     let byte0: UInt8 = 0x00 | UInt8((0b000000111111000 & channel) >> 3)
