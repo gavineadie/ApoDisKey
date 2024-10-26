@@ -8,54 +8,10 @@
 import Foundation
 import AVFoundation
 
-public enum BackColor {
-    case off
-    case on
-    case white
-    case yellow
-    case green
-    case orange
-    case red
-}
-
-typealias Light = (String, BackColor)
-typealias Display = (String, Bool)
-
 @Observable
 class DisKeyModel {
 
     @MainActor static let shared = DisKeyModel()
-
-    public let network: Network
-
-    private init() {
-
-#if os(iOS) || os(tvOS)
-        //      network = Network("192.168.1.232", 19697)   // .. Ubuntu
-        network = Network("192.168.1.100", 19698)           // .. MaxBook
-#else
-        //      network = Network("192.168.1.232", 19697)   // .. Ubuntu
-        network = Network("127.0.0.1", 19697)
-#endif
-
-        statusLights = [
-            11: ("", .off),                                 // initial state
-            12: ("", .off),
-            13: ("", .off),
-            14: ("", .off),
-            15: ("", .off),
-            16: ("", .off),
-            17: ("", .off),
-
-            21: ("", .off),
-            22: ("", .off),
-            23: ("", .off),
-            24: ("", .off),
-            25: ("", .off),
-            26: ("", .off),
-            27: ("", .off)
-        ]
-    }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ .. the fourteen lights resentating status on the DSKY top-left ..                                ┆
@@ -63,49 +19,7 @@ class DisKeyModel {
     public var statusLights : [Int: Light]
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ set light label texts for Apollo 11 • Lunar Module                                               ┆
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-    let luminary099 : [Int: Light] = [
-        11 : ("UPLINK\nACTY", .off),
-        12 : ("NO  ATT", .off),
-        13 : ("STBY", .on),
-        14 : ("KEY  REL", .off),
-        15 : ("OPR  ERR", .off),
-        16 : ("", .off),
-        17 : ("", .off),
-
-        21 : ("TEMP", .off),
-        22 : ("GIMBAL\nLOCK", .off),
-        23 : ("PROG", .off),
-        24 : ("RESTART", .off),
-        25 : ("TRACKER", .off),
-        26 : ("ALT", .off),
-        27 : ("VEL", .off)
-    ]
-
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆  set light label texts for Apollo 11 • Command Module                                            ┆
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-    let comanche055 : [Int: Light] = [
-        11 : ("UPLINK\nACTY", .off),
-        12 : ("NO  ATT", .off),
-        13 : ("STBY", .on),
-        14 : ("KEY  REL", .off),
-        15 : ("OPR  ERR", .off),
-        16 : ("PRIO\nDISP", .off),        // CM lights
-        17 : ("NO DAP", .off),            // CM lights
-
-        21 : ("TEMP", .off),
-        22 : ("GIMBAL\nLOCK", .off),
-        23 : ("PROG", .off),
-        24 : ("RESTART", .off),
-        25 : ("TRACKER", .off),
-        26 : ("ALT", .off),
-        27 : ("VEL", .off)
-    ]
-
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ .. the electroluminescent DSKY top-right panel (initial values are cleared by AGC connect) ..    ┆
+  ┆ .. the electroluminescent DSKY top-right panel (initial values are cleared when AGC connects) .. ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
     public typealias Display = (String, Bool)
 
@@ -124,9 +38,78 @@ class DisKeyModel {
 
     public var elPanelOff = false                       // electroluminescent power
 
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ the KeyPad has no lights or colors                                                               ┆
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-    public var keyPad = 0
+    public let network: Network
 
+    private init() {
+
+#if os(iOS) || os(tvOS)
+        //      network = Network("192.168.1.232", 19697)   // .. Ubuntu
+        network = Network("192.168.1.100", 19698)           // .. MaxBook
+#else
+        //      network = Network("192.168.1.232", 19697)   // .. Ubuntu
+        network = Network("127.0.0.1", 19697)
+#endif
+
+        statusLights = [                // initial state
+            11: ("", .off),             //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
+            12: ("", .off),             //  ┆ UPLINK ┆ ┆  TEMP  ┆
+            13: ("", .off),             //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
+            14: ("", .off),             //  ┆ NO ATT ┆ ┆ GIMBAL ┆
+            15: ("", .off),             //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
+            16: ("", .off),             //  ┆  STBY  ┆ ┆  PROG  ┆
+            17: ("", .off),             //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
+                                        //  ┆KEY REL ┆ ┆RESTART ┆
+            21: ("", .off),             //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
+            22: ("", .off),             //  ┆OPR ERR ┆ ┆TRACKER ┆
+            23: ("", .off),             //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
+            24: ("", .off),             //  ┆        ┆ ┆  ALT   ┆
+            25: ("", .off),             //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
+            26: ("", .off),             //  ┆        ┆ ┆  VEL   ┆
+            27: ("", .off)              //  ╰╌╌╌╌╌╌╌╌╯ ╰╌╌╌╌╌╌╌╌╯
+        ]
+    }
+}
+
+extension DisKeyModel {
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆  set light label texts for Apollo 11 • Command Module                                            ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+    static let comanche055 : [Int: Light] = [
+        11 : ("UPLINK\nACTY", .off),
+        12 : ("NO  ATT", .off),
+        13 : ("STBY", .on),
+        14 : ("KEY  REL", .off),
+        15 : ("OPR  ERR", .off),
+        16 : ("PRIO\nDISP", .off),        // CM lights
+        17 : ("NO DAP", .off),            // CM lights
+
+        21 : ("TEMP", .off),
+        22 : ("GIMBAL\nLOCK", .off),
+        23 : ("PROG", .off),
+        24 : ("RESTART", .off),
+        25 : ("TRACKER", .off),
+        26 : ("ALT", .off),
+        27 : ("VEL", .off)
+    ]
+
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ set light label texts for Apollo 11 • Lunar Module                                               ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+    static let luminary099 : [Int: Light] = [
+        11 : ("UPLINK\nACTY", .off),
+        12 : ("NO  ATT", .off),
+        13 : ("STBY", .on),
+        14 : ("KEY  REL", .off),
+        15 : ("OPR  ERR", .off),
+        16 : ("", .off),
+        17 : ("", .off),
+
+        21 : ("TEMP", .off),
+        22 : ("GIMBAL\nLOCK", .off),
+        23 : ("PROG", .off),
+        24 : ("RESTART", .off),
+        25 : ("TRACKER", .off),
+        26 : ("ALT", .off),
+        27 : ("VEL", .off)
+    ]
 }

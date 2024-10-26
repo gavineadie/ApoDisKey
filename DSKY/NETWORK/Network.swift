@@ -8,16 +8,16 @@
 import Foundation
 import Network
 
-struct Network : Sendable {
+struct Network {
 
     let connection: NWConnection
-//    let didStopCallback: (Error?) -> Void
+    let didStopCallback: (Error?) -> Void
 
     init(_ host: String = "127.0.0.1", _ port: UInt16 = 12345) {
 
-//        self.didStopCallback = { error in
-//            exit( error == nil ? EXIT_SUCCESS : EXIT_SUCCESS )
-//        }
+        self.didStopCallback = { error in
+            exit( error == nil ? EXIT_SUCCESS : EXIT_SUCCESS )
+        }
 
         let tcpOptions = NWProtocolTCP.Options()
         tcpOptions.connectionTimeout = 10

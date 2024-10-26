@@ -48,7 +48,7 @@ struct KeyPadView: View {
                     KeyView(keyCode: 04) //  "4"
                     KeyView(keyCode: 05) //  "5"
                     KeyView(keyCode: 06) //  "6"
-                    KeyView(keyCode: 99) //  "PRO"
+                    KeyView(keyCode: 99) //  "PRO" << cheat
                 }
 
                 HStack {
@@ -101,7 +101,7 @@ struct KeyView: View {
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
             .onTapGesture {
                 if keyCode < 99 {
-                    logger.log("<<<    \(keyText(keyCode)) (\(keyCode))")
+                    logger.log("«««    \(keyText(keyCode)) (\(keyCode))")
 
                     if let clickURL = Bundle.main.url(forResource: "dsky", withExtension: "aiff") {
                         var clickSound: SystemSoundID = 0
@@ -113,7 +113,7 @@ struct KeyView: View {
             }
             .simultaneousGesture(LongPressGesture(minimumDuration: 1.0)
                 .onEnded { _ in
-                    logger.log("<<<    \(keyText(keyCode)) (\(keyCode))")
+                    logger.log("«««    \(keyText(keyCode)) (\(keyCode))")
                     model.network.send(data: formIoPacket(0o015, keyCode))
                 })
     }

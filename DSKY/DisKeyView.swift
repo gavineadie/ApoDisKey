@@ -74,12 +74,12 @@ struct DisKeyView: View {
         }
 
 #if os(iOS)
-        .scaleEffect(min(1.0, UIScreen.main.bounds.width/660.0))
+        .scaleEffect(min(1.2, UIScreen.main.bounds.width/660.0))
 #endif
 
         HStack {
-            Text("T1").background(Rectangle().stroke()).onTapGesture(perform: {model.statusLights = model.luminary099})
-            Text("T2").background(Rectangle().stroke()).onTapGesture(perform: {model.statusLights = model.comanche055})
+            Text("T1").background(Rectangle().stroke()).onTapGesture(perform: {model.statusLights = DisKeyModel.luminary099})
+            Text("T2").background(Rectangle().stroke()).onTapGesture(perform: {model.statusLights = DisKeyModel.comanche055})
         }
         .dropDestination(for: URL.self) { urls, _ in
             if let url = urls.first {

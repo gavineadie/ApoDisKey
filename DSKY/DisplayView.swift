@@ -79,8 +79,8 @@ struct DisplayView: View {
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆                                                                                                  ┆
   ┆    +--------+                                                                      +--------+    ┆
-  ┆    | "COMP" |   <-- placard: ("COMP", off at power-up - on under command)          | "PROG" |    ┆
-  ┆    |        |                          placard: ("PROG", on at power-up)) -->      +--------+    ┆
+  ┆    | "COMP  |   <-- placard: ("COMP", off at power-up - on under command)          | "PROG" |    ┆
+  ┆    |  ACTY" |                          placard: ("PROG", on at power-up)) -->      +--------+    ┆
   ┆    |        |                                                                      +--------+    ┆
   ┆    |        |                           numbers: ( "99" , off/on, height) -->      |        |    ┆
   ┆    |        |                                                                      |   99   |    ┆
@@ -90,7 +90,7 @@ struct DisplayView: View {
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 struct Row1: View {
     var comp: Display = ("  ", false)
-    var prog: Display = ("  ", false)
+    var prog: Display = ("__", true)
 
     var body: some View {
         HStack(alignment: .top) {
@@ -147,8 +147,8 @@ struct Prog: View {
   ┆                                                                                                  ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 struct Row2: View {
-    var verb: Display = ("88", false)
-    var noun: Display = ("44", true)
+    var verb: Display = ("__", true)
+    var noun: Display = ("88", true)
 
     var body: some View {
         HStack {
@@ -291,57 +291,39 @@ struct DisplayNumbers: View {
 
         switch value.0.count {
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ REGISTER ..                                                                                      ┆
+  ┆ REGISTER .. "±ddddd" (decimal)  OR  " ddddd" (octal)                                             ┆
+  ┆     since the " " character width in this font is different from the "+" and "-" characters, it  ┆
+  ┆     needs to accounted for by removing it and moving the remaining five digits slightly left.    ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
             case 6:
                 VStack {
                     DisplaySeparator()
 
-                    if value.0.starts(with: " ") {
-                        Text(adjustDisplay(String(value.0.dropFirst())))
-                            .font(.custom("Zerlina",
-                                          fixedSize: zerlinaFixedSize))
-                            .padding([.top,
-                                      .bottom,
-                                      .trailing], -10.0)
-                            .padding(.leading, 10.5)
-                            .tracking(zerlinaTracking)
-                            .frame(width: 190.0,
-                                   height: panelDigitSize)
-                    } else {
-                        Text(adjustDisplay(String(value.0)))
-                            .font(.custom("Zerlina",
-                                          fixedSize: zerlinaFixedSize))
-                            .padding(.all, -10.0)
-                            .tracking(zerlinaTracking)
-                            .frame(width: 190.0,
-                                   height: panelDigitSize)
-                    }
+                    Text(adjustDisplay(value.0.starts(with: " ") ?
+                                       String(value.0.dropFirst()) : value.0))
+                        .font(.custom("Zerlina",
+                                      fixedSize: zerlinaFixedSize))
+                        .padding(.all, -10.0)
+                        .padding(.leading, value.0.starts(with: " ") ? 10.5 : -10.0)
+                        .tracking(zerlinaTracking)
+                        .frame(width: 190.0,
+                               height: panelDigitSize)
                 }
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ COMP / PROG / VERB / NOUN ..                                                                     ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
             case 2:
-                if value.0 == "  " {
+                if value.0 == "  " {            // for "COMP" -- (tall frame) no number to display ..
                     Text(value.0)
                         .frame(width: 95.0, height: 2.0)
                 } else {
-
-                    if value.1 {
-                        Text(adjustDisplay(String(value.0)))
-                            .font(.custom("Zerlina",
-                                          fixedSize: zerlinaFixedSize))
-                            .padding(.top, 10.0)
-                            .tracking(zerlinaTracking)
-                            .frame(width: 95.0,
-                                   height: panelDigitSize)
-                    } else {
-                        Text(value.0)
-                            .font(.custom("Zerlina",
-                                          fixedSize: zerlinaFixedSize))
-                            .foregroundColor(panelInColor)
-                            .padding(.top, 8.0)
-                            .tracking(zerlinaTracking)
-                            .frame(width: 95.0,
-                                   height: panelDigitSize)
-                    }
+                    Text(adjustDisplay(value.1 ? String(value.0) : "  "))
+                        .font(.custom("Zerlina",
+                                      fixedSize: zerlinaFixedSize))
+                        .padding(.top, 8.0)
+                        .tracking(zerlinaTracking)
+                        .frame(width: 95.0,
+                               height: panelDigitSize)
                 }
             default:
                 Text("ERROR")
@@ -351,28 +333,6 @@ struct DisplayNumbers: View {
                     .foregroundColor(displayElectro)
                     .frame(width: 190.0,
                            height: panelDigitSize)
-        }
-    }
-}
-
-#Preview {
-    DisplayNumbers(value: ("614121", true))
-}
-
-#Preview {
-    ZStack {
-        PanelsView(interiorFill: .black)
-
-        Rectangle()
-            .border(Color.white, width: 1)
-            .padding(8.0)
-            .frame(width: 204, height: 194)
-            .foregroundColor(.clear)
-
-        VStack {
-            Register1(state: ("+88888", true))
-            Register2(state: ("-88888", false))
-            Register3(state: (" 99999", false))
         }
     }
 }
