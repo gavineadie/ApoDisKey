@@ -108,13 +108,25 @@ struct KeyView: View {
                         AudioServicesCreateSystemSoundID(clickURL as CFURL, &clickSound)
                         AudioServicesPlaySystemSound(clickSound)
                     }
-                    model.network.send(data: formIoPacket(0o015, keyCode))
+                    Task {
+                        do {
+                            try await model.network.connection.rawSend(data: formIoPacket(0o015, keyCode))
+                        } catch {
+                            print(error.localizedDescription)
+                        }
+                    }
                 }
             }
             .simultaneousGesture(LongPressGesture(minimumDuration: 1.0)
                 .onEnded { _ in
                     logger.log("«««    \(keyText(keyCode)) (\(keyCode))")
-                    model.network.send(data: formIoPacket(0o015, keyCode))
+                    Task {
+                        do {
+                            try await model.network.connection.rawSend(data: formIoPacket(0o015, keyCode))
+                        } catch {
+                            print(error.localizedDescription)
+                        }
+                    }
                 })
     }
 }

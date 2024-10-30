@@ -8,10 +8,10 @@
 import Foundation
 import Network
 
-struct Network {
+struct Network : Sendable{
 
     let connection: NWConnection
-    let didStopCallback: (Error?) -> Void
+    let didStopCallback: @Sendable (Error?) -> Void
 
     init(_ host: String = "127.0.0.1", _ port: UInt16 = 12345) {
 
@@ -31,7 +31,7 @@ struct Network {
         self.connection.start(queue: .main)
     }
 
-    private func stateDidChange(to state: NWConnection.State) {
+    @Sendable private func stateDidChange(to state: NWConnection.State) {
         switch state {
             case .setup:
                 print("connection .setup")
@@ -63,33 +63,35 @@ struct Network {
 //        self.didStopCallback(error)
     }
 
-    public func send(data: Data) {
-        self.connection.send(content: data,
-                             completion: .contentProcessed( { error in
-            if let error = error {
-                self.connectionDidFail(error: error)
-                return
-            }
-        }))
-    }
+}
 
-    func recv() {
-        connection.receive(minimumIncompleteLength: 1,
-                           maximumLength: 4) { (content, _, connectionEnded, error) in
-
-            if let data = content, !data.isEmpty {
-                if let (channel, action, _) = parseIoPacket(data) {
-                    channelAction(channel, action)
+extension NWConnection {
+    
+    func rawSend(data: Data?) async throws {
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+            send(content: data, completion: .contentProcessed { error in
+                if let error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume(returning: ())
                 }
-
-                recv()
-            }
-
-            if connectionEnded {
-                print("... \(#function) - connection did end")
-            } else if let error = error {
-                print(".. \(#function) - connection did fail, error: \(error)")
-                self.stop(error: error)
+            })
+        }
+    }
+    
+    func rawReceive(length: Int) async throws -> Data {
+        try await withCheckedThrowingContinuation { continuation in
+            receive(minimumIncompleteLength: length,
+                    maximumLength: length) { data, _, connectionEnded, error in
+                if connectionEnded {
+                    print("... \(#function) - connection did end")
+                }
+                if let error {
+                    precondition(data == nil)
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume(returning: data!)
+                }
             }
         }
     }

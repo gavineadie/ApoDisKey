@@ -7,7 +7,7 @@
 
 import Foundation
 
-@MainActor func channelAction(_ channel: UInt16, _ value: UInt16, _ tf: Bool = true) {
+func channelAction(_ channel: UInt16, _ value: UInt16, _ tf: Bool = true) {
 
     switch channel {
         case 0o005...0o006:
@@ -120,7 +120,7 @@ import Foundation
     }
 }
 
-@MainActor func dskyInterpretation(_ code: UInt16) {
+func dskyInterpretation(_ code: UInt16) {
 
     let  rowCode = (code & 0b01111_0_00000_00000) >> 11
 
@@ -172,7 +172,7 @@ import Foundation
             let dStr = digitsDict[Int(dInt)] ?? "?"
 
             logger.log("""
-                >>>    DSKY 010: \(ZeroPadWord(code).prefix(4)) \
+                »»»    DSKY 010: \(ZeroPadWord(code).prefix(4)) \
                 \(ZeroPadWord(code).prefix(5).suffix(1)) \
                 \(ZeroPadWord(code).dropFirst(5).dropLast(5)) \
                 \(ZeroPadWord(code).dropFirst(10)) \
