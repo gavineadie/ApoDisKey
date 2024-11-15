@@ -77,10 +77,7 @@ struct DisKeyView: View {
         .scaleEffect(min(1.2, UIScreen.main.bounds.width/660.0))
 #endif
 
-        HStack {
-            Text("T1").background(Rectangle().stroke()).onTapGesture(perform: {model.statusLights = DisKeyModel.luminary099})
-            Text("T2").background(Rectangle().stroke()).onTapGesture(perform: {model.statusLights = DisKeyModel.comanche055})
-        }
+        Text("drop")
         .dropDestination(for: URL.self) { urls, _ in
             if let url = urls.first {
                 readCanned(path: url.path())

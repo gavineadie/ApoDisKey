@@ -60,7 +60,7 @@ struct Network : Sendable{
         print("... \(#function)")
         self.connection.stateUpdateHandler = nil
         self.connection.cancel()
-//        self.didStopCallback(error)
+        self.didStopCallback(error)
     }
 
 }

@@ -13,3 +13,6 @@
 
 * v0.2 (...) validates for TestFlight ..
 
+## 2024-NOV-15
+
+* passes Apple notarization ..

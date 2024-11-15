@@ -15,7 +15,7 @@ import Foundation
   ┃ .. readCanned:path:                                                                              ┃
   ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛*/
 
-func establishDirectory() -> URL { URL(fileURLWithPath: "~/DSKY") }
+func establishDirectory() -> URL { URL(fileURLWithPath: "~/ApoDisKey", isDirectory: true) }
 
 func readInitializing() {
     if let path = Bundle.main.path(forResource: "Initialize", ofType: "txt"){
@@ -26,7 +26,7 @@ func readInitializing() {
                 logger.log("INIT: \(line)")
             }
         } catch {
-            print(error)
+            logger.log("\(error.localizedDescription)")
         }
     }
 }
