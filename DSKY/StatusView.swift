@@ -34,9 +34,14 @@ import SwiftUI
 */
 
 struct StatusView: View {
+
+    @StateObject var model = DisKeyModel.shared
+
     var body: some View {
         ZStack {
             PanelsView()
+
+#if MONTEREY
 
             VStack {
                 HStack {
@@ -72,47 +77,59 @@ struct StatusView: View {
                 }
             }
 
-//            Grid {
-//                GridRow {
-//                    StatusLight(light: model.statusLights[11]!)
-//                    StatusLight(light: model.statusLights[21]!)
-//                }
-//
-//                GridRow {
-//                    StatusLight(light: model.statusLights[12]!)
-//                    StatusLight(light: model.statusLights[22]!)
-//                }
-//
-//                GridRow {
-//                    StatusLight(light: model.statusLights[13]!)
-//                    StatusLight(light: model.statusLights[23]!)
-//                }
-//                GridRow {
-//                    StatusLight(light: model.statusLights[14]!)
-//                    StatusLight(light: model.statusLights[24]!)
-//                }
-//                GridRow {
-//                    StatusLight(light: model.statusLights[15]!)
-//                    StatusLight(light: model.statusLights[25]!)
-//                }
-//                GridRow {
-//                    StatusLight(light: model.statusLights[16]!)
-//                    StatusLight(light: model.statusLights[26]!)
-//                }
-//
-//                GridRow {
-//                    StatusLight(light: model.statusLights[17]!)
-//                    StatusLight(light: model.statusLights[27]!)
-//                }
-//            }
+#else
+
+            Grid {
+                GridRow {
+                    StatusLight(light: model.statusLights[11]!)
+                    StatusLight(light: model.statusLights[21]!)
+                }
+
+                GridRow {
+                    StatusLight(light: model.statusLights[12]!)
+                    StatusLight(light: model.statusLights[22]!)
+                }
+
+                GridRow {
+                    StatusLight(light: model.statusLights[13]!)
+                    StatusLight(light: model.statusLights[23]!)
+                }
+                GridRow {
+                    StatusLight(light: model.statusLights[14]!)
+                    StatusLight(light: model.statusLights[24]!)
+                }
+                GridRow {
+                    StatusLight(light: model.statusLights[15]!)
+                    StatusLight(light: model.statusLights[25]!)
+                }
+                GridRow {
+                    StatusLight(light: model.statusLights[16]!)
+                    StatusLight(light: model.statusLights[26]!)
+                }
+
+                GridRow {
+                    StatusLight(light: model.statusLights[17]!)
+                    StatusLight(light: model.statusLights[27]!)
+                }
+            }
+
+#endif
+
         }
     }
 }
 
-#Preview {
-    StatusView()
+#if MONTEREY
+struct StatusView_Previews: PreviewProvider {
+    static var previews: some View {
+        StatusView()
+    }
 }
-
+#else
+    #Preview {
+        StatusView()
+    }
+#endif
 
 struct StatusLight: View {
     var light: Light
@@ -121,7 +138,7 @@ struct StatusLight: View {
         ZStack {
             RoundedRectangle(cornerRadius: statusCorner)
                 .fill(back(light))
-                .border(Color(statusBorder), width: 1)
+                .border(statusBorder, width: 1)
                 .frame(width: statusWidth,
                        height: statusHeight)
 
@@ -137,13 +154,13 @@ struct StatusLight: View {
     }
 }
 
-#Preview {
-    StatusLight(light: ("WORDS", .off))
-}
+//#Preview {
+//    StatusLight(light: ("WORDS", .off))
+//}
 
-#Preview {
-    StatusLight(light: ("WORDS", .orange))
-}
+//#Preview {
+//    StatusLight(light: ("WORDS", .orange))
+//}
 
 private func back(_ input: (String, BackColor)) -> Color {
     switch input.1 {

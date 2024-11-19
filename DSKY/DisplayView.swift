@@ -36,6 +36,8 @@ import SwiftUI
 
 struct DisplayView: View {
 
+    @StateObject var model = DisKeyModel.shared
+
     var body: some View {
         ZStack {
             PanelsView()
@@ -66,9 +68,17 @@ struct DisplayView: View {
     }
 }
 
-#Preview {
-    DisplayView()
+#if MONTEREY
+struct DisplayView_Previews: PreviewProvider {
+    static var previews: some View {
+        DisplayView()
+    }
 }
+#endif
+
+//#Preview {
+//    DisplayView()
+//}
 
 /*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
   │ ROW1                                                                                             │
@@ -101,9 +111,9 @@ struct Row1: View {
     }
 }
 
-#Preview {
-    Row1()
-}
+//#Preview {
+//    Row1()
+//}
 
 struct Comp: View {
     var state: Display
@@ -159,16 +169,16 @@ struct Row2: View {
     }
 }
 
-#Preview {
-    Row2()
-}
-
-#Preview {
-    VStack {
-        Row1()
-        Row2()
-    }
-}
+//#Preview {
+//    Row2()
+//}
+//
+//#Preview {
+//    VStack {
+//        Row1()
+//        Row2()
+//    }
+//}
 
 struct Verb: View {
     var state: Display
@@ -280,9 +290,17 @@ struct DisplayPlacard: View {
     }
 }
 
-#Preview {
-    DisplayPlacard(label: "WORD")
+#if MONTEREY
+struct DisplayPlacard_Previews: PreviewProvider {
+    static var previews: some View {
+        DisplayPlacard(label: "WORD")
+    }
 }
+#endif
+
+//#Preview {
+//    DisplayPlacard(label: "WORD")
+//}
 
 struct DisplayNumbers: View {
     var value: Display
@@ -305,7 +323,7 @@ struct DisplayNumbers: View {
                                       fixedSize: zerlinaFixedSize))
                         .padding(.all, -10.0)
                         .padding(.leading, value.0.starts(with: " ") ? 10.5 : -10.0)
-                        .tracking(zerlinaTracking)
+ //###                  .tracking(zerlinaTracking)
                         .frame(width: 190.0,
                                height: panelDigitSize)
                 }
@@ -321,7 +339,7 @@ struct DisplayNumbers: View {
                         .font(.custom("Zerlina",
                                       fixedSize: zerlinaFixedSize))
                         .padding(.top, 8.0)
-                        .tracking(zerlinaTracking)
+//###                   .tracking(zerlinaTracking)
                         .frame(width: 95.0,
                                height: panelDigitSize)
                 }

@@ -9,7 +9,6 @@ import SwiftUI
 import OSLog
 
 let logger = Logger(subsystem: "com.ramsaycons.ApoDisKey", category: "")
-let model = DisKeyModel.shared
 
 @main
 struct DisKeyApp: App {
@@ -30,7 +29,7 @@ struct DisKeyApp: App {
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ set the status display ights to the LM (Apollo 11) defaults                                      ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-        model.statusLights = DisKeyModel.luminary099
+        DisKeyModel.shared.statusLights = DisKeyModel.luminary099
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ start receiving packets from the AGC ..                                                          ┆
@@ -38,7 +37,7 @@ struct DisKeyApp: App {
         Task {
             repeat {
                 do {
-                    let rxPacket = try await model.network.connection.rawReceive(length: 4)
+                    let rxPacket = try await DisKeyModel.shared.network.connection.rawReceive(length: 4)
 
                     if let (channel, action, _) = parseIoPacket(rxPacket) {
                         channelAction(channel, action)

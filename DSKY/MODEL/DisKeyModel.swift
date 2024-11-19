@@ -8,8 +8,7 @@
 import Foundation
 import AVFoundation
 
-@Observable
-class DisKeyModel: @unchecked Sendable {
+class DisKeyModel: ObservableObject {
 
     static let shared = DisKeyModel()
 
@@ -64,7 +63,8 @@ class DisKeyModel: @unchecked Sendable {
         network = Network("192.168.1.100", 19698)   // .. MaxBook
 #else
 //      network = Network("192.168.1.232", 19697)   // .. Ubuntu
-        network = Network(ipAddr, ipPort)           // 172.19.131.37
+//      network = Network(192.168.1.100, ipPort)    // 172.19.131.37
+        network = Network("192.168.1.100", 19698)   // .. MaxBook
 #endif
 
         statusLights = [                // initial state
@@ -91,7 +91,7 @@ extension DisKeyModel {
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆  set light label texts for Apollo 11 • Command Module                                            ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-    nonisolated(unsafe) static let comanche055 : [Int: Light] = [
+    static let comanche055 : [Int: Light] = [
         11 : ("UPLINK\nACTY", .off),
         12 : ("NO  ATT", .off),
         13 : ("STBY", .on),
@@ -112,7 +112,7 @@ extension DisKeyModel {
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ set light label texts for Apollo 11 • Lunar Module                                               ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-    nonisolated(unsafe) static let luminary099 : [Int: Light] = [
+    static let luminary099 : [Int: Light] = [
         11 : ("UPLINK\nACTY", .off),
         12 : ("NO  ATT", .off),
         13 : ("STBY", .on),

@@ -56,8 +56,10 @@ struct PanelsView: View {
     }
 }
 
-#Preview {
-    PanelsView(interiorFill: .pink)
+struct PanelsView_Previews: PreviewProvider {
+    static var previews: some View {
+        PanelsView()
+    }
 }
 
 struct DisplaySeparator: View {
@@ -78,8 +80,10 @@ struct DisplaySeparator: View {
     }
 }
 
-#Preview {
-    DisplaySeparator()
+struct DisplaySeparator_Previews: PreviewProvider {
+    static var previews: some View {
+        DisplaySeparator()
+    }
 }
 
 struct LittleWhiteCircle: View {
@@ -89,10 +93,6 @@ struct LittleWhiteCircle: View {
             .frame(width: 7.0, height: 7.0)
             .foregroundColor(Color(white: 0.7))
     }
-}
-
-#Preview {
-    LittleWhiteCircle()
 }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
