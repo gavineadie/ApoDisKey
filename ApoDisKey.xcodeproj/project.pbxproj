@@ -20,8 +20,8 @@
 		864BD6192C3BD69700D4C896 /* Gorton-Condensed.otf in Resources */ = {isa = PBXBuildFile; fileRef = 864BD6162C3BD69700D4C896 /* Gorton-Condensed.otf */; };
 		864BD61A2C3BD69700D4C896 /* Gorton-Normal-120.otf in Resources */ = {isa = PBXBuildFile; fileRef = 864BD6172C3BD69700D4C896 /* Gorton-Normal-120.otf */; };
 		864BD61B2C3BD69700D4C896 /* Gorton-Normal-180.otf in Resources */ = {isa = PBXBuildFile; fileRef = 864BD6182C3BD69700D4C896 /* Gorton-Normal-180.otf */; };
-		867EBD682C3A1E29004C4DDD /* DisKeyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD672C3A1E29004C4DDD /* DisKeyApp.swift */; };
-		867EBD6A2C3A1E29004C4DDD /* DisKeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD692C3A1E29004C4DDD /* DisKeyView.swift */; };
+		867EBD682C3A1E29004C4DDD /* ApoDisKeyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD672C3A1E29004C4DDD /* ApoDisKeyApp.swift */; };
+		867EBD6A2C3A1E29004C4DDD /* ApoDisKeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD692C3A1E29004C4DDD /* ApoDisKeyView.swift */; };
 		867EBD7A2C3A1E2A004C4DDD /* DSKYTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD792C3A1E2A004C4DDD /* DSKYTests.swift */; };
 		867EBD932C3A5348004C4DDD /* Debug.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 867EBD922C3A5348004C4DDD /* Debug.xcassets */; };
 		868B2B702CD0CAD200A70648 /* FileStuff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 868B2B6F2CD0CAD200A70648 /* FileStuff.swift */; };
@@ -61,10 +61,10 @@
 		864BD6172C3BD69700D4C896 /* Gorton-Normal-120.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gorton-Normal-120.otf"; sourceTree = "<group>"; };
 		864BD6182C3BD69700D4C896 /* Gorton-Normal-180.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gorton-Normal-180.otf"; sourceTree = "<group>"; };
 		867EBD642C3A1E29004C4DDD /* ApoDisKey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ApoDisKey.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		867EBD672C3A1E29004C4DDD /* DisKeyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisKeyApp.swift; sourceTree = "<group>"; };
-		867EBD692C3A1E29004C4DDD /* DisKeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisKeyView.swift; sourceTree = "<group>"; };
+		867EBD672C3A1E29004C4DDD /* ApoDisKeyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApoDisKeyApp.swift; sourceTree = "<group>"; };
+		867EBD692C3A1E29004C4DDD /* ApoDisKeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApoDisKeyView.swift; sourceTree = "<group>"; };
 		867EBD6D2C3A1E2A004C4DDD /* DSKY.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DSKY.entitlements; sourceTree = "<group>"; };
-		867EBD752C3A1E2A004C4DDD /* DSKYTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DSKYTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		867EBD752C3A1E2A004C4DDD /* ApoDisKeyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ApoDisKeyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		867EBD792C3A1E2A004C4DDD /* DSKYTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSKYTests.swift; sourceTree = "<group>"; };
 		867EBD922C3A5348004C4DDD /* Debug.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Debug.xcassets; sourceTree = "<group>"; };
 		868B2B6F2CD0CAD200A70648 /* FileStuff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileStuff.swift; sourceTree = "<group>"; };
@@ -143,7 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				867EBD642C3A1E29004C4DDD /* ApoDisKey.app */,
-				867EBD752C3A1E2A004C4DDD /* DSKYTests.xctest */,
+				867EBD752C3A1E2A004C4DDD /* ApoDisKeyTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -151,8 +151,8 @@
 		867EBD662C3A1E29004C4DDD /* DSKY */ = {
 			isa = PBXGroup;
 			children = (
-				867EBD672C3A1E29004C4DDD /* DisKeyApp.swift */,
-				867EBD692C3A1E29004C4DDD /* DisKeyView.swift */,
+				867EBD672C3A1E29004C4DDD /* ApoDisKeyApp.swift */,
+				867EBD692C3A1E29004C4DDD /* ApoDisKeyView.swift */,
 				864BD60E2C3B416D00D4C896 /* StatusView.swift */,
 				864BD6102C3B42DF00D4C896 /* DisplayView.swift */,
 				864BD6082C3B2B9900D4C896 /* KeyPadView.swift */,
@@ -191,9 +191,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		867EBD632C3A1E29004C4DDD /* DSKY */ = {
+		867EBD632C3A1E29004C4DDD /* ApoDisKey */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 867EBD892C3A1E2A004C4DDD /* Build configuration list for PBXNativeTarget "DSKY" */;
+			buildConfigurationList = 867EBD892C3A1E2A004C4DDD /* Build configuration list for PBXNativeTarget "ApoDisKey" */;
 			buildPhases = (
 				867EBD602C3A1E29004C4DDD /* Sources */,
 				867EBD612C3A1E29004C4DDD /* Frameworks */,
@@ -203,16 +203,16 @@
 			);
 			dependencies = (
 			);
-			name = DSKY;
+			name = ApoDisKey;
 			packageProductDependencies = (
 			);
 			productName = DSKY;
 			productReference = 867EBD642C3A1E29004C4DDD /* ApoDisKey.app */;
 			productType = "com.apple.product-type.application";
 		};
-		867EBD742C3A1E2A004C4DDD /* DSKYTests */ = {
+		867EBD742C3A1E2A004C4DDD /* ApoDisKeyTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 867EBD8C2C3A1E2A004C4DDD /* Build configuration list for PBXNativeTarget "DSKYTests" */;
+			buildConfigurationList = 867EBD8C2C3A1E2A004C4DDD /* Build configuration list for PBXNativeTarget "ApoDisKeyTests" */;
 			buildPhases = (
 				867EBD712C3A1E2A004C4DDD /* Sources */,
 				867EBD722C3A1E2A004C4DDD /* Frameworks */,
@@ -223,9 +223,9 @@
 			dependencies = (
 				867EBD772C3A1E2A004C4DDD /* PBXTargetDependency */,
 			);
-			name = DSKYTests;
+			name = ApoDisKeyTests;
 			productName = DSKYTests;
-			productReference = 867EBD752C3A1E2A004C4DDD /* DSKYTests.xctest */;
+			productReference = 867EBD752C3A1E2A004C4DDD /* ApoDisKeyTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -247,7 +247,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 867EBD5F2C3A1E29004C4DDD /* Build configuration list for PBXProject "DSKY" */;
+			buildConfigurationList = 867EBD5F2C3A1E29004C4DDD /* Build configuration list for PBXProject "ApoDisKey" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -262,8 +262,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				867EBD632C3A1E29004C4DDD /* DSKY */,
-				867EBD742C3A1E2A004C4DDD /* DSKYTests */,
+				867EBD632C3A1E29004C4DDD /* ApoDisKey */,
+				867EBD742C3A1E2A004C4DDD /* ApoDisKeyTests */,
 			);
 		};
 /* End PBXProject section */
@@ -299,7 +299,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				867EBD6A2C3A1E29004C4DDD /* DisKeyView.swift in Sources */,
+				867EBD6A2C3A1E29004C4DDD /* ApoDisKeyView.swift in Sources */,
 				86A055072C405BB3007996B7 /* DisKeyModel.swift in Sources */,
 				864BD6092C3B2B9900D4C896 /* KeyPadView.swift in Sources */,
 				86E838922C3CF06400E7C573 /* DecorView.swift in Sources */,
@@ -309,7 +309,7 @@
 				86B26DB92C4CD3020021E594 /* Extensions.swift in Sources */,
 				86CB9B5E2C45F94400968C20 /* Network.swift in Sources */,
 				864BD6112C3B42DF00D4C896 /* DisplayView.swift in Sources */,
-				867EBD682C3A1E29004C4DDD /* DisKeyApp.swift in Sources */,
+				867EBD682C3A1E29004C4DDD /* ApoDisKeyApp.swift in Sources */,
 				864BD60F2C3B416D00D4C896 /* StatusView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -333,7 +333,7 @@
 /* Begin PBXTargetDependency section */
 		867EBD772C3A1E2A004C4DDD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 867EBD632C3A1E29004C4DDD /* DSKY */;
+			target = 867EBD632C3A1E29004C4DDD /* ApoDisKey */;
 			targetProxy = 867EBD762C3A1E2A004C4DDD /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -394,7 +394,7 @@
 				INFOPLIST_FILE = DSKY/Fonts.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				MARKETING_VERSION = 0.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -460,7 +460,7 @@
 				INFOPLIST_FILE = DSKY/Fonts.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				MARKETING_VERSION = 0.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -500,10 +500,8 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 14.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ramsaycons.ApoDisKey;
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -537,10 +535,8 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.5;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 14.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ramsaycons.ApoDisKey;
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -594,7 +590,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		867EBD5F2C3A1E29004C4DDD /* Build configuration list for PBXProject "DSKY" */ = {
+		867EBD5F2C3A1E29004C4DDD /* Build configuration list for PBXProject "ApoDisKey" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				867EBD872C3A1E2A004C4DDD /* Debug */,
@@ -603,7 +599,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		867EBD892C3A1E2A004C4DDD /* Build configuration list for PBXNativeTarget "DSKY" */ = {
+		867EBD892C3A1E2A004C4DDD /* Build configuration list for PBXNativeTarget "ApoDisKey" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				867EBD8A2C3A1E2A004C4DDD /* Debug */,
@@ -612,7 +608,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		867EBD8C2C3A1E2A004C4DDD /* Build configuration list for PBXNativeTarget "DSKYTests" */ = {
+		867EBD8C2C3A1E2A004C4DDD /* Build configuration list for PBXNativeTarget "ApoDisKeyTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				867EBD8D2C3A1E2A004C4DDD /* Debug */,

@@ -1,6 +1,6 @@
 //
 //  FileStuff.swift
-//  DSKY
+//  ApoDisKey
 //
 //  Created by Gavin Eadie on 10/29/24.
 //
@@ -14,6 +14,13 @@ import Foundation
   ┃ .. readInitializing:                                                                             ┃
   ┃ .. readCanned:path:                                                                              ┃
   ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛*/
+
+func locateAppSupport() -> URL {
+    do {
+        return try FileManager.default.url(for: .applicationSupportDirectory,
+                                           in: .localDomainMask, appropriateFor: nil, create: true)
+    } catch { fatalError("••• missing Application Support Directory")}
+}
 
 func establishDirectory() -> URL { URL(fileURLWithPath: "~/ApoDisKey", isDirectory: true) }
 

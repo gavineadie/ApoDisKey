@@ -17,8 +17,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "867EBD632C3A1E29004C4DDD"
                BuildableName = "ApoDisKey.app"
-               BlueprintName = "DSKY"
-               ReferencedContainer = "container:DSKY.xcodeproj">
+               BlueprintName = "ApoDisKey"
+               ReferencedContainer = "container:ApoDisKey.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -41,9 +41,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "867EBD742C3A1E2A004C4DDD"
-               BuildableName = "DSKYTests.xctest"
-               BlueprintName = "DSKYTests"
-               ReferencedContainer = "container:DSKY.xcodeproj">
+               BuildableName = "ApoDisKeyTests.xctest"
+               BlueprintName = "ApoDisKeyTests"
+               ReferencedContainer = "container:ApoDisKey.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -64,8 +64,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "867EBD632C3A1E29004C4DDD"
             BuildableName = "ApoDisKey.app"
-            BlueprintName = "DSKY"
-            ReferencedContainer = "container:DSKY.xcodeproj">
+            BlueprintName = "ApoDisKey"
+            ReferencedContainer = "container:ApoDisKey.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -81,8 +81,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "867EBD632C3A1E29004C4DDD"
             BuildableName = "ApoDisKey.app"
-            BlueprintName = "DSKY"
-            ReferencedContainer = "container:DSKY.xcodeproj">
+            BlueprintName = "ApoDisKey"
+            ReferencedContainer = "container:ApoDisKey.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

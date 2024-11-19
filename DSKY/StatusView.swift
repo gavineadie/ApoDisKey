@@ -1,6 +1,6 @@
 //
 //  StatusView.swift
-//  DSKY
+//  ApoDisKey
 //
 //  Created by Gavin Eadie on 7/7/24.
 //
@@ -38,39 +38,73 @@ struct StatusView: View {
         ZStack {
             PanelsView()
 
-            Grid {
-                GridRow {
+            VStack {
+                HStack {
                     StatusLight(light: model.statusLights[11]!)
                     StatusLight(light: model.statusLights[21]!)
                 }
 
-                GridRow {
+                HStack {
                     StatusLight(light: model.statusLights[12]!)
                     StatusLight(light: model.statusLights[22]!)
                 }
 
-                GridRow {
+                HStack {
                     StatusLight(light: model.statusLights[13]!)
                     StatusLight(light: model.statusLights[23]!)
                 }
-                GridRow {
+                HStack {
                     StatusLight(light: model.statusLights[14]!)
                     StatusLight(light: model.statusLights[24]!)
                 }
-                GridRow {
+                HStack {
                     StatusLight(light: model.statusLights[15]!)
                     StatusLight(light: model.statusLights[25]!)
                 }
-                GridRow {
+                HStack {
                     StatusLight(light: model.statusLights[16]!)
                     StatusLight(light: model.statusLights[26]!)
                 }
 
-                GridRow {
+                HStack {
                     StatusLight(light: model.statusLights[17]!)
                     StatusLight(light: model.statusLights[27]!)
                 }
             }
+
+//            Grid {
+//                GridRow {
+//                    StatusLight(light: model.statusLights[11]!)
+//                    StatusLight(light: model.statusLights[21]!)
+//                }
+//
+//                GridRow {
+//                    StatusLight(light: model.statusLights[12]!)
+//                    StatusLight(light: model.statusLights[22]!)
+//                }
+//
+//                GridRow {
+//                    StatusLight(light: model.statusLights[13]!)
+//                    StatusLight(light: model.statusLights[23]!)
+//                }
+//                GridRow {
+//                    StatusLight(light: model.statusLights[14]!)
+//                    StatusLight(light: model.statusLights[24]!)
+//                }
+//                GridRow {
+//                    StatusLight(light: model.statusLights[15]!)
+//                    StatusLight(light: model.statusLights[25]!)
+//                }
+//                GridRow {
+//                    StatusLight(light: model.statusLights[16]!)
+//                    StatusLight(light: model.statusLights[26]!)
+//                }
+//
+//                GridRow {
+//                    StatusLight(light: model.statusLights[17]!)
+//                    StatusLight(light: model.statusLights[27]!)
+//                }
+//            }
         }
     }
 }

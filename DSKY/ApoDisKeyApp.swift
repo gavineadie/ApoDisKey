@@ -1,6 +1,6 @@
 //
-//  DSKYApp.swift
-//  DSKY
+//  ApoDisKeyApp.swift
+//  ApoDisKey
 //
 //  Created by Gavin Eadie on 7/6/24.
 //
@@ -20,10 +20,10 @@ struct DisKeyApp: App {
   ┆ .. read init files                                                                               ┆
   ┆ .. make network connection                                                                       ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-//        let homeURL = establishDirectory()              // "~/ApoDisKey"
-//        if homeURL.isFileURL {
-//            logger.log("••• \(homeURL) isn't a file.")
-//        }
+        let homeURL = locateAppSupport()              // "~/ApoDisKey"
+        if homeURL.isFileURL {
+            logger.log("••• \(homeURL) isn't a file.")
+        }
 
 //        readInitializing()
 

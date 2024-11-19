@@ -1,6 +1,6 @@
 //
-//  DSKYTests.swift
-//  DSKYTests
+//  ApoDisKeyTests.swift
+//  ApoDisKeyTests
 //
 //  Created by Gavin Eadie on 7/6/24.
 //
@@ -8,7 +8,7 @@
 import XCTest
 import OSLog
 
-let logger = Logger(subsystem: "com.ramsaycons.DSKY", category: "TEST")
+let logger = Logger(subsystem: "com.ramsaycons.ApoDisKey", category: "TEST")
 
 final class DSKYTests: XCTestCase {
 
@@ -33,18 +33,18 @@ final class DSKYTests: XCTestCase {
 
         var triple = (UInt16(0), UInt16(0), false)
 
-//        for channel in 0...255 {
-//            for value in 0...0x7fff {
-//                let packet = formIoPacket(UInt16(channel), UInt16(value))
-//                triple = parseIoPacket(packet)!
-//                if (triple.1 != value) {
-//                    print("stop")
-//                }
-//            }
-//            if (triple.0 != channel) {
-//                print("stop")
-//            }
-//        }
+        for channel in 0...255 {
+            for value in 0...0x7fff {
+                let packet = formIoPacket(UInt16(channel), UInt16(value))
+                triple = parseIoPacket(packet)!
+                if (triple.1 != value) {
+                    print("stop")
+                }
+            }
+            if (triple.0 != channel) {
+                print("stop")
+            }
+        }
 
         for value in 0...0x7fff {
             let packet = formIoPacket(UInt16(8), UInt16(value))
