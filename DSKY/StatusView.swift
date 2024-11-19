@@ -38,73 +38,39 @@ struct StatusView: View {
         ZStack {
             PanelsView()
 
-            VStack {
-                HStack {
+            Grid {
+                GridRow {
                     StatusLight(light: model.statusLights[11]!)
                     StatusLight(light: model.statusLights[21]!)
                 }
 
-                HStack {
+                GridRow {
                     StatusLight(light: model.statusLights[12]!)
                     StatusLight(light: model.statusLights[22]!)
                 }
 
-                HStack {
+                GridRow {
                     StatusLight(light: model.statusLights[13]!)
                     StatusLight(light: model.statusLights[23]!)
                 }
-                HStack {
+                GridRow {
                     StatusLight(light: model.statusLights[14]!)
                     StatusLight(light: model.statusLights[24]!)
                 }
-                HStack {
+                GridRow {
                     StatusLight(light: model.statusLights[15]!)
                     StatusLight(light: model.statusLights[25]!)
                 }
-                HStack {
+                GridRow {
                     StatusLight(light: model.statusLights[16]!)
                     StatusLight(light: model.statusLights[26]!)
                 }
 
-                HStack {
+                GridRow {
                     StatusLight(light: model.statusLights[17]!)
                     StatusLight(light: model.statusLights[27]!)
                 }
             }
-
-//            Grid {
-//                GridRow {
-//                    StatusLight(light: model.statusLights[11]!)
-//                    StatusLight(light: model.statusLights[21]!)
-//                }
-//
-//                GridRow {
-//                    StatusLight(light: model.statusLights[12]!)
-//                    StatusLight(light: model.statusLights[22]!)
-//                }
-//
-//                GridRow {
-//                    StatusLight(light: model.statusLights[13]!)
-//                    StatusLight(light: model.statusLights[23]!)
-//                }
-//                GridRow {
-//                    StatusLight(light: model.statusLights[14]!)
-//                    StatusLight(light: model.statusLights[24]!)
-//                }
-//                GridRow {
-//                    StatusLight(light: model.statusLights[15]!)
-//                    StatusLight(light: model.statusLights[25]!)
-//                }
-//                GridRow {
-//                    StatusLight(light: model.statusLights[16]!)
-//                    StatusLight(light: model.statusLights[26]!)
-//                }
-//
-//                GridRow {
-//                    StatusLight(light: model.statusLights[17]!)
-//                    StatusLight(light: model.statusLights[27]!)
-//                }
-//            }
         }
     }
 }
@@ -121,7 +87,7 @@ struct StatusLight: View {
         ZStack {
             RoundedRectangle(cornerRadius: statusCorner)
                 .fill(back(light))
-                .border(Color(statusBorder), width: 1)
+                .border(statusBorder, width: 1)
                 .frame(width: statusWidth,
                        height: statusHeight)
 
