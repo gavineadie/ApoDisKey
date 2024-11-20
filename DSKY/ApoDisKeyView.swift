@@ -91,14 +91,8 @@ struct DisKeyView: View {
     }
 }
 
-#if MONTEREY
 struct DisKeyView_Previews: PreviewProvider {
     static var previews: some View {
         DisKeyView()
     }
 }
-#else
-#Preview {
-    DisKeyView()
-}
-#endif

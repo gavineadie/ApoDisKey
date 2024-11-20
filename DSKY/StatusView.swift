@@ -35,7 +35,7 @@ import SwiftUI
 
 struct StatusView: View {
 
-    @StateObject var model = DisKeyModel.shared
+    @ObservedObject var model = DisKeyModel.shared
 
     var body: some View {
         ZStack {
@@ -119,17 +119,11 @@ struct StatusView: View {
     }
 }
 
-#if MONTEREY
 struct StatusView_Previews: PreviewProvider {
     static var previews: some View {
         StatusView()
     }
 }
-#else
-    #Preview {
-        StatusView()
-    }
-#endif
 
 struct StatusLight: View {
     var light: Light
@@ -154,13 +148,11 @@ struct StatusLight: View {
     }
 }
 
-//#Preview {
-//    StatusLight(light: ("WORDS", .off))
-//}
-
-//#Preview {
-//    StatusLight(light: ("WORDS", .orange))
-//}
+struct StatusLight_Previews: PreviewProvider {
+    static var previews: some View {
+        StatusLight(light: ("WORDS", .orange))
+    }
+}
 
 private func back(_ input: (String, BackColor)) -> Color {
     switch input.1 {
