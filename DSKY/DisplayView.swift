@@ -68,17 +68,11 @@ struct DisplayView: View {
     }
 }
 
-#if MONTEREY
 struct DisplayView_Previews: PreviewProvider {
     static var previews: some View {
         DisplayView()
     }
 }
-#endif
-
-//#Preview {
-//    DisplayView()
-//}
 
 /*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
   │ ROW1                                                                                             │
@@ -110,10 +104,6 @@ struct Row1: View {
         .padding(.bottom, 6.0)
     }
 }
-
-//#Preview {
-//    Row1()
-//}
 
 struct Comp: View {
     var state: Display
@@ -168,17 +158,6 @@ struct Row2: View {
         .padding(.bottom, 6.0)
     }
 }
-
-//#Preview {
-//    Row2()
-//}
-//
-//#Preview {
-//    VStack {
-//        Row1()
-//        Row2()
-//    }
-//}
 
 struct Verb: View {
     var state: Display
@@ -290,17 +269,11 @@ struct DisplayPlacard: View {
     }
 }
 
-#if MONTEREY
 struct DisplayPlacard_Previews: PreviewProvider {
     static var previews: some View {
         DisplayPlacard(label: "WORD")
     }
 }
-#endif
-
-//#Preview {
-//    DisplayPlacard(label: "WORD")
-//}
 
 struct DisplayNumbers: View {
     var value: Display

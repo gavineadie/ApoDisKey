@@ -68,15 +68,11 @@ struct KeyPadView: View {
     }
 }
 
-//struct KeyPadView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        KeyPadView()
-//    }
-//}
-
-//#Preview {
-//    KeyPadView()
-//}
+struct KeyPadView_Previews: PreviewProvider {
+    static var previews: some View {
+        KeyPadView()
+    }
+}
 
 struct KeyView: View {
     var keyCode: UInt16
@@ -136,14 +132,6 @@ struct KeyView: View {
                 })
     }
 }
-
-//#Preview {
-//    KeyView(keyCode: 6)
-//}
-
-//#Preview {
-//    KeyView(keyCode: 255)
-//}
 
 func keyText(_ code: UInt16) -> String { keyDict[code] ?? "ERROR" }
 
