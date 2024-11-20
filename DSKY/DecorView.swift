@@ -56,9 +56,7 @@ struct PanelsView: View {
     }
 }
 
-#Preview {
-    PanelsView(interiorFill: .pink)
-}
+#Preview { PanelsView(interiorFill: .pink) }
 
 struct DisplaySeparator: View {
     var body: some View {
@@ -78,9 +76,7 @@ struct DisplaySeparator: View {
     }
 }
 
-#Preview {
-    DisplaySeparator()
-}
+#Preview { DisplaySeparator() }
 
 struct LittleWhiteCircle: View {
     var body: some View {
@@ -91,9 +87,7 @@ struct LittleWhiteCircle: View {
     }
 }
 
-#Preview {
-    LittleWhiteCircle()
-}
+#Preview { LittleWhiteCircle() }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ .. takes a string and converts "_" to faded "8" ..                                               ┆

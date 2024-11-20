@@ -66,9 +66,7 @@ struct DisplayView: View {
     }
 }
 
-#Preview {
-    DisplayView()
-}
+#Preview { DisplayView() }
 
 /*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
   │ ROW1                                                                                             │
@@ -280,9 +278,7 @@ struct DisplayPlacard: View {
     }
 }
 
-#Preview {
-    DisplayPlacard(label: "WORD")
-}
+#Preview { DisplayPlacard(label: "WORD") }
 
 struct DisplayNumbers: View {
     var value: Display

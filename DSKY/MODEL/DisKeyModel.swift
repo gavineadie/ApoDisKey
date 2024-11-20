@@ -2,7 +2,7 @@
 //  StatusModel.swift
 //  ApoDisKey
 //
-//  Created by Gavin Eadie on 7/11/24.
+//  Created by Gavin Eadie on Jul11/24.
 //
 
 import Foundation
@@ -16,7 +16,23 @@ class DisKeyModel: @unchecked Sendable {
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ .. the fourteen lights resentating status on the DSKY top-left ..                                ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-    public var statusLights : [Int: Light]
+    public var statusLights : [Int: Light] = [
+            11: ("", .off),             //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
+            12: ("", .off),             //  ┆ UPLINK ┆ ┆  TEMP  ┆
+            13: ("", .off),             //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
+            14: ("", .off),             //  ┆ NO ATT ┆ ┆ GIMBAL ┆
+            15: ("", .off),             //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
+            16: ("", .off),             //  ┆  STBY  ┆ ┆  PROG  ┆
+            17: ("", .off),             //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
+                                        //  ┆KEY REL ┆ ┆RESTART ┆
+            21: ("", .off),             //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
+            22: ("", .off),             //  ┆OPR ERR ┆ ┆TRACKER ┆
+            23: ("", .off),             //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
+            24: ("", .off),             //  ┆        ┆ ┆  ALT   ┆
+            25: ("", .off),             //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
+            26: ("", .off),             //  ┆        ┆ ┆  VEL   ┆
+            27: ("", .off)              //  ╰╌╌╌╌╌╌╌╌╯ ╰╌╌╌╌╌╌╌╌╯
+        ]
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ .. the electroluminescent DSKY top-right panel (initial values are cleared when AGC connects) .. ┆
@@ -42,8 +58,6 @@ class DisKeyModel: @unchecked Sendable {
 
     private init() {
 
-        let userDefaults = UserDefaults.standard
-
 /*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
   │ defaults set by:                                                                                 │
   │         defaults write com.ramsaycons.ApoDisKey ipAddr "127.0.0.1"                               │
@@ -52,6 +66,8 @@ class DisKeyModel: @unchecked Sendable {
   │         defaults delete com.ramsaycons.ApoDisKey ipAddr                                          │
   │         defaults delete com.ramsaycons.ApoDisKey ipPort                                          │
   └──────────────────────────────────────────────────────────────────────────────────────────────────┘*/
+        let userDefaults = UserDefaults.standard
+
         let ipAddr = userDefaults.string(forKey: "ipAddr") ?? "localhost"
         let ipPort = UInt16(userDefaults.integer(forKey: "ipPort")) == 0
                     ? 19697
@@ -64,26 +80,9 @@ class DisKeyModel: @unchecked Sendable {
         network = Network("192.168.1.100", 19698)   // .. MaxBook
 #else
 //      network = Network("192.168.1.232", 19697)   // .. Ubuntu
-        network = Network(ipAddr, ipPort)           // 172.19.131.37
+        network = Network(ipAddr, ipPort)           // (defaults)
 #endif
 
-        statusLights = [                // initial state
-            11: ("", .off),             //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
-            12: ("", .off),             //  ┆ UPLINK ┆ ┆  TEMP  ┆
-            13: ("", .off),             //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
-            14: ("", .off),             //  ┆ NO ATT ┆ ┆ GIMBAL ┆
-            15: ("", .off),             //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
-            16: ("", .off),             //  ┆  STBY  ┆ ┆  PROG  ┆
-            17: ("", .off),             //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
-                                        //  ┆KEY REL ┆ ┆RESTART ┆
-            21: ("", .off),             //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
-            22: ("", .off),             //  ┆OPR ERR ┆ ┆TRACKER ┆
-            23: ("", .off),             //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
-            24: ("", .off),             //  ┆        ┆ ┆  ALT   ┆
-            25: ("", .off),             //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
-            26: ("", .off),             //  ┆        ┆ ┆  VEL   ┆
-            27: ("", .off)              //  ╰╌╌╌╌╌╌╌╌╯ ╰╌╌╌╌╌╌╌╌╯
-        ]
     }
 }
 

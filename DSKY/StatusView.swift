@@ -75,9 +75,7 @@ struct StatusView: View {
     }
 }
 
-#Preview {
-    StatusView()
-}
+#Preview { StatusView() }
 
 
 struct StatusLight: View {
@@ -103,13 +101,9 @@ struct StatusLight: View {
     }
 }
 
-#Preview {
-    StatusLight(light: ("WORDS", .off))
-}
+#Preview { StatusLight(light: ("WORDS", .off)) }
 
-#Preview {
-    StatusLight(light: ("WORDS", .orange))
-}
+#Preview { StatusLight(light: ("WORDS", .orange)) }
 
 private func back(_ input: (String, BackColor)) -> Color {
     switch input.1 {
