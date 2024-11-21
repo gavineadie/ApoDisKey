@@ -7,6 +7,8 @@
 
 import Foundation
 
+let model = DisKeyModel.shared
+
 func channelAction(_ channel: UInt16, _ value: UInt16, _ tf: Bool = true) {
 
     switch channel {
