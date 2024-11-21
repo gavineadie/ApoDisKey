@@ -121,8 +121,8 @@ func setNetwork() -> Network {
     return Network("192.168.1.100", 19698)   // .. MaxBook
 #else
 //  return Network("192.168.1.166", 19697)   // .. Ubuntu
-    return Network("127.0.0.1", 19697)       // .. Ubuntu
-//  return Network(ipAddr, ipPort)           // (defaults)
+//  return Network("127.0.0.1", 19697)       // .. Ubuntu
+  return Network(ipAddr, ipPort)           // (defaults)
 #endif
 
 }

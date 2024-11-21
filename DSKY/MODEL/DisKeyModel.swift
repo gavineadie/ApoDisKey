@@ -44,9 +44,9 @@ final class DisKeyModel: Sendable {
     public var verb: Display = ("35", true)             // numbers=35, placard=green
     public var noun: Display = ("77", true)
 
-    public var reg1: Display = (" 54321", true)
-    public var reg2: Display = ("-12345", false)        // TODO: what does "false" do here?
-    public var reg3: Display = ("+88888", true)
+    public var reg1: Display = ("      ", true)
+    public var reg2: Display = ("      ", false)        // TODO: what does "false" do here?
+    public var reg3: Display = ("      ", true)
 
     public var r1Sign = (false, false)                  // blank prefix (± or blank)
     public var r2Sign = (false, false)
