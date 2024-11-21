@@ -129,6 +129,7 @@ let ch010Labs = [" ??? ",
                  "PRIO ",    // b1
                  "NEVER"]
 
+@available(macOS 13.0, *)
 func prettyCh010(_ code: UInt16) -> String {
     let bitArray = ZeroPadWord(code, to: 10).split(separator: "")
     var catString = ""
@@ -162,6 +163,7 @@ let ch011Labs = [" ??? ",    // b8
                  " ??? ",    // b1
                  "NEVER"]
 
+@available(macOS 13.0, *)
 func prettyCh011(_ code: UInt16) -> String {
     let bitArray = ZeroPadWord(code, to: 8).split(separator: "")
     var catString = "          "
@@ -197,6 +199,7 @@ let ch163Labs = [" EL↓ ",    // b10
                  " AGC ",    // b1
                  "NEVER"]
 
+@available(macOS 13.0, *)
 func prettyCh163(_ code: UInt16) -> String {
     let bitArray = ZeroPadWord(code, to: 10).split(separator: "")
     var catString = ""
@@ -208,6 +211,7 @@ func prettyCh163(_ code: UInt16) -> String {
     return catString
 }
 
+@available(macOS 13.0, *)
 func prettyCh032(_ code: UInt16) -> String {
     let bitArray = ZeroPadWord(code).split(separator: "")
     var catString = ""
