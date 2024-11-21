@@ -112,7 +112,7 @@ struct KeyView: View {
                     }
                     Task {
                         do {
-                            try await DisKeyModel.shared.network.connection.rawSend(data: formIoPacket(0o015, keyCode))
+                            try await model.network.connection.rawSend(data: formIoPacket(0o015, keyCode))
                         } catch {
                             print(error.localizedDescription)
                         }

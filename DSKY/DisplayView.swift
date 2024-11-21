@@ -105,6 +105,12 @@ struct Row1: View {
     }
 }
 
+struct Row1_Previews: PreviewProvider {
+    static var previews: some View {
+        Row1()
+    }
+}
+
 struct Comp: View {
     var state: Display
 
