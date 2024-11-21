@@ -99,9 +99,7 @@ struct Row1: View {
     }
 }
 
-#Preview {
-    Row1()
-}
+#Preview { Row1() }
 
 struct Comp: View {
     var state: Display
@@ -157,9 +155,7 @@ struct Row2: View {
     }
 }
 
-#Preview {
-    Row2()
-}
+#Preview { Row2() }
 
 #Preview {
     VStack {

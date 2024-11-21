@@ -9,7 +9,7 @@ import Foundation
 import AVFoundation
 
 @Observable
-class DisKeyModel: @unchecked Sendable {
+final class DisKeyModel: Sendable {
 
     static let shared = DisKeyModel()
 
@@ -54,36 +54,7 @@ class DisKeyModel: @unchecked Sendable {
 
     public var elPanelOff = false                       // electroluminescent power
 
-    public let network: Network
-
-    private init() {
-
-/*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
-  │ defaults set by:                                                                                 │
-  │         defaults write com.ramsaycons.ApoDisKey ipAddr "127.0.0.1"                               │
-  │         defaults write com.ramsaycons.ApoDisKey ipPort 19697                                     │
-  │ defaults removed by:                                                                             │
-  │         defaults delete com.ramsaycons.ApoDisKey ipAddr                                          │
-  │         defaults delete com.ramsaycons.ApoDisKey ipPort                                          │
-  └──────────────────────────────────────────────────────────────────────────────────────────────────┘*/
-        let userDefaults = UserDefaults.standard
-
-        let ipAddr = userDefaults.string(forKey: "ipAddr") ?? "localhost"
-        let ipPort = UInt16(userDefaults.integer(forKey: "ipPort")) == 0
-                    ? 19697
-                    : UInt16(userDefaults.integer(forKey: "ipPort"))
-
-        logger.log("→→→ appDefaults: \(ipAddr):\(ipPort)")
-
-#if os(iOS) || os(tvOS)
-//      network = Network("192.168.1.232", 19697)   // .. Ubuntu
-        network = Network("192.168.1.100", 19698)   // .. MaxBook
-#else
-//      network = Network("192.168.1.232", 19697)   // .. Ubuntu
-        network = Network(ipAddr, ipPort)           // (defaults)
-#endif
-
-    }
+    public let network = setNetwork()
 }
 
 extension DisKeyModel {

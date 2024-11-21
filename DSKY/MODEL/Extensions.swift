@@ -207,3 +207,14 @@ func prettyCh163(_ code: UInt16) -> String {
 
     return catString
 }
+
+func prettyCh032(_ code: UInt16) -> String {
+    let bitArray = ZeroPadWord(code).split(separator: "")
+    var catString = ""
+
+    for index in 0..<bitArray.count {
+        catString += (bitArray[index] == "0") ? "  ↓  " : "  ↑  "
+    }
+
+    return catString
+}

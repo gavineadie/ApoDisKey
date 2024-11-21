@@ -52,9 +52,9 @@ struct DisKeyView: View {
     var body: some View {
 
         ZStack {
-            Rectangle()
-                .fill(backgroundColor)
-                .padding(-80.0)
+//            Rectangle()
+//                .fill(backgroundColor)
+//                .padding(-80.0)
 
             Image("BackGround")         // width=656px
                 .cornerRadius(18.0)
