@@ -108,7 +108,7 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ tf: Bool = true) {
             model.statusLights[24]?.1 = (value & bit8 > 0) ? .yellow : .off     // Bit 8: RESTART lamp
             model.statusLights[13]?.1 = (value & bit9 > 0) ? .white : .off      // Bit 9: STBY lamp
 
-            model.elPanelOff = value & bit10 > 0                                // Bit 10: EL panel
+            model.elPanelOff = value & bit10 > 0                                // Bit 10: EL panel (power)
 
         case 0o165:
             logger.log("»»» DSKY165 \(ZeroPadWord(value)) TIME1")

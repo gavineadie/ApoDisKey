@@ -10,10 +10,10 @@ import Foundation
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ Converts a yaAGC integer channel-number and value to a 4-byte channel i/o packet ..              ┆
   ┆╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┆
-  ┆ bytes: 00pppppp 01pppddd 10dddddd 11dddddd                                                       ┆
+  ┆ bytes: 00tupppp 01pppddd 10dddddd 11dddddd                                                       ┆
   ┆        ^^       ^^       ^^       ^^            packet validation bits                           ┆
   ┆╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┆
-  ┆    0000000ppppppppp is the 9-bit channel              0ddddddddddddddd is the 15-bit value.      ┆
+  ┆    0000000tuppppppp is the 9-bit channel              0ddddddddddddddd is the 15-bit value.      ┆
   ┆                                                                                                  ┆
   ┆    0000000ppppppppp                                                                              ┆
   ┆           >> 3                                                                                   ┆

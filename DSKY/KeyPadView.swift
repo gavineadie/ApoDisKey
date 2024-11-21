@@ -131,7 +131,7 @@ struct KeyView: View {
                                 """)
                             Task {
                                 do {
-                                    try await model.network.connection.rawSend(data: formIoPacket(0o032, 0b0000_0000_0000_0000))
+                                    try await model.network.connection.rawSend(data: formIoPacket(0o032, value))
                                 } catch {
                                     print(error.localizedDescription)
                                 }

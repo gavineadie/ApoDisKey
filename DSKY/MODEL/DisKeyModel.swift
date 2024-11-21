@@ -44,9 +44,9 @@ class DisKeyModel: ObservableObject {
     @Published public var verb: Display = ("35", true)      // numbers=35, placard=green
     @Published public var noun: Display = ("77", true)
 
-    @Published public var reg1: Display = (" 54321", true)
-    @Published public var reg2: Display = ("-12345", false) // TODO: what does "false" do here?
-    @Published public var reg3: Display = ("+88888", true)
+    @Published public var reg1: Display = ("      ", true)
+    @Published public var reg2: Display = ("      ", false) // TODO: what does "false" do here?
+    @Published public var reg3: Display = ("      ", true)
 
     @Published public var r1Sign = (false, false)           // blank prefix (± or blank)
     @Published public var r2Sign = (false, false)
@@ -54,36 +54,7 @@ class DisKeyModel: ObservableObject {
 
     @Published public var elPanelOff = false                // electroluminescent power
 
-    public let network: Network
-
-    private init() {
-
-/*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
-  │ defaults set by:                                                                                 │
-  │         defaults write com.ramsaycons.ApoDisKey ipAddr "127.0.0.1"                               │
-  │         defaults write com.ramsaycons.ApoDisKey ipPort 19697                                     │
-  │ defaults removed by:                                                                             │
-  │         defaults delete com.ramsaycons.ApoDisKey ipAddr                                          │
-  │         defaults delete com.ramsaycons.ApoDisKey ipPort                                          │
-  └──────────────────────────────────────────────────────────────────────────────────────────────────┘*/
-        let userDefaults = UserDefaults.standard
-
-        let ipAddr = userDefaults.string(forKey: "ipAddr") ?? "localhost"
-        let ipPort = UInt16(userDefaults.integer(forKey: "ipPort")) == 0
-                    ? 19697
-                    : UInt16(userDefaults.integer(forKey: "ipPort"))
-
-        logger.log("→→→ appDefaults: \(ipAddr):\(ipPort)")
-
-#if os(iOS) || os(tvOS)
-//      network = Network("192.168.1.232", 19697)   // .. Ubuntu
-        network = Network("192.168.1.100", 19698)   // .. MaxBook
-#else
-//      network = Network("192.168.1.232", 19697)   // .. Ubuntu
-        network = Network(ipAddr, ipPort)           // (defaults)
-#endif
-
-    }
+    public let network = setNetwork()
 }
 
 extension DisKeyModel {
