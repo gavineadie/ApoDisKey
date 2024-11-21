@@ -119,17 +119,43 @@ struct KeyView: View {
                     }
                 }
             }
-            .simultaneousGesture(LongPressGesture(minimumDuration: 1.0)
-                .onEnded { _ in
-                    logger.log("«««    \(keyText(keyCode)) (\(keyCode))")
-                    Task {
-                        do {
-                            try await DisKeyModel.shared.network.connection.rawSend(data: formIoPacket(0o015, keyCode))
-                        } catch {
-                            print(error.localizedDescription)
+            .simultaneousGesture(
+                DragGesture(minimumDistance: 0)
+                    .onChanged ({ _ in
+                        if keyCode == 99 {
+                            let value: UInt16 = 0b0000_0000_0000_0000   // bit 14 - zero
+
+                            logger.log("""
+                                «««    DSKY 032:    \(ZeroPadWord(value)) BITS (15)      \
+                                :: \(keyText(keyCode)) ↓
+                                """)
+                            Task {
+                                do {
+                                    try await model.network.connection.rawSend(data: formIoPacket(0o032, 0b0000_0000_0000_0000))
+                                } catch {
+                                    print(error.localizedDescription)
+                                }
+                            }
                         }
-                    }
-                })
+                    })
+                    .onEnded ({ _ in
+                        if keyCode == 99 {
+                            let value: UInt16 = 0b0010_0000_0000_0000   // bit 14 - one
+
+                            logger.log("""
+                                «««    DSKY 032:    \(ZeroPadWord(value)) BITS (15)      \
+                                :: \(keyText(keyCode)) ↑
+                                """)
+                            Task {
+                                do {
+                                    try await model.network.connection.rawSend(data: formIoPacket(0o032, value))
+                                } catch {
+                                    print(error.localizedDescription)
+                                }
+                            }
+                        }
+                    })
+            )
     }
 }
 

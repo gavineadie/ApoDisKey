@@ -129,16 +129,17 @@ let ch010Labs = [" ??? ",
                  "PRIO ",    // b1
                  "NEVER"]
 
-//func prettyCh010(_ code: UInt16) -> String {
-//    let bitArray = ZeroPadWord(code, to: 10).split(separator: "")
-//    var catString = ""
-//
-//    for index in 0..<bitArray.count {
-//        catString += (bitArray[index] == "0") ? "  ↓  " : ch010Labs[index]
-//    }
-//
-//    return catString
-//}
+@available(macOS 13.0, *)
+func prettyCh010(_ code: UInt16) -> String {
+   let bitArray = ZeroPadWord(code, to: 10).split(separator: "")
+   var catString = ""
+
+   for index in 0..<bitArray.count {
+       catString += (bitArray[index] == "0") ? "  ↓  " : ch010Labs[index]
+   }
+
+   return catString
+}
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ All LATCHES                                                                                      ┆
@@ -162,16 +163,17 @@ let ch011Labs = [" ??? ",    // b8
                  " ??? ",    // b1
                  "NEVER"]
 
-//func prettyCh011(_ code: UInt16) -> String {
-//    let bitArray = ZeroPadWord(code, to: 8).split(separator: "")
-//    var catString = "          "
-//
-//    for index in 0..<bitArray.count {
-//        catString += (bitArray[index] == "0") ? "  ↓  " : ch011Labs[index]
-//    }
-//
-//    return catString
-//}
+@available(macOS 13.0, *)
+func prettyCh011(_ code: UInt16) -> String {
+   let bitArray = ZeroPadWord(code, to: 8).split(separator: "")
+   var catString = "          "
+
+   for index in 0..<bitArray.count {
+       catString += (bitArray[index] == "0") ? "  ↓  " : ch011Labs[index]
+   }
+
+   return catString
+}
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆          Bit 1:               AGC warning                                                        ┆
@@ -197,13 +199,26 @@ let ch163Labs = [" EL↓ ",    // b10
                  " AGC ",    // b1
                  "NEVER"]
 
-//func prettyCh163(_ code: UInt16) -> String {
-//    let bitArray = ZeroPadWord(code, to: 10).split(separator: "")
-//    var catString = ""
-//
-//    for index in 0..<bitArray.count {
-//        catString += (bitArray[index] == "0") ? "  ↓  " : ch163Labs[index]
-//    }
-//
-//    return catString
-//}
+@available(macOS 13.0, *)
+func prettyCh163(_ code: UInt16) -> String {
+   let bitArray = ZeroPadWord(code, to: 10).split(separator: "")
+   var catString = ""
+
+   for index in 0..<bitArray.count {
+       catString += (bitArray[index] == "0") ? "  ↓  " : ch163Labs[index]
+   }
+
+   return catString
+}
+
+@available(macOS 13.0, *)
+func prettyCh032(_ code: UInt16) -> String {
+    let bitArray = ZeroPadWord(code).split(separator: "")
+    var catString = ""
+
+    for index in 0..<bitArray.count {
+        catString += (bitArray[index] == "0") ? "  ↓  " : "  ↑  "
+    }
+
+    return catString
+}

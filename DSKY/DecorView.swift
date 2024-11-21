@@ -23,9 +23,6 @@ let statusCorner: CGFloat = 6
 
 let backgroundColor = Color(red: 0.9, green: 0.9, blue: 0.8)
 
-let panelExColor = Color(white: 0.25)
-let panelInColor = Color(white: 0.35)
-
 let statusBorder = Color(white: 0.5)
 let statusText = Color(white: 0.0)
 
@@ -37,14 +34,40 @@ let keyPadColor = Color(white: 0.25)
 let zerlinaFixedSize: CGFloat = 46.0
 let zerlinaTracking: CGFloat = 4.0
 
+/*
+            ╭───────────────────────╮
+            │ ╭───────────────────╮ │
+            │ │                   │<--- exterior color (edge)
+            │ │         <-------------- interior color
+            │ │                   │ │
+            │ │                   │ │
+            │ │                   │ │
+            │ │                   │ │
+            │ │                   │ │
+            │ │                   │ │
+            │ │                   │ │
+            │ │                   │ │
+            │ │                   │ │
+            │ │                   │ │
+            │ │                   │ │
+            │ │                   │ │
+            │ │                   │ │
+            │ │                   │ │
+            │ │                   │ │
+            │ │                   │ │
+            │ │                   │ │
+            │ │                   │ │
+            │ ╰───────────────────╯ │
+            ╰───────────────────────╯
+*/
 
 struct PanelsView: View {
-    var interiorFill: Color = panelInColor
+    var interiorFill: Color = Color(white: 0.35)
 
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 10)
-                .fill(panelExColor)
+                .fill(Color(white: 0.25))
                 .frame(width: panelExSizeW, 
                        height: panelExSizeH)
 

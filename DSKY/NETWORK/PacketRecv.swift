@@ -145,13 +145,13 @@ func dskyInterpretation(_ code: UInt16) {
 //                LIGHTS (10)    :: \(prettyCh010(code & 0b0000000_111111111))
 //                """)
 
-            model.statusLights[12]?.1 = (code & bit4 > 0) ?  .white : .off   // 4: NO ATT
-
-            model.statusLights[22]?.1 = (code & bit6 > 0) ? .yellow : .off   // 6: GIMBAL LOCK
-            model.statusLights[23]?.1 = (code & bit9 > 0) ? .yellow : .off   // 9: PROG
-            model.statusLights[25]?.1 = (code & bit8 > 0) ? .yellow : .off   // 8: TRACKER
             model.statusLights[27]?.1 = (code & bit3 > 0) ? .yellow : .off   // 3: VEL
+            model.statusLights[12]?.1 = (code & bit4 > 0) ?  .white : .off   // 4: NO ATT
             model.statusLights[26]?.1 = (code & bit5 > 0) ? .yellow : .off   // 5: ALT
+            model.statusLights[22]?.1 = (code & bit6 > 0) ? .yellow : .off   // 6: GIMBAL LOCK
+
+            model.statusLights[25]?.1 = (code & bit8 > 0) ? .yellow : .off   // 8: TRACKER
+            model.statusLights[23]?.1 = (code & bit9 > 0) ? .yellow : .off   // 9: PROG
 
         case 0:
             return // logger.log("ooo    DSKY 010: \(ZeroPadWord(code))")
