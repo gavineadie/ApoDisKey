@@ -109,7 +109,7 @@ extension DisKeyModel {
         13 : ("STBY",           .off),
         14 : ("KEY  REL",       .off),
         15 : ("OPR  ERR",       .off),
-        16 : ("PRIO DISO",      .off),
+        16 : ("PRIO DISP",      .off),
         17 : ("NO DAP",         .off),
 
         21 : ("TEMP",           .off),
