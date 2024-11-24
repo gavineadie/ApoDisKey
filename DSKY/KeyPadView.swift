@@ -83,12 +83,12 @@ struct KeyView: View {
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
         let fontSize: CGFloat = (1...16).contains(keyCode) ||
                                (26...27).contains(keyCode) ? 28 : 12
+        let fontName = (1...16).contains(keyCode) || (26...27).contains(keyCode) ?  
+                                           "Gorton-Normal-120" : "Gorton-Normal-180"
 
         Text(keyText(keyCode))
-            .font(.custom("Gorton-Normal-120",
-                          fixedSize: fontSize))
+            .font(.custom(fontName, fixedSize: fontSize))
             .baselineOffset(-4.0)
-            .tracking(2.0)
             .foregroundColor(keyTextColor)
             .multilineTextAlignment(.center)
             .lineLimit(2)
