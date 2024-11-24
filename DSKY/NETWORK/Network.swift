@@ -107,12 +107,10 @@ extension NWConnection {
   │         defaults delete com.ramsaycons.ApoDisKey ipPort                                          │
   └──────────────────────────────────────────────────────────────────────────────────────────────────┘*/
 func setNetwork() -> Network {
-    let userDefaults = UserDefaults.standard
-
-    let ipAddr = userDefaults.string(forKey: "ipAddr") ?? "localhost"
-    let ipPort = UInt16(userDefaults.integer(forKey: "ipPort")) == 0
+    let ipAddr = UserDefaults.standard.string(forKey: "ipAddr") ?? "localhost"
+    let ipPort = UInt16(UserDefaults.standard.integer(forKey: "ipPort")) == 0
                                 ? 19697
-                                : UInt16(userDefaults.integer(forKey: "ipPort"))
+                                : UInt16(UserDefaults.standard.integer(forKey: "ipPort"))
 
     logger.log("→→→ appDefaults: \(ipAddr, privacy: .public):\(ipPort, privacy: .public)")
 
@@ -121,8 +119,8 @@ func setNetwork() -> Network {
     return Network("192.168.1.100", 19698)   // .. MaxBook
 #else
 //  return Network("192.168.1.166", 19697)   // .. Ubuntu
-    return Network("127.0.0.1", 19697)       // .. Ubuntu
-//  return Network(ipAddr, ipPort)           // (defaults)
+//  return Network("127.0.0.1", 19697)       // .. Ubuntu
+    return Network(ipAddr, ipPort)           // (defaults)
 #endif
 
 }

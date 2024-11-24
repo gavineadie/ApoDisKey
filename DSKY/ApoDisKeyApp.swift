@@ -27,9 +27,20 @@ struct DisKeyApp: App {
 //        readInitializing()
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ set the status display lights to the LM (Apollo 11) defaults                                     ┆
+  ┆ set the status display lights to the specified defaults                                          ┆
+  │ defaults set by:                                                                                 │
+  │         defaults write com.ramsaycons.ApoDisKey dskyModule "CM", "LM0", "LM1"                    │
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-        model.statusLights = DisKeyModel.luminary099
+        switch UserDefaults.standard.string(forKey: "dskyModule") ?? "LM0" {
+            case "CM":
+                model.statusLights = DisKeyModel.CM
+            case "LM0":
+                model.statusLights = DisKeyModel.LM0
+            case "LM1":
+                model.statusLights = DisKeyModel.LM1
+            default:
+                model.statusLights = DisKeyModel.LM0
+        }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ start receiving packets from the AGC ..                                                          ┆
