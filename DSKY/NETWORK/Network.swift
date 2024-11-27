@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Network
+@preconcurrency import Network
 
 struct Network : Sendable{
 
