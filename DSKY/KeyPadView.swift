@@ -78,15 +78,14 @@ struct KeyView: View {
     var keyCode: UInt16
 
     var body: some View {
+        let keyGlyph = keyText(keyCode)
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ .. single characters are 28 points and words are 12 points                                       ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-        let fontSize: CGFloat = (1...16).contains(keyCode) ||
-                               (26...27).contains(keyCode) ? 28 : 12
-        let fontName = (1...16).contains(keyCode) || (26...27).contains(keyCode) ?  
-                                           "Gorton-Normal-120" : "Gorton-Normal-180"
+        let fontSize: CGFloat = keyGlyph.count == 1 ? 28 : 12
+        let fontName = keyGlyph.count == 1 ? "Gorton-Normal-120" : "Gorton-Normal-180"
 
-        Text(keyText(keyCode))
+        Text(keyGlyph)
             .font(.custom(fontName, fixedSize: fontSize))
             .baselineOffset(-4.0)
             .foregroundColor(keyTextColor)
@@ -101,6 +100,7 @@ struct KeyView: View {
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ the "PRO" key is a long press                                                                    ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+            .acceptClickThrough()
             .onTapGesture {
                 if keyCode < 99 {
                     logger.log("«««    \(keyText(keyCode)) (\(keyCode))")
