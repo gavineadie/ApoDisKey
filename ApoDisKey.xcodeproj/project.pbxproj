@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		860873A92CF6FD640086DC63 /* MonitorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 860873A82CF6FD640086DC63 /* MonitorView.swift */; };
 		861754F92C471ABB0080D82B /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86CB9B5D2C45F94400968C20 /* Network.swift */; };
 		8623E1122C6B1129003B934F /* dsky.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 8623E1112C6B1129003B934F /* dsky.aiff */; };
 		862A1D272C48230500AD4352 /* PacketSend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86ECA4DE2C47602F0025545C /* PacketSend.swift */; };
@@ -48,6 +49,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		860873A82CF6FD640086DC63 /* MonitorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitorView.swift; sourceTree = "<group>"; };
 		8623E1112C6B1129003B934F /* dsky.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = dsky.aiff; sourceTree = "<group>"; };
 		862A1D292C48236A00AD4352 /* DSKY.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = DSKY.xctestplan; sourceTree = "<group>"; };
 		864143C32C4AE78300EEC7EB /* Initialize.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = Initialize.txt; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				867EBD672C3A1E29004C4DDD /* ApoDisKeyApp.swift */,
+				860873A82CF6FD640086DC63 /* MonitorView.swift */,
 				867EBD692C3A1E29004C4DDD /* ApoDisKeyView.swift */,
 				864BD60E2C3B416D00D4C896 /* StatusView.swift */,
 				864BD6102C3B42DF00D4C896 /* DisplayView.swift */,
@@ -304,6 +307,7 @@
 				864BD6092C3B2B9900D4C896 /* KeyPadView.swift in Sources */,
 				86E838922C3CF06400E7C573 /* DecorView.swift in Sources */,
 				86ECA4DF2C47602F0025545C /* PacketSend.swift in Sources */,
+				860873A92CF6FD640086DC63 /* MonitorView.swift in Sources */,
 				86ECA4E12C4760400025545C /* PacketRecv.swift in Sources */,
 				868B2B712CD0CAD200A70648 /* FileStuff.swift in Sources */,
 				86B26DB92C4CD3020021E594 /* Extensions.swift in Sources */,
@@ -395,7 +399,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 0.2;
+				MARKETING_VERSION = 0.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -461,7 +465,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 0.2;
+				MARKETING_VERSION = 0.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ramsaycons.ApoDisKey;
@@ -501,6 +505,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				MARKETING_VERSION = 0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ramsaycons.ApoDisKey;
 				SDKROOT = auto;
@@ -536,6 +541,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				MARKETING_VERSION = 0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ramsaycons.ApoDisKey;
 				SDKROOT = auto;

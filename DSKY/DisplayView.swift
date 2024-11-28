@@ -66,7 +66,7 @@ struct DisplayView: View {
     }
 }
 
-#Preview { DisplayView() }
+#Preview("DISPLAY") { DisplayView() }
 
 /*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
   │ ROW1                                                                                             │
@@ -88,7 +88,7 @@ struct DisplayView: View {
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 struct Row1: View {
     var comp: Display = ("  ", false)
-    var prog: Display = ("__", true)
+    var prog: Display = ("__", false)
 
     var body: some View {
         HStack(alignment: .top) {
@@ -99,7 +99,7 @@ struct Row1: View {
     }
 }
 
-#Preview { Row1() }
+#Preview("ROW1") { Row1() }
 
 struct Comp: View {
     var state: Display
@@ -119,7 +119,8 @@ struct Prog: View {
 
     var body: some View {
         VStack {
-            DisplayPlacard(label: "PROG")
+            DisplayPlacard(label: "PROG",
+                           illum: state.1)
             DisplayNumbers(value: state)
         }
     }
@@ -143,8 +144,8 @@ struct Prog: View {
   ┆                                                                                                  ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 struct Row2: View {
-    var verb: Display = ("__", true)
-    var noun: Display = ("88", true)
+    var verb: Display = ("__", false)
+    var noun: Display = ("__", false)
 
     var body: some View {
         HStack {
@@ -155,7 +156,7 @@ struct Row2: View {
     }
 }
 
-#Preview { Row2() }
+#Preview("ROW2") { Row2() }
 
 #Preview {
     VStack {
@@ -169,7 +170,8 @@ struct Verb: View {
 
     var body: some View {
         VStack {
-            DisplayPlacard(label: "VERB")
+            DisplayPlacard(label: "VERB",
+                           illum: state.1)
             DisplayNumbers(value: state)
         }
     }
@@ -180,7 +182,8 @@ struct Noun: View {
 
     var body: some View {
         VStack {
-            DisplayPlacard(label: "NOUN")
+            DisplayPlacard(label: "NOUN",
+                           illum: state.1)
             DisplayNumbers(value: state)
                 .padding(.trailing, -1.0)
         }

@@ -31,17 +31,26 @@ struct DisKeyApp: App {
   │ defaults set by:                                                                                 │
   │         defaults write com.ramsaycons.ApoDisKey dskyModule "CM", "LM0", "LM1"                    │
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-        switch UserDefaults.standard.string(forKey: "dskyModule") ?? "LM0" {
-            case "CM":
-                model.statusLights = DisKeyModel.CM
-            case "LM0":
-                model.statusLights = DisKeyModel.LM0
-            case "LM1":
-                model.statusLights = DisKeyModel.LM1
-            default:
-                model.statusLights = DisKeyModel.LM0
-        }
+//        let missionType = UserDefaults.standard.string(forKey: "dskyModule") ?? "LM0"
+//        logger.log("→→→ appDefaults: missionType=\(missionType, privacy: .public)")
+//        switch missionType {
+//            case "CM":
+//                model.statusLights = DisKeyModel.CM
+//            case "LM0":
+//                model.statusLights = DisKeyModel.LM0
+//            case "LM1":
+//                model.statusLights = DisKeyModel.LM1
+//            default:
+//                model.statusLights = DisKeyModel.LM0
+//        }
 
+        model.elPanelOff = false
+
+        model.prog = ("__", true)
+        model.verb = ("__", true)
+        model.noun = ("__", true)
+
+        model.statusLights = DisKeyModel.LM0
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ start receiving packets from the AGC ..                                                          ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
@@ -80,6 +89,10 @@ struct DisKeyApp: App {
     var body: some Scene {
         WindowGroup {
             DisKeyView()
+        }
+
+        Window("Monitor", id: "ApoDisKeyMon") {
+            MonitorView()
         }
     }
 }
