@@ -114,12 +114,6 @@ struct StatusView: View {
     }
 }
 
-struct StatusView_Previews: PreviewProvider {
-    static var previews: some View {
-        StatusView()
-    }
-}
-
 struct StatusLight: View {
     var light: Light
 
@@ -140,12 +134,6 @@ struct StatusLight: View {
                 .lineLimit(2)
                 .lineSpacing(4.0)
         }
-    }
-}
-
-struct StatusLight_Previews: PreviewProvider {
-    static var previews: some View {
-        StatusLight(light: ("WORDS", .orange))
     }
 }
 

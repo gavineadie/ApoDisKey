@@ -39,10 +39,10 @@ class DisKeyModel: ObservableObject {
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
     public typealias Display = (String, Bool)
 
-    @Published public var comp: Display = ("--", false)     // numbers (none for COMP), placard=dark
-    @Published public var prog: Display = ("  ", true)
-    @Published public var verb: Display = ("88", true)      // numbers=35, placard=green
-    @Published public var noun: Display = ("88", true)
+    @Published public var comp: Display = ("--", false)      // numbers (none for COMP), placard=dark
+    @Published public var prog: Display = ("  ", false)
+    @Published public var verb: Display = ("--", false)      // numbers=35, placard=green
+    @Published public var noun: Display = ("--", false)
 
     @Published public var reg1: Display = ("      ", true)
     @Published public var reg2: Display = ("      ", false) // TODO: what does "false" do here?
@@ -63,10 +63,10 @@ extension DisKeyModel {
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
     static let CM : [Int: Light] = [
         11 : ("UPLINK\nACTY",   .off),
-        12 : ("NO  ATT",        .off),
+        12 : ("NO ATT",         .off),
         13 : ("STBY",           .off),
-        14 : ("KEY  REL",       .off),
-        15 : ("OPR  ERR",       .off),
+        14 : ("KEY REL",        .off),
+        15 : ("OPR ERR",        .off),
         16 : (" ",              .off),
         17 : (" ",              .off),
 
@@ -84,10 +84,10 @@ extension DisKeyModel {
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
     static let LM0 : [Int: Light] = [
         11 : ("UPLINK\nACTY",   .off),
-        12 : ("NO  ATT",        .off),
+        12 : ("NO ATT",         .off),
         13 : ("STBY",           .off),
-        14 : ("KEY  REL",       .off),
-        15 : ("OPR  ERR",       .off),
+        14 : ("KEY REL",        .off),
+        15 : ("OPR ERR",        .off),
         16 : (" ",              .off),
         17 : (" ",              .off),
 
@@ -105,10 +105,10 @@ extension DisKeyModel {
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
     static let LM1 : [Int: Light] = [
         11 : ("UPLINK\nACTY",   .off),
-        12 : ("NO  ATT",        .off),
+        12 : ("NO ATT",         .off),
         13 : ("STBY",           .off),
-        14 : ("KEY  REL",       .off),
-        15 : ("OPR  ERR",       .off),
+        14 : ("KEY REL",        .off),
+        15 : ("OPR ERR",        .off),
         16 : ("PRIO DISP",      .off),
         17 : ("NO DAP",         .off),
 
@@ -120,4 +120,26 @@ extension DisKeyModel {
         26 : ("ALT",            .off),
         27 : ("VEL",            .off)
     ]
+
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆  set light label texts "powered off" mode ..                                                     ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+    nonisolated(unsafe) static let OFF : [Int: Light] = [
+        11 : ("   ",            .off),
+        12 : ("   ",            .off),
+        13 : ("   ",            .off),
+        14 : ("   ",            .off),
+        15 : ("   ",            .off),
+        16 : ("   ",            .off),
+        17 : ("   ",            .off),
+
+        21 : ("   ",            .off),
+        22 : ("   ",            .off),
+        23 : ("   ",            .off),
+        24 : ("   ",            .off),
+        25 : ("   ",            .off),
+        26 : ("   ",            .off),
+        27 : ("   ",            .off)
+    ]
+
 }

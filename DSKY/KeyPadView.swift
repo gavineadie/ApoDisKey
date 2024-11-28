@@ -68,12 +68,6 @@ struct KeyPadView: View {
     }
 }
 
-struct KeyPadView_Previews: PreviewProvider {
-    static var previews: some View {
-        KeyPadView()
-    }
-}
-
 struct KeyView: View {
     var keyCode: UInt16
 

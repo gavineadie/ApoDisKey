@@ -90,9 +90,3 @@ struct DisKeyView: View {
         }
     }
 }
-
-struct DisKeyView_Previews: PreviewProvider {
-    static var previews: some View {
-        DisKeyView()
-    }
-}

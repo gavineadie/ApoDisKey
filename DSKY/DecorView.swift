@@ -79,12 +79,6 @@ struct PanelsView: View {
     }
 }
 
-struct PanelsView_Previews: PreviewProvider {
-    static var previews: some View {
-        PanelsView()
-    }
-}
-
 struct DisplaySeparator: View {
     var body: some View {
         HStack {
@@ -100,12 +94,6 @@ struct DisplaySeparator: View {
         .frame(width: 192,
                height: 5)
 
-    }
-}
-
-struct DisplaySeparator_Previews: PreviewProvider {
-    static var previews: some View {
-        DisplaySeparator()
     }
 }
 

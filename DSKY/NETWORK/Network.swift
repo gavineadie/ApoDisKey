@@ -112,14 +112,11 @@ func setNetwork() -> Network {
                                 ? 19697
                                 : UInt16(UserDefaults.standard.integer(forKey: "ipPort"))
 
-    logger.log("→→→ appDefaults: \(ipAddr, privacy: .public):\(ipPort, privacy: .public)")
-
 #if os(iOS) || os(tvOS)
 //  return Network("192.168.1.232", 19697)   // .. Ubuntu
     return Network("192.168.1.100", 19698)   // .. MaxBook
 #else
-//  return Network("192.168.1.166", 19697)   // .. Ubuntu
-//  return Network("127.0.0.1", 19697)       // .. Ubuntu
+    logger.log("→→→ appDefaults: ipAddr=\(ipAddr, privacy: .public), ipPort=\(ipPort, privacy: .public)")
     return Network(ipAddr, ipPort)           // (defaults)
 #endif
 

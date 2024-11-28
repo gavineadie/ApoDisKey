@@ -68,12 +68,6 @@ struct DisplayView: View {
     }
 }
 
-struct DisplayView_Previews: PreviewProvider {
-    static var previews: some View {
-        DisplayView()
-    }
-}
-
 /*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
   │ ROW1                                                                                             │
   │     "COMP"  default OFF, illuminated briefly by AGC                                              │
@@ -94,7 +88,7 @@ struct DisplayView_Previews: PreviewProvider {
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 struct Row1: View {
     var comp: Display = ("  ", false)
-    var prog: Display = ("__", true)
+    var prog: Display = ("__", false)
 
     var body: some View {
         HStack(alignment: .top) {
@@ -102,12 +96,6 @@ struct Row1: View {
             Prog(state: prog)
         }
         .padding(.bottom, 6.0)
-    }
-}
-
-struct Row1_Previews: PreviewProvider {
-    static var previews: some View {
-        Row1()
     }
 }
 
@@ -129,7 +117,8 @@ struct Prog: View {
 
     var body: some View {
         VStack {
-            DisplayPlacard(label: "PROG")
+            DisplayPlacard(label: "PROG",
+                           illum: state.1)
             DisplayNumbers(value: state)
         }
     }
@@ -153,8 +142,8 @@ struct Prog: View {
   ┆                                                                                                  ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 struct Row2: View {
-    var verb: Display = ("__", true)
-    var noun: Display = ("88", true)
+    var verb: Display = ("__", false)
+    var noun: Display = ("__", false)
 
     var body: some View {
         HStack {
@@ -170,7 +159,8 @@ struct Verb: View {
 
     var body: some View {
         VStack {
-            DisplayPlacard(label: "VERB")
+            DisplayPlacard(label: "VERB",
+                           illum: state.1)
             DisplayNumbers(value: state)
         }
     }
@@ -181,7 +171,8 @@ struct Noun: View {
 
     var body: some View {
         VStack {
-            DisplayPlacard(label: "NOUN")
+            DisplayPlacard(label: "NOUN",
+                           illum: state.1)
             DisplayNumbers(value: state)
                 .padding(.trailing, -1.0)
         }
@@ -272,12 +263,6 @@ struct DisplayPlacard: View {
                 .lineSpacing(4.0)
 
         }
-    }
-}
-
-struct DisplayPlacard_Previews: PreviewProvider {
-    static var previews: some View {
-        DisplayPlacard(label: "WORD")
     }
 }
 
