@@ -76,6 +76,9 @@ struct PanelsView: View {
                 .frame(width: panelExSizeW-panelInset,
                        height: panelExSizeH-panelInset)
         }
+        .shadow(color: Color.black.opacity(0.6),
+                radius: 4.0,
+                x: 4.0, y: 4.0)
     }
 }
 

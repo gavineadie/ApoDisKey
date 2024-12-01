@@ -65,6 +65,7 @@ struct KeyPadView: View {
                 KeyView(keyCode: 18) // "RSET"
             }
         }
+        .padding(.top, 16.0)
     }
 }
 
@@ -91,10 +92,13 @@ struct KeyView: View {
             .background(keyPadColor)
             .padding(.all, keyPadding)
             .cornerRadius(keyCorner)
+//          .border(Color(white: 0.75), width: 1.5)
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ the "PRO" key is a long press                                                                    ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+#if os(macOS)
             .acceptClickThrough()
+#endif
             .onTapGesture {
                 if keyCode < 99 {
                     logger.log("«««    \(keyText(keyCode)) (\(keyCode))")

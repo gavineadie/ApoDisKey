@@ -65,6 +65,7 @@ struct DisplayView: View {
                 Register3(state: model.reg3)
             }
         }
+        .padding(.leading, 18.0)
     }
 }
 

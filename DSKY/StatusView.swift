@@ -111,6 +111,7 @@ struct StatusView: View {
                 }
             }
         }
+        .padding(.trailing, 18.0)
     }
 }
 
@@ -123,7 +124,7 @@ struct StatusLight: View {
                 .fill(back(light))
                 .border(statusBorder, width: 1)
                 .frame(width: statusWidth,
-                       height: statusHeight)
+                       height: statusHeight+3.0)
 
             Text(light.0)
                 .font(.custom("Gorton-Normal-180",
