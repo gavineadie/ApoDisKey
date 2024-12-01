@@ -76,10 +76,11 @@ struct PanelsView: View {
                 .frame(width: panelExSizeW-panelInset,
                        height: panelExSizeH-panelInset)
         }
+        .shadow(color: Color.black.opacity(0.6),
+                radius: 4.0,
+                x: 4.0, y: 4.0)
     }
 }
-
-#Preview { PanelsView(interiorFill: .pink) }
 
 struct DisplaySeparator: View {
     var body: some View {
@@ -99,8 +100,6 @@ struct DisplaySeparator: View {
     }
 }
 
-#Preview { DisplaySeparator() }
-
 struct LittleWhiteCircle: View {
     var body: some View {
         RoundedRectangle(cornerRadius: 3.5)
@@ -109,8 +108,6 @@ struct LittleWhiteCircle: View {
             .foregroundColor(Color(white: 0.7))
     }
 }
-
-#Preview { LittleWhiteCircle() }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ .. takes a string and converts "_" to faded "8" ..                                               ┆

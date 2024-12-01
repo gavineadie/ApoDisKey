@@ -108,11 +108,9 @@ struct StatusView: View {
                 }
             }
         }
+        .padding(.trailing, 18.0)
     }
 }
-
-#Preview { StatusView() }
-
 
 struct StatusLight: View {
     var light: Light
@@ -123,7 +121,7 @@ struct StatusLight: View {
                 .fill(back(light))
                 .border(statusBorder, width: 1)
                 .frame(width: statusWidth,
-                       height: statusHeight)
+                       height: statusHeight+3.0)
 
             Text(light.0)
                 .font(.custom("Gorton-Normal-180",
@@ -136,10 +134,6 @@ struct StatusLight: View {
         }
     }
 }
-
-#Preview { StatusLight(light: ("WORDS", .off)) }
-
-#Preview { StatusLight(light: ("WORDS", .orange)) }
 
 private func back(_ input: (String, BackColor)) -> Color {
     switch input.1 {

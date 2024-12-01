@@ -223,6 +223,7 @@ func prettyCh032(_ code: UInt16) -> String {
     return catString
 }
 
+#if os(macOS)
 /*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
   │  https://christiantietze.de/posts/2024/04/enable-swiftui-button-click-through-inactive-windows/  │
   └──────────────────────────────────────────────────────────────────────────────────────────────────┘*/
@@ -293,4 +294,4 @@ fileprivate struct ClickThroughBackdrop<Content: SwiftUI.View>: NSViewRepresenta
         nsView.rootView = content
     }
 }
-
+#endif

@@ -8,11 +8,18 @@
 import SwiftUI
 
 struct MonitorView: View {
-    var body: some View {
-        VStack {
 
-            Text("IP address: ..")
-            Text("IP port: ..")
+    @State private var ipAddr: String = ""
+    @State private var ipPort: UInt = 0
+
+    static var number: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        return formatter
+    }()
+
+    var body: some View {
+        HStack {
 
             Menu("Choose Mission") {
                 Button("Apollo CM 8-17",
@@ -21,18 +28,41 @@ struct MonitorView: View {
                     model.elPanelOff = false
                 })
                 Button("Apollo LM 11-14",
-                       action: { model.statusLights = DisKeyModel.LM0 })
+                       action: {
+                    model.statusLights = DisKeyModel.LM0
+                    model.elPanelOff = false
+                })
                 Button("Apollo LM 15-17",
-                       action: { model.statusLights = DisKeyModel.LM1 })
-                Button("*** Power Off ***",
-                       action: { model.statusLights = DisKeyModel.OFF
-                    model.elPanelOff = true
-})
+                       action: {
+                    model.statusLights = DisKeyModel.LM1
+                    model.elPanelOff = false
+                })
             }
 
-            .padding(/*@START_MENU_TOKEN@*/.all, 20.0/*@END_MENU_TOKEN@*/)
-        }
+            TextField("AGC Address",
+                      text: $ipAddr,
+                      onEditingChanged: { tf in
+                                print("onEditingChanged \(tf)")
+                            },
+                      onCommit: {
+                                print("onCommit")
+                            })
+//            .foregroundColor(.blue)
+//            .background(.yellow)
+            .font(.custom("Menlo", size: 12))
 
+            TextField("AGC PortNum",
+                      value: $ipPort,
+                      formatter: MonitorView.number)
+            .font(.custom("Menlo", size: 12))
+
+            Button("Connect",
+                   systemImage: "phone.connection",
+                   action: { print("connect") } )
+            .disabled(ipAddr.isEmpty || ipPort == 0)
+        }
+        .padding(5)
+        .background(.gray)
     }
 }
 

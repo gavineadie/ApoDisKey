@@ -52,23 +52,16 @@ struct DisKeyView: View {
     var body: some View {
 
         ZStack {
-//            Rectangle()
-//                .fill(backgroundColor)
-//                .padding(-80.0)
-
             Image("BackGround")         // width=656px
                 .cornerRadius(18.0)
 
             VStack {
                 HStack {
                     StatusView()
-                        .padding(.trailing, 18.0)
                     DisplayView()
-                        .padding(.leading, 18.0)
                 }
 
                 KeyPadView()
-                    .padding(.top, 16.0)
             }
             .padding(.top, 5.0)
         }
@@ -90,5 +83,3 @@ struct DisKeyView: View {
 //        }
     }
 }
-
-#Preview { DisKeyView() }

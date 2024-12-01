@@ -65,10 +65,9 @@ struct KeyPadView: View {
                 KeyView(keyCode: 18) // "RSET"
             }
         }
+        .padding(.top, 16.0)
     }
 }
-
-#Preview { KeyPadView() }
 
 struct KeyView: View {
     var keyCode: UInt16
@@ -93,10 +92,13 @@ struct KeyView: View {
             .background(keyPadColor)
             .padding(.all, keyPadding)
             .cornerRadius(keyCorner)
+//            .border(Color(white: 0.75), width: 1.5)
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ the "PRO" key is a long press                                                                    ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+#if os(macOS)
             .acceptClickThrough()
+#endif
             .onTapGesture {
                 if keyCode < 99 {
                     logger.log("«««    \(keyText(keyCode)) (\(keyCode))")
@@ -154,10 +156,6 @@ struct KeyView: View {
             )
     }
 }
-
-#Preview { KeyView(keyCode: 6) }
-
-#Preview { KeyView(keyCode: 255) }
 
 func keyText(_ code: UInt16) -> String { keyDict[code] ?? "ERROR" }
 

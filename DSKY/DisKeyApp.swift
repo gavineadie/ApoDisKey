@@ -1,5 +1,5 @@
 //
-//  ApoDisKeyApp.swift
+//  DisKeyApp.swift
 //  ApoDisKey
 //
 //  Created by Gavin Eadie on Jul06/24.
@@ -88,11 +88,23 @@ struct DisKeyApp: App {
 
     var body: some Scene {
         WindowGroup {
-            DisKeyView()
+            AppView()
         }
+    }
+}
 
-        Window("Monitor", id: "ApoDisKeyMon") {
+struct AppView: View {
+    var body: some View {
+        VStack {
+            DisKeyView()
+                .padding(.bottom, 10.0)
+
+            Divider()
             MonitorView()
         }
     }
+}
+
+#Preview {
+    AppView()
 }

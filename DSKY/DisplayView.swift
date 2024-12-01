@@ -63,10 +63,9 @@ struct DisplayView: View {
                 Register3(state: model.reg3)
             }
         }
+        .padding(.leading, 18.0)
     }
 }
-
-#Preview("DISPLAY") { DisplayView() }
 
 /*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
   │ ROW1                                                                                             │
@@ -98,8 +97,6 @@ struct Row1: View {
         .padding(.bottom, 6.0)
     }
 }
-
-#Preview("ROW1") { Row1() }
 
 struct Comp: View {
     var state: Display
@@ -153,15 +150,6 @@ struct Row2: View {
             Noun(state: noun)
         }
         .padding(.bottom, 6.0)
-    }
-}
-
-#Preview("ROW2") { Row2() }
-
-#Preview {
-    VStack {
-        Row1()
-        Row2()
     }
 }
 
@@ -276,8 +264,6 @@ struct DisplayPlacard: View {
         }
     }
 }
-
-#Preview { DisplayPlacard(label: "WORD") }
 
 struct DisplayNumbers: View {
     var value: Display
