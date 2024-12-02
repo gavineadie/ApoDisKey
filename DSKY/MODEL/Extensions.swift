@@ -202,9 +202,9 @@ let ch163Labs = [" EL↓ ",    // b10
 @available(macOS 13.0, *)
 func prettyCh163(_ code: UInt16) -> String {
    let bitArray = ZeroPadWord(code, to: 10).split(separator: "")
-   var catString = ""
+    var catString = (bitArray[0] == "1") ? "  ↓  " : " EL↑ "
 
-   for index in 0..<bitArray.count {
+    for index in 1..<bitArray.count {
        catString += (bitArray[index] == "0") ? "  ↓  " : ch163Labs[index]
    }
 

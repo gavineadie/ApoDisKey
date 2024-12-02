@@ -119,7 +119,7 @@ struct Prog: View {
     var body: some View {
         VStack {
             DisplayPlacard(label: "PROG",
-                           illum: state.1)
+                           illum: model.elPowerOn)
             DisplayNumbers(value: state)
         }
     }
@@ -161,7 +161,7 @@ struct Verb: View {
     var body: some View {
         VStack {
             DisplayPlacard(label: "VERB",
-                           illum: state.1)
+                           illum: model.elPowerOn)
             DisplayNumbers(value: state)
         }
     }
@@ -173,7 +173,7 @@ struct Noun: View {
     var body: some View {
         VStack {
             DisplayPlacard(label: "NOUN",
-                           illum: state.1)
+                           illum: model.elPowerOn)
             DisplayNumbers(value: state)
                 .padding(.trailing, -1.0)
         }

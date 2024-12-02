@@ -24,63 +24,8 @@ struct DisKeyApp: App {
             logger.log("••• \(homeURL) isn't a file.")
         }
 
-//        readInitializing()
+//      readInitializing()
 
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ set the status display lights to the specified defaults                                          ┆
-  │ defaults set by:                                                                                 │
-  │         defaults write com.ramsaycons.ApoDisKey dskyModule "CM", "LM0", "LM1"                    │
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-//        let missionType = UserDefaults.standard.string(forKey: "dskyModule") ?? "LM0"
-//        logger.log("→→→ appDefaults: missionType=\(missionType, privacy: .public)")
-//        switch missionType {
-//            case "CM":
-//                model.statusLights = DisKeyModel.CM
-//            case "LM0":
-//                model.statusLights = DisKeyModel.LM0
-//            case "LM1":
-//                model.statusLights = DisKeyModel.LM1
-//            default:
-//                model.statusLights = DisKeyModel.LM0
-//        }
-
-        model.elPanelOff = false
-
-        model.prog = ("__", true)
-        model.verb = ("__", true)
-        model.noun = ("__", true)
-
-        model.statusLights = DisKeyModel.LM0
-
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ start receiving packets from the AGC ..                                                          ┆
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-        Task {
-            repeat {
-                do {
-                    let rxPacket = try await model.network.connection.rawReceive(length: 4)
-
-                    if let (channel, action, _) = parseIoPacket(rxPacket) {
-                        channelAction(channel, action)
-                    }
-                } catch {
-                    print(error.localizedDescription)
-                }
-            } while true
-        }
-
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ send a u-bit channel command to indicate channel 0o032 send bit-14 to the AGC ..                 ┆
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-        Task {
-            let value: UInt16 = 0b0010_0000_0000_0000
-            do {
-                try await model.network.connection.rawSend(data: formIoPacket(0o0232, 0b0010_0000_0000_0000))
-                logger.log("«««    DSKY 032:    \(ZeroPadWord(value)) BITS (15)")       // send u-bit
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
     }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -104,4 +49,107 @@ struct AppView: View {
             MonitorView()
         }
     }
+}
+
+#Preview {
+    AppView()
+}
+
+struct MonitorView: View {
+
+    @State private var ipAddr: String = ""
+    @State private var ipPort: UInt16 = 0
+
+    static var number: NumberFormatter = {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        return formatter
+    }()
+
+    var body: some View {
+        HStack {
+
+            Menu("Choose Mission") {
+                Button("Apollo CM 8-17",
+                       action: {
+                    model.statusLights = DisKeyModel.CM
+                    model.elPowerOn = true
+                })
+                Button("Apollo LM 11-14",
+                       action: {
+                    model.statusLights = DisKeyModel.LM0
+                    model.elPowerOn = true
+                })
+                Button("Apollo LM 15-17",
+                       action: {
+                    model.statusLights = DisKeyModel.LM1
+                    model.elPowerOn = true
+                })
+            }
+
+            TextField("AGC Address",
+                      text: $ipAddr,
+                      onEditingChanged: { tf in
+                print("onEditingChanged \(tf)")
+            },
+                      onCommit: {
+                print("onCommit")
+            })
+//            .foregroundColor(.blue)
+//            .background(.yellow)
+            .font(.custom("Menlo", size: 12))
+
+            TextField("AGC PortNum",
+                      value: $ipPort,
+                      formatter: MonitorView.number)
+            .font(.custom("Menlo", size: 12))
+
+            Button("Connect",
+                   systemImage: "phone.connection",
+                   action: {
+                print("connect")
+                model.ipAddr = ipAddr
+                model.ipPort = ipPort
+                model.network = setNetwork(ipAddr, ipPort, start: true)
+
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ start receiving packets from the AGC ..                                                          ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+                Task {
+                    repeat {
+                        do {
+                            let rxPacket = try await model.network.connection.rawReceive(length: 4)
+
+                            if let (channel, action, _) = parseIoPacket(rxPacket) {
+                                channelAction(channel, action)
+                            }
+                        } catch {
+                            print(error.localizedDescription)
+                        }
+                    } while true
+                }
+
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ send a u-bit channel command to indicate channel 0o032 send bit-14 to the AGC ..                 ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+                Task {
+                    let value: UInt16 = 0b0010_0000_0000_0000
+                    do {
+                        try await model.network.connection.rawSend(data: formIoPacket(0o0232, 0b0010_0000_0000_0000))
+                        logger.log("«««    DSKY 032:    \(ZeroPadWord(value)) BITS (15)")       // send u-bit
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
+            }
+            )
+            .disabled(ipAddr.isEmpty || ipPort == 0)
+        }
+        .padding(5)
+        .background(.gray)
+    }
+}
+
+#Preview {
+    MonitorView()
 }

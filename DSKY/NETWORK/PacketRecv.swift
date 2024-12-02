@@ -29,22 +29,23 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ tf: Bool = true) {
   ┆                 This means to flash the digits in the NOUN and VERB areas.                       ┆
   ┆          Bit 7: Lights the "OPR ERR" indicator.                                                  ┆
   ┆                                                                                                  ┆
-//┆          NOTE: don't log command that only cycle the "COMP ACTY" indicator.                      ┆
+  ┆          Bit2 11 and 15 ..                                                                       ┆
+  ┆                                                                                                  ┆
+  ┆###       NOTE: don't log command that only cycle the "COMP ACTY" indicator.                      ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
         case 0o011:                 // [OUTPUT] flags for indicator lamps etc
-//            if value != 8192 && value != 8194 {
-//                logger.log("""
-//                »»»    DSKY 011:           \(ZeroPadWord(value, to: 8)) BITS (8)       \
-//                :: \(prettyCh011(value))
-//                """)
-//            }
+//          if value != 0x2000 && value != 0x2002 && value != 0x2200 && value != 0x2202 {
+//              logger.log("""
+//              »»»    DSKY 011:   \(ZeroPadWord(value)) BITS (15)       \
+//              :: \(prettyCh011(value))
+//              """)
+//          }
             model.comp.1 = value & bit2 > 0                                     // "COMP ACTY"
 
             model.statusLights[11]?.1 = (value & bit3 > 0) ? .white : .off      // "UPLINK
-            model.statusLights[14]?.1 = (value & bit7 > 0) ? .white : .off      // "OPR ERR"
-
             model.statusLights[21]?.1 = (value & bit4 > 0) ? .yellow : .off     // "TEMP"
             model.statusLights[24]?.1 = (value & bit5 > 0) ? .yellow : .off     // "KEY REL"
+            model.statusLights[14]?.1 = (value & bit7 > 0) ? .white : .off      // "OPR ERR"
 
         case 0o012:                 // [OUTPUT] CM and LM actions ..
             break
@@ -102,13 +103,13 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ tf: Bool = true) {
 
             model.statusLights[21]?.1 = (value & bit4 > 0) ? .yellow : .off     // Bit 4: TEMP lamp
             model.statusLights[14]?.1 = (value & bit5 > 0) ? .white : .off      // Bit 5: KEY REL lamp
-            model.verb.1 = value & bit6 == 0                                    // Bit 6: flash "VERB"
-            model.noun.1 = value & bit6 == 0                                    // Bit 6: flash "NOUN"
+            model.verb.1 = value & bit6 == 0                                    // Bit 6: flash V digits
+            model.noun.1 = value & bit6 == 0                                    // Bit 6: flash N digits
             model.statusLights[15]?.1 = (value & bit7 > 0) ? .white : .off      // Bit 7: OPER ERR lamp
             model.statusLights[24]?.1 = (value & bit8 > 0) ? .yellow : .off     // Bit 8: RESTART lamp
             model.statusLights[13]?.1 = (value & bit9 > 0) ? .white : .off      // Bit 9: STBY lamp
 
-            model.elPanelOff = value & bit10 > 0                                // Bit 10: EL panel (power)
+            model.elPowerOn = value & bit10 == 0                                // Bit 10: EL panel (power)
 
         case 0o165:
             logger.log("»»» DSKY165 \(ZeroPadWord(value)) TIME1")
