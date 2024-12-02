@@ -10,7 +10,7 @@ import SwiftUI
 struct MonitorView: View {
 
     @State private var ipAddr: String = ""
-    @State private var ipPort: UInt = 0
+    @State private var ipPort: UInt16 = 0
 
     static var number: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -25,17 +25,17 @@ struct MonitorView: View {
                 Button("Apollo CM 8-17",
                        action: {
                     model.statusLights = DisKeyModel.CM
-                    model.elPanelOff = false
+                    model.elPowerOn = true
                 })
                 Button("Apollo LM 11-14",
                        action: {
                     model.statusLights = DisKeyModel.LM0
-                    model.elPanelOff = false
+                    model.elPowerOn = true
                 })
                 Button("Apollo LM 15-17",
                        action: {
                     model.statusLights = DisKeyModel.LM1
-                    model.elPanelOff = false
+                    model.elPowerOn = true
                 })
             }
 
@@ -58,7 +58,15 @@ struct MonitorView: View {
 
             Button("Connect",
                    systemImage: "phone.connection",
-                   action: { print("connect") } )
+                   action: {
+                print("connect")
+                model.ipAddr = ipAddr
+                model.ipPort = ipPort
+                logger.log("→→→ monitor set: ipAddr=\(ipAddr, privacy: .public), ipPort=\(ipPort, privacy: .public)")
+                model.network = setNetwork(ipAddr, ipPort, start: true)
+
+                startReading()
+            } )
             .disabled(ipAddr.isEmpty || ipPort == 0)
         }
         .padding(5)

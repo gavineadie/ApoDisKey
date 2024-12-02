@@ -37,6 +37,8 @@ final class DisKeyModel: Sendable {
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ .. the electroluminescent DSKY top-right panel (initial values are cleared when AGC connects) .. ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+    public var elPowerOn = false                        // electroluminescent power (starts OFF)
+
     public typealias Display = (String, Bool)
 
     public var comp: Display = ("--", false)            // numbers (none for COMP), placard=dark
@@ -52,9 +54,14 @@ final class DisKeyModel: Sendable {
     public var r2Sign = (false, false)
     public var r3Sign = (false, false)
 
-    public var elPanelOff = true                       // electroluminescent power
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ .. network imnformation for connecting to AGC ..                                                 ┆
+  ┆ should be changed by UserDefaults (if any) and/or user control                                   ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+    public var ipAddr: String = "localhost"
+    public var ipPort: UInt16 = 19697
 
-    public let network = setNetwork()
+    public var network = setNetwork()
 }
 
 extension DisKeyModel {

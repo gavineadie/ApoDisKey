@@ -13,22 +13,23 @@ struct Network : Sendable{
     let connection: NWConnection
     let didStopCallback: @Sendable (Error?) -> Void
 
-    init(_ host: String = "127.0.0.1", _ port: UInt16 = 12345) {
+    init(_ host: String = "127.0.0.1", _ port: UInt16 = 12345, start: Bool = false) {
 
         self.didStopCallback = { error in
             exit( error == nil ? EXIT_SUCCESS : EXIT_SUCCESS )
         }
 
         let tcpOptions = NWProtocolTCP.Options()
-        tcpOptions.connectionTimeout = 10
+        tcpOptions.connectionTimeout = 30
 
         self.connection = NWConnection(host: NWEndpoint.Host(host),
                                        port: NWEndpoint.Port(rawValue: port)!,
                                        using: NWParameters(tls: nil,
                                                            tcp: tcpOptions))
-
-        self.connection.stateUpdateHandler = self.stateDidChange(to:)
-        self.connection.start(queue: .main)
+        if start {
+            self.connection.stateUpdateHandler = self.stateDidChange(to:)
+            self.connection.start(queue: .main)
+        }
     }
 
     @Sendable private func stateDidChange(to state: NWConnection.State) {
@@ -111,13 +112,17 @@ func setNetwork() -> Network {
     let ipPort = UInt16(UserDefaults.standard.integer(forKey: "ipPort")) == 0
                                 ? 19697
                                 : UInt16(UserDefaults.standard.integer(forKey: "ipPort"))
-
-#if os(iOS) || os(tvOS)
-//  return Network("192.168.1.232", 19697)   // .. Ubuntu
-    return Network("192.168.1.100", 19698)   // .. MaxBook
-#else
     logger.log("→→→ appDefaults: ipAddr=\(ipAddr, privacy: .public), ipPort=\(ipPort, privacy: .public)")
-    return Network(ipAddr, ipPort)           // (defaults)
-#endif
 
+//#if os(iOS) || os(tvOS)
+////  return Network("192.168.1.232", 19697)   // .. Ubuntu
+//    return Network("192.168.1.100", 19698)   // .. MaxBook
+//#else
+    return Network(ipAddr, ipPort)             // (defaults)
+//#endif
+
+}
+
+func setNetwork(_ ipAddr: String, _ ipPort: UInt16, start: Bool = false) -> Network {
+    return Network(ipAddr, ipPort, start: true)
 }
