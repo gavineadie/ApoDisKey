@@ -29,15 +29,17 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ tf: Bool = true) {
   ┆                 This means to flash the digits in the NOUN and VERB areas.                       ┆
   ┆          Bit 7: Lights the "OPR ERR" indicator.                                                  ┆
   ┆                                                                                                  ┆
-//┆###       NOTE: don't log command that only cycle the "COMP ACTY" indicator.                      ┆
+  ┆          Bit2 11 and 15 ..                                                                       ┆
+  ┆                                                                                                  ┆
+  ┆###       NOTE: don't log command that only cycle the "COMP ACTY" indicator.                      ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
         case 0o011:                 // [OUTPUT] flags for indicator lamps etc
-// ###        if value != 8192 && value != 8194 {
+            if value != 0x2000 && value != 0x2002 && value != 0x2200 && value != 0x2202 {
                 logger.log("""
-                »»»    DSKY 011:           \(ZeroPadWord(value, to: 8)) BITS (8)       \
+                »»»    DSKY 011:   \(ZeroPadWord(value)) BITS (15)       \
                 :: \(prettyCh011(value))
                 """)
-// ###        }
+            }
             model.comp.1 = value & bit2 > 0                                     // "COMP ACTY"
 
             model.statusLights[11]?.1 = (value & bit3 > 0) ? .white : .off      // "UPLINK

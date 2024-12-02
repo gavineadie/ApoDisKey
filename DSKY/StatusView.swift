@@ -121,7 +121,7 @@ struct StatusLight: View {
                 .fill(back(light))
                 .border(statusBorder, width: 1)
                 .frame(width: statusWidth,
-                       height: statusHeight+3.0)
+                       height: statusHeight+2.0)
 
             Text(light.0)
                 .font(.custom("Gorton-Normal-180",
