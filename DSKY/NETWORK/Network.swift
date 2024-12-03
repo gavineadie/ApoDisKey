@@ -80,7 +80,7 @@ extension NWConnection {
         }
     }
     
-    func rawReceive(length: Int) async throws -> Data {
+    func rawReceive(length: Int) async throws -> Data? {
         try await withCheckedThrowingContinuation { continuation in
             receive(minimumIncompleteLength: length,
                     maximumLength: length) { data, _, connectionEnded, error in
@@ -91,7 +91,7 @@ extension NWConnection {
                     precondition(data == nil)
                     continuation.resume(throwing: error)
                 } else {
-                    continuation.resume(returning: data!)
+                    continuation.resume(returning: data)
                 }
             }
         }

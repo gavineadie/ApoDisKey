@@ -298,7 +298,6 @@ func dskyInterpretation(_ code: UInt16) {
                 default:
                     break
             }
-
     }
 
     return
@@ -325,11 +324,14 @@ func dskyInterpretation(_ code: UInt16) {
   ┆            00pppppp                                    ---------dddddd                           ┆
   ┆                                                                                                  ┆
   ┆            --u-----                                                                              ┆
-  ┆                                                                                                  ┆
+  ┆╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌┆
+  ┆ Special: 00000000 01000000 10000000 11000000                                                     ┆
+  ┆          (channel = zero & value = zero) signals lost connection ..                              ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 
 /// This function is the reverse of FormIoPacket:
-/// A 4-byte packet representing yaAGC channel i/o can be converted to an integer channel-number and value.
+/// A 4-byte packet representing yaAGC channel i/o
+/// can be converted to an integer channel-number and value.
 func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
     
     guard data.count == 4 else {
@@ -344,8 +346,7 @@ func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
         (byte[2] == 0xff) &&
         (byte[3] == 0xff)) { return nil }
     
-    if (byte[0] / 64) != 0 || (byte[1] / 64) != 1 ||
-        (byte[2] / 64) != 2 || (byte[3] / 64) != 3 {
+    if (byte[0] / 64) != 0 || (byte[1] / 64) != 1 || (byte[2] / 64) != 2 || (byte[3] / 64) != 3 {
         logger.log("\(#function): prefix bits wrong [\(prettyString(data))]")
         return nil
     }
@@ -359,4 +360,3 @@ func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
     
     return (channel, value, (byte[0] & 0b00100000) > 0)
 }
-
