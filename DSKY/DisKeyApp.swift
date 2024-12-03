@@ -17,14 +17,11 @@ struct DisKeyApp: App {
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ establish the global environment                                                                 ┆
   ┆ .. read init files                                                                               ┆
-  ┆ .. make network connection                                                                       ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
         let homeURL = locateAppSupport()              // "~/ApoDisKey"
         if homeURL.isFileURL {
             logger.log("••• \(homeURL) isn't a file.")
         }
-
-//      readInitializing()
 
     }
 
@@ -40,12 +37,17 @@ struct DisKeyApp: App {
 }
 
 struct AppView: View {
+    let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
+
     var body: some View {
         VStack {
             DisKeyView()
                 .padding(.bottom, 10.0)
 
             Divider()
+                .onReceive(timer) { date in
+                    logger.log("TEN SECONDS: \(date)")
+                }
             MonitorView()
         }
     }
@@ -104,6 +106,9 @@ struct MonitorView: View {
                       formatter: MonitorView.number)
             .font(.custom("Menlo", size: 12))
 
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ .. make network connection                                                                       ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
             Button("Connect",
                    systemImage: "phone.connection",
                    action: {
@@ -118,10 +123,17 @@ struct MonitorView: View {
                 Task {
                     repeat {
                         do {
-                            let rxPacket = try await model.network.connection.rawReceive(length: 4)
-
+                            if let rxPacket = try await model
+                                .network
+                                .connection
+                                .rawReceive(length: 4) {
                             if let (channel, action, _) = parseIoPacket(rxPacket) {
-                                channelAction(channel, action)
+                                    channelAction(channel,
+                                                  action)
+                            }
+                            } else {
+                                logger.log("!!!   ")
+                                exit(EXIT_FAILURE)
                             }
                         } catch {
                             print(error.localizedDescription)
@@ -130,12 +142,15 @@ struct MonitorView: View {
                 }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ send a u-bit channel command to indicate channel 0o032 send bit-14 to the AGC ..                 ┆
+  ┆ send a u-bit channel command to indicate channel 0o032 sends bit-14 to the AGC ..                ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
                 Task {
                     let value: UInt16 = 0b0010_0000_0000_0000
                     do {
-                        try await model.network.connection.rawSend(data: formIoPacket(0o0232, 0b0010_0000_0000_0000))
+                        try await model
+                            .network
+                            .connection
+                            .rawSend(data: formIoPacket(0o0232, 0b0010_0000_0000_0000))
                         logger.log("«««    DSKY 032:    \(ZeroPadWord(value)) BITS (15)")       // send u-bit
                     } catch {
                         print(error.localizedDescription)

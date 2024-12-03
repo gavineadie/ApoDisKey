@@ -61,7 +61,7 @@ class DisKeyModel: ObservableObject {
     public var ipAddr: String = "localhost"
     public var ipPort: UInt16 = 19697
 
-    public let network = setNetwork()
+    public var network = setNetwork()
 }
 
 extension DisKeyModel {
