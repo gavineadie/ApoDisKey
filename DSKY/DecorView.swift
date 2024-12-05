@@ -88,9 +88,9 @@ struct DisplaySeparator: View {
             LittleWhiteCircle()
 
             RoundedRectangle(cornerRadius: 1)
-                    .padding(.horizontal, -4.0)
-                    .frame(height: 4.0)
-                    .foregroundColor(model.elPowerOn ? displayElectro : .clear)
+                .padding(.horizontal, -4.0)
+                .frame(height: 4.0)
+                .foregroundColor(model.elPowerOn ? displayElectro : .clear)
 
             LittleWhiteCircle()
         }

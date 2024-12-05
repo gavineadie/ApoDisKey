@@ -295,3 +295,69 @@ fileprivate struct ClickThroughBackdrop<Content: SwiftUI.View>: NSViewRepresenta
     }
 }
 #endif
+
+@MainActor
+func extractOptions() {
+
+    let args = CommandLine.arguments
+
+    var ipAddr: String = ""
+    var ipPort: UInt16 = 0
+
+    for var arg in args {
+        if arg.hasPrefix("--cfg=") {
+            arg.removeFirst(6)
+            switch arg {
+                case "CM":
+                    model.statusLights = DisKeyModel.CM
+                case "LM0":
+                    model.statusLights = DisKeyModel.LM0
+                case "LM1":
+                    model.statusLights = DisKeyModel.LM1
+                default:
+                    break
+            }
+            model.elPowerOn = true
+        }
+        else if arg.hasPrefix("--ip=")  {
+            arg.removeFirst(5)
+            ipAddr = arg
+        }
+        else if arg.hasPrefix("--port=")  {
+            arg.removeFirst(7)
+            ipPort = UInt16(arg)!
+        }
+        else if arg.hasPrefix("--half-size")  {
+
+        }
+        else {}
+
+        print("\(arg)")
+    }
+
+    if !ipAddr.isEmpty && ipPort > 0 {
+
+        model.network = setNetwork(ipAddr, ipPort, start: true)
+
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ start receiving packets from the AGC ..                                                          ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+        Task {
+            var keepGoing = true
+            repeat {
+                do {
+                    if let rxPacket = try await model.network.connection
+                        .rawReceive(length: 4) {
+                        if let (channel, action, _) =
+                            parseIoPacket(rxPacket) { channelAction(channel, action) }
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                    keepGoing = false
+                }
+            } while keepGoing
+        }
+
+    }
+
+}
