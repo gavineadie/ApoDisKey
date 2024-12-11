@@ -8,6 +8,20 @@
 import Foundation
 import AVFoundation
 
+public enum BackColor : Sendable{
+    case off
+    case on
+    case white
+    case yellow
+    case green
+    case orange
+    case red
+}
+
+typealias Light = (String, BackColor)
+
+typealias Display = (String, Bool)
+
 @Observable
 final class DisKeyModel: Sendable {
 
@@ -38,8 +52,6 @@ final class DisKeyModel: Sendable {
   ┆ .. the electroluminescent DSKY top-right panel (initial values are cleared when AGC connects) .. ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
     public var elPowerOn = false                        // electroluminescent power (starts OFF)
-
-    public typealias Display = (String, Bool)
 
     public var comp: Display = ("--", false)            // numbers (none for COMP), placard=dark
     public var prog: Display = ("  ", false)

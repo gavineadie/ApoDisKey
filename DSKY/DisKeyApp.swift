@@ -19,10 +19,8 @@ struct DisKeyApp: App {
   ┆ establish the global environment                                                                 ┆
   ┆ .. read init files                                                                               ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-        let homeURL = locateAppSupport()              // "~/ApoDisKey"
-        if homeURL.isFileURL {
-//          logger.log("••• \(homeURL) isn't a file.")
-        }
+//        let homeURL = locateAppSupport()              // "~/ApoDisKey"
+//        if homeURL.isFileURL { logger.log("••• \(homeURL) isn't a file.") }
 
         extractOptions()
     }

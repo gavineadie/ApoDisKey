@@ -7,19 +7,6 @@
 
 import Foundation
 
-public enum BackColor {
-    case off
-    case on
-    case white
-    case yellow
-    case green
-    case orange
-    case red
-}
-
-typealias Light = (String, BackColor)
-typealias Display = (String, Bool)
-
 let bit1: UInt16 = 0b0000_0000_0000_0001
 let bit2: UInt16 = 0b0000_0000_0000_0010
 let bit3: UInt16 = 0b0000_0000_0000_0100
@@ -328,7 +315,7 @@ func extractOptions() {
             ipPort = UInt16(arg)!
         }
         else if arg.hasPrefix("--half-size")  {
-
+//            model.fullSize = true
         }
         else {}
 

@@ -7,8 +7,7 @@
 
 import Foundation
 
-let model = DisKeyModel.shared
-
+@MainActor
 func channelAction(_ channel: UInt16, _ value: UInt16, _ tf: Bool = true) {
 
     switch channel {
@@ -123,6 +122,7 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ tf: Bool = true) {
     }
 }
 
+@MainActor
 func dskyInterpretation(_ code: UInt16) {
 
     let  rowCode = (code & 0b01111_0_00000_00000) >> 11
