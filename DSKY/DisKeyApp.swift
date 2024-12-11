@@ -9,6 +9,7 @@ import SwiftUI
 import OSLog
 
 let logger = Logger(subsystem: "com.ramsaycons.ApoDisKey", category: "")
+@MainActor var model = DisKeyModel.shared
 
 @main
 struct DisKeyApp: App {
@@ -50,7 +51,7 @@ struct AppView: View {
     }
 }
 
-#Preview {
+#Preview("AppView") {
     AppView()
 }
 
@@ -145,6 +146,6 @@ struct MonitorView: View {
     }
 }
 
-#Preview {
+#Preview("Monitor") {
     MonitorView()
 }

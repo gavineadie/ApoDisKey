@@ -75,7 +75,9 @@ func readCanned(path: String) {
                 } else {
                     if let channel = UInt16(words[1], radix: 8),
                        let action = UInt16(words[2], radix: 8) {
+                        DispatchQueue.main.async {
                         channelAction(channel, action)
+                        }
                     } else {
                         logger.log("'\(line)' -- bad format")
                     }
