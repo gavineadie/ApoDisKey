@@ -19,7 +19,7 @@ func locateAppSupport() -> URL {
     do {
         return try FileManager.default.url(for: .applicationSupportDirectory,
                                            in: .localDomainMask, appropriateFor: nil, create: true)
-    } catch { fatalError("••• missing Application Support Directory")}
+    } catch { fatalError("••• missing Application Support Directory") }
 }
 
 func establishDirectory() -> URL { URL(fileURLWithPath: "~/ApoDisKey", isDirectory: true) }
@@ -76,7 +76,7 @@ func readCanned(path: String) {
                     if let channel = UInt16(words[1], radix: 8),
                        let action = UInt16(words[2], radix: 8) {
                         DispatchQueue.main.async {
-                        channelAction(channel, action)
+                            channelAction(channel, action)
                         }
                     } else {
                         logger.log("'\(line)' -- bad format")
