@@ -9,6 +9,7 @@ import SwiftUI
 import OSLog
 
 let logger = Logger(subsystem: "com.ramsaycons.ApoDisKey", category: "")
+@MainActor var model = DisKeyModel.shared
 
 @main
 struct DisKeyApp: App {
@@ -18,11 +19,10 @@ struct DisKeyApp: App {
   ┆ establish the global environment                                                                 ┆
   ┆ .. read init files                                                                               ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-        let homeURL = locateAppSupport()              // "~/ApoDisKey"
-        if homeURL.isFileURL {
-            logger.log("••• \(homeURL) isn't a file.")
-        }
+//        let homeURL = locateAppSupport()              // "~/ApoDisKey"
+//        if homeURL.isFileURL { logger.log("••• \(homeURL) isn't a file.") }
 
+        extractOptions()
     }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -40,21 +40,20 @@ struct AppView: View {
     let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
 
     var body: some View {
+        let scaleFactor = model.fullSize ? 1 : 0.5
         VStack {
             DisKeyView()
                 .padding(.bottom, 10.0)
-
-            Divider()
-                .onReceive(timer) { date in
-                    logger.log("TEN SECONDS: \(date)")
-                }
-            MonitorView()
+                .frame(width: 569 * scaleFactor,
+                       height: 656 * scaleFactor) // 569 × 656 pixels
+                .scaleEffect(scaleFactor)
+                .onReceive(timer) { date in logger.log("TEN SECONDS: \(date)") }
+            if model.fullSize {
+				Divider()
+				MonitorView()
+			}
         }
     }
-}
-
-#Preview {
-    AppView()
 }
 
 struct MonitorView: View {
@@ -89,20 +88,10 @@ struct MonitorView: View {
                 })
             }
 
-            TextField("AGC Address",
-                      text: $ipAddr,
-                      onEditingChanged: { tf in
-                print("onEditingChanged \(tf)")
-            },
-                      onCommit: {
-                print("onCommit")
-            })
-//            .foregroundColor(.blue)
-//            .background(.yellow)
+            TextField("AGC Address", text: $ipAddr)
             .font(.custom("Menlo", size: 12))
 
-            TextField("AGC PortNum",
-                      value: $ipPort,
+            TextField("AGC PortNum", value: $ipPort,
                       formatter: MonitorView.number)
             .font(.custom("Menlo", size: 12))
 
@@ -121,37 +110,30 @@ struct MonitorView: View {
   ┆ start receiving packets from the AGC ..                                                          ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
                 Task {
+                    var keepGoing = true
                     repeat {
                         do {
-                            if let rxPacket = try await model
-                                .network
-                                .connection
+                            if let rxPacket = try await model.network.connection
                                 .rawReceive(length: 4) {
-                            if let (channel, action, _) = parseIoPacket(rxPacket) {
-                                    channelAction(channel,
-                                                  action)
-                            }
-                            } else {
-                                logger.log("!!!   ")
-                                exit(EXIT_FAILURE)
+                                if let (channel, action, _) =
+                                    parseIoPacket(rxPacket) { channelAction(channel, action) }
                             }
                         } catch {
                             print(error.localizedDescription)
+                            keepGoing = false
                         }
-                    } while true
+                    } while keepGoing
                 }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ send a u-bit channel command to indicate channel 0o032 sends bit-14 to the AGC ..                ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
                 Task {
-                    let value: UInt16 = 0b0010_0000_0000_0000
+                    let bit14: UInt16 = 0b0010_0000_0000_0000
                     do {
-                        try await model
-                            .network
-                            .connection
-                            .rawSend(data: formIoPacket(0o0232, 0b0010_0000_0000_0000))
-                        logger.log("«««    DSKY 032:    \(ZeroPadWord(value)) BITS (15)")       // send u-bit
+                        try await model.network.connection
+                            .rawSend(data: formIoPacket(0o0232, bit14))
+                        logger.log("«««    DSKY 032:    \(ZeroPadWord(bit14)) BITS (15)")
                     } catch {
                         print(error.localizedDescription)
                     }
@@ -163,8 +145,4 @@ struct MonitorView: View {
         .padding(5)
         .background(.gray)
     }
-}
-
-#Preview {
-    MonitorView()
 }

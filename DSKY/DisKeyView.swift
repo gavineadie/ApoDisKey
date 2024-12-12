@@ -52,7 +52,7 @@ struct DisKeyView: View {
     var body: some View {
 
         ZStack {
-            Image("BackGround")         // width=656px
+            Image("BackGround")         // 569 × 656 pixels
                 .cornerRadius(18.0)
 
             VStack {
