@@ -22,10 +22,13 @@ typealias Light = (String, BackColor)
 
 typealias Display = (String, Bool)
 
+@MainActor
 @Observable
-final class DisKeyModel: Sendable {
+final class DisKeyModel {
 
     static let shared = DisKeyModel()
+
+    public var fullSize = true
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ .. the fourteen lights resentating status on the DSKY top-left ..                                ┆
@@ -78,7 +81,7 @@ final class DisKeyModel: Sendable {
 
 extension DisKeyModel {
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆  set light label texts for Apollo 11 • Command Module                           (Apollo CM 11-17) ┆
+  ┆  set light label texts for Apollo 11 • Command Module                          (Apollo CM 11-17) ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
     static let CM : [Int: Light] = [
         11 : ("UPLINK\nACTY",   .off),
@@ -138,27 +141,6 @@ extension DisKeyModel {
         25 : ("TRACKER",        .off),
         26 : ("ALT",            .off),
         27 : ("VEL",            .off)
-    ]
-
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ set light label texts for some other use of the DSKY annunciators .. (given is an OLD usage)     ┆
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-    static let XXX : [Int: Light] = [
-        11 : ("UPLINK\nACTY",  .off),
-        12 : ("AUTO",          .off),
-        13 : ("HOLD",          .off),
-        14 : ("FREE",          .off),
-        15 : ("NO ATT",        .off),
-        16 : ("STBY",          .off),
-        17 : ("KEY REL",       .off),
-
-        21 : ("TEMP",          .off),
-        22 : ("GIMBAL\nLOCK",  .off),
-        23 : ("PROG",          .off),
-        24 : ("RESTART",       .off),
-        25 : ("TRACKER",       .off),
-        26 : ("BLANK",         .off),
-        27 : ("OPR ERR",       .off)
     ]
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮

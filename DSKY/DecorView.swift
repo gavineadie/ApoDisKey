@@ -7,19 +7,19 @@
 
 import SwiftUI
 
-let keyPadSize: CGFloat = 73
-let keyPadding: CGFloat = -2
-let keyCorner: CGFloat = 3
+let keyPadSize: CGFloat = 73.0
+let keyPadding: CGFloat = -2.0
+let keyCorner: CGFloat = 3.0
 
-let panelExSizeW: CGFloat = 222
-let panelExSizeH: CGFloat = 374
+let panelExSizeW: CGFloat = 222.0
+let panelExSizeH: CGFloat = 374.0
 
-let panelInset: CGFloat = 26
-let panelDigitSize: CGFloat = 37
+let panelInset: CGFloat = 26.0
+let panelDigitSize: CGFloat = 37.0
 
-let statusWidth: CGFloat = 90
-let statusHeight: CGFloat = 44
-let statusCorner: CGFloat = 6
+let statusWidth: CGFloat = 90.0
+let statusHeight: CGFloat = 44.0
+let statusCorner: CGFloat = 6.0
 
 let backgroundColor = Color(red: 0.9, green: 0.9, blue: 0.8)
 
@@ -82,6 +82,8 @@ struct PanelsView: View {
     }
 }
 
+#Preview("Panels") { PanelsView(interiorFill: .brown) }
+
 struct DisplaySeparator: View {
     var body: some View {
         HStack {
@@ -100,6 +102,8 @@ struct DisplaySeparator: View {
     }
 }
 
+#Preview("Separator") { DisplaySeparator() }
+
 struct LittleWhiteCircle: View {
     var body: some View {
         RoundedRectangle(cornerRadius: 3.5)
@@ -108,6 +112,8 @@ struct LittleWhiteCircle: View {
             .foregroundColor(Color(white: 0.7))
     }
 }
+
+#Preview("WhiteCircle") { LittleWhiteCircle() }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ .. takes a string and converts "_" to faded "8" ..                                               ┆

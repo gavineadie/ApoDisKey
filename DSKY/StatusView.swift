@@ -112,6 +112,8 @@ struct StatusView: View {
     }
 }
 
+#Preview("Status") { StatusView() }
+
 struct StatusLight: View {
     var light: Light
 

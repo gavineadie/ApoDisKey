@@ -69,6 +69,8 @@ struct KeyPadView: View {
     }
 }
 
+#Preview("KeyPad") { KeyPadView() }
+
 struct KeyView: View {
     var keyCode: UInt16
 
@@ -92,7 +94,6 @@ struct KeyView: View {
             .background(keyPadColor)
             .padding(.all, keyPadding)
             .cornerRadius(keyCorner)
-//            .border(Color(white: 0.75), width: 1.5)
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ the "PRO" key is a long press                                                                    ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
@@ -156,6 +157,9 @@ struct KeyView: View {
             )
     }
 }
+
+#Preview("Key [6]") { KeyView(keyCode: 6) }
+#Preview("Key [?]") { KeyView(keyCode: 255) }
 
 func keyText(_ code: UInt16) -> String { keyDict[code] ?? "ERROR" }
 

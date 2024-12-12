@@ -67,6 +67,8 @@ struct DisplayView: View {
     }
 }
 
+#Preview("Display") { DisplayView() }
+
 /*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
   │ ROW1                                                                                             │
   │     "COMP"  default OFF, illuminated briefly by AGC                                              │

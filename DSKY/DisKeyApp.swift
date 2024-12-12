@@ -41,19 +41,23 @@ struct AppView: View {
     let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
 
     var body: some View {
+        let scaleFactor = model.fullSize ? 1 : 0.5
         VStack {
             DisKeyView()
                 .padding(.bottom, 10.0)
-            Divider()
+                .frame(width: 569 * scaleFactor,
+                       height: 656 * scaleFactor) // 569 × 656 pixels
+                .scaleEffect(scaleFactor)
                 .onReceive(timer) { date in logger.log("TEN SECONDS: \(date)") }
-            MonitorView()
+            if model.fullSize {
+                Divider()
+                MonitorView()
+            }
         }
     }
 }
 
-#Preview("AppView") {
-    AppView()
-}
+#Preview("AppView") { AppView() }
 
 struct MonitorView: View {
 
@@ -146,6 +150,4 @@ struct MonitorView: View {
     }
 }
 
-#Preview("Monitor") {
-    MonitorView()
-}
+#Preview("Monitor") { MonitorView() }

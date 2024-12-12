@@ -315,7 +315,7 @@ func extractOptions() {
             ipPort = UInt16(arg)!
         }
         else if arg.hasPrefix("--half-size")  {
-//            model.fullSize = true
+            model.fullSize = false
         }
         else {}
 

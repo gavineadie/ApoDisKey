@@ -7,14 +7,6 @@
 
 import SwiftUI
 
-#Preview("DisKeyView") { DisKeyView() }
-
-#Preview("StatusView") { StatusView() }
-#Preview("DisplayView") { DisplayView() }
-#Preview("KeyPadView") { KeyPadView() }
-
-#Preview("MonitorView") { MonitorView() }
-
 #Preview { StatusLight(light: ("WORDS", .off)) }
 #Preview { StatusLight(light: ("WORDS", .orange)) }
 
@@ -28,11 +20,3 @@ import SwiftUI
         Row2()
     }
 }
-
-#Preview { KeyView(keyCode: 6) }
-#Preview { KeyView(keyCode: 255) }
-
-#Preview { PanelsView(interiorFill: .pink) }
-
-#Preview { DisplaySeparator() }
-#Preview { LittleWhiteCircle() }

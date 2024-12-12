@@ -83,3 +83,5 @@ struct DisKeyView: View {
 //        }
     }
 }
+
+#Preview("DisKey") { DisKeyView() }
