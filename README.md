@@ -1,6 +1,6 @@
 ## ApoDisKey
 
-<p align="center"> <img src="https://ramsaycons.com/pix/macOS-DSKY-OV014B.png"
+<p align="center"> <img src="https://ramsaycons.com/pix/macOS-DSKY-EC124A.png"
 width="600" /> </p>
 
 ### Context
@@ -43,13 +43,13 @@ Project](https://www.ibiblio.org/apollo/).
 
 Included in the Virtual AGC Project is cross-platform AGC simulator was
 developed some years ago as part of the Virtual AGC project -- it is the `yaAGC`
-program, written in C, in the [`virtualagc` GitHub
+program, written in C, in the Virtual AGC [GitHub
 repository](https://github.com/virtualagc/virtualagc).
 
 ### ApoDisKey
 
 ApoDisKey will launch and run in the absense of an `yaAGC`, but it will be quite
-uninteresting -- rather like an unconnected regular computer keyboard.  The
+uninteresting -- rather like an unplugged regular computer keyboard.  The
 emphasis here is that ApoDisKey without `yaAGC` is nothing more than a pretty
 face!
 

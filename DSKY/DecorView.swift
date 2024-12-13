@@ -118,13 +118,14 @@ struct LittleWhiteCircle: View {
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ .. takes a string and converts "_" to faded "8" ..                                               ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+@MainActor
 func adjustDisplay(_ text: String) -> AttributedString {
 
     var attrText = AttributedString()
 
     for byte in text {
         var attrByte = AttributedString(String(byte))
-        if byte == "_" {
+        if (byte == "_") || !model.elPowerOn {
             attrByte = AttributedString("8")
             attrByte.foregroundColor = Color(white: 0.34)
         } else {

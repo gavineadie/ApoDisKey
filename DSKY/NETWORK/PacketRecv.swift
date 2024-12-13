@@ -35,7 +35,7 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ tf: Bool = true) {
         case 0o011:                 // [OUTPUT] flags for indicator lamps etc
             if value != 0x2000 && value != 0x2002 && value != 0x2200 && value != 0x2202 {
                 logger.log("""
-                »»»    DSKY 011:   \(ZeroPadWord(value)) BITS (15)       \
+                »»»    DSKY 011:    \(ZeroPadWord(value)) BITS (15)      \
                 :: \(prettyCh011(value))
                 """)
             }
@@ -61,8 +61,10 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ tf: Bool = true) {
                 :: \(value) = "\(keyText(value))"
                 """)
 
-            if value == 18 { /* RSET */ }
-            break
+            if keyDict[value] == "RSET" {
+                model.ch15ResetCount += 1
+                if model.ch15ResetCount == 5 { exit(EXIT_SUCCESS) }             // 5 and we quit
+            }
 
         case 0o016...0o031:         //
             break
@@ -130,6 +132,8 @@ func dskyInterpretation(_ code: UInt16) {
     switch rowCode {
         case 12:
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ STATUS ANNUNCIATORS                                                                              ┆
+  ┆                                                                                                  ┆
   ┆          Bit 1 lights the "PRIO DISP" indicator.                                                 ┆
   ┆          Bit 2 lights the "NO DAP" indicator.                                                    ┆
   ┆          Bit 3 lights the "VEL" indicator.                                                       ┆
@@ -141,9 +145,9 @@ func dskyInterpretation(_ code: UInt16) {
   ┆          Bit 9 lights the "PROG" indicator.                                                      ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
             logger.log("""
-                ***    DSKY 010: \(ZeroPadWord(code).prefix(5))   \
+                ***    DSKY 010: \(ZeroPadWord(code).prefix(5)) \
                 \(ZeroPadWord(code).dropFirst(5)) \
-                LIGHTS (10)    :: \(prettyCh010(code & 0b0000000_111111111))
+                LIGHTS (10)      :: \(prettyCh010(code & 0b0000000_111111111))
                 """)
 
             model.statusLights[27]?.1 = (code & bit3 > 0) ? .yellow : .off   // 3: VEL
@@ -160,6 +164,8 @@ func dskyInterpretation(_ code: UInt16) {
         default:
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ DISPLAY ELECTROLUMINESCENT LIGHTS                                                                ┆
+  ┆                                                                                                  ┆
   ┆                               -AAAA B CCCCC DDDDD                                                ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
             let bBit = (code & 0b00000_1_00000_00000) >  0
@@ -183,12 +189,12 @@ func dskyInterpretation(_ code: UInt16) {
                 """)
 
             switch rowCode {
-                case 9:         // NOUN
-                    model.noun.0 = cStr + dStr
-                case 10:        // VERB
-                    model.verb.0 = cStr + dStr
-                case 11:        // PROG
-                    model.prog.0 = cStr + dStr
+                case 9:
+                    model.noun = (cStr + dStr, true)
+                case 10:
+                    model.verb = (cStr + dStr, true)
+                case 11:        
+                    model.prog = (cStr + dStr, true)
                 default:
                     break
             }

@@ -106,7 +106,7 @@ struct Comp: View {
     var body: some View {
         VStack {
             DisplayPlacard(label: "COMP\nACTY",
-                           illum: state.1,
+                           illum: model.elPowerOn && state.1,
                            placardHeight: 60.0)
             DisplayNumbers(value: ("  ", false))
         }

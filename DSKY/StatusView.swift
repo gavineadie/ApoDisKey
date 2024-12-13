@@ -137,21 +137,26 @@ struct StatusLight: View {
     }
 }
 
+@MainActor
 private func back(_ input: (String, BackColor)) -> Color {
-    switch input.1 {
-        case .on:
-            return .white
-        case .white:
-            return .white
-        case .green:
-            return .green
-        case .yellow:
-            return .yellow
-        case .orange:
-            return .orange
-        case .red:
-            return .red
-        default:
-            return .gray
+    if model.elPowerOn {
+        switch input.1 {
+            case .on:
+                return .white
+            case .white:
+                return .white
+            case .green:
+                return .green
+            case .yellow:
+                return .yellow
+            case .orange:
+                return .orange
+            case .red:
+                return .red
+            default:
+                return .gray
+        }
+    } else {
+        return .gray
     }
 }
