@@ -107,20 +107,26 @@ extension NWConnection {
   │         defaults delete com.ramsaycons.ApoDisKey ipAddr                                          │
   │         defaults delete com.ramsaycons.ApoDisKey ipPort                                          │
   └──────────────────────────────────────────────────────────────────────────────────────────────────┘*/
+@MainActor
 func setNetwork() -> Network {
-    let ipAddr = UserDefaults.standard.string(forKey: "ipAddr") ?? "localhost"
-    let ipPort = UInt16(UserDefaults.standard.integer(forKey: "ipPort")) == 0
-                                ? 19697
-                                : UInt16(UserDefaults.standard.integer(forKey: "ipPort"))
-    logger.log("→→→ appDefaults: ipAddr=\(ipAddr, privacy: .public), ipPort=\(ipPort, privacy: .public)")
-
+    /*box..
+     if we find UserDefault values, use them ..
+     */
+    if let ipAddr = UserDefaults.standard.string(forKey: "ipAddr") {
+        var ipPort = UInt16(UserDefaults.standard.integer(forKey: "ipPort"))
+        if ipPort == 0 {
+            ipPort = 19697
+        }
+        logger.log("→→→ appDefaults: ipAddr=\(ipAddr, privacy: .public), ipPort=\(ipPort, privacy: .public)")
+        return Network(ipAddr, ipPort)
+    } else {
 #if os(iOS) || os(tvOS)
-//  return Network("192.168.1.232", 19697)   // .. Ubuntu
-    return Network("192.168.1.100", 19698)   // .. MaxBook
+//  return Network("192.168.1.232", 19697)          // .. Ubuntu
+    return Network("192.168.1.100", 19698)          // .. MaxBook
 #else
-    return Network(ipAddr, ipPort)
+    return Network("localhost", 19697)
 #endif
-
+    }
 }
 
 func setNetwork(_ ipAddr: String, _ ipPort: UInt16, start: Bool = false) -> Network {

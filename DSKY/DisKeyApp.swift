@@ -33,6 +33,10 @@ struct DisKeyApp: App {
     var body: some Scene {
         WindowGroup {
             AppView()
+                .onDisappear(perform: {
+                    logger.log("••• Application wiew disappeared -- EXIT.")
+                    exit(EXIT_SUCCESS)
+                })
         }
     }
 }
