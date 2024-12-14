@@ -60,9 +60,9 @@ struct DisplayView: View {
                         Spacer().frame(height: 20)
                     }
                 }
-                Register1(state: model.reg1)
-                Register2(state: model.reg2)
-                Register3(state: model.reg3)
+                Register(state: model.reg1)
+                Register(state: model.reg2)
+                Register(state: model.reg3)
             }
         }
         .padding(.leading, 18.0)
@@ -94,7 +94,7 @@ struct Row1: View {
     var body: some View {
         HStack(alignment: .top) {
             Comp(state: comp)
-            Prog(state: prog)
+            twoDigit(label: "PROG", value: prog)
         }
         .padding(.bottom, 6.0)
     }
@@ -106,21 +106,9 @@ struct Comp: View {
     var body: some View {
         VStack {
             DisplayPlacard(label: "COMP\nACTY",
-                           illum: state.1,
+                           illum: model.elPowerOn && state.1,
                            placardHeight: 60.0)
             DisplayNumbers(value: ("  ", false))
-        }
-    }
-}
-
-struct Prog: View {
-    var state: Display
-
-    var body: some View {
-        VStack {
-            DisplayPlacard(label: "PROG",
-                           illum: model.elPowerOn)
-            DisplayNumbers(value: state)
         }
     }
 }
@@ -148,40 +136,28 @@ struct Row2: View {
 
     var body: some View {
         HStack {
-            Verb(state: verb)
-            Noun(state: noun)
+            twoDigit(label: "VERB", value: verb)
+            twoDigit(label: "NOUN", value: noun)
         }
         .padding(.bottom, 6.0)
     }
 }
 
-struct Verb: View {
-    var state: Display
+struct twoDigit: View {
+    var label: String
+    var value: Display
 
     var body: some View {
         VStack {
-            DisplayPlacard(label: "VERB",
+            DisplayPlacard(label: label,
                            illum: model.elPowerOn)
-            DisplayNumbers(value: state)
-        }
-    }
-}
-
-struct Noun: View {
-    var state: Display
-
-    var body: some View {
-        VStack {
-            DisplayPlacard(label: "NOUN",
-                           illum: model.elPowerOn)
-            DisplayNumbers(value: state)
-                .padding(.trailing, -1.0)
+            DisplayNumbers(value: value)
         }
     }
 }
 
 /*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
-  │ REGISTER1                                                                                        │
+  │ REGISTER                                                                                         │
   └──────────────────────────────────────────────────────────────────────────────────────────────────┘*/
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ +---------------------------+                                                                    ┆
@@ -193,49 +169,7 @@ struct Noun: View {
   ┆ |  +--------+ | +--------+  |                                                                    ┆
   ┆ +---------------------------+                                                                    ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-struct Register1: View {
-    var state: Display
-
-    var body: some View {
-        DisplayNumbers(value: state)
-    }
-}
-
-/*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
-  │ REGISTER2                                                                                        │
-  └──────────────────────────────────────────────────────────────────────────────────────────────────┘*/
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ +---------------------------+                                                                    ┆
-  ┆ |  +---------------------+  |                                                                    ┆
-  ┆ |  +--------+ | +--------+  |                                                                    ┆
-  ┆ |  |        | | |        |  |                                                                    ┆
-  ┆ |  | +77777 | | | +77777 |  |  <-- numbers: ( "99" , off/on, height)                             ┆
-  ┆ |  |        | | |        |  |                                                                    ┆
-  ┆ |  +--------+ | +--------+  |                                                                    ┆
-  ┆ +---------------------------+                                                                    ┆
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-struct Register2: View {
-    var state: Display
-
-    var body: some View {
-        DisplayNumbers(value: state)
-    }
-}
-
-/*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
-  │ REGISTER3                                                                                        │
-  └──────────────────────────────────────────────────────────────────────────────────────────────────┘*/
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ +---------------------------+                                                                    ┆
-  ┆ |  +---------------------+  |                                                                    ┆
-  ┆ |  +--------+ | +--------+  |                                                                    ┆
-  ┆ |  |        | | |        |  |                                                                    ┆
-  ┆ |  | +77777 | | | +77777 |  |  <-- numbers: ( "99" , off/on, height)                             ┆
-  ┆ |  |        | | |        |  |                                                                    ┆
-  ┆ |  +--------+ | +--------+  |                                                                    ┆
-  ┆ +---------------------------+                                                                    ┆
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-struct Register3: View {
+struct Register: View {
     var state: Display
 
     var body: some View {
@@ -287,7 +221,7 @@ struct DisplayNumbers: View {
                         .font(.custom("Zerlina",
                                       fixedSize: zerlinaFixedSize))
                         .padding(.all, -10.0)
-                        .padding(.leading, value.0.starts(with: " ") ? 10.5 : -10.0)
+                        .padding(.leading, value.0.starts(with: " ") ? 22 : 0)
  //###                  .tracking(zerlinaTracking)
                         .frame(width: 190.0,
                                height: panelDigitSize)
@@ -300,7 +234,7 @@ struct DisplayNumbers: View {
                     Text(value.0)
                         .frame(width: 95.0, height: 2.0)
                 } else {
-                    Text(adjustDisplay(value.1 ? String(value.0) : "  "))
+                    Text(adjustDisplay(value.1 ? value.0 : "__"))
                         .font(.custom("Zerlina",
                                       fixedSize: zerlinaFixedSize))
                         .padding(.top, 8.0)

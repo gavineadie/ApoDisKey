@@ -65,21 +65,9 @@ struct DisKeyView: View {
             }
             .padding(.top, 5.0)
         }
-
 #if os(iOS)
         .scaleEffect(min(1.2, UIScreen.main.bounds.width/660.0))
 #endif
 
-//        if #available(macOS 13.0, *) {
-//            Text("drop")
-//                .dropDestination(for: URL.self) { urls, _ in
-//                    if let url = urls.first {
-//                        readCanned(path: url.path())
-//                        return true
-//                    } else {
-//                        return false
-//                    }
-//                }
-//        }
     }
 }

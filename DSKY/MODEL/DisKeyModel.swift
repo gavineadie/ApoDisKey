@@ -27,6 +27,9 @@ class DisKeyModel: ObservableObject {
     static let shared = DisKeyModel()
 
     @Published public var fullSize = true
+    
+    @Published public var ch15ResetCount = 0
+
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ .. the fourteen lights resentating status on the DSKY top-left ..                                ┆
@@ -60,9 +63,9 @@ class DisKeyModel: ObservableObject {
     @Published public var verb: Display = ("--", false)      // numbers=35, placard=green
     @Published public var noun: Display = ("--", false)
 
-    @Published public var reg1: Display = ("      ", true)
-    @Published public var reg2: Display = ("      ", false) // TODO: what does "false" do here?
-    @Published public var reg3: Display = ("      ", true)
+    @Published public var reg1: Display = (" _____", true)
+    @Published public var reg2: Display = (" _____", false)        // TODO: what does "false" do here?
+    @Published public var reg3: Display = (" _____", true)
 
     @Published public var r1Sign = (false, false)           // blank prefix (± or blank)
     @Published public var r2Sign = (false, false)

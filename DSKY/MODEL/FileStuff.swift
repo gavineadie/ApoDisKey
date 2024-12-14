@@ -73,10 +73,13 @@ func readCanned(path: String) {
                 if words[0].starts(with: "!") {
                     logger.log("!!\(line)")
                 } else {
+                    logger.log("---- \(words[1]) + \(words[2])")
                     if let channel = UInt16(words[1], radix: 8),
-                       let action = UInt16(words[2], radix: 8) {
+                       let command = words[2].count > 5 ?
+                                    UInt16(words[2].filter{ !($0 == "_") }, radix: 2) :
+                                    UInt16(words[2].filter{ !($0 == "_") }, radix: 8) {
                         DispatchQueue.main.async {
-                        	channelAction(channel, action)
+                            channelAction(channel, command)
                         }
                     } else {
                         logger.log("'\(line)' -- bad format")

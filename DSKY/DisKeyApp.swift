@@ -13,6 +13,15 @@ let logger = Logger(subsystem: "com.ramsaycons.ApoDisKey", category: "")
 
 @main
 struct DisKeyApp: App {
+
+#if os(macOS)
+    class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
+        func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { true }
+    }
+
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+#endif
+    
     init() {
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮

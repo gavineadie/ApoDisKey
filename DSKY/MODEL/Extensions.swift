@@ -7,15 +7,15 @@
 
 import Foundation
 
-let bit1: UInt16 = 0b0000_0000_0000_0001
-let bit2: UInt16 = 0b0000_0000_0000_0010
-let bit3: UInt16 = 0b0000_0000_0000_0100
-let bit4: UInt16 = 0b0000_0000_0000_1000
-let bit5: UInt16 = 0b0000_0000_0001_0000
-let bit6: UInt16 = 0b0000_0000_0010_0000
-let bit7: UInt16 = 0b0000_0000_0100_0000
-let bit8: UInt16 = 0b0000_0000_1000_0000
-let bit9: UInt16 = 0b0000_0001_0000_0000
+let bit1:  UInt16 = 0b0000_0000_0000_0001
+let bit2:  UInt16 = 0b0000_0000_0000_0010
+let bit3:  UInt16 = 0b0000_0000_0000_0100
+let bit4:  UInt16 = 0b0000_0000_0000_1000
+let bit5:  UInt16 = 0b0000_0000_0001_0000
+let bit6:  UInt16 = 0b0000_0000_0010_0000
+let bit7:  UInt16 = 0b0000_0000_0100_0000
+let bit8:  UInt16 = 0b0000_0000_1000_0000
+let bit9:  UInt16 = 0b0000_0001_0000_0000
 let bit10: UInt16 = 0b0000_0010_0000_0000
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -110,9 +110,9 @@ let ch010Labs = [" ??? ",
                  " b7? ",    // b7
                  "GMBL ",    // b6
                  " ALT ",    // b5
-                 "NOAT ",    // b4
+                 "~ATT ",    // b4
                  " VEL ",    // b3
-                 "NODP ",    // b2
+                 "~DAP ",    // b2
                  "PRIO ",    // b1
                  "NEVER"]
 
@@ -162,6 +162,18 @@ func prettyCh011(_ code: UInt16) -> String {
    return catString
 }
 
+@available(macOS 13.0, *)
+func prettyCh032(_ code: UInt16) -> String {
+    let bitArray = ZeroPadWord(code).split(separator: "")
+    var catString = ""
+
+    for index in 0..<bitArray.count {
+        catString += (bitArray[index] == "0") ? "  ↓  " : "  ↑  "
+    }
+
+    return catString
+}
+
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆          Bit 1:               AGC warning                                                        ┆
   ┆          _                                                                                       ┆
@@ -196,18 +208,6 @@ func prettyCh163(_ code: UInt16) -> String {
    }
 
    return catString
-}
-
-@available(macOS 13.0, *)
-func prettyCh032(_ code: UInt16) -> String {
-    let bitArray = ZeroPadWord(code).split(separator: "")
-    var catString = ""
-
-    for index in 0..<bitArray.count {
-        catString += (bitArray[index] == "0") ? "  ↓  " : "  ↑  "
-    }
-
-    return catString
 }
 
 #if os(macOS)
@@ -294,15 +294,12 @@ func extractOptions() {
     for var arg in args {
         if arg.hasPrefix("--cfg=") {
             arg.removeFirst(6)
-            switch arg {
-                case "CM":
+            if arg.starts(with: "CM") {
                     model.statusLights = DisKeyModel.CM
-                case "LM0":
+            } else if arg.starts(with: "LM1") {
+                model.statusLights = DisKeyModel.LM1
+            } else if arg.starts(with: "LM") {
                     model.statusLights = DisKeyModel.LM0
-                case "LM1":
-                    model.statusLights = DisKeyModel.LM1
-                default:
-                    break
             }
             model.elPowerOn = true
         }
@@ -317,7 +314,6 @@ func extractOptions() {
         else if arg.hasPrefix("--half-size")  {
             model.fullSize = false
         }
-        else {}
 
         print("\(arg)")
     }

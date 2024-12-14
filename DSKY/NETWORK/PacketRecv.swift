@@ -61,8 +61,10 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ tf: Bool = true) {
                 :: \(value) = "\(keyText(value))"
                 """)
 
-            if value == 18 { /* RSET */ }
-            break
+            if keyDict[value] == "RSET" {
+                model.ch15ResetCount += 1
+                if model.ch15ResetCount == 5 { exit(EXIT_SUCCESS) }             // 5 and we quit
+            }
 
         case 0o016...0o031:         //
             break
@@ -130,6 +132,8 @@ func dskyInterpretation(_ code: UInt16) {
     switch rowCode {
         case 12:
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ STATUS ANNUNCIATORS                                                                              ┆
+  ┆                                                                                                  ┆
   ┆          Bit 1 lights the "PRIO DISP" indicator.                                                 ┆
   ┆          Bit 2 lights the "NO DAP" indicator.                                                    ┆
   ┆          Bit 3 lights the "VEL" indicator.                                                       ┆
@@ -160,6 +164,8 @@ func dskyInterpretation(_ code: UInt16) {
         default:
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ DISPLAY ELECTROLUMINESCENT LIGHTS                                                                ┆
+  ┆                                                                                                  ┆
   ┆                               -AAAA B CCCCC DDDDD                                                ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
             let bBit = (code & 0b00000_1_00000_00000) >  0
@@ -183,12 +189,12 @@ func dskyInterpretation(_ code: UInt16) {
                 """)
 
             switch rowCode {
-                case 9:         // NOUN
-                    model.noun.0 = cStr + dStr
-                case 10:        // VERB
-                    model.verb.0 = cStr + dStr
-                case 11:        // PROG
-                    model.prog.0 = cStr + dStr
+                case 9:
+                    model.noun = (cStr + dStr, true)
+                case 10:
+                    model.verb = (cStr + dStr, true)
+                case 11:        
+                    model.prog = (cStr + dStr, true)
                 default:
                     break
             }

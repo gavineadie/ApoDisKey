@@ -9,15 +9,28 @@
 # at half-second intervals.
 
 # Starting state ... all digits, signs, and lamps off.
-# DEC | OCT | OCT
+# DEC | OCT | OCT/BIN
 
 ! Canned script starts
 
-500   010	60000	# row12 - lights
 
-150	010	54000	# M1M2 (P1P2)
-150	010	50000	# V1V2
-150	010	44000	# N1N2
+                                #   Bit 1 lights the "PRIO DISP" indicator.
+                                #   Bit 2 lights the "NO DAP" indicator.
+                                #   Bit 3 lights the "VEL" indicator.
+                                #   Bit 4 lights the "NO ATT" indicator.
+                                #   Bit 5 lights the "ALT" indicator.
+                                #   Bit 6 lights the "GIMBAL LOCK" indicator.
+                                #   Bit 8 lights the "TRACKER" indicator.
+                                #   Bit 9 lights the "PROG" indicator.
+
+500 010	11000_00000_00000 	    # status lights -- all off
+500 010	11000_01111_11111	    # status lights -- all on
+
+! display lights all off ..
+
+150	010	1011 0 00000 00000         # M1M2 (PROG)
+150	010	50000	# V1V2 (VERB)
+150	010	44000	# N1N2 (MODE)
 150	010	40000	# ..11
 150	010	34000	# 1213
 150	010	30000	# 1415
@@ -29,8 +42,6 @@
 
 500	011	00000	# channel 11 indicator lamps
 500	013	00000	# channel 13 DSKY lamp tests
-
-# 500	163 01000	# channel 163 EL power off
 
 1000 010 00000
 
@@ -53,8 +64,19 @@
 50 011 00002    # COMP ACTY on.
 50 011 00000    # COMP ACTY off.
 
-                # PROG
-500 010 55640   # Delay half a second, left-hand PROG turns to 8.
+! "PROG"
+
+500 010 101101111100000  # 55640   # Delay half a second, left-hand PROG turns to 9.
+100 010 101101110100000  # 55640   # Delay 0.1 seconds, left-hand PROG turns to 8.
+100 010 101101001100000  # 55140   # Delay 0.1 seconds, left-hand PROG turns to 7.
+100 010 101101110000000  # 55640   # Delay 0.1 seconds, left-hand PROG turns to 6.
+100 010 101101111000000  # 55640   # Delay 0.1 seconds, left-hand PROG turns to 5.
+100 010 101100111100000  # 55640   # Delay 0.1 seconds, left-hand PROG turns to 4.
+100 010 101101101100000  # 55640   # Delay 0.1 seconds, left-hand PROG turns to 3.
+100 010 101101100100000  # 55640   # Delay 0.1 seconds, left-hand PROG turns to 2.
+100 010 101101110100000  # 55640   # Delay 0.1 seconds, left-hand PROG turns to 1.
+500 010 101100001100000  # 55640   # Delay half a second, left-hand PROG turns to 8.
+
 150 010 55675   # Delay half a second, right-hand PROG turns to 8.
 
                 # VERB ...
@@ -66,11 +88,38 @@
 150 010 45675
 
 # ------------------------------------------------------------------------------------------------------
-# R1
-500 10 36000    # SIGN + == 1111 0 0000 00000
 
-150 10 41035    # (41035) # Left digit 8
-150 10 37640
+#       00000 (binary) :  0 (decimal) = Blank
+#       10101 (binary) : 21 (decimal) =   0
+#       00011 (binary) :  3 (decimal) =   1
+#       11001 (binary) : 25 (decimal) =   2
+#       11011 (binary) : 27 (decimal) =   3
+#       01111 (binary) : 15 (decimal) =   4
+#       11110 (binary) : 30 (decimal) =   5
+#       11100 (binary) : 28 (decimal) =   6
+#       10011 (binary) : 19 (decimal) =   7
+#       11101 (binary) : 29 (decimal) =   8
+#       11111 (binary) : 31 (decimal) =   9
+
+500 10 24757		44...						0101 0 01111 01111
+500 10 25736		55...						0101 0 11110 11110
+500 10 20757									0100 0 01111 01111
+500 10 21736									0100 0 11110 11110
+500 10 24757									0011 0 01111 01111
+500 10 25736									0011 0 11110 11110
+500 10 20757									0100 0 01111 01111
+500 10 21736									0100 0 11110 11110
+500 10 24757									0001 0 01111 01111
+500 10 25736									0001 0 11110 11110
+
+# ------------------------------------------------------------------------------------------------------
+# R1
+#                                               AAAAB CCCCC DDDDD
+#                                               -----------------
+500 10 36000    # SIGN + == 1111 00000 00000    01111 00000 00000
+
+150 10 41035    # (41035) # Left digit 8        10000 10000 11101
+150 10 37640                                    01111 11101 00000
 150 10 37675
 150 10 31640
 150 10 31675    # Right digit 8
@@ -100,18 +149,20 @@
 500 11 00016	# TEMP↑
 
 # and so on with other lamps
-150 10 60010	# NO ATT
-150 10 60050	# GIMBAL LOCK
+150 10  60010	# NO ATT
+150 10  60050	# GIMBAL LOCK
 150 163 00400	# STBY (TEMP↓ + 0o10 to restore)
-150 10 60450	# PROG
+150 10  60450	# PROG
 150 163 00420	# KEY REL
 150 163 00620	# RESTART
 150 163 00720	# OPER ERR
-150 10 60650	# TRACKER
-150 10 60651	# PRIO DISP (CM ONLY)
-150 10 60671	# ALT
-150 10 60673	# NO DAP (CM ONLY)
-150 10 60677	# VEL
+150 10  60650	# TRACKER
+150 10  60651	# PRIO DISP (CM ONLY)
+150 10  60671	# ALT
+150 10  60673	# NO DAP (CM ONLY)
+150 10  60677	# VEL
+
+500	163 01000	# channel 163 EL power off
 
 ! Canned script ends
 -end-of-file-
