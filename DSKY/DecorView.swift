@@ -127,7 +127,7 @@ func adjustDisplay(_ text: String) -> AttributedString {
         var attrByte = AttributedString(String(byte))
         if (byte == "_") || !model.elPowerOn {
             attrByte = AttributedString("8")
-            attrByte.foregroundColor = Color(white: 0.34)
+            attrByte.foregroundColor = Color(white: 0.37)
         } else {
             attrByte.foregroundColor = displayElectro
         }

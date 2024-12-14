@@ -59,13 +59,14 @@ final class DisKeyModel {
     public var elPowerOn = false                        // electroluminescent power (starts OFF)
 
     public var comp: Display = ("--", false)            // numbers (none for COMP), placard=dark
-    public var prog: Display = ("  ", false)
-    public var verb: Display = ("--", false)            // numbers=35, placard=green
-    public var noun: Display = ("--", false)
 
-    public var reg1: Display = ("      ", true)
-    public var reg2: Display = ("      ", false)        // TODO: what does "false" do here?
-    public var reg3: Display = ("      ", true)
+    public var prog: Display = ("__", false)
+    public var verb: Display = ("__", false)            // numbers=35, placard=green
+    public var noun: Display = ("__", false)
+
+    public var reg1: Display = (" _____", true)
+    public var reg2: Display = (" _____", false)        // TODO: what does "false" do here?
+    public var reg3: Display = (" _____", true)
 
     public var r1Sign = (false, false)                  // blank prefix (± or blank)
     public var r2Sign = (false, false)
