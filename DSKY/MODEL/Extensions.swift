@@ -320,6 +320,12 @@ func extractOptions() {
 
     if !ipAddr.isEmpty && ipPort > 0 {
 
+        model.haveCmdArgs = true
+        logger.log("""
+            →→→ cmdArgs set: \
+            ipAddr=\(ipAddr, privacy: .public), \
+            ipPort=\(ipPort, privacy: .public)
+            """)
         model.network = setNetwork(ipAddr, ipPort, start: true)
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮

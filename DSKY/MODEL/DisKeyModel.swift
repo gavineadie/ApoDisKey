@@ -26,11 +26,13 @@ class DisKeyModel: ObservableObject {
 
     static let shared = DisKeyModel()
 
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ .. properties relating to the application itself ..                                              ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
     @Published public var fullSize = true
-    
+    @Published public var haveCmdArgs = false
     @Published public var ch15ResetCount = 0
-
-
+    
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ .. the fourteen lights resentating status on the DSKY top-left ..                                ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
@@ -59,9 +61,9 @@ class DisKeyModel: ObservableObject {
     public var elPowerOn = false                        // electroluminescent power (starts OFF)
 
     @Published public var comp: Display = ("--", false)      // numbers (none for COMP), placard=dark
-    @Published public var prog: Display = ("  ", false)
-    @Published public var verb: Display = ("--", false)      // numbers=35, placard=green
-    @Published public var noun: Display = ("--", false)
+    @Published public var prog: Display = ("__", false)
+    @Published public var verb: Display = ("__", false)      // numbers=35, placard=green
+    @Published public var noun: Display = ("__", false)
 
     @Published public var reg1: Display = (" _____", true)
     @Published public var reg2: Display = (" _____", false)        // TODO: what does "false" do here?

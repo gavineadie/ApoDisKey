@@ -31,7 +31,7 @@ struct DisKeyApp: App {
 //        let homeURL = locateAppSupport()              // "~/ApoDisKey"
 //        if homeURL.isFileURL { logger.log("••• \(homeURL) isn't a file.") }
 
-        extractOptions()
+        extractOptions()                            // any command arguments ?
     }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -52,12 +52,11 @@ struct AppView: View {
         let scaleFactor = model.fullSize ? 1 : 0.5
         VStack {
             DisKeyView()
-                .padding(.bottom, 10.0)
                 .frame(width: 569 * scaleFactor,
-                       height: 656 * scaleFactor) // 569 × 656 pixels
+                       height: 656 * scaleFactor)        // 569 × 656 pixels
                 .scaleEffect(scaleFactor)
                 .onReceive(timer) { date in logger.log("TEN SECONDS: \(date)") }
-            if model.fullSize {
+            if model.fullSize && !model.haveCmdArgs {
 				Divider()
 				MonitorView()
 			}
@@ -70,9 +69,10 @@ struct MonitorView: View {
     @State private var ipAddr: String = ""
     @State private var ipPort: UInt16 = 0
 
-    static var number: NumberFormatter = {
+    static var integer: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
+        formatter.usesGroupingSeparator = false
         return formatter
     }()
 
@@ -101,7 +101,7 @@ struct MonitorView: View {
             .font(.custom("Menlo", size: 12))
 
             TextField("AGC PortNum", value: $ipPort,
-                      formatter: MonitorView.number)
+                      formatter: MonitorView.integer)
             .font(.custom("Menlo", size: 12))
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -113,6 +113,11 @@ struct MonitorView: View {
                 print("connect")
                 model.ipAddr = ipAddr
                 model.ipPort = ipPort
+                logger.log("""
+                    →→→ monitor set: \
+                    ipAddr=\(ipAddr, privacy: .public), \
+                    ipPort=\(ipPort, privacy: .public)
+                    """)
                 model.network = setNetwork(ipAddr, ipPort, start: true)
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
