@@ -177,7 +177,6 @@ struct Register: View {
     }
 }
 
-
 struct DisplayPlacard: View {
     var label: String                   // placard label: "COMP", "PROG", "VERB", "NOUN"
     var illum: Bool = true              // illuminate the background (green)

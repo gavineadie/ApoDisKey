@@ -13,7 +13,7 @@ struct Network : Sendable{
     let connection: NWConnection
     let didStopCallback: @Sendable (Error?) -> Void
 
-    init(_ host: String = "127.0.0.1", _ port: UInt16 = 12345, start: Bool = false) {
+    init(_ host: String = "127.0.0.1", _ port: UInt16 = 19697, start: Bool = false) {
 
         self.didStopCallback = { error in
             exit( error == nil ? EXIT_SUCCESS : EXIT_SUCCESS )
@@ -100,36 +100,17 @@ extension NWConnection {
 }
 
 /*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
-  │ defaults set by:                                                                                 │
-  │         defaults write com.ramsaycons.ApoDisKey ipAddr "127.0.0.1"                               │
-  │         defaults write com.ramsaycons.ApoDisKey ipPort 19697                                     │
-  │ defaults removed by:                                                                             │
-  │         defaults delete com.ramsaycons.ApoDisKey ipAddr                                          │
-  │         defaults delete com.ramsaycons.ApoDisKey ipPort                                          │
   └──────────────────────────────────────────────────────────────────────────────────────────────────┘*/
 @MainActor
 func setNetwork() -> Network {
-    /*box..
-     if we find UserDefault values, use them ..
-     */
-    if let ipAddr = UserDefaults.standard.string(forKey: "ipAddr") {
-        var ipPort = UInt16(UserDefaults.standard.integer(forKey: "ipPort"))
-        if ipPort == 0 {
-            ipPort = 19697
-        }
-        logger.log("→→→ appDefaults: ipAddr=\(ipAddr, privacy: .public), ipPort=\(ipPort, privacy: .public)")
-        return Network(ipAddr, ipPort)
-    } else {
 #if os(iOS) || os(tvOS)
 //  return Network("192.168.1.232", 19697)          // .. Ubuntu
     return Network("192.168.1.100", 19698)          // .. MaxBook
 #else
-    return Network("localhost", 19697)
+    return Network()                                // "localhost", 19697
 #endif
-    }
 }
 
 func setNetwork(_ ipAddr: String, _ ipPort: UInt16, start: Bool = false) -> Network {
-    logger.log("→→→ monitor set: ipAddr=\(ipAddr, privacy: .public), ipPort=\(ipPort, privacy: .public)")
     return Network(ipAddr, ipPort, start: true)
 }
