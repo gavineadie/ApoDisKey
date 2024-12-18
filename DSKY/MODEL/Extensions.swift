@@ -118,14 +118,14 @@ let ch010Labs = [" ??? ",
 
 @available(macOS 13.0, *)
 func prettyCh010(_ code: UInt16) -> String {
-    let bitArray = ZeroPadWord(code, to: 10).split(separator: "")
-    var catString = ""
+	let bitArray = ZeroPadWord(code, to: 10).split(separator: "")
+	var catString = ""
 
-    for index in 0..<bitArray.count {
-        catString += (bitArray[index] == "0") ? "  ↓  " : ch010Labs[index]
-    }
+	for index in 0..<bitArray.count {
+		catString += (bitArray[index] == "0") ? "  ↓  " : ch010Labs[index]
+	}
 
-    return catString
+	return catString
 }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -201,7 +201,7 @@ let ch163Labs = [" EL↓ ",    // b10
 @available(macOS 13.0, *)
 func prettyCh163(_ code: UInt16) -> String {
     let bitArray = ZeroPadWord(code, to: 10).split(separator: "")
-    var catString = (bitArray[0] == "1") ? "  ↓  " : " EL↑ "
+    var catString = (bitArray[0] == "1") ? " EL↓ " : " EL↑ "
 
     for index in 1..<bitArray.count {
         catString += (bitArray[index] == "0") ? "  ↓  " : ch163Labs[index]

@@ -31,7 +31,7 @@ struct DisKeyApp: App {
 //        let homeURL = locateAppSupport()              // "~/ApoDisKey"
 //        if homeURL.isFileURL { logger.log("••• \(homeURL) isn't a file.") }
 
-        extractOptions()                            // any command arguments
+        extractOptions()                            // any command arguments ?
     }
     
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮

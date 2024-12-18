@@ -62,7 +62,6 @@ final class DisKeyModel {
     public var elPowerOn = false                        // electroluminescent power (starts OFF)
 
     public var comp: Display = ("--", false)            // numbers (none for COMP), placard=dark
-
     public var prog: Display = ("__", false)
     public var verb: Display = ("__", false)            // numbers=35, placard=green
     public var noun: Display = ("__", false)
