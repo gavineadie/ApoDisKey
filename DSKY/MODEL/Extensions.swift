@@ -118,14 +118,14 @@ let ch010Labs = [" ??? ",
 
 @available(macOS 13.0, *)
 func prettyCh010(_ code: UInt16) -> String {
-   let bitArray = ZeroPadWord(code, to: 10).split(separator: "")
-   var catString = ""
+	let bitArray = ZeroPadWord(code, to: 10).split(separator: "")
+	var catString = ""
 
-   for index in 0..<bitArray.count {
-       catString += (bitArray[index] == "0") ? "  ↓  " : ch010Labs[index]
-   }
+	for index in 0..<bitArray.count {
+		catString += (bitArray[index] == "0") ? "  ↓  " : ch010Labs[index]
+	}
 
-   return catString
+	return catString
 }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -152,14 +152,14 @@ let ch011Labs = [" ??? ",    // b8
 
 @available(macOS 13.0, *)
 func prettyCh011(_ code: UInt16) -> String {
-   let bitArray = ZeroPadWord(code, to: 8).split(separator: "")
-   var catString = "          "
+    let bitArray = ZeroPadWord(code, to: 8).split(separator: "")
+    var catString = "          "
 
-   for index in 0..<bitArray.count {
-       catString += (bitArray[index] == "0") ? "  ↓  " : ch011Labs[index]
-   }
+    for index in 0..<bitArray.count {
+        catString += (bitArray[index] == "0") ? "  ↓  " : ch011Labs[index]
+    }
 
-   return catString
+    return catString
 }
 
 @available(macOS 13.0, *)
@@ -200,14 +200,14 @@ let ch163Labs = [" EL↓ ",    // b10
 
 @available(macOS 13.0, *)
 func prettyCh163(_ code: UInt16) -> String {
-   let bitArray = ZeroPadWord(code, to: 10).split(separator: "")
-    var catString = (bitArray[0] == "1") ? "  ↓  " : " EL↑ "
+    let bitArray = ZeroPadWord(code, to: 10).split(separator: "")
+    var catString = (bitArray[0] == "1") ? " EL↓ " : " EL↑ "
 
     for index in 1..<bitArray.count {
-       catString += (bitArray[index] == "0") ? "  ↓  " : ch163Labs[index]
-   }
+        catString += (bitArray[index] == "0") ? "  ↓  " : ch163Labs[index]
+    }
 
-   return catString
+    return catString
 }
 
 #if os(macOS)
@@ -295,11 +295,11 @@ func extractOptions() {
         if arg.hasPrefix("--cfg=") {
             arg.removeFirst(6)
             if arg.starts(with: "CM") {
-                    model.statusLights = DisKeyModel.CM
+                model.statusLights = DisKeyModel.CM
             } else if arg.starts(with: "LM1") {
                 model.statusLights = DisKeyModel.LM1
             } else if arg.starts(with: "LM") {
-                    model.statusLights = DisKeyModel.LM0
+                model.statusLights = DisKeyModel.LM0
             }
             model.elPowerOn = true
         }

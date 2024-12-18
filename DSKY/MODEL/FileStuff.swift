@@ -58,7 +58,7 @@ func readCanned(path: String) {
                 .components(separatedBy: .whitespaces)
                 .filter({!$0.isEmpty})
             if #available(macOS 13.0, *) {
-                if words.isEmpty || words[0].starts(with: /#|--/) || words.count < 3 { continue }
+            	if words.isEmpty || words[0].starts(with: /#|--/) || words.count < 3 { continue }
             }
             if words[0].starts(with: "-end-of-file-") { return }
 

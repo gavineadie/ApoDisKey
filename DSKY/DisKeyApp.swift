@@ -33,7 +33,7 @@ struct DisKeyApp: App {
 
         extractOptions()                            // any command arguments ?
     }
-
+    
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ do other things as the ContentView runs ..                                                       ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
@@ -57,9 +57,9 @@ struct AppView: View {
                 .scaleEffect(scaleFactor)
                 .onReceive(timer) { date in logger.log("TEN SECONDS: \(date)") }
             if model.fullSize && !model.haveCmdArgs {
-				Divider()
-				MonitorView()
-			}
+                Divider()
+                MonitorView()
+            }
         }
     }
 }

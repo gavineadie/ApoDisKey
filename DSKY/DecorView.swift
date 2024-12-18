@@ -68,7 +68,7 @@ struct PanelsView: View {
         ZStack {
             RoundedRectangle(cornerRadius: 10)
                 .fill(Color(white: 0.25))
-                .frame(width: panelExSizeW, 
+                .frame(width: panelExSizeW,
                        height: panelExSizeH)
 
             RoundedRectangle(cornerRadius: 6)
@@ -88,9 +88,9 @@ struct DisplaySeparator: View {
             LittleWhiteCircle()
 
             RoundedRectangle(cornerRadius: 1)
-                    .padding(.horizontal, -4.0)
-                    .frame(height: 4.0)
-                    .foregroundColor(model.elPowerOn ? displayElectro : .clear)
+                .padding(.horizontal, -4.0)
+                .frame(height: 4.0)
+                .foregroundColor(model.elPowerOn ? displayElectro : .clear)
 
             LittleWhiteCircle()
         }
@@ -116,14 +116,26 @@ struct LittleWhiteCircle: View {
 func adjustDisplay(_ text: String) -> AttributedString {
 
     var attrText = AttributedString()
+    let normText = model.elPowerOn ? text :
+                    text.count > 2 ? "-_____" : "__"
 
-    for byte in text {
+    for byte in normText {
         var attrByte = AttributedString(String(byte))
-        if (byte == "_") || !model.elPowerOn {
-            attrByte = AttributedString("8")
-            attrByte.foregroundColor = Color(white: 0.37)
-        } else {
-            attrByte.foregroundColor = displayElectro
+        switch byte {
+            case "+", "-":
+                attrByte = AttributedString("+")
+                if model.elPowerOn {
+                    attrByte.foregroundColor = displayElectro
+                } else {
+                    attrByte.foregroundColor = .clear
+                }
+
+            case "_":
+                attrByte = AttributedString("8")
+                attrByte.foregroundColor = Color(white: 0.37)
+
+            default:
+                attrByte.foregroundColor = displayElectro
         }
         attrText += attrByte
     }

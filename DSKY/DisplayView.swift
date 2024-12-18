@@ -106,7 +106,7 @@ struct Comp: View {
     var body: some View {
         VStack {
             DisplayPlacard(label: "COMP\nACTY",
-                           illum: model.elPowerOn && state.1,
+                           power: model.elPowerOn && state.1,
                            placardHeight: 60.0)
             DisplayNumbers(value: ("  ", false))
         }
@@ -150,8 +150,31 @@ struct twoDigit: View {
     var body: some View {
         VStack {
             DisplayPlacard(label: label,
-                           illum: model.elPowerOn)
+                           power: model.elPowerOn)
             DisplayNumbers(value: value)
+        }
+    }
+}
+
+struct DisplayPlacard: View {
+    var label: String                   // placard label: "COMP", "PROG", "VERB", "NOUN"
+    var power: Bool = true              // illuminate the background (green)
+    var placardHeight: CGFloat = 20.0   // the height of the placard
+
+    var body: some View {
+        ZStack {
+            let placardColor = power ? displayElectro : .clear
+
+            RoundedRectangle(cornerRadius: 3.0)
+                .frame(width: 74.0, height: placardHeight)
+                .foregroundColor(placardColor)
+
+            Text(label)
+                .font(.custom("Gorton-Normal-180", fixedSize: 12))
+                .foregroundColor(.black)
+                .multilineTextAlignment(.center)
+                .lineSpacing(4.0)
+
         }
     }
 }
@@ -177,29 +200,7 @@ struct Register: View {
     }
 }
 
-struct DisplayPlacard: View {
-    var label: String                   // placard label: "COMP", "PROG", "VERB", "NOUN"
-    var illum: Bool = true              // illuminate the background (green)
-    var placardHeight: CGFloat = 20.0   // the height of the placard
-
-    var body: some View {
-        ZStack {
-            let placardColor = illum ? displayElectro : .clear
-
-            RoundedRectangle(cornerRadius: 3.0)
-                .frame(width: 74.0, height: placardHeight)
-                .foregroundColor(placardColor)
-
-            Text(label)
-                .font(.custom("Gorton-Normal-180",
-                              fixedSize: 12))
-                .foregroundColor(.black)
-                .multilineTextAlignment(.center)
-                .lineSpacing(4.0)
-
-        }
-    }
-}
+#Preview("Register") { Register(state: Display(label: "-89999", off: true)) }
 
 struct DisplayNumbers: View {
     var value: Display
@@ -216,15 +217,14 @@ struct DisplayNumbers: View {
                 VStack {
                     DisplaySeparator()
 
-                    Text(adjustDisplay(value.0.starts(with: " ") ?
-                                       String(value.0.dropFirst()) : value.0))
-                        .font(.custom("Zerlina",
-                                      fixedSize: zerlinaFixedSize))
-                        .padding(.all, -10.0)
-                        .padding(.leading, value.0.starts(with: " ") ? 22 : 0)
- //###                  .tracking(zerlinaTracking)
-                        .frame(width: 190.0,
-                               height: panelDigitSize)
+                    if #available(macOS 13.0, *) {
+                        Text(adjustDisplay(value.0))
+                            .sevenSegRegister()
+                            .kerning(4.0)
+                   } else {
+                       Text(adjustDisplay(value.0))
+                           .sevenSegRegister()
+                    }
                 }
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ COMP / PROG / VERB / NOUN ..                                                                     ┆
@@ -234,22 +234,52 @@ struct DisplayNumbers: View {
                     Text(value.0)
                         .frame(width: 95.0, height: 2.0)
                 } else {
-                    Text(adjustDisplay(value.1 ? value.0 : "__"))
-                        .font(.custom("Zerlina",
-                                      fixedSize: zerlinaFixedSize))
-                        .padding(.top, 8.0)
-//###                   .tracking(zerlinaTracking)
-                        .frame(width: 95.0,
-                               height: panelDigitSize)
+                    if #available(macOS 13.0, *) {
+                        Text(adjustDisplay(value.1 ? value.0 : "__"))
+                            .sevenSegVerbNoun()
+                            .kerning(4.0)
+                    } else {
+                        Text(adjustDisplay(value.1 ? value.0 : "__"))
+                            .sevenSegVerbNoun()
+                    }
                 }
             default:
-                Text("ERROR")
-                    .font(.custom("Zerlina",
-                                  fixedSize: zerlinaFixedSize))
-                    .tracking(zerlinaTracking)
-                    .foregroundColor(displayElectro)
-                    .frame(width: 190.0,
-                           height: panelDigitSize)
+                Text("--------")
+                    .font(.custom("Zerlina", fixedSize: zerlinaFixedSize))
+                    .kerning(4.0)
+                    .foregroundColor(.red)
+                    .frame(width: 95.0, height: panelDigitSize)
         }
+    }
+}
+
+
+extension View {
+    func sevenSegRegister() -> some View {
+        modifier(SevenSegRegister())
+    }
+}
+
+struct SevenSegRegister: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(.custom("Zerlina", fixedSize: zerlinaFixedSize))
+            .padding(.all, -10.0)
+            .frame(width: 190.0, height: panelDigitSize)
+    }
+}
+
+extension View {
+    func sevenSegVerbNoun() -> some View {
+        modifier(SevenSegVerbNoun())
+    }
+}
+
+struct SevenSegVerbNoun: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(.custom("Zerlina", fixedSize: zerlinaFixedSize))
+            .padding(.top, 8.0)
+            .frame(width: 95.0, height: panelDigitSize)
     }
 }
