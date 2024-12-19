@@ -19,7 +19,10 @@ struct DisKeyApp: App {
         func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { true }
 
         func applicationWillTerminate(_ notification: Notification) {
-            UserDefaults.standard.removeObject(forKey: "NSWindow Frame ApoDisKey.AppView-1-AppWindow-1")
+            if model.fX >= 0.0 && model.fY >= 0.0 {
+                UserDefaults.standard.removeObject(
+                    forKey: "NSWindow Frame ApoDisKey.AppView-1-AppWindow-1")
+            }
         }
     }
 
@@ -28,16 +31,16 @@ struct DisKeyApp: App {
     
     init() {
 
-        UserDefaults.standard.removeObject(forKey: "NSWindow Frame ApoDisKey.AppView-1-AppWindow-1")
-
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ establish the global environment                                                                 ┆
   ┆ .. read init files                                                                               ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
         extractOptions()                            // any command arguments ?
 
-        let appSupportURL = URL.applicationSupportDirectory
-        logger.log("••• appSupportURL: \(appSupportURL)")
+        if model.fX >= 0.0 && model.fY >= 0.0 {
+            UserDefaults.standard.removeObject(
+                forKey: "NSWindow Frame ApoDisKey.AppView-1-AppWindow-1")
+        }
 
         readInitializing()
     }
@@ -75,6 +78,7 @@ struct AppView: View {
     }
 }
 
+@available(macOS 13.0, *)
 #Preview("AppView") { AppView() }
 
 struct MonitorView: View {
@@ -174,4 +178,5 @@ struct MonitorView: View {
     }
 }
 
+@available(macOS 13.0, *)
 #Preview("Monitor") { MonitorView() }

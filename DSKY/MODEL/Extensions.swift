@@ -291,12 +291,8 @@ func extractOptions() {
     var ipAddr: String = ""
     var ipPort: UInt16 = 0
 
-//    for screen in NSScreen.screens {
-//        print(screen.frame)
-//    }
-
     let screenSize: CGSize = NSScreen.main!.frame.size
-    var camArgsOffset = CGPoint(x: 0.0, y: 0.0)
+    var camArgsOffset = CGPoint(x: -999.0, y: -999.0)
 
     for var arg in args {
         if arg.hasPrefix("--cfg=") {
@@ -324,11 +320,11 @@ func extractOptions() {
         }
         else if arg.hasPrefix("--x=")  {
             arg.removeFirst(4)
-            camArgsOffset.x = CGFloat(Float(Int(arg) ?? 0))
+            camArgsOffset.x = CGFloat(Float(Int(arg) ?? -999))
         }
         else if arg.hasPrefix("--y=")  {
             arg.removeFirst(4)
-            camArgsOffset.y = CGFloat(Float(Int(arg) ?? 0))
+            camArgsOffset.y = CGFloat(Float(Int(arg) ?? -999))
         }
         else if arg.hasPrefix("--log-timer")  {
             model.logTimer = true
@@ -370,11 +366,13 @@ func extractOptions() {
   ┆                                                                                                  ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 
-    let screenAvailableWidth = CGFloat(screenSize.width - 569.0)
-    let screenAvailableHeight = CGFloat(screenSize.height - 569.0)
+    if camArgsOffset.x >= 0.0 && camArgsOffset.y >= 0.0 {
+        let screenAvailableWidth = CGFloat(screenSize.width - 569.0)
+        let screenAvailableHeight = CGFloat(screenSize.height - 569.0)
 
-    model.fX = min(camArgsOffset.x, screenAvailableWidth) / screenAvailableWidth
-    model.fY = min(camArgsOffset.y, screenAvailableHeight) / screenAvailableHeight
+        model.fX = min(camArgsOffset.x, screenAvailableWidth) / screenAvailableWidth
+        model.fY = min(camArgsOffset.y, screenAvailableHeight) / screenAvailableHeight
+    }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ if command arguments for network are good ..                                                     ┆

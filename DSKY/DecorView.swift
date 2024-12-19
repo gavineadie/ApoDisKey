@@ -82,6 +82,7 @@ struct PanelsView: View {
     }
 }
 
+@available(macOS 13.0, *)
 #Preview("Panels") { PanelsView(interiorFill: .brown) }
 
 struct DisplaySeparator: View {
@@ -102,6 +103,7 @@ struct DisplaySeparator: View {
     }
 }
 
+@available(macOS 13.0, *)
 #Preview("Separator") { DisplaySeparator() }
 
 struct LittleWhiteCircle: View {
@@ -113,6 +115,7 @@ struct LittleWhiteCircle: View {
     }
 }
 
+@available(macOS 13.0, *)
 #Preview("WhiteCircle") { LittleWhiteCircle() }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮

@@ -34,9 +34,11 @@ final class DisKeyModel {
     public var fullSize = true
     public var haveCmdArgs = false
 
-    public var fX: CGFloat = 0.0
-    public var fY: CGFloat = 0.0
+    public var fX: CGFloat = -99.0
+    public var fY: CGFloat = -99.0
+    
     public var logTimer = false
+ 
     public var ch15ResetCount = 0
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮

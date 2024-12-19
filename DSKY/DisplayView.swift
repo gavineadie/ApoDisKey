@@ -67,6 +67,7 @@ struct DisplayView: View {
     }
 }
 
+@available(macOS 13.0, *)
 #Preview("Display") { DisplayView() }
 
 /*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
@@ -199,6 +200,7 @@ struct Register: View {
     }
 }
 
+@available(macOS 13.0, *)
 #Preview("Register") { Register(state: Display(label: "+89999", off: true)) }
 
 struct DisplayNumbers: View {

@@ -112,6 +112,7 @@ struct StatusView: View {
     }
 }
 
+@available(macOS 13.0, *)
 #Preview("Status") { StatusView() }
 
 struct StatusLight: View {

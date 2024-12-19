@@ -91,11 +91,11 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--x=400"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--y=100"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
    </LaunchAction>
