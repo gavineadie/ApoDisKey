@@ -17,6 +17,10 @@ struct DisKeyApp: App {
 #if os(macOS)
     class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { true }
+
+        func applicationWillTerminate(_ notification: Notification) {
+            UserDefaults.standard.removeObject(forKey: "NSWindow Frame ApoDisKey.AppView-1-AppWindow-1")
+        }
     }
 
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
@@ -24,14 +28,18 @@ struct DisKeyApp: App {
     
     init() {
 
+        UserDefaults.standard.removeObject(forKey: "NSWindow Frame ApoDisKey.AppView-1-AppWindow-1")
+
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ establish the global environment                                                                 ┆
   ┆ .. read init files                                                                               ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-//        let homeURL = locateAppSupport()              // "~/ApoDisKey"
-//        if homeURL.isFileURL { logger.log("••• \(homeURL) isn't a file.") }
-
         extractOptions()                            // any command arguments ?
+
+        let appSupportURL = URL.applicationSupportDirectory
+        logger.log("••• appSupportURL: \(appSupportURL)")
+
+        readInitializing()
     }
     
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -42,11 +50,14 @@ struct DisKeyApp: App {
         WindowGroup {
             AppView()
         }
+        .defaultSize(CGSize(width: 569, height: 656))
+        .defaultPosition(UnitPoint(x: model.fX, y: model.fY))
     }
 }
 
 struct AppView: View {
-    let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
+    let timer = Timer.publish(every: model.logTimer ? 1E1 : 1E8,
+                              on: .main, in: .common).autoconnect()
 
     var body: some View {
         let scaleFactor = model.fullSize ? 1 : 0.5
