@@ -55,7 +55,7 @@
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
       ignoresPersistentStateOnLaunch = "NO"
-      debugDocumentVersioning = "YES"
+      debugDocumentVersioning = "NO"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
       <BuildableProductRunnable
@@ -70,19 +70,31 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "--cfg=LM0.ini"
-            isEnabled = "YES">
+            argument = "--log-timer"
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--ip=localhost"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--port=19697"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
+            argument = "--cfg=LM0.ini"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
             argument = "--half-size"
+            isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--x=400"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "--y=100"
             isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>

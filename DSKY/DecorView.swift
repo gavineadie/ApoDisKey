@@ -82,6 +82,9 @@ struct PanelsView: View {
     }
 }
 
+@available(macOS 13.0, *)
+#Preview("Panels") { PanelsView(interiorFill: .brown) }
+
 struct DisplaySeparator: View {
     var body: some View {
         HStack {
@@ -100,6 +103,9 @@ struct DisplaySeparator: View {
     }
 }
 
+@available(macOS 13.0, *)
+#Preview("Separator") { DisplaySeparator() }
+
 struct LittleWhiteCircle: View {
     var body: some View {
         RoundedRectangle(cornerRadius: 3.5)
@@ -108,6 +114,9 @@ struct LittleWhiteCircle: View {
             .foregroundColor(Color(white: 0.7))
     }
 }
+
+@available(macOS 13.0, *)
+#Preview("WhiteCircle") { LittleWhiteCircle() }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ .. takes a string and converts "_" to faded "8" ..                                               ┆

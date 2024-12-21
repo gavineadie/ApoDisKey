@@ -69,6 +69,9 @@ struct KeyPadView: View {
     }
 }
 
+@available(macOS 13.0, *)
+#Preview("KeyPad") { KeyPadView() }
+
 struct KeyView: View {
     var keyCode: UInt16
 
@@ -155,6 +158,12 @@ struct KeyView: View {
             )
     }
 }
+
+@available(macOS 13.0, *)
+#Preview("Key [6]") { KeyView(keyCode: 6) }
+
+@available(macOS 13.0, *)
+#Preview("Key [?]") { KeyView(keyCode: 255) }
 
 func keyText(_ code: UInt16) -> String { keyDict[code] ?? "ERROR" }
 

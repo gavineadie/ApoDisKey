@@ -68,7 +68,6 @@
 		867EBD792C3A1E2A004C4DDD /* DSKYTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSKYTests.swift; sourceTree = "<group>"; };
 		867EBD922C3A5348004C4DDD /* Debug.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Debug.xcassets; sourceTree = "<group>"; };
 		868B2B6F2CD0CAD200A70648 /* FileStuff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileStuff.swift; sourceTree = "<group>"; };
-		869AAA5F2CFC20B100841FB5 /* Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Previews.swift; sourceTree = "<group>"; };
 		869F39962C3F337E002DD6B7 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		86A055062C405BB3007996B7 /* DisKeyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisKeyModel.swift; sourceTree = "<group>"; };
 		86B26DB82C4CD3020021E594 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -158,7 +157,6 @@
 				864BD6102C3B42DF00D4C896 /* DisplayView.swift */,
 				864BD6082C3B2B9900D4C896 /* KeyPadView.swift */,
 				86E838912C3CF06400E7C573 /* DecorView.swift */,
-				869AAA5F2CFC20B100841FB5 /* Previews.swift */,
 				867D86222C489F43007CDD48 /* MODEL */,
 				86ECA4E42C4763E70025545C /* NETWORK */,
 				867EBD922C3A5348004C4DDD /* Debug.xcassets */,

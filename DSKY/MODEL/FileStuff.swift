@@ -10,31 +10,23 @@ import Foundation
 /*┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
   ┃ File stuff ..                                                                                    ┃
   ┃──────────────────────────────────────────────────────────────────────────────────────────────────┃
-  ┃ .. establishDirectory:                                                                           ┃
   ┃ .. readInitializing:                                                                             ┃
   ┃ .. readCanned:path:                                                                              ┃
   ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛*/
 
-func locateAppSupport() -> URL {
-    do {
-        return try FileManager.default.url(for: .applicationSupportDirectory,
-                                           in: .localDomainMask, appropriateFor: nil, create: true)
-    } catch { fatalError("••• missing Application Support Directory") }
-}
-
-func establishDirectory() -> URL { URL(fileURLWithPath: "~/ApoDisKey", isDirectory: true) }
-
 func readInitializing() {
-    if let path = Bundle.main.path(forResource: "Initialize", ofType: "txt"){
+    if let initURL = Bundle.main.url(forResource: "Initialize", withExtension: "txt"){
         do {
-            let initContent = try String(contentsOfFile: path, encoding: .utf8)
+            let initContent = try String(contentsOf: initURL, encoding: .utf8)
             let lineArray = initContent.components(separatedBy: .newlines)
-            for line in lineArray {
-                logger.log("INIT: \(line)")
-            }
+//            for line in lineArray {
+//                logger.log("INIT: \(line)")
+//            }
         } catch {
             logger.log("\(error.localizedDescription)")
         }
+    } else {
+        logger.log("••• \(#function): \"Initialize.txt\" not found in Bundle.")
     }
 }
 
