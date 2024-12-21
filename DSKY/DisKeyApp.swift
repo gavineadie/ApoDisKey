@@ -61,8 +61,8 @@ struct DisKeyApp: App {
 }
 
 struct AppView: View {
-    let timer = Timer.publish(every: model.logTimer ? 1E1 : 1E8,
-                              on: .main, in: .common).autoconnect()
+//    let timer = Timer.publish(every: model.logTimer ? 1E1 : 1E8,
+//                              on: .main, in: .common).autoconnect()
 
     var body: some View {
         let scaleFactor = model.fullSize ? 1 : 0.5
@@ -71,7 +71,7 @@ struct AppView: View {
                 .frame(width: 569 * scaleFactor,
                        height: 656 * scaleFactor)        // 569 × 656 pixels
                 .scaleEffect(scaleFactor)
-                .onReceive(timer) { date in logger.log("TEN SECONDS: \(date)") }
+//                .onReceive(timer) { date in logger.log("TEN SECONDS: \(date)") }
             if model.fullSize && !model.haveCmdArgs {
                 Divider()
                 MonitorView()
@@ -80,8 +80,9 @@ struct AppView: View {
     }
 }
 
-@available(macOS 13.0, *)
+#if swift(>=5.9)
 #Preview("AppView") { AppView() }
+#endif
 
 struct MonitorView: View {
 
@@ -127,7 +128,7 @@ struct MonitorView: View {
   ┆ .. make network connection                                                                       ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
             Button("Connect",
-                   systemImage: "phone.connection",
+//                   systemImage: "phone.connection",
                    action: {
                 print("connect")
                 model.ipAddr = ipAddr
@@ -180,5 +181,6 @@ struct MonitorView: View {
     }
 }
 
-@available(macOS 13.0, *)
+#if swift(>=5.9)
 #Preview("Monitor") { MonitorView() }
+#endif

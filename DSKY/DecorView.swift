@@ -82,8 +82,9 @@ struct PanelsView: View {
     }
 }
 
-@available(macOS 13.0, *)
+#if swift(>=5.9)
 #Preview("Panels") { PanelsView(interiorFill: .brown) }
+#endif
 
 struct DisplaySeparator: View {
     var body: some View {
@@ -103,8 +104,9 @@ struct DisplaySeparator: View {
     }
 }
 
-@available(macOS 13.0, *)
+#if swift(>=5.9)
 #Preview("Separator") { DisplaySeparator() }
+#endif
 
 struct LittleWhiteCircle: View {
     var body: some View {
@@ -115,8 +117,9 @@ struct LittleWhiteCircle: View {
     }
 }
 
-@available(macOS 13.0, *)
+#if swift(>=5.9)
 #Preview("WhiteCircle") { LittleWhiteCircle() }
+#endif
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ .. takes a string and converts "_" to faded "8" ..                                               ┆

@@ -18,7 +18,7 @@ func readInitializing() {
     if let initURL = Bundle.main.url(forResource: "Initialize", withExtension: "txt"){
         do {
             let initContent = try String(contentsOf: initURL, encoding: .utf8)
-            let lineArray = initContent.components(separatedBy: .newlines)
+//            let lineArray = initContent.components(separatedBy: .newlines)
 //            for line in lineArray {
 //                logger.log("INIT: \(line)")
 //            }

@@ -115,8 +115,9 @@ struct StatusView: View {
     }
 }
 
-@available(macOS 13.0, *)
+#if swift(>=5.9)
 #Preview("Status") { StatusView() }
+#endif
 
 struct StatusLight: View {
     var light: Light
@@ -141,11 +142,10 @@ struct StatusLight: View {
     }
 }
 
-@available(macOS 13.0, *)
+#if swift(>=5.9)
 #Preview { StatusLight(light: ("WORDS", .off)) }
-
-@available(macOS 13.0, *)
 #Preview { StatusLight(light: ("WORDS", .orange)) }
+#endif
 
 @MainActor
 private func back(_ input: (String, BackColor)) -> Color {

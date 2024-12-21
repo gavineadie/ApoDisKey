@@ -69,8 +69,9 @@ struct DisplayView: View {
     }
 }
 
-@available(macOS 13.0, *)
+#if swift(>=5.9)
 #Preview("Display") { DisplayView() }
+#endif
 
 /*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
   │ ROW1                                                                                             │
@@ -103,8 +104,9 @@ struct Row1: View {
     }
 }
 
-@available(macOS 13.0, *)
+#if swift(>=5.9)
 #Preview("ROW1") { Row1() }
+#endif
 
 struct Comp: View {
     var state: Display
@@ -149,16 +151,16 @@ struct Row2: View {
     }
 }
 
-@available(macOS 13.0, *)
+#if swift(>=5.9)
 #Preview("ROW2") { Row2() }
 
-@available(macOS 13.0, *)
 #Preview("ROW1+ROW2") {
     VStack {
         Row1()
         Row2()
     }
 }
+#endif
 
 struct twoDigit: View {
     var label: String
@@ -196,8 +198,9 @@ struct DisplayPlacard: View {
     }
 }
 
-@available(macOS 13.0, *)
+#if swift(>=5.9)
 #Preview("Placard") { DisplayPlacard(label: "WORD") }
+#endif
 
 /*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
   │ REGISTER                                                                                         │
@@ -220,8 +223,9 @@ struct Register: View {
     }
 }
 
-@available(macOS 13.0, *)
+#if swift(>=5.9)
 #Preview("Register") { Register(state: Display(label: "+89999", off: true)) }
+#endif
 
 struct DisplayNumbers: View {
     var value: Display
