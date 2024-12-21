@@ -101,6 +101,9 @@ struct Row1: View {
     }
 }
 
+@available(macOS 13.0, *)
+#Preview("ROW1") { Row1() }
+
 struct Comp: View {
     var state: Display
 
@@ -144,6 +147,17 @@ struct Row2: View {
     }
 }
 
+@available(macOS 13.0, *)
+#Preview("ROW2") { Row2() }
+
+@available(macOS 13.0, *)
+#Preview("ROW1+ROW2") {
+    VStack {
+        Row1()
+        Row2()
+    }
+}
+
 struct twoDigit: View {
     var label: String
     var value: Display
@@ -178,6 +192,9 @@ struct DisplayPlacard: View {
         }
     }
 }
+
+@available(macOS 13.0, *)
+#Preview("Placard") { DisplayPlacard(label: "WORD") }
 
 /*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
   │ REGISTER                                                                                         │

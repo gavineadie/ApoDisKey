@@ -32,7 +32,6 @@
 		86C4C5C02C4CE79900A4DEA1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86C4C5BF2C4CE79900A4DEA1 /* Assets.xcassets */; };
 		86C85A1B2C4F46A1002BE367 /* testLights.canned in Resources */ = {isa = PBXBuildFile; fileRef = 86C85A1A2C4F46A1002BE367 /* testLights.canned */; };
 		86CB9B5E2C45F94400968C20 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86CB9B5D2C45F94400968C20 /* Network.swift */; };
-		86D6E7222CF8343B00231FD5 /* Previews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86D6E7212CF8343B00231FD5 /* Previews.swift */; };
 		86E838922C3CF06400E7C573 /* DecorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E838912C3CF06400E7C573 /* DecorView.swift */; };
 		86ECA4DF2C47602F0025545C /* PacketSend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86ECA4DE2C47602F0025545C /* PacketSend.swift */; };
 		86ECA4E12C4760400025545C /* PacketRecv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86ECA4E02C4760400025545C /* PacketRecv.swift */; };
@@ -75,7 +74,6 @@
 		86C4C5BF2C4CE79900A4DEA1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		86C85A1A2C4F46A1002BE367 /* testLights.canned */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testLights.canned; sourceTree = "<group>"; };
 		86CB9B5D2C45F94400968C20 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
-		86D6E7212CF8343B00231FD5 /* Previews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Previews.swift; sourceTree = "<group>"; };
 		86E838912C3CF06400E7C573 /* DecorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecorView.swift; sourceTree = "<group>"; };
 		86ECA4DE2C47602F0025545C /* PacketSend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketSend.swift; sourceTree = "<group>"; };
 		86ECA4E02C4760400025545C /* PacketRecv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketRecv.swift; sourceTree = "<group>"; };
@@ -159,7 +157,6 @@
 				864BD6102C3B42DF00D4C896 /* DisplayView.swift */,
 				864BD6082C3B2B9900D4C896 /* KeyPadView.swift */,
 				86E838912C3CF06400E7C573 /* DecorView.swift */,
-				86D6E7212CF8343B00231FD5 /* Previews.swift */,
 				867D86222C489F43007CDD48 /* MODEL */,
 				86ECA4E42C4763E70025545C /* NETWORK */,
 				867EBD922C3A5348004C4DDD /* Debug.xcassets */,
@@ -307,7 +304,6 @@
 				864BD6092C3B2B9900D4C896 /* KeyPadView.swift in Sources */,
 				86E838922C3CF06400E7C573 /* DecorView.swift in Sources */,
 				86ECA4DF2C47602F0025545C /* PacketSend.swift in Sources */,
-				86D6E7222CF8343B00231FD5 /* Previews.swift in Sources */,
 				86ECA4E12C4760400025545C /* PacketRecv.swift in Sources */,
 				868B2B712CD0CAD200A70648 /* FileStuff.swift in Sources */,
 				86B26DB92C4CD3020021E594 /* Extensions.swift in Sources */,

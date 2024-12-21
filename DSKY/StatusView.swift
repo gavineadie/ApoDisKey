@@ -138,6 +138,12 @@ struct StatusLight: View {
     }
 }
 
+@available(macOS 13.0, *)
+#Preview { StatusLight(light: ("WORDS", .off)) }
+
+@available(macOS 13.0, *)
+#Preview { StatusLight(light: ("WORDS", .orange)) }
+
 @MainActor
 private func back(_ input: (String, BackColor)) -> Color {
     if model.elPowerOn {
