@@ -81,5 +81,6 @@ struct DisKeyView: View {
     }
 }
 
-@available(macOS 13.0, *)
+#if swift(>=5.9)
 #Preview("DisKey") { DisKeyView() }
+#endif

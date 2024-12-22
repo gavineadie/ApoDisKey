@@ -78,8 +78,9 @@ struct AppView: View {
     }
 }
 
-@available(macOS 13.0, *)
+#if swift(>=5.9)
 #Preview("AppView") { AppView() }
+#endif
 
 struct MonitorView: View {
 
@@ -178,5 +179,6 @@ struct MonitorView: View {
     }
 }
 
-@available(macOS 13.0, *)
+#if swift(>=5.9)
 #Preview("Monitor") { MonitorView() }
+#endif
