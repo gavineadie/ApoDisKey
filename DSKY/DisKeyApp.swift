@@ -53,16 +53,20 @@ struct DisKeyApp: App {
         WindowGroup {
             AppView()
         }
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆     .defaultSize(CGSize(width: 569, height: 656))                       available(macOS 13.0, *) ┆
-  ┆     .defaultPosition(UnitPoint(x: model.fX, y: model.fY))                                        ┆
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+#if MONTEREY
+#else
+        .defaultSize(CGSize(width: 569, height: 656))
+        .defaultPosition(UnitPoint(x: model.fX, y: model.fY))
+#endif
     }
 }
 
 struct AppView: View {
-//    let timer = Timer.publish(every: model.logTimer ? 1E1 : 1E8,
-//                              on: .main, in: .common).autoconnect()
+#if MONTEREY
+#else
+    let timer = Timer.publish(every: model.logTimer ? 1E1 : 1E8,
+                              on: .main, in: .common).autoconnect()
+#endif
 
     var body: some View {
         let scaleFactor = model.fullSize ? 1 : 0.5
@@ -71,7 +75,10 @@ struct AppView: View {
                 .frame(width: 569 * scaleFactor,
                        height: 656 * scaleFactor)        // 569 × 656 pixels
                 .scaleEffect(scaleFactor)
-//              .onReceive(timer) { date in logger.log("TEN SECONDS: \(date)") }
+#if MONTEREY
+#else
+                .onReceive(timer) { date in logger.log("TEN SECONDS: \(date)") }
+#endif
             if model.fullSize && !model.haveCmdArgs {
                 Divider()
                 MonitorView()

@@ -47,11 +47,18 @@ struct DisplayView: View {
             VStack {
                 ZStack {
                     VStack {
+#if MONTEREY
                         Spacer().frame(height: 4.0)
                         Row1(comp: model.comp, prog: model.prog)
                         Spacer().frame(height: 8.0)
                         Row2(verb: model.verb, noun: model.noun)
                         Spacer().frame(height: 0)
+#else
+                        Row1(comp: model.comp, prog: model.prog)
+                        Spacer().frame(height: 12.0)
+                        Row2(verb: model.verb, noun: model.noun)
+                        Spacer().frame(height: 12.0)
+#endif
                     }
                     VStack {
                         Spacer().frame(height: 10)
