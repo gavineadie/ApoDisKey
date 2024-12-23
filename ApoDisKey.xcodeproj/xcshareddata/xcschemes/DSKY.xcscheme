@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
    LastUpgradeVersion = "1600"
-   version = "1.8">
+   version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES"
@@ -75,7 +75,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--ip=localhost"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--port=19697"
@@ -87,7 +87,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--half-size"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--x=400"

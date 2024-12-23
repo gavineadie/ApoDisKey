@@ -15,15 +15,13 @@ let panelExSizeW: CGFloat = 222.0
 let panelExSizeH: CGFloat = 374.0
 
 let panelInset: CGFloat = 26.0
-let panelDigitSize: CGFloat = 37.0
 
 let statusWidth: CGFloat = 90.0
-let statusHeight: CGFloat = 44.0
+let statusHeight: CGFloat = 45.0
 let statusCorner: CGFloat = 6.0
 
 let backgroundColor = Color(red: 0.9, green: 0.9, blue: 0.8)
 
-let statusBorder = Color(white: 0.5)
 let statusText = Color(white: 0.0)
 
 let displayElectro = Color(red: 0.1, green: 0.8, blue: 0.1)
@@ -62,23 +60,23 @@ let zerlinaTracking: CGFloat = 4.0
 */
 
 struct PanelsView: View {
-    var interiorFill: Color = Color(white: 0.35)
+    var interiorFill: Color = Color(white: 0.6)
 
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 10)
-                .fill(Color(white: 0.25))
+                .fill(Color(white: 0.60))
                 .frame(width: panelExSizeW,
                        height: panelExSizeH)
+                .shadow(color: Color.black.opacity(0.6),
+                        radius: 1.0,
+                        x: 3.0, y: 3.0)
 
             RoundedRectangle(cornerRadius: 6)
                 .fill(interiorFill)
                 .frame(width: panelExSizeW-panelInset,
                        height: panelExSizeH-panelInset)
         }
-        .shadow(color: Color.black.opacity(0.6),
-                radius: 4.0,
-                x: 4.0, y: 4.0)
     }
 }
 

@@ -71,7 +71,7 @@ struct AppView: View {
                 .frame(width: 569 * scaleFactor,
                        height: 656 * scaleFactor)        // 569 × 656 pixels
                 .scaleEffect(scaleFactor)
-//                .onReceive(timer) { date in logger.log("TEN SECONDS: \(date)") }
+//              .onReceive(timer) { date in logger.log("TEN SECONDS: \(date)") }
             if model.fullSize && !model.haveCmdArgs {
                 Divider()
                 MonitorView()
@@ -128,7 +128,7 @@ struct MonitorView: View {
   ┆ .. make network connection                                                                       ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
             Button("Connect",
-//                   systemImage: "phone.connection",
+//                 systemImage: "phone.connection",
                    action: {
                 print("connect")
                 model.ipAddr = ipAddr

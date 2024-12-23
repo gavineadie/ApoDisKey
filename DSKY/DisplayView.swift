@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+let panelDigitSize: CGFloat = 37.0
+
 /*
             ┌───────────────────────┐
             │ ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮ │
@@ -40,7 +42,7 @@ struct DisplayView: View {
 
     var body: some View {
         ZStack {
-            PanelsView()
+            PanelsView(interiorFill: Color(white: 0.35))
 
             VStack {
                 ZStack {
