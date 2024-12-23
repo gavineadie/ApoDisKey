@@ -88,7 +88,7 @@ struct KeyView: View {
 
         Text(keyGlyph)
             .font(.custom(fontName, fixedSize: fontSize))
-            .baselineOffset(-4.0)
+            .baselineOffset(keyPadBaselineOffset)
             .foregroundColor(keyTextColor)
             .multilineTextAlignment(.center)
             .lineLimit(2)
