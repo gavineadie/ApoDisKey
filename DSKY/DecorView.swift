@@ -64,19 +64,20 @@ struct PanelsView: View {
 
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 10)
+            RoundedRectangle(cornerRadius: 10)              // outer
                 .fill(Color(white: 0.60))
                 .frame(width: panelExSizeW,
-                       height: panelExSizeH)
+                       height: panelExSizeH-2)
                 .shadow(color: Color.black.opacity(0.6),
                         radius: 1.0,
                         x: 3.0, y: 3.0)
 
-            RoundedRectangle(cornerRadius: 6)
+            RoundedRectangle(cornerRadius: 6)               // inner
                 .fill(interiorFill)
                 .frame(width: panelExSizeW-panelInset,
-                       height: panelExSizeH-panelInset)
+                       height: panelExSizeH-panelInset-2)
         }
+        .padding(.top, +4)
     }
 }
 
