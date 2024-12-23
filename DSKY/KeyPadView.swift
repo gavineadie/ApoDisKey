@@ -81,7 +81,9 @@ struct KeyView: View {
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ .. single characters are 28 points and words are 12 points                                       ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-        let fontSize: CGFloat = keyGlyph.count == 1 ? 28 : 12
+        let fontSize: CGFloat = model.fullSize ?
+                                    (keyGlyph.count == 1 ? 24.2 : 11.1) :
+                                    (keyGlyph.count == 1 ? 32.2 : 15.1)
         let fontName = keyGlyph.count == 1 ? "Gorton-Normal-120" : "Gorton-Normal-180"
 
         Text(keyGlyph)
@@ -185,7 +187,7 @@ let keyDict: [UInt16:String] = [
     26: "+",
     30: "CLR",
     99: "PRO",
-    25: "KEY REL",
+    25: "KEY\nREL",
     28: "ENTR",
     18: "RSET"
 ]

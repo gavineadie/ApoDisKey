@@ -9,10 +9,10 @@ import SwiftUI
 
 /*
             ┌───────────────────────┐
-            │ ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮ │
+            │ ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮<--- exterior color (edge)
             │ ┆ UPLINK ┆ ┆  TEMP  ┆ │
             │ ╰╌╌╌╌╌╌╌╌╯ ╰╌╌╌╌╌╌╌╌╯ │
-            │ ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮ │
+            │ ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮ │   interior color: Color(white: 0.6)
             │ ┆ NO ATT ┆ ┆ GIMBAL ┆ │
             │ ╰╌╌╌╌╌╌╌╌╯ ╰╌╌╌╌╌╌╌╌╯ │
             │ ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮ │
@@ -36,74 +36,74 @@ import SwiftUI
 struct StatusView: View {
     var body: some View {
         ZStack {
-            PanelsView()
+            PanelsView(interiorFill: Color(white: 0.6))
 
             if #available(macOS 13.0, *) {
                 Grid {
                     GridRow {
-                        StatusLight(light: model.statusLights[11]!)
-                        StatusLight(light: model.statusLights[21]!)
+                        AnnunciatorLamp(light: model.statusLights[11]!)
+                        AnnunciatorLamp(light: model.statusLights[21]!)
                     }
                     
                     GridRow {
-                        StatusLight(light: model.statusLights[12]!)
-                        StatusLight(light: model.statusLights[22]!)
+                        AnnunciatorLamp(light: model.statusLights[12]!)
+                        AnnunciatorLamp(light: model.statusLights[22]!)
                     }
                     
                     GridRow {
-                        StatusLight(light: model.statusLights[13]!)
-                        StatusLight(light: model.statusLights[23]!)
+                        AnnunciatorLamp(light: model.statusLights[13]!)
+                        AnnunciatorLamp(light: model.statusLights[23]!)
                     }
                     GridRow {
-                        StatusLight(light: model.statusLights[14]!)
-                        StatusLight(light: model.statusLights[24]!)
+                        AnnunciatorLamp(light: model.statusLights[14]!)
+                        AnnunciatorLamp(light: model.statusLights[24]!)
                     }
                     GridRow {
-                        StatusLight(light: model.statusLights[15]!)
-                        StatusLight(light: model.statusLights[25]!)
+                        AnnunciatorLamp(light: model.statusLights[15]!)
+                        AnnunciatorLamp(light: model.statusLights[25]!)
                     }
                     GridRow {
-                        StatusLight(light: model.statusLights[16]!)
-                        StatusLight(light: model.statusLights[26]!)
+                        AnnunciatorLamp(light: model.statusLights[16]!)
+                        AnnunciatorLamp(light: model.statusLights[26]!)
                     }
                     
                     GridRow {
-                        StatusLight(light: model.statusLights[17]!)
-                        StatusLight(light: model.statusLights[27]!)
+                        AnnunciatorLamp(light: model.statusLights[17]!)
+                        AnnunciatorLamp(light: model.statusLights[27]!)
                     }
                 }
             } else {
                 VStack {
                     HStack {
-                        StatusLight(light: model.statusLights[11]!)
-                        StatusLight(light: model.statusLights[21]!)
+                        AnnunciatorLamp(light: model.statusLights[11]!)
+                        AnnunciatorLamp(light: model.statusLights[21]!)
                     }
 
                     HStack {
-                        StatusLight(light: model.statusLights[12]!)
-                        StatusLight(light: model.statusLights[22]!)
+                        AnnunciatorLamp(light: model.statusLights[12]!)
+                        AnnunciatorLamp(light: model.statusLights[22]!)
                     }
 
                     HStack {
-                        StatusLight(light: model.statusLights[13]!)
-                        StatusLight(light: model.statusLights[23]!)
+                        AnnunciatorLamp(light: model.statusLights[13]!)
+                        AnnunciatorLamp(light: model.statusLights[23]!)
                     }
                     HStack {
-                        StatusLight(light: model.statusLights[14]!)
-                        StatusLight(light: model.statusLights[24]!)
+                        AnnunciatorLamp(light: model.statusLights[14]!)
+                        AnnunciatorLamp(light: model.statusLights[24]!)
                     }
                     HStack {
-                        StatusLight(light: model.statusLights[15]!)
-                        StatusLight(light: model.statusLights[25]!)
+                        AnnunciatorLamp(light: model.statusLights[15]!)
+                        AnnunciatorLamp(light: model.statusLights[25]!)
                     }
                     HStack {
-                        StatusLight(light: model.statusLights[16]!)
-                        StatusLight(light: model.statusLights[26]!)
+                        AnnunciatorLamp(light: model.statusLights[16]!)
+                        AnnunciatorLamp(light: model.statusLights[26]!)
                     }
 
                     HStack {
-                        StatusLight(light: model.statusLights[17]!)
-                        StatusLight(light: model.statusLights[27]!)
+                        AnnunciatorLamp(light: model.statusLights[17]!)
+                        AnnunciatorLamp(light: model.statusLights[27]!)
                     }
                 }
             }
@@ -116,20 +116,33 @@ struct StatusView: View {
 #Preview("Status") { StatusView() }
 #endif
 
-struct StatusLight: View {
+/*
+            ┌───────────────────────┐
+            ┆           <-------------- interior color: Color(white: 0.6)
+            │ ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮ │
+            │ ┆  STBY  ┆ ┆  PROG  ┆<--- border color: Color(white: 0.5)
+            │ ╰╌╌╌╌╌╌╌╌╯ ╰╌╌╌╌╌╌╌╌╯ │
+            │ ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮ │
+            │ ┆KEY REL ┆ ┆    <-------- lamp color OFF: Color(white: 0.55)
+            │ ╰╌╌╌╌╌╌╌╌╯ ╰╌╌╌╌╌╌╌╌╯ │
+            ┆                       ┆
+            └───────────────────────┘
+*/
+
+struct AnnunciatorLamp: View {
     var light: Light
 
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: statusCorner)
                 .fill(back(light))
-                .border(statusBorder, width: 1)
-                .frame(width: statusWidth,
-                       height: statusHeight+2.0)
+                .border(Color(white: 0.5), width: 1.5)
+                .frame(width: statusWidth, height: statusHeight)
+                .padding(.vertical, 1)
+                .padding(.horizontal,+2)
 
             Text(light.0)
-                .font(.custom("Gorton-Normal-180",
-                              fixedSize: 12))
+                .font(.custom("Gorton-Normal-180", fixedSize: 12.5))
                 .baselineOffset(-2.0)
                 .foregroundColor(light.1 == .off ? .black : statusText)
                 .multilineTextAlignment(.center)
@@ -140,8 +153,9 @@ struct StatusLight: View {
 }
 
 #if swift(>=5.9)
-#Preview { StatusLight(light: ("WORDS", .off)) }
-#Preview { StatusLight(light: ("WORDS", .orange)) }
+#Preview("OFF") { AnnunciatorLamp(light: ("WORDS", .off)) }
+#Preview("YELLOW") { AnnunciatorLamp(light: ("WORDS", .orange)) }
+#Preview("WHITE") { AnnunciatorLamp(light: ("WORDS", .white)) }
 #endif
 
 @MainActor
@@ -150,6 +164,8 @@ private func back(_ input: (String, BackColor)) -> Color {
         switch input.1 {
             case .on:
                 return .white
+            case .off:
+                return Color(white: 0.55)
             case .white:
                 return .white
             case .green:
@@ -160,8 +176,6 @@ private func back(_ input: (String, BackColor)) -> Color {
                 return .orange
             case .red:
                 return .red
-            default:
-                return .gray
         }
     } else {
         return .gray
