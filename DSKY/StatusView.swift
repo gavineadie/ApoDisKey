@@ -138,7 +138,11 @@ struct AnnunciatorLamp: View {
                 .fill(back(light))
                 .border(Color(white: 0.5), width: 1.5)
                 .frame(width: statusWidth, height: statusHeight)
-                .padding(.vertical, +1)
+#if MONTEREY
+                .padding(.vertical, -0.75)
+#else
+                .padding(.vertical, +1.0)
+#endif
                 .padding(.horizontal, +2)
 
             Text(light.0)

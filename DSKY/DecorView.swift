@@ -7,10 +7,6 @@
 
 import SwiftUI
 
-let keyPadSize: CGFloat = 73.0
-let keyPadding: CGFloat = -2.0
-let keyCorner: CGFloat = 3.0
-
 // panel dimensions
 
 let panelExSizeW: CGFloat = 222.0
@@ -21,6 +17,8 @@ let panelExSizeH: CGFloat = 374.0
 #endif
 let panelInset: CGFloat = 26.0
 
+// annunciator lamp panel dimensions
+
 #if MONTEREY
 let statusWidth: CGFloat = 90.0 - 2.0
 let statusHeight: CGFloat = 45.0 - 1.5
@@ -30,9 +28,9 @@ let statusHeight: CGFloat = 45.0
 #endif
 let statusCorner: CGFloat = 6.0
 
-let backgroundColor = Color(red: 0.9, green: 0.9, blue: 0.8)
-
 let statusText = Color(white: 0.0)
+
+// electro-luminescent display panel dimensions
 
 let displayElectro = Color(red: 0.1, green: 0.8, blue: 0.1)
 
@@ -47,6 +45,12 @@ let keyPadBaselineOffset = -4.0
 
 let zerlinaFixedSize: CGFloat = 46.0
 let zerlinaTracking: CGFloat = 4.0
+
+// keypad dimensions
+
+let keyPadSize: CGFloat = 73.0
+let keyPadding: CGFloat = -2.0
+let keyCorner: CGFloat = 3.0
 
 /*
             ╭───────────────────────╮
@@ -93,6 +97,9 @@ struct PanelsView: View {
                 .frame(width: panelExSizeW-panelInset,
                        height: panelExSizeH-panelInset)
         }
+#if MONTEREY
+        .padding(.top, +4)
+#endif
     }
 }
 

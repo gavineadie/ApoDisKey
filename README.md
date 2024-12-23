@@ -1,6 +1,6 @@
 ## ApoDisKey
 
-<p align="center"> <img src="https://ramsaycons.com/pix/macOS-DSKY-EC124A.png"
+<p align="center"> <img src="https://ramsaycons.com/pix/macOS-DSKY-EC234A.png"
 width="600" /> </p>
 
 ### Context
