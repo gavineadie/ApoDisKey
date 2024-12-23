@@ -5,6 +5,9 @@
 //  Created by Gavin Eadie on 7/7/24.
 //
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable switch_case_alignment
+
 import SwiftUI
 
 /*
@@ -44,12 +47,10 @@ struct StatusView: View {
                         AnnunciatorLamp(light: model.statusLights[11]!)
                         AnnunciatorLamp(light: model.statusLights[21]!)
                     }
-                    
                     GridRow {
                         AnnunciatorLamp(light: model.statusLights[12]!)
                         AnnunciatorLamp(light: model.statusLights[22]!)
                     }
-                    
                     GridRow {
                         AnnunciatorLamp(light: model.statusLights[13]!)
                         AnnunciatorLamp(light: model.statusLights[23]!)
@@ -66,7 +67,6 @@ struct StatusView: View {
                         AnnunciatorLamp(light: model.statusLights[16]!)
                         AnnunciatorLamp(light: model.statusLights[26]!)
                     }
-                    
                     GridRow {
                         AnnunciatorLamp(light: model.statusLights[17]!)
                         AnnunciatorLamp(light: model.statusLights[27]!)

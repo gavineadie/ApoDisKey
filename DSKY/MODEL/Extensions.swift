@@ -5,6 +5,14 @@
 //  Created by Gavin Eadie on Jul21/24.
 //
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable identifier_name
+// swiftlint:disable colon
+// swiftlint:disable comma
+// swiftlint:disable switch_case_alignment
+// swiftlint:disable vertical_whitespace
+// swiftlint:disable file_length
+
 import Foundation
 
 let bit1:  UInt16 = 0b0000_0000_0000_0001
@@ -64,19 +72,19 @@ public func plu_min(_ pm: (Bool, Bool)) -> String {
 
 
 func prettyPrint(_ data: Data) {
-    logger.log("\(ZeroPadByte(data[0])) \(ZeroPadByte(data[1])) \(ZeroPadByte(data[2])) \(ZeroPadByte(data[3]))")
+    logger.log("\(zeroPadByte(data[0])) \(zeroPadByte(data[1])) \(zeroPadByte(data[2])) \(zeroPadByte(data[3]))")
 }
 
 func prettyString(_ data: Data) -> String {
-    "\(ZeroPadByte(data[0])) \(ZeroPadByte(data[1])) \(ZeroPadByte(data[2])) \(ZeroPadByte(data[3]))"
+    "\(zeroPadByte(data[0])) \(zeroPadByte(data[1])) \(zeroPadByte(data[2])) \(zeroPadByte(data[3]))"
 }
 
 
-private func ZeroPadByte(_ code: UInt8, _ length: Int = 8) -> String {
+private func zeroPadByte(_ code: UInt8, _ length: Int = 8) -> String {
     String(("000000000" + String(UInt16(code), radix: 2)).suffix(length))
 }
 
-func ZeroPadWord(_ code: UInt16, to length: Int = 15) -> String {
+func zeroPadWord(_ code: UInt16, to length: Int = 15) -> String {
     String(("0000000000000000" + String(UInt16(code), radix: 2)).suffix(length))
 }
 
@@ -118,7 +126,7 @@ let ch010Labs = [" ??? ",
 
 @available(macOS 13.0, *)
 func prettyCh010(_ code: UInt16) -> String {
-	let bitArray = ZeroPadWord(code, to: 10).split(separator: "")
+	let bitArray = zeroPadWord(code, to: 10).split(separator: "")
 	var catString = ""
 
 	for index in 0..<bitArray.count {
@@ -152,7 +160,7 @@ let ch011Labs = [" ??? ",    // b8
 
 @available(macOS 13.0, *)
 func prettyCh011(_ code: UInt16) -> String {
-    let bitArray = ZeroPadWord(code, to: 8).split(separator: "")
+    let bitArray = zeroPadWord(code, to: 8).split(separator: "")
     var catString = "          "
 
     for index in 0..<bitArray.count {
@@ -164,7 +172,7 @@ func prettyCh011(_ code: UInt16) -> String {
 
 @available(macOS 13.0, *)
 func prettyCh032(_ code: UInt16) -> String {
-    let bitArray = ZeroPadWord(code).split(separator: "")
+    let bitArray = zeroPadWord(code).split(separator: "")
     var catString = ""
 
     for index in 0..<bitArray.count {
@@ -200,7 +208,7 @@ let ch163Labs = [" EL↓ ",    // b10
 
 @available(macOS 13.0, *)
 func prettyCh163(_ code: UInt16) -> String {
-    let bitArray = ZeroPadWord(code, to: 10).split(separator: "")
+    let bitArray = zeroPadWord(code, to: 10).split(separator: "")
     var catString = (bitArray[0] == "1") ? " EL↓ " : " EL↑ "
 
     for index in 1..<bitArray.count {
@@ -258,7 +266,7 @@ extension SwiftUI.View {
     }
 }
 
-fileprivate struct ClickThroughBackdrop<Content: SwiftUI.View>: NSViewRepresentable {
+private struct ClickThroughBackdrop<Content: SwiftUI.View>: NSViewRepresentable {
     final class Backdrop: NSHostingView<Content> {
         override func acceptsFirstMouse(for event: NSEvent?) -> Bool {
             return true
@@ -306,27 +314,21 @@ func extractOptions() {
             }
 
             model.elPowerOn = true
-        }
-        else if arg.hasPrefix("--ip=")  {
+        } else if arg.hasPrefix("--ip=") {
             arg.removeFirst(5)
             ipAddr = arg
-        }
-        else if arg.hasPrefix("--port=")  {
+        } else if arg.hasPrefix("--port=") {
             arg.removeFirst(7)
             ipPort = UInt16(arg)!
-        }
-        else if arg.hasPrefix("--half-size")  {
+        } else if arg.hasPrefix("--half-size") {
             model.fullSize = false
-        }
-        else if arg.hasPrefix("--x=")  {
+        } else if arg.hasPrefix("--x=") {
             arg.removeFirst(4)
             camArgsOffset.x = CGFloat(Float(Int(arg) ?? -999))
-        }
-        else if arg.hasPrefix("--y=")  {
+        } else if arg.hasPrefix("--y=") {
             arg.removeFirst(4)
             camArgsOffset.y = CGFloat(Float(Int(arg) ?? -999))
-        }
-        else if arg.hasPrefix("--log-timer")  {
+        } else if arg.hasPrefix("--log-timer") {
             model.logTimer = true
         }
 

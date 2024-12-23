@@ -5,10 +5,13 @@
 //  Created by Gavin Eadie on 7/15/24.
 //
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable switch_case_alignment
+
 import Foundation
 @preconcurrency import Network
 
-struct Network : Sendable{
+struct Network: Sendable {
 
     let connection: NWConnection
     let didStopCallback: @Sendable (Error?) -> Void
@@ -67,7 +70,7 @@ struct Network : Sendable{
 }
 
 extension NWConnection {
-    
+
     func rawSend(data: Data?) async throws {
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
             send(content: data, completion: .contentProcessed { error in
@@ -79,7 +82,7 @@ extension NWConnection {
             })
         }
     }
-    
+
     func rawReceive(length: Int) async throws -> Data? {
         try await withCheckedThrowingContinuation { continuation in
             receive(minimumIncompleteLength: length,

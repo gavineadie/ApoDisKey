@@ -5,6 +5,11 @@
 //  Created by Gavin Eadie on 7/16/24.
 //
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable identifier_name
+// swiftlint:disable switch_case_alignment
+// swiftlint:disable large_tuple
+
 import Foundation
 
 @MainActor
@@ -35,7 +40,7 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ tf: Bool = true) {
         case 0o011:                 // [OUTPUT] flags for indicator lamps etc
             if value != 0x2000 && value != 0x2002 && value != 0x2200 && value != 0x2202 {
                 logger.log("""
-                »»»    DSKY 011:    \(ZeroPadWord(value)) BITS (15)      \
+                »»»    DSKY 011:    \(zeroPadWord(value)) BITS (15)      \
                 :: \(prettyCh011(value))
                 """)
             }
@@ -57,7 +62,7 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ tf: Bool = true) {
 
         case 0o015:                 // [INPUT] Used for inputting keystrokes from the DSKY. ..
             logger.log("""
-                »»»    DSKY 015:           \(ZeroPadWord(value, to: 8)) BITS (8)       \
+                »»»    DSKY 015:           \(zeroPadWord(value, to: 8)) BITS (8)       \
                 :: \(value) = "\(keyText(value))"
                 """)
 
@@ -98,7 +103,7 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ tf: Bool = true) {
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
         case 0o163:
             logger.log("""
-                »»»    DSKY 163:         \(ZeroPadWord(value, to: 10)) BITS (10)      \
+                »»»    DSKY 163:         \(zeroPadWord(value, to: 10)) BITS (10)      \
                 :: \(prettyCh163(value))
                 """)
 
@@ -113,13 +118,13 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ tf: Bool = true) {
             model.elPowerOn = value & bit10 == 0                                // Bit 10: panel power
 
         case 0o165:
-            logger.log("»»» DSKY165 \(ZeroPadWord(value)) TIME1")
+            logger.log("»»» DSKY165 \(zeroPadWord(value)) TIME1")
 
         case 0o164, 0o166...0o177:
-            logger.log("»»» fiction \(channel, format: .octal(minDigits: 3)): \(ZeroPadWord(value))")
+            logger.log("»»» fiction \(channel, format: .octal(minDigits: 3)): \(zeroPadWord(value))")
 
         default:
-            logger.log("??? channel \(channel, format: .octal(minDigits: 3)): \(ZeroPadWord(value))")
+            logger.log("??? channel \(channel, format: .octal(minDigits: 3)): \(zeroPadWord(value))")
 
     }
 }
@@ -145,8 +150,8 @@ func dskyInterpretation(_ code: UInt16) {
   ┆          Bit 9 lights the "PROG" indicator.                                                      ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
             logger.log("""
-                ***    DSKY 010: \(ZeroPadWord(code).prefix(5)) \
-                \(ZeroPadWord(code).dropFirst(5)) \
+                ***    DSKY 010: \(zeroPadWord(code).prefix(5)) \
+                \(zeroPadWord(code).dropFirst(5)) \
                 LIGHTS (10)      :: \(prettyCh010(code & 0b0000000_111111111))
                 """)
 
@@ -181,10 +186,10 @@ func dskyInterpretation(_ code: UInt16) {
             let dStr = digitsDict[Int(dInt)] ?? "?"
 
             logger.log("""
-                »»»    DSKY 010: \(ZeroPadWord(code).prefix(4)) \
-                \(ZeroPadWord(code).prefix(5).suffix(1)) \
-                \(ZeroPadWord(code).dropFirst(5).dropLast(5)) \
-                \(ZeroPadWord(code).dropFirst(10)) \
+                »»»    DSKY 010: \(zeroPadWord(code).prefix(4)) \
+                \(zeroPadWord(code).prefix(5).suffix(1)) \
+                \(zeroPadWord(code).dropFirst(5).dropLast(5)) \
+                \(zeroPadWord(code).dropFirst(10)) \
                 (\(aStr)) ±\(bBit ? "↑" : "↓") "\(cStr)\(dStr)\"
                 """)
 
@@ -193,7 +198,7 @@ func dskyInterpretation(_ code: UInt16) {
                     model.noun = (cStr + dStr, true)
                 case 10:
                     model.verb = (cStr + dStr, true)
-                case 11:        
+                case 11:
                     model.prog = (cStr + dStr, true)
                 default:
                     break
@@ -339,30 +344,30 @@ func dskyInterpretation(_ code: UInt16) {
 /// A 4-byte packet representing yaAGC channel i/o
 /// can be converted to an integer channel-number and value.
 func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
-    
+
     guard data.count == 4 else {
         logger.log("\(#function): not four bytes")
         return nil
     }
-    
+
     let byte = [UInt8](data)
-    
-    if ((byte[0] == 0xff) &&
-        (byte[1] == 0xff) &&
-        (byte[2] == 0xff) &&
-        (byte[3] == 0xff)) { return nil }
-    
+
+    if (byte[0] == 0xff) &&
+       (byte[1] == 0xff) &&
+       (byte[2] == 0xff) &&
+       (byte[3] == 0xff) { return nil }
+
     if (byte[0] / 64) != 0 || (byte[1] / 64) != 1 || (byte[2] / 64) != 2 || (byte[3] / 64) != 3 {
         logger.log("\(#function): prefix bits wrong [\(prettyString(data))]")
         return nil
     }
-    
+
     let channel: UInt16 = UInt16(byte[0] & UInt8(0b00111111)) << 3 |
     UInt16(byte[1] & UInt8(0b00111000)) >> 3
-    
+
     let value: UInt16 =   UInt16(byte[1] & UInt8(0b00000111)) << 12 |
     UInt16(byte[2] & UInt8(0b00111111)) << 6 |
     UInt16(byte[3] & UInt8(0b00111111))
-    
+
     return (channel, value, (byte[0] & 0b00100000) > 0)
 }

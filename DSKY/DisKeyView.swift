@@ -65,8 +65,6 @@ struct DisKeyView: View {
             }
             .padding(.top, 5.0)
         }
-#if MONTEREY
-#else
         .dropDestination(for: URL.self) { urls, _ in
             if let url = urls.first {
                 readCanned(path: url.path())
@@ -75,7 +73,6 @@ struct DisKeyView: View {
                 return false
             }
         }
-#endif
 
 #if os(iOS)
         .scaleEffect(min(1.2, UIScreen.main.bounds.width/660.0))

@@ -28,7 +28,7 @@ struct DisKeyApp: App {
 
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 #endif
-    
+
     init() {
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -44,7 +44,7 @@ struct DisKeyApp: App {
 
         readInitializing()
     }
-    
+
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ do other things as the ContentView runs ..                                                       ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
@@ -53,11 +53,8 @@ struct DisKeyApp: App {
         WindowGroup {
             AppView()
         }
-#if MONTEREY
-#else
         .defaultSize(CGSize(width: 569, height: 656))
         .defaultPosition(UnitPoint(x: model.fX, y: model.fY))
-#endif
     }
 }
 
@@ -75,10 +72,7 @@ struct AppView: View {
                 .frame(width: 569 * scaleFactor,
                        height: 656 * scaleFactor)        // 569 × 656 pixels
                 .scaleEffect(scaleFactor)
-#if MONTEREY
-#else
                 .onReceive(timer) { date in logger.log("TEN SECONDS: \(date)") }
-#endif
             if model.fullSize && !model.haveCmdArgs {
                 Divider()
                 MonitorView()
@@ -174,7 +168,7 @@ struct MonitorView: View {
                     do {
                         try await model.network.connection
                             .rawSend(data: formIoPacket(0o0232, bit14))
-                        logger.log("«««    DSKY 032:    \(ZeroPadWord(bit14)) BITS (15)")
+                        logger.log("«««    DSKY 032:    \(zeroPadWord(bit14)) BITS (15)")
                     } catch {
                         print(error.localizedDescription)
                     }

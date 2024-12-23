@@ -5,6 +5,15 @@
 //  Created by Gavin Eadie on 7/15/24.
 //
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable identifier_name
+// swiftlint:disable switch_case_alignment
+// swiftlint:disable vertical_whitespace
+// swiftlint:disable large_tuple
+// swiftlint:disable unused_optional_binding
+// swiftlint:disable line_length
+// swiftlint:disable comma
+
 import Foundation
 import Network
 import TCPLib
@@ -34,7 +43,7 @@ struct Network {
                 client.connection.connectionDidEnd()
             } else if let error = error {
                 client.connection.connectionDidFail(error: error)
-            }  else {
+            } else {
                 setupReceive()
             }
         }

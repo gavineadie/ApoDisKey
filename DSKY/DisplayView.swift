@@ -5,6 +5,10 @@
 //  Created by Gavin Eadie on 7/7/24.
 //
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable switch_case_alignment
+// swiftlint:disable vertical_whitespace
+
 import SwiftUI
 
 let panelDigitSize: CGFloat = 37.0
@@ -106,7 +110,7 @@ struct Row1: View {
     var body: some View {
         HStack(alignment: .top) {
             Comp(state: comp)
-            twoDigit(label: "PROG", value: prog)
+            TwoDigit(label: "PROG", value: prog)
         }
         .padding(.bottom, 6.0)
     }
@@ -152,8 +156,8 @@ struct Row2: View {
 
     var body: some View {
         HStack {
-            twoDigit(label: "VERB", value: verb)
-            twoDigit(label: "NOUN", value: noun)
+            TwoDigit(label: "VERB", value: verb)
+            TwoDigit(label: "NOUN", value: noun)
         }
         .padding(.bottom, 6.0)
     }
@@ -170,7 +174,7 @@ struct Row2: View {
 }
 #endif
 
-struct twoDigit: View {
+struct TwoDigit: View {
     var label: String
     var value: Display
 

@@ -15,7 +15,7 @@ import Foundation
   ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛*/
 
 func readInitializing() {
-    if let initURL = Bundle.main.url(forResource: "Initialize", withExtension: "txt"){
+    if let initURL = Bundle.main.url(forResource: "Initialize", withExtension: "txt") {
         do {
             let initContent = try String(contentsOf: initURL, encoding: .utf8)
 //            let lineArray = initContent.components(separatedBy: .newlines)
@@ -68,8 +68,8 @@ func readCanned(path: String) {
                     logger.log("---- \(words[1]) + \(words[2])")
                     if let channel = UInt16(words[1], radix: 8),
                        let command = words[2].count > 5 ?
-                                    UInt16(words[2].filter{ !($0 == "_") }, radix: 2) :
-                                    UInt16(words[2].filter{ !($0 == "_") }, radix: 8) {
+                                    UInt16(words[2].filter { !($0 == "_") }, radix: 2) :
+                                    UInt16(words[2].filter { !($0 == "_") }, radix: 8) {
                         DispatchQueue.main.async {
                             channelAction(channel, command)
                         }
