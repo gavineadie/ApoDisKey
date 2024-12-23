@@ -124,7 +124,7 @@ struct KeyView: View {
             }
             .simultaneousGesture(
                 DragGesture(minimumDistance: 0)
-                    .onChanged ({ _ in
+                    .onChanged( { _ in
                         if keyCode == 99 {
                             let value: UInt16 = 0b0000_0000_0000_0000   // bit 14 - zero
 
@@ -141,7 +141,7 @@ struct KeyView: View {
                             }
                         }
                     })
-                    .onEnded ({ _ in
+                    .onEnded( { _ in
                         if keyCode == 99 {
                             let value: UInt16 = 0b0010_0000_0000_0000   // bit 14 - one
 
@@ -170,7 +170,7 @@ struct KeyView: View {
 
 func keyText(_ code: UInt16) -> String { keyDict[code] ?? "ERROR" }
 
-let keyDict: [UInt16:String] = [
+let keyDict: [UInt16: String] = [
     17: "VERB",
     31: "NOUN",
     16: "0",

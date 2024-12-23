@@ -5,6 +5,9 @@
 //  Created by Gavin Eadie on 7/9/24.
 //
 
+// swiftlint:disable blanket_disable_command
+// swiftlint:disable switch_case_alignment
+
 import SwiftUI
 
 // panel dimensions

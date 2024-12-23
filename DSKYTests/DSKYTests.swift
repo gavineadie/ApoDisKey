@@ -20,14 +20,6 @@ final class DSKYTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
-
 // takes about 3½ minutes ..
     func testParseIO() throws {
 
@@ -37,11 +29,11 @@ final class DSKYTests: XCTestCase {
             for value in 0...0x7fff {
                 let packet = formIoPacket(UInt16(channel), UInt16(value))
                 triple = parseIoPacket(packet)!
-                if (triple.1 != value) {
+                if triple.1 != value {
                     print("stop")
                 }
             }
-            if (triple.0 != channel) {
+            if triple.0 != channel {
                 print("stop")
             }
         }
@@ -49,7 +41,7 @@ final class DSKYTests: XCTestCase {
         for value in 0...0x7fff {
             let packet = formIoPacket(UInt16(8), UInt16(value))
             triple = parseIoPacket(packet)!
-            if (triple.1 != value) {
+            if triple.1 != value {
                 print("stop")
             }
         }

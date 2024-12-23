@@ -34,7 +34,7 @@ struct Network {
                 client.connection.connectionDidEnd()
             } else if let error = error {
                 client.connection.connectionDidFail(error: error)
-            }  else {
+            } else {
                 setupReceive()
             }
         }

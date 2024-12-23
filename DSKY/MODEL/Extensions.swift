@@ -258,7 +258,7 @@ extension SwiftUI.View {
     }
 }
 
-fileprivate struct ClickThroughBackdrop<Content: SwiftUI.View>: NSViewRepresentable {
+private struct ClickThroughBackdrop<Content: SwiftUI.View>: NSViewRepresentable {
     final class Backdrop: NSHostingView<Content> {
         override func acceptsFirstMouse(for event: NSEvent?) -> Bool {
             return true
@@ -305,27 +305,21 @@ func extractOptions() {
                 model.statusLights = DisKeyModel.LM0
             }
             model.elPowerOn = true
-        }
-        else if arg.hasPrefix("--ip=")  {
+        } else if arg.hasPrefix("--ip=") {
             arg.removeFirst(5)
             ipAddr = arg
-        }
-        else if arg.hasPrefix("--port=")  {
+        } else if arg.hasPrefix("--port=") {
             arg.removeFirst(7)
             ipPort = UInt16(arg)!
-        }
-        else if arg.hasPrefix("--half-size")  {
+        } else if arg.hasPrefix("--half-size") {
             model.fullSize = false
-        }
-        else if arg.hasPrefix("--x=")  {
+        } else if arg.hasPrefix("--x=") {
             arg.removeFirst(4)
             camArgsOffset.x = CGFloat(Float(Int(arg) ?? -999))
-        }
-        else if arg.hasPrefix("--y=")  {
+        } else if arg.hasPrefix("--y=") {
             arg.removeFirst(4)
             camArgsOffset.y = CGFloat(Float(Int(arg) ?? -999))
-        }
-        else if arg.hasPrefix("--log-timer")  {
+        } else if arg.hasPrefix("--log-timer") {
             model.logTimer = true
         }
 

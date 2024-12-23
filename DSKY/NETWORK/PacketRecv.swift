@@ -348,10 +348,10 @@ func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
     
     let byte = [UInt8](data)
     
-    if ((byte[0] == 0xff) &&
-        (byte[1] == 0xff) &&
-        (byte[2] == 0xff) &&
-        (byte[3] == 0xff)) { return nil }
+    if (byte[0] == 0xff) &&
+       (byte[1] == 0xff) &&
+       (byte[2] == 0xff) &&
+       (byte[3] == 0xff) { return nil }
     
     if (byte[0] / 64) != 0 || (byte[1] / 64) != 1 || (byte[2] / 64) != 2 || (byte[3] / 64) != 3 {
         logger.log("\(#function): prefix bits wrong [\(prettyString(data))]")

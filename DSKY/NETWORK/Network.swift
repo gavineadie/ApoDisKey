@@ -8,7 +8,7 @@
 import Foundation
 @preconcurrency import Network
 
-struct Network : Sendable{
+struct Network: Sendable {
 
     let connection: NWConnection
     let didStopCallback: @Sendable (Error?) -> Void
