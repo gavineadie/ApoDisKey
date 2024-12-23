@@ -11,13 +11,23 @@ let keyPadSize: CGFloat = 73.0
 let keyPadding: CGFloat = -2.0
 let keyCorner: CGFloat = 3.0
 
-let panelExSizeW: CGFloat = 222.0
-let panelExSizeH: CGFloat = 374.0
+// panel dimensions
 
+let panelExSizeW: CGFloat = 222.0
+#if MONTEREY
+let panelExSizeH: CGFloat = 374.0 - 2.0
+#else
+let panelExSizeH: CGFloat = 374.0
+#endif
 let panelInset: CGFloat = 26.0
 
+#if MONTEREY
+let statusWidth: CGFloat = 90.0 - 2.0
+let statusHeight: CGFloat = 45.0 - 1.5
+#else
 let statusWidth: CGFloat = 90.0
 let statusHeight: CGFloat = 45.0
+#endif
 let statusCorner: CGFloat = 6.0
 
 let backgroundColor = Color(red: 0.9, green: 0.9, blue: 0.8)
@@ -28,6 +38,12 @@ let displayElectro = Color(red: 0.1, green: 0.8, blue: 0.1)
 
 let keyTextColor = Color(white: 0.9)
 let keyPadColor = Color(white: 0.25)
+
+#if MONTEREY
+let keyPadBaselineOffset = -2.0
+#else
+let keyPadBaselineOffset = +4.0
+#endif
 
 let zerlinaFixedSize: CGFloat = 46.0
 let zerlinaTracking: CGFloat = 4.0
@@ -67,7 +83,7 @@ struct PanelsView: View {
             RoundedRectangle(cornerRadius: 10)              // outer
                 .fill(Color(white: 0.60))
                 .frame(width: panelExSizeW,
-                       height: panelExSizeH-2)
+                       height: panelExSizeH)
                 .shadow(color: Color.black.opacity(0.6),
                         radius: 1.0,
                         x: 3.0, y: 3.0)
@@ -75,7 +91,7 @@ struct PanelsView: View {
             RoundedRectangle(cornerRadius: 6)               // inner
                 .fill(interiorFill)
                 .frame(width: panelExSizeW-panelInset,
-                       height: panelExSizeH-panelInset-2)
+                       height: panelExSizeH-panelInset)
         }
         .padding(.top, +4)
     }

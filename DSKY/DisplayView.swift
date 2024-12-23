@@ -74,12 +74,6 @@ struct DisplayView: View {
 
 #if swift(>=5.9)
 #Preview("Display") { DisplayView() }
-#else
-struct DisplayView_Previews: PreviewProvider {
-    static var previews: some View {
-        DisplayView()
-    }
-}
 #endif
 
 /*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
