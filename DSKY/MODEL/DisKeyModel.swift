@@ -76,7 +76,7 @@ class DisKeyModel: ObservableObject {
     @Published public var noun: Display = ("__", false)
 
     @Published public var reg1: Display = (" _____", true)
-    @Published public var reg2: Display = (" _____", false)  // TODO: what does "false" do here?
+    @Published public var reg2: Display = (" _____", false)  // what does "false" do here?
     @Published public var reg3: Display = (" _____", true)
 
     @Published public var r1Sign = (false, false)            // blank prefix (± or blank)
