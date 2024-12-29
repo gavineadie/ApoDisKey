@@ -53,8 +53,10 @@ struct DisKeyApp: App {
         WindowGroup {
             AppView()
         }
+#if os(macOS)
         .defaultSize(CGSize(width: 569, height: 656))
         .defaultPosition(UnitPoint(x: model.fX, y: model.fY))
+#endif
     }
 }
 

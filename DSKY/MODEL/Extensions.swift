@@ -299,8 +299,10 @@ func extractOptions() {
     var ipAddr: String = ""
     var ipPort: UInt16 = 0
 
+#if os(macOS)
     let screenSize: CGSize = NSScreen.main!.frame.size
     var camArgsOffset = CGPoint(x: -999.0, y: -999.0)
+#endif
 
     for var arg in args {
         if arg.hasPrefix("--cfg=") {
@@ -322,15 +324,19 @@ func extractOptions() {
             ipPort = UInt16(arg)!
         } else if arg.hasPrefix("--half-size") {
             model.fullSize = false
-        } else if arg.hasPrefix("--x=") {
+        }
+        else if arg.hasPrefix("--log-timer") {
+            model.logTimer = true
+        }
+#if os(macOS)
+        if arg.hasPrefix("--x=") {
             arg.removeFirst(4)
             camArgsOffset.x = CGFloat(Float(Int(arg) ?? -999))
         } else if arg.hasPrefix("--y=") {
             arg.removeFirst(4)
             camArgsOffset.y = CGFloat(Float(Int(arg) ?? -999))
-        } else if arg.hasPrefix("--log-timer") {
-            model.logTimer = true
         }
+#endif
 
         print("\(arg)")
     }
@@ -368,6 +374,7 @@ func extractOptions() {
   ┆                                                                                                  ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 
+#if os(macOS)
     if camArgsOffset.x >= 0.0 && camArgsOffset.y >= 0.0 {
         let screenAvailableWidth = CGFloat(screenSize.width - 569.0)
         let screenAvailableHeight = CGFloat(screenSize.height - 569.0)
@@ -375,6 +382,7 @@ func extractOptions() {
         model.fX = min(camArgsOffset.x, screenAvailableWidth) / screenAvailableWidth
         model.fY = min(camArgsOffset.y, screenAvailableHeight) / screenAvailableHeight
     }
+#endif
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ if command arguments for network are good ..                                                     ┆
