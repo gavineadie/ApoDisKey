@@ -2,7 +2,7 @@
 //  Extensions.swift
 //  ApoDisKey
 //
-//  Created by Gavin Eadie on Jul21/24.
+//  Created by Gavin Eadie on Jul21/24 (copyright 2024-25)
 //
 
 // swiftlint:disable blanket_disable_command

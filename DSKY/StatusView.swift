@@ -2,7 +2,7 @@
 //  StatusView.swift
 //  ApoDisKey
 //
-//  Created by Gavin Eadie on 7/7/24.
+//  Created by Gavin Eadie on Jul07/24 (copyright 2024-25)
 //
 
 // swiftlint:disable blanket_disable_command
