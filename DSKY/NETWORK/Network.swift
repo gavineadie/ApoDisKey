@@ -104,12 +104,12 @@ extension NWConnection {
 
 /*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
   └──────────────────────────────────────────────────────────────────────────────────────────────────┘*/
-func setNetwork() -> Network {
+func setNetwork(start: Bool = false) -> Network {
 #if os(iOS) || os(tvOS)
-//  return Network("192.168.1.232", 19697)          // .. Ubuntu
-    return Network("192.168.1.100", 19698)          // .. MaxBook
+//  return Network("192.168.1.232", 19697)              // .. Ubuntu
+    return Network("192.168.1.100", 19698, start: true) // .. MaxBook
 #else
-    return Network()                                // "localhost", 19697
+    return Network()                                    // "localhost", 19697
 #endif
 }
 

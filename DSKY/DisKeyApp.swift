@@ -35,7 +35,7 @@ struct DisKeyApp: App {
   ┆ establish the global environment                                                                 ┆
   ┆ .. read init files                                                                               ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-        extractOptions()                            // any command arguments ?
+        extractOptions()                        // any command arguments ?
 
         if model.fX >= 0.0 && model.fY >= 0.0 {
             UserDefaults.standard.removeObject(
@@ -43,6 +43,8 @@ struct DisKeyApp: App {
         }
 
         readInitializing()
+
+        startNetwork()
     }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮

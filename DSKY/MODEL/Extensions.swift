@@ -7,6 +7,7 @@
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable identifier_name
+// swiftlint:disable function_body_length
 // swiftlint:disable colon
 // swiftlint:disable comma
 // swiftlint:disable switch_case_alignment
@@ -296,8 +297,8 @@ func extractOptions() {
 
     let args = CommandLine.arguments
 
-    var ipAddr: String = ""
-    var ipPort: UInt16 = 0
+//    var ipAddr: String = ""
+//    var ipPort: UInt16 = 0
 
 #if os(macOS)
     let screenSize: CGSize = NSScreen.main!.frame.size
@@ -305,6 +306,8 @@ func extractOptions() {
 #endif
 
     for var arg in args {
+        logger.info("command line argument: \(arg)")
+
         if arg.hasPrefix("--cfg=") {
             arg.removeFirst(6)
             if arg.starts(with: "CM") {
@@ -316,17 +319,21 @@ func extractOptions() {
             }
 
             model.elPowerOn = true
+
         } else if arg.hasPrefix("--ip=") {
             arg.removeFirst(5)
-            ipAddr = arg
+            model.ipAddr = arg
         } else if arg.hasPrefix("--port=") {
             arg.removeFirst(7)
-            ipPort = UInt16(arg)!
+            model.ipPort = UInt16(arg)!
+
+            model.haveCmdArgs = !model.ipAddr.isEmpty && model.ipPort > 0
+
+        } else if arg.hasPrefix("--log-timer") {
+            model.logTimer = true
+
         } else if arg.hasPrefix("--half-size") {
             model.fullSize = false
-        }
-        else if arg.hasPrefix("--log-timer") {
-            model.logTimer = true
         }
 #if os(macOS)
         if arg.hasPrefix("--x=") {
@@ -338,7 +345,6 @@ func extractOptions() {
         }
 #endif
 
-        print("\(arg)")
     }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -384,38 +390,38 @@ func extractOptions() {
     }
 #endif
 
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ if command arguments for network are good ..                                                     ┆
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-    if !ipAddr.isEmpty && ipPort > 0 {
+}
 
-        model.haveCmdArgs = true
+@MainActor
+func startNetwork() {
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ if command arguments for network are good, use them ..                                           ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+    if model.haveCmdArgs {
         logger.log("""
             →→→ cmdArgs set: \
-            ipAddr=\(ipAddr, privacy: .public), \
-            ipPort=\(ipPort, privacy: .public)
+            ipAddr=\(model.ipAddr, privacy: .public), \
+            ipPort=\(model.ipPort, privacy: .public)
             """)
-        model.network = setNetwork(ipAddr, ipPort, start: true)
+        model.network = setNetwork(model.ipAddr, model.ipPort, start: true)
+    }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ start receiving packets from the AGC ..                                                          ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-        Task {
-            var keepGoing = true
-            repeat {
-                do {
-                    if let rxPacket = try await model.network.connection
-                        .rawReceive(length: 4) {
-                        if let (channel, action, _) =
-                            parseIoPacket(rxPacket) { channelAction(channel, action) }
-                    }
-                } catch {
-                    print(error.localizedDescription)
-                    keepGoing = false
+    Task {
+        var keepGoing = true
+        repeat {
+            do {
+                if let rxPacket = try await model.network.connection
+                    .rawReceive(length: 4) {
+                    if let (channel, action, _) =
+                        parseIoPacket(rxPacket) { channelAction(channel, action) }
                 }
-            } while keepGoing
-        }
-
+            } catch {
+                print(error.localizedDescription)
+                keepGoing = false
+            }
+        } while keepGoing
     }
-
 }
