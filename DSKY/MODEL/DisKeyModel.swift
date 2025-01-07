@@ -46,7 +46,7 @@ final class DisKeyModel {
     public var ch15ResetCount = 0
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ .. the fourteen lights resentating status on the DSKY top-left ..                                ┆
+  ┆ .. the fourteen annunciator lamps resentating status on the DSKY top-left ..                     ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
     public var statusLights: [Int: Light] = [
             11: ("   ", .off),              //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
@@ -60,9 +60,9 @@ final class DisKeyModel {
             21: ("   ", .off),              //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
             22: ("   ", .off),              //  ┆OPR ERR ┆ ┆TRACKER ┆
             23: ("   ", .off),              //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
-            24: ("   ", .off),              //  ┆        ┆ ┆  ALT   ┆
+            24: ("   ", .off),              //  ┆PRI DIS ┆ ┆  ALT   ┆
             25: ("   ", .off),              //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
-            26: ("   ", .off),              //  ┆        ┆ ┆  VEL   ┆
+            26: ("   ", .off),              //  ┆ NO DAP ┆ ┆  VEL   ┆
             27: ("   ", .off)               //  ╰╌╌╌╌╌╌╌╌╯ ╰╌╌╌╌╌╌╌╌╯
         ]
 

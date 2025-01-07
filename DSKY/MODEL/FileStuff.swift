@@ -77,7 +77,6 @@ func readCanned(path: String) {
                         logger.log("'\(line)' -- bad format")
                     }
                 }
-
             }
         }
     } catch {

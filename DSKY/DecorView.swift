@@ -152,19 +152,14 @@ struct LittleWhiteCircle: View {
 func adjustDisplay(_ text: String) -> AttributedString {
 
     var attrText = AttributedString()
-    let normText = model.elPowerOn ? text :
-                    text.count > 2 ? "-_____" : "__"
+    let normText = model.elPowerOn ? text : text.count > 2 ? "+_____" : "__"
 
     for byte in normText {
         var attrByte = AttributedString(String(byte))
         switch byte {
             case "+", "-":
-                attrByte = AttributedString("+")
-                if model.elPowerOn {
-                    attrByte.foregroundColor = displayElectro
-                } else {
-                    attrByte.foregroundColor = .clear
-                }
+                attrByte = AttributedString(String(byte))
+                attrByte.foregroundColor = model.elPowerOn ? displayElectro : .clear
 
             case "_":
                 attrByte = AttributedString("8")

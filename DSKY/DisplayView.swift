@@ -235,9 +235,20 @@ struct Register: View {
 }
 
 #if swift(>=5.9)
-#Preview("Register") { Register(state: Display(label: "+89999", off: true)) }
+#Preview("REGISTERS") {
+    VStack {
+        Register(state: Display(label: "+88888", off: true))
+        Register(state: Display(label: "-88888", off: true))
+        Register(state: Display(label: " 00000", off: true))
+    }
+}
 #endif
 
+/*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ display electroluminescent numbers for:                                                          │
+  │     PROG, VERB and NOUN (2 digits), or                                                           │
+  │     for registers (5 digits with possible "±" or " " preceding ..                                │
+  └──────────────────────────────────────────────────────────────────────────────────────────────────┘*/
 struct DisplayNumbers: View {
     var value: Display
 
@@ -254,9 +265,16 @@ struct DisplayNumbers: View {
                     DisplaySeparator()
 
                     if #available(macOS 13.0, *) {
-                        Text(adjustDisplay(value.0))
-                            .sevenSegRegister()
-                            .kerning(4.0)
+                        if value.0.first == " " {
+                            Text(adjustDisplay(value.0))
+                                .sevenSegRegister()
+                                .padding(.trailing, +12)
+                                .kerning(4.0)
+                        } else {
+                            Text(adjustDisplay(value.0))
+                                .sevenSegRegister()
+                                .kerning(4.0)
+                        }
                    } else {
                        Text(adjustDisplay(value.0))
                            .sevenSegRegister()
