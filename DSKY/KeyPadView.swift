@@ -2,7 +2,7 @@
 //  KeyPadView.swift
 //  ApoDisKey
 //
-//  Created by Gavin Eadie on 7/7/24.
+//  Created by Gavin Eadie on Jul07/24 (copyright 2024-25)
 //
 
 import SwiftUI
@@ -89,7 +89,7 @@ struct KeyView: View {
         Text(keyGlyph)
             .font(.custom(fontName, fixedSize: fontSize))
             .baselineOffset(keyPadBaselineOffset)
-            .foregroundColor(keyTextColor)
+            .foregroundColor(model.elPowerOn ? keyTextColorLit : keyTextColorOff)
             .multilineTextAlignment(.center)
             .lineLimit(2)
             .lineSpacing(4.0)
@@ -98,9 +98,6 @@ struct KeyView: View {
             .background(keyPadColor)
             .padding(.all, keyPadding)
             .cornerRadius(keyCorner)
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ the "PRO" key is a long press                                                                    ┆
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 #if os(macOS)
             .acceptClickThrough()
 #endif
@@ -115,13 +112,16 @@ struct KeyView: View {
                     }
                     Task {
                         do {
-                            try await model.network.connection.rawSend(data: formIoPacket(0o015, keyCode))
+                            try await model.network.rawSend(data: formIoPacket(0o015, keyCode))
                         } catch {
                             print(error.localizedDescription)
                         }
                     }
                 }
             }
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ the "PRO" key is a long press                                                                    ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
             .simultaneousGesture(
                 DragGesture(minimumDistance: 0)
                     .onChanged( { _ in
@@ -132,9 +132,12 @@ struct KeyView: View {
                                 «««    DSKY 032:    \(ZeroPadWord(value)) BITS (15)      \
                                 :: \(keyText(keyCode)) ↓
                                 """)
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ "PRO" key DOWN ..                                                                                ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
                             Task {
                                 do {
-                                    try await model.network.connection.rawSend(data: formIoPacket(0o032, value))
+                                    try await model.network.rawSend(data: formIoPacket(0o032, value))
                                 } catch {
                                     print(error.localizedDescription)
                                 }
@@ -149,13 +152,21 @@ struct KeyView: View {
                                 «««    DSKY 032:    \(ZeroPadWord(value)) BITS (15)      \
                                 :: \(keyText(keyCode)) ↑
                                 """)
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ "PRO" key UP ..                                                                                  ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
                             Task {
                                 do {
-                                    try await model.network.connection.rawSend(data: formIoPacket(0o032, value))
+                                    try await model.network.rawSend(data: formIoPacket(0o032, value))
                                 } catch {
                                     print(error.localizedDescription)
                                 }
                             }
+                        }
+
+                        if model.network.connection.state != .ready {
+                            logger.log("PRO key while network not ready ..")
+                            startNetwork()
                         }
                     })
             )

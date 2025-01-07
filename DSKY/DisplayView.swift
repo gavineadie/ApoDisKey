@@ -2,7 +2,7 @@
 //  DisplayView.swift
 //  ApoDisKey
 //
-//  Created by Gavin Eadie on 7/7/24.
+//  Created by Gavin Eadie on Jul07/24 (copyright 2024-25)
 //
 
 import SwiftUI
@@ -234,9 +234,20 @@ struct Register: View {
 }
 
 #if swift(>=5.9)
-#Preview("Register") { Register(state: Display(label: "+89999", off: true)) }
+#Preview("REGISTERS") {
+    VStack {
+        Register(state: Display(label: "+88888", off: true))
+        Register(state: Display(label: "-88888", off: true))
+        Register(state: Display(label: " 00000", off: true))
+    }
+}
 #endif
 
+/*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │ display electroluminescent numbers for:                                                          │
+  │     PROG, VERB and NOUN (2 digits), or                                                           │
+  │     for registers (5 digits with possible "±" or " " preceding ..                                │
+  └──────────────────────────────────────────────────────────────────────────────────────────────────┘*/
 struct DisplayNumbers: View {
     var value: Display
 
@@ -248,42 +259,50 @@ struct DisplayNumbers: View {
   ┆     since the " " character width in this font is different from the "+" and "-" characters, it  ┆
   ┆     needs to accounted for by removing it and moving the remaining five digits slightly left.    ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-            case 6:
-                VStack {
-                    DisplaySeparator()
+        case 6:
+            VStack {
+                DisplaySeparator()
 
-                    if #available(macOS 13.0, *) {
+                if #available(macOS 13.0, *) {
+                    if value.0.first == " " {
+                        Text(adjustDisplay(value.0))
+                            .sevenSegRegister()
+                            .padding(.trailing, +12)
+                            .kerning(4.0)
+                    } else {
                         Text(adjustDisplay(value.0))
                             .sevenSegRegister()
                             .kerning(4.0)
-                   } else {
-                       Text(adjustDisplay(value.0))
-                           .sevenSegRegister()
                     }
+               } else {
+                   Text(adjustDisplay(value.0))
+                       .sevenSegRegister()
                 }
+            }
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ COMP / PROG / VERB / NOUN ..                                                                     ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-            case 2:
-                if value.0 == "  " {            // for "COMP" -- (tall frame) no number to display ..
-                    Text(value.0)
-                        .frame(width: 95.0, height: 2.0)
+        case 2:
+            if value.0 == "  " {            // for "COMP" -- (tall frame) no number to display ..
+                Text(value.0)
+                    .frame(width: 95.0, height: 2.0)
+            } else {
+                if #available(macOS 13.0, *) {
+                    Text(adjustDisplay(value.1 ? value.0 : "__"))
+                        .sevenSegVerbNoun()
+                        .kerning(4.0)
                 } else {
-                    if #available(macOS 13.0, *) {
-                        Text(adjustDisplay(value.1 ? value.0 : "__"))
-                            .sevenSegVerbNoun()
-                            .kerning(4.0)
-                    } else {
-                        Text(adjustDisplay(value.1 ? value.0 : "__"))
-                            .sevenSegVerbNoun()
-                    }
+                    Text(adjustDisplay(value.1 ? value.0 : "__"))
+                        .sevenSegVerbNoun()
                 }
-            default:
-                Text("--------")
-                    .font(.custom("Zerlina", fixedSize: zerlinaFixedSize))
-                    .kerning(4.0)
-                    .foregroundColor(.red)
-                    .frame(width: 95.0, height: panelDigitSize)
+            }
+            
+        default:
+            Text("--------")
+                .font(.custom("Zerlina", fixedSize: zerlinaFixedSize))
+                .kerning(4.0)
+                .foregroundColor(.red)
+                .frame(width: 95.0, height: panelDigitSize)
         }
     }
 }

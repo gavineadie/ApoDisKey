@@ -2,7 +2,7 @@
 //  Extensions.swift
 //  ApoDisKey
 //
-//  Created by Gavin Eadie on Jul21/24.
+//  Created by Gavin Eadie on Jul21/24 (copyright 2024-25)
 //
 
 import Foundation
@@ -55,10 +55,10 @@ let bit10: UInt16 = 0b0000_0010_0000_0000
 
 public func plu_min(_ pm: (Bool, Bool)) -> String {
     switch pm {
-        case (false, false): return " "
-        case (true, false): return "+"
-        case (false, true): return "-"
-        case (true, true): return "-"
+    case (false, false): return " "
+    case (true, false): return "+"
+    case (false, true): return "-"
+    case (true, true): return "-"
     }
 }
 
@@ -288,13 +288,17 @@ func extractOptions() {
 
     let args = CommandLine.arguments
 
-    var ipAddr: String = ""
-    var ipPort: UInt16 = 0
+//    var ipAddr: String = ""
+//    var ipPort: UInt16 = 0
 
+#if os(macOS)
     let screenSize: CGSize = NSScreen.main!.frame.size
     var camArgsOffset = CGPoint(x: -999.0, y: -999.0)
+#endif
 
     for var arg in args {
+        logger.info("command line argument: \(arg)")
+
         if arg.hasPrefix("--cfg=") {
             arg.removeFirst(6)
             if arg.starts(with: "CM") {
@@ -307,23 +311,29 @@ func extractOptions() {
             model.elPowerOn = true
         } else if arg.hasPrefix("--ip=") {
             arg.removeFirst(5)
-            ipAddr = arg
+            model.ipAddr = arg
         } else if arg.hasPrefix("--port=") {
             arg.removeFirst(7)
-            ipPort = UInt16(arg)!
+            model.ipPort = UInt16(arg)!
+
+            model.haveCmdArgs = !model.ipAddr.isEmpty && model.ipPort > 0
+
+        } else if arg.hasPrefix("--log-timer") {
+            model.logTimer = true
+
         } else if arg.hasPrefix("--half-size") {
             model.fullSize = false
-        } else if arg.hasPrefix("--x=") {
+        }
+#if os(macOS)
+        if arg.hasPrefix("--x=") {
             arg.removeFirst(4)
             camArgsOffset.x = CGFloat(Float(Int(arg) ?? -999))
         } else if arg.hasPrefix("--y=") {
             arg.removeFirst(4)
             camArgsOffset.y = CGFloat(Float(Int(arg) ?? -999))
-        } else if arg.hasPrefix("--log-timer") {
-            model.logTimer = true
         }
+#endif
 
-        print("\(arg)")
     }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -359,6 +369,7 @@ func extractOptions() {
   ┆                                                                                                  ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 
+#if os(macOS)
     if camArgsOffset.x >= 0.0 && camArgsOffset.y >= 0.0 {
         let screenAvailableWidth = CGFloat(screenSize.width - 569.0)
         let screenAvailableHeight = CGFloat(screenSize.height - 569.0)
@@ -366,39 +377,40 @@ func extractOptions() {
         model.fX = min(camArgsOffset.x, screenAvailableWidth) / screenAvailableWidth
         model.fY = min(camArgsOffset.y, screenAvailableHeight) / screenAvailableHeight
     }
+#endif
 
+}
+
+@MainActor
+func startNetwork() {
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ if command arguments for network are good ..                                                     ┆
+  ┆ if command arguments for network are good, use them ..                                           ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-    if !ipAddr.isEmpty && ipPort > 0 {
-
-        model.haveCmdArgs = true
+    if model.haveCmdArgs {
         logger.log("""
             →→→ cmdArgs set: \
-            ipAddr=\(ipAddr, privacy: .public), \
-            ipPort=\(ipPort, privacy: .public)
+            ipAddr=\(model.ipAddr, privacy: .public), \
+            ipPort=\(model.ipPort, privacy: .public)
             """)
-        model.network = setNetwork(ipAddr, ipPort, start: true)
+        model.network = setNetwork(model.ipAddr, model.ipPort, start: true)
+    }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ start receiving packets from the AGC ..                                                          ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-        Task {
-            var keepGoing = true
-            repeat {
-                do {
-                    if let rxPacket = try await model.network.connection
-                        .rawReceive(length: 4) {
-                        if let (channel, action, _) =
-                            parseIoPacket(rxPacket) { channelAction(channel, action) }
-                    }
-                } catch {
-                    print(error.localizedDescription)
-                    keepGoing = false
+    Task {
+        var keepGoing = true
+        repeat {
+            do {
+                if let rxPacket = try await model.network.rawReceive(length: 4) {
+                    if let (channel, action, _) =
+                        parseIoPacket(rxPacket) { channelAction(channel, action) }
                 }
-            } while keepGoing
-        }
-
+            } catch {
+                print(error.localizedDescription)
+                keepGoing = false
+            }
+        } while keepGoing
     }
 
 }

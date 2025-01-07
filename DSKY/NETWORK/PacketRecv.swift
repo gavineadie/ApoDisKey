@@ -2,7 +2,7 @@
 //  PacketRecv.swift
 //  ApoDisKey
 //
-//  Created by Gavin Eadie on 7/16/24.
+//  Created by Gavin Eadie on Jul16/24 (copyright 2024-25)
 //
 
 import Foundation
@@ -11,11 +11,11 @@ import Foundation
 func channelAction(_ channel: UInt16, _ value: UInt16, _ tf: Bool = true) {
 
     switch channel {
-        case 0o005...0o006:
-            break
+    case 0o005...0o006:
+        break
 
-        case 0o010:                 // [OUTPUT] drives DSKY electroluminescent panel
-            dskyInterpretation(value)
+    case 0o010:                 // [OUTPUT] drives DSKY electroluminescent panel
+        dskyInterpretation(value)
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ All LATCHES                                                                                      ┆

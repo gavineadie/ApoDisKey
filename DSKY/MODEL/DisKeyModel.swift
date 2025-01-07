@@ -2,7 +2,7 @@
 //  StatusModel.swift
 //  ApoDisKey
 //
-//  Created by Gavin Eadie on Jul11/24.
+//  Created by Gavin Eadie on Jul11/24 (copyright 2024-25)
 //
 
 // swiftlint:disable blanket_disable_command
@@ -44,7 +44,7 @@ class DisKeyModel: ObservableObject {
     @Published public var ch15ResetCount = 0
     
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ .. the fourteen lights resentating status on the DSKY top-left ..                                ┆
+  ┆ .. the fourteen annunciator lamps resentating status on the DSKY top-left ..                     ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
     @Published public var statusLights : [Int: Light] = [
             11: ("", .off),             //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮

@@ -2,7 +2,7 @@
 //  DisKeyApp.swift
 //  ApoDisKey
 //
-//  Created by Gavin Eadie on Jul06/24.
+//  Created by Gavin Eadie on Jul06/24 (copyright 2024-25)
 //
 
 import SwiftUI
@@ -35,7 +35,7 @@ struct DisKeyApp: App {
   ┆ establish the global environment                                                                 ┆
   ┆ .. read init files                                                                               ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-        extractOptions()                            // any command arguments ?
+        extractOptions()                        // any command arguments ?
 
         if model.fX >= 0.0 && model.fY >= 0.0 {
             UserDefaults.standard.removeObject(
@@ -43,6 +43,8 @@ struct DisKeyApp: App {
         }
 
         readInitializing()
+
+        startNetwork()
     }
     
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -55,8 +57,10 @@ struct DisKeyApp: App {
         }
 #if MONTEREY
 #else
+#if os(macOS)
         .defaultSize(CGSize(width: 569, height: 656))
         .defaultPosition(UnitPoint(x: model.fX, y: model.fY))
+#endif
 #endif
     }
 }
@@ -154,8 +158,7 @@ struct MonitorView: View {
                     var keepGoing = true
                     repeat {
                         do {
-                            if let rxPacket = try await model.network.connection
-                                .rawReceive(length: 4) {
+                            if let rxPacket = try await model.network.rawReceive(length: 4) {
                                 if let (channel, action, _) =
                                     parseIoPacket(rxPacket) { channelAction(channel, action) }
                             }
@@ -172,8 +175,7 @@ struct MonitorView: View {
                 Task {
                     let bit14: UInt16 = 0b0010_0000_0000_0000
                     do {
-                        try await model.network.connection
-                            .rawSend(data: formIoPacket(0o0232, bit14))
+                        try await model.network.rawSend(data: formIoPacket(0o0232, bit14))
                         logger.log("«««    DSKY 032:    \(ZeroPadWord(bit14)) BITS (15)")
                     } catch {
                         print(error.localizedDescription)

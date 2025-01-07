@@ -2,7 +2,7 @@
 //  Network.swift
 //  ApoDisKey
 //
-//  Created by Gavin Eadie on 7/15/24.
+//  Created by Gavin Eadie on Jul15/24 (copyright 2024-25)
 //
 
 import Foundation
@@ -20,7 +20,7 @@ struct Network: Sendable {
         }
 
         let tcpOptions = NWProtocolTCP.Options()
-        tcpOptions.connectionTimeout = 30
+        tcpOptions.connectionTimeout = 10
 
         self.connection = NWConnection(host: NWEndpoint.Host(host),
                                        port: NWEndpoint.Port(rawValue: port)!,
@@ -32,45 +32,9 @@ struct Network: Sendable {
         }
     }
 
-    @Sendable private func stateDidChange(to state: NWConnection.State) {
-        switch state {
-            case .setup:
-                print("connection .setup")
-            case .waiting(let error):
-                print("connection .waiting: \(error.localizedDescription)")
-            case .preparing:
-                print("connection .preparing")
-            case .ready:
-                print("connection .ready")
-            case .failed(let error):
-                print("connection .failed")
-                self.connectionDidFail(error: error)
-            case .cancelled:
-                print("connection .cancelled")
-            default:
-                print("connection .default")
-        }
-    }
-
-    private func connectionDidFail(error: Error) {
-        print("connection did fail, error: \(error)")
-        self.stop(error: error)
-    }
-
-    private func stop(error: Error?) {
-        print("... \(#function)")
-        self.connection.stateUpdateHandler = nil
-        self.connection.cancel()
-        self.didStopCallback(error)
-    }
-
-}
-
-extension NWConnection {
-    
     func rawSend(data: Data?) async throws {
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
-            send(content: data, completion: .contentProcessed { error in
+            self.connection.send(content: data, completion: .contentProcessed { error in
                 if let error {
                     continuation.resume(throwing: error)
                 } else {
@@ -82,31 +46,58 @@ extension NWConnection {
     
     func rawReceive(length: Int) async throws -> Data? {
         try await withCheckedThrowingContinuation { continuation in
-            receive(minimumIncompleteLength: length,
+            self.connection.receive(minimumIncompleteLength: length,
                     maximumLength: length) { data, _, connectionEnded, error in
-                if connectionEnded {
-                    print("... \(#function) - connection did end")
-                }
                 if let error {
                     precondition(data == nil)
                     continuation.resume(throwing: error)
                 } else {
                     continuation.resume(returning: data)
                 }
+                if connectionEnded {
+                    logger.log("🛜 connection did end")
+                    stop(error: nil)
+                }
             }
         }
+    }
+
+    @Sendable private func stateDidChange(to state: NWConnection.State) {
+        switch state {
+        case .setup:
+            logger.log("🛜 .setup")
+        case .waiting(let error):
+            logger.log("🛜 .waiting: \(error.localizedDescription)")
+        case .preparing:
+            logger.log("🛜 .preparing")
+        case .ready:
+            logger.log("🛜 .ready")
+        case .failed(let error):
+            logger.log("🛜 .failed: \(error.localizedDescription)")
+            self.stop(error: error)
+        case .cancelled:
+            logger.log("🛜 .cancelled")
+        default:
+            logger.log("🛜 .default")
+        }
+    }
+
+    private func stop(error: Error?) {
+        self.connection.stateUpdateHandler = nil
+        self.connection.cancel()
+        self.didStopCallback(error)
     }
 
 }
 
 /*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
   └──────────────────────────────────────────────────────────────────────────────────────────────────┘*/
-func setNetwork() -> Network {
+func setNetwork(start: Bool = false) -> Network {
 #if os(iOS) || os(tvOS)
-//  return Network("192.168.1.232", 19697)          // .. Ubuntu
-    return Network("192.168.1.100", 19698)          // .. MaxBook
+//  return Network("192.168.1.232", 19697)              // .. Ubuntu
+    return Network("192.168.1.100", 19698, start: true) // .. MaxBook
 #else
-    return Network()                                // "localhost", 19697
+    return Network()                                    // "localhost", 19697
 #endif
 }
 
