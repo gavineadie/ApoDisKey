@@ -5,9 +5,6 @@
 //  Created by Gavin Eadie on Jul09/24 (copyright 2024-25)
 //
 
-// swiftlint:disable blanket_disable_command
-// swiftlint:disable switch_case_alignment
-
 import SwiftUI
 
 // panel dimensions
@@ -37,7 +34,8 @@ let statusText = Color(white: 0.0)
 
 let displayElectro = Color(red: 0.1, green: 0.8, blue: 0.1)
 
-let keyTextColor = Color(white: 0.9)
+let keyTextColorLit = Color(white: 0.9)
+let keyTextColorOff = Color(white: 0.7)
 let keyPadColor = Color(white: 0.25)
 
 #if MONTEREY
@@ -157,16 +155,16 @@ func adjustDisplay(_ text: String) -> AttributedString {
     for byte in normText {
         var attrByte = AttributedString(String(byte))
         switch byte {
-            case "+", "-":
-                attrByte = AttributedString(String(byte))
-                attrByte.foregroundColor = model.elPowerOn ? displayElectro : .clear
+        case "+", "-":
+            attrByte = AttributedString(String(byte))
+            attrByte.foregroundColor = model.elPowerOn ? displayElectro : .clear
 
-            case "_":
-                attrByte = AttributedString("8")
-                attrByte.foregroundColor = Color(white: 0.37)
+        case "_":
+            attrByte = AttributedString("8")
+            attrByte.foregroundColor = Color(white: 0.37)
 
-            default:
-                attrByte.foregroundColor = displayElectro
+        default:
+            attrByte.foregroundColor = displayElectro
         }
         attrText += attrByte
     }

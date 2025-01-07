@@ -152,8 +152,7 @@ struct MonitorView: View {
                     var keepGoing = true
                     repeat {
                         do {
-                            if let rxPacket = try await model.network.connection
-                                .rawReceive(length: 4) {
+                            if let rxPacket = try await model.network.rawReceive(length: 4) {
                                 if let (channel, action, _) =
                                     parseIoPacket(rxPacket) { channelAction(channel, action) }
                             }
@@ -170,8 +169,7 @@ struct MonitorView: View {
                 Task {
                     let bit14: UInt16 = 0b0010_0000_0000_0000
                     do {
-                        try await model.network.connection
-                            .rawSend(data: formIoPacket(0o0232, bit14))
+                        try await model.network.rawSend(data: formIoPacket(0o0232, bit14))
                         logger.log("«««    DSKY 032:    \(zeroPadWord(bit14)) BITS (15)")
                     } catch {
                         print(error.localizedDescription)

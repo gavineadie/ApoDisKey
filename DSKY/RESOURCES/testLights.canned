@@ -13,43 +13,67 @@
 
 ! Canned script starts
 
-500	163 00400	# channel 163 EL power on
+                                # channel 163 - Bit 4: TEMP lamp
+                                # channel 163 - Bit 5: KEY REL lamp
+                                # channel 163 - Bit 6: VERB/NOUN flash
+                                # channel 163 - Bit 7: OPER ERR lamp
+                                # channel 163 - Bit 8: RESTART lamp
+                                # channel 163 - Bit 9: STANDBY lamp
+                                # channel 163 - Bit 10 EL power on
+
+1000 163 00000_00000_00000      #   EL↑
+1000 163 00000_01110_11000      #   EL↑ STBY RSRT OPER   ↓  KREL TEMP   ↓    ↓    ↓
+
+                                # channel 163 (Annunicator Lamps)
+                                #
+                                #           ┌───────────────────────┐
+                                #           │ ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮ │
+                                #           │ ┆ UPLINK ┆ ┆  TEMP  ┆ <-- 163:4
+                                #           │ ╰╌╌╌╌╌╌╌╌╯ ╰╌╌╌╌╌╌╌╌╯ │
+                                #           │ ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮ │
+                                #   Bit 4 --> ┆ NO ATT ┆ ┆ GIMBAL ┆ <-- Bit 6
+                                #           │ ╰╌╌╌╌╌╌╌╌╯ ╰╌╌╌╌╌╌╌╌╯ │
+                                #   163:9 --> ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮ │
+                                #   Bit 7 --> ┆  STBY  ┆ ┆  PROG  ┆ <-- Bit 9
+                                #           │ ╰╌╌╌╌╌╌╌╌╯ ╰╌╌╌╌╌╌╌╌╯ │
+                                #           │ ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮ │
+                                #   163:5 --> ┆KEY REL ┆ ┆RESTART ┆ <-- 163:8
+                                #           │ ╰╌╌╌╌╌╌╌╌╯ ╰╌╌╌╌╌╌╌╌╯ │
+                                #           │ ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮ │
+                                #   163:7 --> ┆OPR ERR ┆ ┆TRACKER ┆ <-- Bit 8
+                                #           │ ╰╌╌╌╌╌╌╌╌╯ ╰╌╌╌╌╌╌╌╌╯ │
+                                #           │ ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮ │
+                                #   Bit 1 --> ┆ PRIO D ┆ ┆  ALT   ┆ <-- Bit 5
+                                #           │ ╰╌╌╌╌╌╌╌╌╯ ╰╌╌╌╌╌╌╌╌╯ │
+                                #           │ ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮ │
+                                #   Bit 2 --> ┆ NO DAP ┆ ┆  VEL   ┆ <-- Bit 3
+                                #           │ ╰╌╌╌╌╌╌╌╌╯ ╰╌╌╌╌╌╌╌╌╯ │
+                                #           └───────────────────────┘
 
 
-                                #   Bit 1 lights the "PRIO DISP" indicator.
-                                #   Bit 2 lights the "NO DAP" indicator.
-                                #   Bit 3 lights the "VEL" indicator.
-                                #   Bit 4 lights the "NO ATT" indicator.
-                                #   Bit 5 lights the "ALT" indicator.
-                                #   Bit 6 lights the "GIMBAL LOCK" indicator.
-                                #   Bit 8 lights the "TRACKER" indicator.
-                                #   Bit 9 lights the "PROG" indicator.
+1000 010 11000_00000_00110 	    #     ↓    ↓    ↓    ↓    ↓    ↓    ↓   VEL ~DAP   ↓
+1000 010 11000_01111_11111	    #     ↓  PROG TRAK  b7? GMBL  ALT ~ATT  VEL ~DAP PRIO
+5000 010 11000_00000_00000 	    #     ↓    ↓    ↓    ↓    ↓    ↓    ↓    ↓    ↓    ↓
+1000 011 00000_00000_00100
 
-500 010	11000_00000_00000 	    # status lights -- all off
-500 010	11000_01111_11111	    # status lights -- all on
+! digital display all off ..
 
-! display lights all off ..
+150	010	1011_0_00000_00000      # M1M2 (PROG)
+150	010	1010_0_00000_00000	    # V1V2 (VERB)
+150	010	1001_0_00000_00000      # N1N2 (MODE)
+150	010	1000_0_00000_00000	    # ..11
+150	010	0111_0_00000_00000	    # 1213
+150	010	0110_0_00000_00000	    # 1415
+150	010	0101_0_00000_00000	    # 2122
+150	010	0100_0_00000_00000	    # 2324
+150	010	0011_0_00000_00000	    # 2531
+150	010	0010_0_00000_00000	    # 3233
+150	010	0001_0_00000_00000	    # 3435
 
-150	010	1011 0 00000 00000         # M1M2 (PROG)
-150	010	50000	# V1V2 (VERB)
-150	010	44000	# N1N2 (MODE)
-150	010	40000	# ..11
-150	010	34000	# 1213
-150	010	30000	# 1415
-150	010	24000	# 2122
-150	010	20000	# 2324
-150	010	14000	# 2531
-150	010	10000	# 3233
-150	010	04000	# 3435
+500	011	00000	                # channel 11 indicator lamps
+500	013	00000	                # channel 13 DSKY lamp tests
 
-500	011	00000	# channel 11 indicator lamps
-500	013	00000	# channel 13 DSKY lamp tests
-
-1000 010 00000
-
-                # COMP
-500 011 00002   # Delay half a second, COMP ACTY on.
-500 011 00000   # Delay half a second, COMP ACTY off.
+1000 010 0000 0 00000 00000     # ?
 
 ! flicker "COMP""
 
@@ -59,27 +83,32 @@
 50 011 00000    # COMP ACTY off.
 50 011 00002    # COMP ACTY on.
 50 011 00000    # COMP ACTY off.
-50 011 00002    # COMP ACTY on.
-50 011 00000    # COMP ACTY off.
-50 011 00002    # COMP ACTY on.
-50 011 00000    # COMP ACTY off.
-50 011 00002    # COMP ACTY on.
-50 011 00000    # COMP ACTY off.
 
 ! "PROG"
 
-500 010 101101111100000  # 55640   # Delay half a second, left-hand PROG turns to 9.
-100 010 101101110100000  # 55640   # Delay 0.1 seconds, left-hand PROG turns to 8.
-100 010 101101001100000  # 55140   # Delay 0.1 seconds, left-hand PROG turns to 7.
-100 010 101101110000000  # 55640   # Delay 0.1 seconds, left-hand PROG turns to 6.
-100 010 101101111000000  # 55640   # Delay 0.1 seconds, left-hand PROG turns to 5.
-100 010 101100111100000  # 55640   # Delay 0.1 seconds, left-hand PROG turns to 4.
-100 010 101101101100000  # 55640   # Delay 0.1 seconds, left-hand PROG turns to 3.
-100 010 101101100100000  # 55640   # Delay 0.1 seconds, left-hand PROG turns to 2.
-100 010 101101110100000  # 55640   # Delay 0.1 seconds, left-hand PROG turns to 1.
-500 010 101100001100000  # 55640   # Delay half a second, left-hand PROG turns to 8.
+500 010 1011_0_11111_00000      # left-hand PROG turns to 9.
+050 010 1011_0_11101_00000      # left-hand PROG turns to 8.
+050 010 1011_0_10011_00000      # left-hand PROG turns to 7.
+050 010 1011_0_11100_00000      # left-hand PROG turns to 6.
+050 010 1011_0_11110_00000      # left-hand PROG turns to 5.
+050 010 1011_0_01111_00000      # left-hand PROG turns to 4.
+050 010 1011_0_11011_00000      # left-hand PROG turns to 3.
+050 010 1011_0_11001_00000      # left-hand PROG turns to 2.
+050 010 1011_0_11101_00000      # left-hand PROG turns to 1.
+050 010 1011_0_10101_00000      # left-hand PROG turns to 0.
+050 010 1011_0_00000_00000      # left-hand PROG turns to blank.
 
-150 010 55675   # Delay half a second, right-hand PROG turns to 8.
+500 010 1011_0_00000_11111      # right-hand PROG turns to 9.
+100 010 1011_0_00000_11101      # right-hand PROG turns to 8.
+100 010 1011_0_00000_10011      # right-hand PROG turns to 7.
+100 010 1011_0_00000_11100      # right-hand PROG turns to 6.
+100 010 1011_0_00000_11110      # right-hand PROG turns to 5.
+100 010 1011_0_00000_01111      # right-hand PROG turns to 4.
+100 010 1011_0_00000_11011      # right-hand PROG turns to 3.
+100 010 1011_0_00000_11001      # right-hand PROG turns to 2.
+100 010 1011_0_00000_11101      # right-hand PROG turns to 1.
+100 010 1011_0_00000_10101      # right-hand PROG turns to 0.
+100 010 1011_0_00000_00000      # right-hand PROG turns to blank.
 
                 # VERB ...
 500 010 51640
@@ -89,39 +118,34 @@
 500 010 45640
 150 010 45675
 
-# ------------------------------------------------------------------------------------------------------
+                # REGISTER ...
 
-#       00000 (binary) :  0 (decimal) = Blank
-#       10101 (binary) : 21 (decimal) =   0
-#       00011 (binary) :  3 (decimal) =   1
-#       11001 (binary) : 25 (decimal) =   2
-#       11011 (binary) : 27 (decimal) =   3
-#       01111 (binary) : 15 (decimal) =   4
-#       11110 (binary) : 30 (decimal) =   5
-#       11100 (binary) : 28 (decimal) =   6
-#       10011 (binary) : 19 (decimal) =   7
-#       11101 (binary) : 29 (decimal) =   8
-#       11111 (binary) : 31 (decimal) =   9
+500 10 0101_0_01111_01111       # R2 = ..... 44... .....
+100 10 0101_0_11110_11110       # R2 = ..... 55... .....
+100 10 0100_0_01111_01111       # R2 = ..... ..44. .....
+100 10 0100_0_11110_11110       # R2 = ..... ..55. .....
+100 10 0011_0_01111_01111       #                4 4
+100 10 0011_0_11110_11110       #                5 5
+100 10 0100_0_01111_01111       #                   44
+100 10 0100_0_11110_11110       #                   55
+100 10 0001_0_01111_01111       #                     44
+100 10 0001_0_11110_11110       #                     55
 
-500 10 24757		44...						0101 0 01111 01111
-500 10 25736		55...						0101 0 11110 11110
-500 10 20757									0100 0 01111 01111
-500 10 21736									0100 0 11110 11110
-500 10 24757									0011 0 01111 01111
-500 10 25736									0011 0 11110 11110
-500 10 20757									0100 0 01111 01111
-500 10 21736									0100 0 11110 11110
-500 10 24757									0001 0 01111 01111
-500 10 25736									0001 0 11110 11110
+
+
+
+500 10 100000000000011          # "+12345"
+10 10 011111100111011
+10 10 011000111111110
 
 # ------------------------------------------------------------------------------------------------------
 # R1
-#                                               AAAAB CCCCC DDDDD
-#                                               -----------------
-500 10 36000    # SIGN + == 1111 00000 00000    01111 00000 00000
+#                                               AAAA B CCCCC DDDDD
+#                                               ---- -------------
+500 10 36000    # SIGN + == 1111 00000 00000    0111 1 00000 00000
 
-150 10 41035    # (41035) # Left digit 8        10000 10000 11101
-150 10 37640                                    01111 11101 00000
+150 10 41035    # (41035) # Left digit 8        1000 0 10000 11101
+150 10 37640                                    0111 1 11101 00000
 150 10 37675
 150 10 31640
 150 10 31675    # Right digit 8

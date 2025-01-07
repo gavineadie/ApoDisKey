@@ -5,9 +5,6 @@
 //  Created by Gavin Eadie on Jul07/24 (copyright 2024-25)
 //
 
-// swiftlint:disable blanket_disable_command
-// swiftlint:disable switch_case_alignment
-
 import SwiftUI
 
 /*
@@ -166,20 +163,20 @@ struct AnnunciatorLamp: View {
 private func back(_ input: (String, BackColor)) -> Color {
     if model.elPowerOn {
         switch input.1 {
-            case .on:
-                return .white
-            case .off:
-                return Color(white: 0.55)
-            case .white:
-                return .white
-            case .green:
-                return .green
-            case .yellow:
-                return .yellow
-            case .orange:
-                return .orange
-            case .red:
-                return .red
+        case .on:
+            return .white
+        case .off:
+            return Color(white: 0.55)
+        case .white:
+            return .white
+        case .green:
+            return .green
+        case .yellow:
+            return .yellow
+        case .orange:
+            return .orange
+        case .red:
+            return .red
         }
     } else {
         return .gray

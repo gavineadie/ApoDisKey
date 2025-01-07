@@ -7,10 +7,8 @@
 
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable identifier_name
-// swiftlint:disable function_body_length
 // swiftlint:disable colon
 // swiftlint:disable comma
-// swiftlint:disable switch_case_alignment
 // swiftlint:disable vertical_whitespace
 // swiftlint:disable file_length
 
@@ -64,10 +62,10 @@ let bit10: UInt16 = 0b0000_0010_0000_0000
 
 public func plu_min(_ pm: (Bool, Bool)) -> String {
     switch pm {
-        case (false, false): return " "
-        case (true, false): return "+"
-        case (false, true): return "-"
-        case (true, true): return "-"
+    case (false, false): return " "
+    case (true, false): return "+"
+    case (false, true): return "-"
+    case (true, true): return "-"
     }
 }
 
@@ -413,8 +411,7 @@ func startNetwork() {
         var keepGoing = true
         repeat {
             do {
-                if let rxPacket = try await model.network.connection
-                    .rawReceive(length: 4) {
+                if let rxPacket = try await model.network.rawReceive(length: 4) {
                     if let (channel, action, _) =
                         parseIoPacket(rxPacket) { channelAction(channel, action) }
                 }
