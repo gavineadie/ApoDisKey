@@ -173,9 +173,9 @@ func dskyInterpretation(_ code: UInt16) {
   ┆                                                                                                  ┆
   ┆                               -AAAA B CCCCC DDDDD                                                ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-            let bBit = (code & 0b00000_1_00000_00000) >  0
-            let cInt = (code & 0b00000_0_11111_00000) >> 5
-            let dInt = (code & 0b00000_0_00000_11111) >> 0
+            let bBit: Bool = (code & 0b00000_1_00000_00000) >  0
+            let cInt: UInt16 = (code & 0b00000_0_11111_00000) >> 5
+            let dInt: UInt16 = (code & 0b00000_0_00000_11111) >> 0
 
             var aStr = "????"
             if rowCode < symbolArray.count {
@@ -350,24 +350,22 @@ func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
         return nil
     }
 
-    let byte = [UInt8](data)
+    let bytes = [UInt8](data)
 
-    if (byte[0] == 0xff) &&
-       (byte[1] == 0xff) &&
-       (byte[2] == 0xff) &&
-       (byte[3] == 0xff) { return nil }
+    if (bytes[0] == 0xff) && (bytes[1] == 0xff) &&
+       (bytes[2] == 0xff) && (bytes[3] == 0xff) { return nil }
 
-    if (byte[0] / 64) != 0 || (byte[1] / 64) != 1 || (byte[2] / 64) != 2 || (byte[3] / 64) != 3 {
+    if (bytes[0] / 64) != 0 || (bytes[1] / 64) != 1 || (bytes[2] / 64) != 2 || (bytes[3] / 64) != 3 {
         logger.log("\(#function): prefix bits wrong [\(prettyString(data))]")
         return nil
     }
 
-    let channel: UInt16 = UInt16(byte[0] & UInt8(0b00111111)) << 3 |
-    UInt16(byte[1] & UInt8(0b00111000)) >> 3
+    let channel: UInt16 = UInt16(bytes[0] & UInt8(0b00111111)) << 3 |
+    UInt16(bytes[1] & UInt8(0b00111000)) >> 3
 
-    let value: UInt16 =   UInt16(byte[1] & UInt8(0b00000111)) << 12 |
-    UInt16(byte[2] & UInt8(0b00111111)) << 6 |
-    UInt16(byte[3] & UInt8(0b00111111))
+    let value: UInt16 =   UInt16(bytes[1] & UInt8(0b00000111)) << 12 |
+    UInt16(bytes[2] & UInt8(0b00111111)) << 6 |
+    UInt16(bytes[3] & UInt8(0b00111111))
 
-    return (channel, value, (byte[0] & 0b00100000) > 0)
+    return (channel, value, (bytes[0] & 0b00100000) > 0)
 }

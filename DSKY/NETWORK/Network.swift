@@ -104,3 +104,47 @@ func setNetwork(start: Bool = false) -> Network {
 func setNetwork(_ ipAddr: String, _ ipPort: UInt16, start: Bool = false) -> Network {
     return Network(ipAddr, ipPort, start: true)
 }
+
+@MainActor
+func startNetwork() {
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ if command arguments for network are good, use them ..                                           ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+#if os(macOS)
+    if model.haveCmdArgs {
+        logger.log("""
+            →→→ cmdArgs set: \
+            ipAddr=\(model.ipAddr, privacy: .public), \
+            ipPort=\(model.ipPort, privacy: .public)
+            """)
+        model.network = setNetwork(model.ipAddr, model.ipPort, start: true)
+    }
+#else
+    model.statusLights = DisKeyModel.LM0
+    model.elPowerOn = true
+    logger.log("""
+            →→→ defaults set: \
+            ipAddr=\(model.ipAddr, privacy: .public), \
+            ipPort=\(model.ipPort, privacy: .public)
+            """)
+    model.network = setNetwork(model.ipAddr, model.ipPort, start: true)
+#endif
+
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ start receiving packets from the AGC ..                                                          ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+    Task {
+        var keepGoing = true
+        repeat {
+            do {
+                if let rxPacket = try await model.network.rawReceive(length: 4) {
+                    if let (channel, action, _) =
+                        parseIoPacket(rxPacket) { channelAction(channel, action) }
+                }
+            } catch {
+                print(error.localizedDescription)
+                keepGoing = false
+            }
+        } while keepGoing
+    }
+}

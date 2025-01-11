@@ -76,10 +76,12 @@ struct AppView: View {
                 .frame(width: 569 * scaleFactor,
                        height: 656 * scaleFactor)        // 569 × 656 pixels
                 .scaleEffect(scaleFactor)
-             if model.fullSize && !model.haveCmdArgs {
+#if os(macOS)
+            if model.fullSize && !model.haveCmdArgs {
                 Divider()
                 MonitorView()
             }
+#endif
         }
     }
 }

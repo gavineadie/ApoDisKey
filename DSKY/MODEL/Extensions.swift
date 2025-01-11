@@ -10,7 +10,6 @@
 // swiftlint:disable colon
 // swiftlint:disable comma
 // swiftlint:disable vertical_whitespace
-// swiftlint:disable file_length
 
 import Foundation
 
@@ -388,37 +387,4 @@ func extractOptions() {
     }
 #endif
 
-}
-
-@MainActor
-func startNetwork() {
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ if command arguments for network are good, use them ..                                           ┆
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-    if model.haveCmdArgs {
-        logger.log("""
-            →→→ cmdArgs set: \
-            ipAddr=\(model.ipAddr, privacy: .public), \
-            ipPort=\(model.ipPort, privacy: .public)
-            """)
-        model.network = setNetwork(model.ipAddr, model.ipPort, start: true)
-    }
-
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ start receiving packets from the AGC ..                                                          ┆
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-    Task {
-        var keepGoing = true
-        repeat {
-            do {
-                if let rxPacket = try await model.network.rawReceive(length: 4) {
-                    if let (channel, action, _) =
-                        parseIoPacket(rxPacket) { channelAction(channel, action) }
-                }
-            } catch {
-                print(error.localizedDescription)
-                keepGoing = false
-            }
-        } while keepGoing
-    }
 }
