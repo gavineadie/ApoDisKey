@@ -19,7 +19,7 @@ struct DisKeyApp: App {
         func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { true }
 
         func applicationWillTerminate(_ notification: Notification) {
-            if model.fX >= 0.0 && model.fY >= 0.0 {
+            if model.windowX >= 0.0 && model.windowY >= 0.0 {
                 UserDefaults.standard.removeObject(
                     forKey: "NSWindow Frame ApoDisKey.AppView-1-AppWindow-1")
             }
@@ -37,7 +37,7 @@ struct DisKeyApp: App {
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
         extractOptions()                        // any command arguments ?
 
-        if model.fX >= 0.0 && model.fY >= 0.0 {
+        if model.windowX >= 0.0 && model.windowY >= 0.0 {
             UserDefaults.standard.removeObject(
                 forKey: "NSWindow Frame ApoDisKey.AppView-1-AppWindow-1")
         }
@@ -57,7 +57,7 @@ struct DisKeyApp: App {
         }
 #if os(macOS)
         .defaultSize(CGSize(width: 569, height: 656))
-        .defaultPosition(UnitPoint(x: model.fX, y: model.fY))
+        .defaultPosition(UnitPoint(x: model.windowX, y: model.windowY))
 #endif
     }
 }
@@ -76,8 +76,7 @@ struct AppView: View {
                 .frame(width: 569 * scaleFactor,
                        height: 656 * scaleFactor)        // 569 × 656 pixels
                 .scaleEffect(scaleFactor)
-                .onReceive(timer) { date in logger.log("TEN SECONDS: \(date)") }
-            if model.fullSize && !model.haveCmdArgs {
+             if model.fullSize && !model.haveCmdArgs {
                 Divider()
                 MonitorView()
             }

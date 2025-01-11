@@ -6,7 +6,6 @@
 //
 
 // swiftlint:disable blanket_disable_command
-// swiftlint:disable identifier_name
 // swiftlint:disable comma
 
 import Foundation
@@ -14,7 +13,6 @@ import AVFoundation
 
 public enum BackColor: Sendable {
     case off
-    case on
     case white
     case yellow
     case green
@@ -38,8 +36,8 @@ final class DisKeyModel {
     public var fullSize = true
     public var haveCmdArgs = false
 
-    public var fX: CGFloat = -99.0
-    public var fY: CGFloat = -99.0
+    public var windowX: CGFloat = -99.0
+    public var windowY: CGFloat = -99.0
 
     public var logTimer = false
 
@@ -60,7 +58,7 @@ final class DisKeyModel {
             21: ("   ", .off),              //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
             22: ("   ", .off),              //  ┆OPR ERR ┆ ┆TRACKER ┆
             23: ("   ", .off),              //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
-            24: ("   ", .off),              //  ┆PRI DIS ┆ ┆  ALT   ┆
+            24: ("   ", .off),              //  ┆PRIODISP┆ ┆  ALT   ┆
             25: ("   ", .off),              //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
             26: ("   ", .off),              //  ┆ NO DAP ┆ ┆  VEL   ┆
             27: ("   ", .off)               //  ╰╌╌╌╌╌╌╌╌╯ ╰╌╌╌╌╌╌╌╌╯

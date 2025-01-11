@@ -293,6 +293,7 @@ struct DisplayNumbers: View {
                         .sevenSegVerbNoun()
                 }
             }
+
         default:
             Text("--------")
                 .font(.custom("Zerlina", fixedSize: zerlinaFixedSize))

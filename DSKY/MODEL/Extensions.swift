@@ -383,8 +383,8 @@ func extractOptions() {
         let screenAvailableWidth = CGFloat(screenSize.width - 569.0)
         let screenAvailableHeight = CGFloat(screenSize.height - 569.0)
 
-        model.fX = min(camArgsOffset.x, screenAvailableWidth) / screenAvailableWidth
-        model.fY = min(camArgsOffset.y, screenAvailableHeight) / screenAvailableHeight
+        model.windowX = min(camArgsOffset.x, screenAvailableWidth) / screenAvailableWidth
+        model.windowY = min(camArgsOffset.y, screenAvailableHeight) / screenAvailableHeight
     }
 #endif
 
