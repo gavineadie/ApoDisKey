@@ -102,6 +102,11 @@ struct KeyView: View {
             .acceptClickThrough()
 #endif
             .onTapGesture {
+                if model.network.connection.state != .ready {
+                    logger.log("any key press while network not ready ..")
+                    startNetwork()
+                }
+
                 if keyCode < 99 {
                     logger.log("«««    \(keyText(keyCode)) (\(keyCode))")
 
@@ -162,11 +167,6 @@ struct KeyView: View {
                                     print(error.localizedDescription)
                                 }
                             }
-                        }
-
-                        if model.network.connection.state != .ready {
-                            logger.log("PRO key while network not ready ..")
-                            startNetwork()
                         }
                     })
             )
