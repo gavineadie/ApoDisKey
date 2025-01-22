@@ -36,8 +36,8 @@ class DisKeyModel: ObservableObject {
     @Published public var fullSize = true
     @Published public var haveCmdArgs = false
     
-    @Published public var fX: CGFloat = -99.0
-    @Published public var fY: CGFloat = -99.0
+    @Published public var windowX: CGFloat = -99.0
+    @Published public var windowY: CGFloat = -99.0
     
     @Published public var logTimer = false
 

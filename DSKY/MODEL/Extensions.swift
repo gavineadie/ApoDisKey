@@ -64,19 +64,19 @@ public func plu_min(_ pm: (Bool, Bool)) -> String {
 
 
 func prettyPrint(_ data: Data) {
-    logger.log("\(ZeroPadByte(data[0])) \(ZeroPadByte(data[1])) \(ZeroPadByte(data[2])) \(ZeroPadByte(data[3]))")
+    logger.log("\(zeroPadByte(data[0])) \(zeroPadByte(data[1])) \(zeroPadByte(data[2])) \(zeroPadByte(data[3]))")
 }
 
 func prettyString(_ data: Data) -> String {
-    "\(ZeroPadByte(data[0])) \(ZeroPadByte(data[1])) \(ZeroPadByte(data[2])) \(ZeroPadByte(data[3]))"
+    "\(zeroPadByte(data[0])) \(zeroPadByte(data[1])) \(zeroPadByte(data[2])) \(zeroPadByte(data[3]))"
 }
 
 
-private func ZeroPadByte(_ code: UInt8, _ length: Int = 8) -> String {
+private func zeroPadByte(_ code: UInt8, _ length: Int = 8) -> String {
     String(("000000000" + String(UInt16(code), radix: 2)).suffix(length))
 }
 
-func ZeroPadWord(_ code: UInt16, to length: Int = 15) -> String {
+func zeroPadWord(_ code: UInt16, to length: Int = 15) -> String {
     String(("0000000000000000" + String(UInt16(code), radix: 2)).suffix(length))
 }
 
@@ -118,7 +118,7 @@ let ch010Labs = [" ??? ",
 
 @available(macOS 13.0, *)
 func prettyCh010(_ code: UInt16) -> String {
-	let bitArray = ZeroPadWord(code, to: 10).split(separator: "")
+	let bitArray = zeroPadWord(code, to: 10).split(separator: "")
 	var catString = ""
 
 	for index in 0..<bitArray.count {
@@ -152,7 +152,7 @@ let ch011Labs = [" ??? ",    // b8
 
 @available(macOS 13.0, *)
 func prettyCh011(_ code: UInt16) -> String {
-    let bitArray = ZeroPadWord(code, to: 8).split(separator: "")
+    let bitArray = zeroPadWord(code, to: 8).split(separator: "")
     var catString = "          "
 
     for index in 0..<bitArray.count {
@@ -164,7 +164,7 @@ func prettyCh011(_ code: UInt16) -> String {
 
 @available(macOS 13.0, *)
 func prettyCh032(_ code: UInt16) -> String {
-    let bitArray = ZeroPadWord(code).split(separator: "")
+    let bitArray = zeroPadWord(code).split(separator: "")
     var catString = ""
 
     for index in 0..<bitArray.count {
@@ -200,7 +200,7 @@ let ch163Labs = [" EL↓ ",    // b10
 
 @available(macOS 13.0, *)
 func prettyCh163(_ code: UInt16) -> String {
-    let bitArray = ZeroPadWord(code, to: 10).split(separator: "")
+    let bitArray = zeroPadWord(code, to: 10).split(separator: "")
     var catString = (bitArray[0] == "1") ? " EL↓ " : " EL↑ "
 
     for index in 1..<bitArray.count {
@@ -374,43 +374,9 @@ func extractOptions() {
         let screenAvailableWidth = CGFloat(screenSize.width - 569.0)
         let screenAvailableHeight = CGFloat(screenSize.height - 569.0)
 
-        model.fX = min(camArgsOffset.x, screenAvailableWidth) / screenAvailableWidth
-        model.fY = min(camArgsOffset.y, screenAvailableHeight) / screenAvailableHeight
+        model.windowX = min(camArgsOffset.x, screenAvailableWidth) / screenAvailableWidth
+        model.windowY = min(camArgsOffset.y, screenAvailableHeight) / screenAvailableHeight
     }
 #endif
-
-}
-
-@MainActor
-func startNetwork() {
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ if command arguments for network are good, use them ..                                           ┆
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-    if model.haveCmdArgs {
-        logger.log("""
-            →→→ cmdArgs set: \
-            ipAddr=\(model.ipAddr, privacy: .public), \
-            ipPort=\(model.ipPort, privacy: .public)
-            """)
-        model.network = setNetwork(model.ipAddr, model.ipPort, start: true)
-    }
-
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ start receiving packets from the AGC ..                                                          ┆
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-    Task {
-        var keepGoing = true
-        repeat {
-            do {
-                if let rxPacket = try await model.network.rawReceive(length: 4) {
-                    if let (channel, action, _) =
-                        parseIoPacket(rxPacket) { channelAction(channel, action) }
-                }
-            } catch {
-                print(error.localizedDescription)
-                keepGoing = false
-            }
-        } while keepGoing
-    }
 
 }

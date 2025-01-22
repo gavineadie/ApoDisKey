@@ -19,7 +19,7 @@ struct DisKeyApp: App {
         func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { true }
 
         func applicationWillTerminate(_ notification: Notification) {
-            if model.fX >= 0.0 && model.fY >= 0.0 {
+            if model.windowX >= 0.0 && model.windowY >= 0.0 {
                 UserDefaults.standard.removeObject(
                     forKey: "NSWindow Frame ApoDisKey.AppView-1-AppWindow-1")
             }
@@ -37,7 +37,7 @@ struct DisKeyApp: App {
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
         extractOptions()                        // any command arguments ?
 
-        if model.fX >= 0.0 && model.fY >= 0.0 {
+        if model.windowX >= 0.0 && model.windowY >= 0.0 {
             UserDefaults.standard.removeObject(
                 forKey: "NSWindow Frame ApoDisKey.AppView-1-AppWindow-1")
         }
@@ -176,7 +176,7 @@ struct MonitorView: View {
                     let bit14: UInt16 = 0b0010_0000_0000_0000
                     do {
                         try await model.network.rawSend(data: formIoPacket(0o0232, bit14))
-                        logger.log("«««    DSKY 032:    \(ZeroPadWord(bit14)) BITS (15)")
+                        logger.log("«««    DSKY 032:    \(zeroPadWord(bit14)) BITS (15)")
                     } catch {
                         print(error.localizedDescription)
                     }

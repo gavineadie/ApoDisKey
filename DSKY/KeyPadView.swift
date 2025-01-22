@@ -102,6 +102,11 @@ struct KeyView: View {
             .acceptClickThrough()
 #endif
             .onTapGesture {
+                if model.network.connection.state != .ready {
+                    logger.log("any key press while network not ready ..")
+                    startNetwork()
+                }
+
                 if keyCode < 99 {
                     logger.log("«««    \(keyText(keyCode)) (\(keyCode))")
 
@@ -129,7 +134,7 @@ struct KeyView: View {
                             let value: UInt16 = 0b0000_0000_0000_0000   // bit 14 - zero
 
                             logger.log("""
-                                «««    DSKY 032:    \(ZeroPadWord(value)) BITS (15)      \
+                                «««    DSKY 032:    \(zeroPadWord(value)) BITS (15)      \
                                 :: \(keyText(keyCode)) ↓
                                 """)
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -149,7 +154,7 @@ struct KeyView: View {
                             let value: UInt16 = 0b0010_0000_0000_0000   // bit 14 - one
 
                             logger.log("""
-                                «««    DSKY 032:    \(ZeroPadWord(value)) BITS (15)      \
+                                «««    DSKY 032:    \(zeroPadWord(value)) BITS (15)      \
                                 :: \(keyText(keyCode)) ↑
                                 """)
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -162,11 +167,6 @@ struct KeyView: View {
                                     print(error.localizedDescription)
                                 }
                             }
-                        }
-
-                        if model.network.connection.state != .ready {
-                            logger.log("PRO key while network not ready ..")
-                            startNetwork()
                         }
                     })
             )
