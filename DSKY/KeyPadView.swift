@@ -28,14 +28,14 @@ import AVFoundation
 struct KeyPadView: View {
 
     var body: some View {
-        HStack {
-            VStack {
+        HStack(alignment: .center) {
+            VStack(alignment: .center) {
                 KeyView(keyCode: 17) // "VERB"
                 KeyView(keyCode: 31) // "NOUN"
             }
 
-            VStack {
-                HStack {
+            VStack(alignment: .center) {
+                HStack(alignment: .center) {
                     KeyView(keyCode: 26) //  "+"
                     KeyView(keyCode: 07) //  "7"
                     KeyView(keyCode: 08) //  "8"
@@ -43,7 +43,7 @@ struct KeyPadView: View {
                     KeyView(keyCode: 30) //  "CLR"
                 }
 
-                HStack {
+                HStack(alignment: .center) {
                     KeyView(keyCode: 27) //  "-"
                     KeyView(keyCode: 04) //  "4"
                     KeyView(keyCode: 05) //  "5"
@@ -51,7 +51,7 @@ struct KeyPadView: View {
                     KeyView(keyCode: 99) //  "PRO" << cheat
                 }
 
-                HStack {
+                HStack(alignment: .center) {
                     KeyView(keyCode: 16) //  "0"
                     KeyView(keyCode: 01) //  "1"
                     KeyView(keyCode: 02) //  "2"
@@ -60,7 +60,7 @@ struct KeyPadView: View {
                 }
             }
 
-            VStack {
+            VStack(alignment: .center) {
                 KeyView(keyCode: 28) // "ENTR"
                 KeyView(keyCode: 18) // "RSET"
             }
@@ -79,7 +79,7 @@ struct KeyView: View {
     var body: some View {
         let keyGlyph = keyText(keyCode)
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ .. single characters are 28 points and words are 12 points                                       ┆
+  ┆ .. single characters are ~28 points and words are ~12 points                                     ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
         let fontSize: CGFloat = model.fullSize ?
                                     (keyGlyph.count == 1 ? 24.2 : 11.1) :
@@ -119,7 +119,7 @@ struct KeyView: View {
                         do {
                             try await model.network.rawSend(data: formIoPacket(0o015, keyCode))
                         } catch {
-                            print(error.localizedDescription)
+                            logger.error("\(error.localizedDescription)")
                         }
                     }
                 }
@@ -144,7 +144,7 @@ struct KeyView: View {
                                 do {
                                     try await model.network.rawSend(data: formIoPacket(0o032, value))
                                 } catch {
-                                    print(error.localizedDescription)
+                                    logger.error("\(error.localizedDescription)")
                                 }
                             }
                         }
@@ -164,7 +164,7 @@ struct KeyView: View {
                                 do {
                                     try await model.network.rawSend(data: formIoPacket(0o032, value))
                                 } catch {
-                                    print(error.localizedDescription)
+                                    logger.error("\(error.localizedDescription)")
                                 }
                             }
                         }
@@ -175,30 +175,5 @@ struct KeyView: View {
 
 #if swift(>=5.9)
 #Preview("Key [6]") { KeyView(keyCode: 6) }
-
-#Preview("Key [?]") { KeyView(keyCode: 255) }
+#Preview("Key [∇]") { KeyView(keyCode: 255) }
 #endif
-
-func keyText(_ code: UInt16) -> String { keyDict[code] ?? "ERROR" }
-
-let keyDict: [UInt16: String] = [
-    17: "VERB",
-    31: "NOUN",
-    16: "0",
-    01: "1",
-    02: "2",
-    03: "3",
-    04: "4",
-    05: "5",
-    06: "6",
-    07: "7",
-    08: "8",
-    09: "9",
-    27: "-",
-    26: "+",
-    30: "CLR",
-    99: "PRO",
-    25: "KEY\nREL",
-    28: "ENTR",
-    18: "RSET"
-]

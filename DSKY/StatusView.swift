@@ -169,8 +169,6 @@ struct AnnunciatorLamp: View {
 private func back(_ input: (String, BackColor)) -> Color {
     if model.elPowerOn {
         switch input.1 {
-        case .on:
-            return .white
         case .off:
             return Color(white: 0.55)
         case .white:

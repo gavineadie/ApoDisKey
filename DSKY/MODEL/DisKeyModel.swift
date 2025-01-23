@@ -6,7 +6,6 @@
 //
 
 // swiftlint:disable blanket_disable_command
-// swiftlint:disable identifier_name
 // swiftlint:disable comma
 
 import Foundation
@@ -14,7 +13,6 @@ import AVFoundation
 
 public enum BackColor: Sendable {
     case off
-    case on
     case white
     case yellow
     case green
@@ -96,7 +94,7 @@ extension DisKeyModel {
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆  set light label texts for Apollo 11 • Command Module                          (Apollo CM 11-17) ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-    static let CM: [Int: Light] = [
+    static let commandModule: [Int: Light] = [
         11: ("UPLINK\nACTY",   .off),
         12: ("NO ATT",         .off),
         13: ("STBY",           .off),
@@ -117,7 +115,7 @@ extension DisKeyModel {
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ set light label texts for Apollo 11 • Lunar Module (Luminary099)               (Apollo LM 11-14) ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-    static let LM0: [Int: Light] = [
+    static let lunarModule0: [Int: Light] = [
         11: ("UPLINK\nACTY",   .off),
         12: ("NO ATT",         .off),
         13: ("STBY",           .off),
@@ -138,7 +136,7 @@ extension DisKeyModel {
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ set light label texts for Apollo 11 • Lunar Module                             (Apollo LM 15-17) ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-    static let LM1: [Int: Light] = [
+    static let lunarModule1: [Int: Light] = [
         11: ("UPLINK\nACTY",   .off),
         12: ("NO ATT",         .off),
         13: ("STBY",           .off),
@@ -178,3 +176,27 @@ extension DisKeyModel {
     ]
 
 }
+
+func keyText(_ code: UInt16) -> String { keyDict[code] ?? "ERROR" }
+
+let keyDict: [UInt16: String] = [
+    17: "VERB",
+    31: "NOUN",
+    16: "0",
+    01: "1",
+    02: "2",
+    03: "3",
+    04: "4",
+    05: "5",
+    06: "6",
+    07: "7",
+    08: "8",
+    09: "9",
+    27: "-",
+    26: "+",
+    30: "CLR",
+    99: "PRO",
+    25: "KEY\nREL",
+    28: "ENTR",
+    18: "RSET"
+]
