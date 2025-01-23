@@ -17,9 +17,9 @@ struct Network: Sendable {
 
         self.didStopCallback = { error in
             if let error = error {
-                logger.log("🛜 Connection stopped due to error: \(error.localizedDescription)")
+                logger.log("←→ Connection stopped due to error: \(error.localizedDescription)")
             } else {
-                logger.log("🛜 Connection stopped successfully.")
+                logger.log("←→ Connection stopped successfully.")
             }
             exit( error == nil ? EXIT_SUCCESS : EXIT_SUCCESS )  // Notify or update UI instead of calling exit().
         }
@@ -60,8 +60,7 @@ struct Network: Sendable {
                     continuation.resume(returning: data)
                 }
                 if connectionEnded {
-                    logger.log("🛜 connection did end")
-                    stop(error: nil)
+                    logger.log("←→ connection did end")
                 }
             }
         }
@@ -70,20 +69,20 @@ struct Network: Sendable {
     @Sendable private func stateDidChange(to state: NWConnection.State) {
         switch state {
         case .setup:
-            logger.log("🛜 .setup: The connection has been initialized but not started")
+            logger.log("←→ .setup: The connection has been initialized but not started")
         case .waiting(let error):
-            logger.log("🛜 .waiting: \(error.localizedDescription)")
+            logger.log("←→ .waiting: \(error.localizedDescription)")
         case .preparing:
-            logger.log("🛜 .preparing: The connection in the process of being established")
+            logger.log("←→ .preparing: The connection in the process of being established")
         case .ready:
-            logger.log("🛜 .ready: The connection is established, and ready to send and receive data")
+            logger.log("←→ .ready: The connection is established, and ready to send and receive data")
         case .failed(let error):
-            logger.log("🛜 .failed: \(error.localizedDescription)")
+            logger.error("←→ .failed: \(error.localizedDescription)")
             self.stop(error: error)
         case .cancelled:
-            logger.log("🛜 .cancelled: The connection has been canceled")
+            logger.error("←→ .cancelled: The connection has been canceled")
         @unknown default:
-            fatalError("The state: \(state) is not supported")  // \(String(describing: state))
+            fatalError("←→ network state: \(state) is not supported")  // \(String(describing: state))
         }
     }
 
