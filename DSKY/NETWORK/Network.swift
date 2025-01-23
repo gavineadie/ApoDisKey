@@ -138,7 +138,7 @@ func startNetwork() {
                         parseIoPacket(rxPacket) { channelAction(channel, action) }
                 }
             } catch {
-                print(error.localizedDescription)
+                logger.error("\(error.localizedDescription)")
                 keepGoing = false
             }
         } while keepGoing

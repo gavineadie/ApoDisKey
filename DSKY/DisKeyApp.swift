@@ -42,8 +42,6 @@ struct DisKeyApp: App {
                 forKey: "NSWindow Frame ApoDisKey.AppView-1-AppWindow-1")
         }
 
-        readInitializing()
-
         startNetwork()
     }
 
@@ -108,17 +106,17 @@ struct MonitorView: View {
             Menu("Choose Mission") {
                 Button("Apollo CM 8-17",
                        action: {
-                    model.statusLights = DisKeyModel.CM
+                    model.statusLights = DisKeyModel.commandModule
                     model.elPowerOn = true
                 })
                 Button("Apollo LM 11-14",
                        action: {
-                    model.statusLights = DisKeyModel.LM0
+                    model.statusLights = DisKeyModel.lunarModule0
                     model.elPowerOn = true
                 })
                 Button("Apollo LM 15-17",
                        action: {
-                    model.statusLights = DisKeyModel.LM1
+                    model.statusLights = DisKeyModel.lunarModule1
                     model.elPowerOn = true
                 })
             }
@@ -126,8 +124,7 @@ struct MonitorView: View {
             TextField("AGC Address", text: $ipAddr)
             .font(.custom("Menlo", size: 12))
 
-            TextField("AGC PortNum", value: $ipPort,
-                      formatter: MonitorView.integer)
+            TextField("AGC PortNum", value: $ipPort, formatter: MonitorView.integer)
             .font(.custom("Menlo", size: 12))
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -136,7 +133,6 @@ struct MonitorView: View {
             Button("Connect",
                    systemImage: "phone.connection",
                    action: {
-                print("connect")
                 model.ipAddr = ipAddr
                 model.ipPort = ipPort
                 logger.log("""
@@ -158,7 +154,7 @@ struct MonitorView: View {
                                     parseIoPacket(rxPacket) { channelAction(channel, action) }
                             }
                         } catch {
-                            print(error.localizedDescription)
+                            logger.error("\(error.localizedDescription)")
                             keepGoing = false
                         }
                     } while keepGoing
@@ -173,7 +169,7 @@ struct MonitorView: View {
                         try await model.network.rawSend(data: formIoPacket(0o0232, bit14))
                         logger.log("«««    DSKY 032:    \(zeroPadWord(bit14)) BITS (15)")
                     } catch {
-                        print(error.localizedDescription)
+                        logger.error("\(error.localizedDescription)")
                     }
                 }
             }

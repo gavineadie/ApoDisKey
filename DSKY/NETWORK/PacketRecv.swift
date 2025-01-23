@@ -8,7 +8,6 @@
 // swiftlint:disable blanket_disable_command
 // swiftlint:disable identifier_name
 // swiftlint:disable function_body_length
-// swiftlint:disable large_tuple
 
 import Foundation
 

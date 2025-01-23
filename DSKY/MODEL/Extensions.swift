@@ -308,11 +308,11 @@ func extractOptions() {
         if arg.hasPrefix("--cfg=") {
             arg.removeFirst(6)
             if arg.starts(with: "CM") {
-                model.statusLights = DisKeyModel.CM
+                model.statusLights = DisKeyModel.commandModule
             } else if arg.starts(with: "LM1") {
-                model.statusLights = DisKeyModel.LM1
+                model.statusLights = DisKeyModel.lunarModule1
             } else if arg.starts(with: "LM") {
-                model.statusLights = DisKeyModel.LM0
+                model.statusLights = DisKeyModel.lunarModule0
             }
 
             model.elPowerOn = true
