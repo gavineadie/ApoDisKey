@@ -46,19 +46,21 @@ developed some years ago as part of the Virtual AGC project -- it is the `yaAGC`
 program, written in C, in the Virtual AGC [GitHub
 repository](https://github.com/virtualagc/virtualagc).
 
-### ApoDisKey
+### Connecting ApoDisKey to `yaAGC`
 
 ApoDisKey will launch and run in the absense of an `yaAGC`, but it will be quite
 uninteresting -- rather like an unplugged regular computer keyboard.  The
 emphasis here is that ApoDisKey without `yaAGC` is nothing more than a pretty
 face!
 
-Getting `yaAGC` running is quite easy ..
+When running on a Mac, the Virtual AGC project will detect the presence of 
+ApoDisKey and make it an option to be used in place of the provided DSKY application.
+Obtaining, [building and running Virtual AGC on macOS](https://www.ibiblio.org/apollo/download.html#Sequoia) 
+is well described in that project's documentation.
 
-### Connecting ApoDisKey to `yaAGC`
-
-The AGC emulator, `yaAGC`, replaces the real AGC i/o hardwaring channels with four byte TCP
-packets which carry the channel number and the command value. 
+Questions, issues and concerns that are related to ApoDisKey specifically should
+come to this author via this project's [issues](https://github.com/gavineadie/ApoDisKey/issues)
+page.
 
 ### Acknowledgments
 
