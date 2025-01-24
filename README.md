@@ -1,7 +1,7 @@
 ## ApoDisKey
 
 <p align="center"> <img src="https://ramsaycons.com/pix/macOS-DSKY-EC234A.png"
-width="600" /> </p>
+width="400" /> </p>
 
 ### Context
 
@@ -35,13 +35,13 @@ ApoDisKey's implementation of the DSKY is similarly separated from the actual
 AGC and requires a running AGC emulator (no remaining real AGC being available)
 to communicate with.
 
-A huge effort was made several years ago to preserve the details of the AGC. The
+A huge effort started several years ago, and continues, to preserve the details of the AGC. The
 original engineering and manufacturing documents have been preserved and much of
 the software has been recovered from listings or dumped from AGC memory boards.
 This work is documented and preserved at: [The Virtual AGC
 Project](https://www.ibiblio.org/apollo/).
 
-Included in the Virtual AGC Project is cross-platform AGC simulator was
+Included in the Virtual AGC Project is cross-platform AGC simulator which was
 developed some years ago as part of the Virtual AGC project -- it is the `yaAGC`
 program, written in C, in the Virtual AGC [GitHub
 repository](https://github.com/virtualagc/virtualagc).
@@ -61,6 +61,12 @@ is well described in that project's documentation.
 Questions, issues and concerns that are related to ApoDisKey specifically should
 come to this author via this project's [issues](https://github.com/gavineadie/ApoDisKey/issues)
 page.
+
+### supported macOS versions
+
+ApoDisKey will run on macOS versions 14 (Sonoma) and 15 (Sequoia).  Because the 
+regular version uses new features of SwiftUI, there is a separate
+version that will run on macOS 12 (Monterey) and 13 (Ventura). 
 
 ### Acknowledgments
 
