@@ -10,22 +10,38 @@ import SwiftUI
 // panel dimensions
 
 let panelExSizeW: CGFloat = 222.0
-#if MONTEREY
-let panelExSizeH: CGFloat = 374.0 - 2.0
-#else
-let panelExSizeH: CGFloat = 374.0
-#endif
+var panelExSizeH: CGFloat {
+    if #available(macOS 13.0, *) {
+        return 374.0 - 2.0
+    } else {
+        return 374.0
+    }
+}
 let panelInset: CGFloat = 26.0
 
 // annunciator lamp panel dimensions
 
-#if MONTEREY
-let statusWidth: CGFloat = 90.0 - 2.0
-let statusHeight: CGFloat = 45.0 - 1.5
-#else
-let statusWidth: CGFloat = 90.0
-let statusHeight: CGFloat = 45.0
-#endif
+var lampVerticalPadding: CGFloat {
+    if #available(macOS 13.0, *) {
+        return +1.0
+    } else {
+        return -0.75
+    }
+}
+var statusWidth: CGFloat {
+    if #available(macOS 13.0, *) {
+        return 90.0
+    } else {
+        return 90.0 - 2.0
+    }
+}
+var statusHeight: CGFloat {
+    if #available(macOS 13.0, *) {
+        return 45.0
+    } else {
+        return 45.0 - 1.5
+    }
+}
 let statusCorner: CGFloat = 6.0
 
 let statusText = Color(white: 0.0)
@@ -38,11 +54,13 @@ let keyTextColorLit = Color(white: 0.9)
 let keyTextColorOff = Color(white: 0.7)
 let keyPadColor = Color(white: 0.25)
 
-#if MONTEREY
-let keyPadBaselineOffset = -2.0
-#else
-let keyPadBaselineOffset = -4.0
-#endif
+var keyPadBaselineOffset: CGFloat {
+    if #available(macOS 13.0, *) {
+        return -4.0
+    } else {
+        return -2.0
+    }
+}
 
 let zerlinaFixedSize: CGFloat = 46.0
 let zerlinaTracking: CGFloat = 4.0
@@ -80,6 +98,14 @@ let keyCorner: CGFloat = 3.0
             ╰───────────────────────╯
 */
 
+var panelTopPadding: CGFloat {
+    if #available(macOS 13.0, *) {
+        return 0
+    } else {
+        return 4
+    }
+}
+
 struct PanelsView: View {
     var interiorFill: Color = Color(white: 0.6)
 
@@ -98,9 +124,7 @@ struct PanelsView: View {
                 .frame(width: panelExSizeW-panelInset,
                        height: panelExSizeH-panelInset)
         }
-#if MONTEREY
-        .padding(.top, +4)
-#endif
+        .padding(.top, panelTopPadding)
     }
 }
 

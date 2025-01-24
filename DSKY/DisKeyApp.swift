@@ -15,6 +15,8 @@ let logger = Logger(subsystem: "com.ramsaycons.ApoDisKey", category: "")
 struct DisKeyApp: App {
 
 #if os(macOS)
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
     class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { true }
 
@@ -25,8 +27,6 @@ struct DisKeyApp: App {
             }
         }
     }
-
-    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 #endif
 
     init() {
@@ -49,24 +49,55 @@ struct DisKeyApp: App {
   ┆ do other things as the ContentView runs ..                                                       ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 
+//    var body: some Scene {
+//        if #available(macOS 13.0, *) {
+//            WindowGroup {
+//                AppView()
+//            }
+//            .defaultSize(CGSize(width: 569, height: 656))
+//            .defaultPosition(UnitPoint(x: model.windowX, y: model.windowY))
+//        } else {
+//            WindowGroup {
+//                AppView()
+//            }
+//            .windowLevel(.normal)
+//        }
+//    }
+
     var body: some Scene {
         WindowGroup {
             AppView()
         }
-#if os(macOS)
-        .defaultSize(CGSize(width: 569, height: 656))
-        .defaultPosition(UnitPoint(x: model.windowX, y: model.windowY))
-#endif
+        .commands {
+        	CommandGroup(replacing: .pasteboard) { }            // "Cut", "Copy", "Paste", ..
+        	CommandGroup(replacing: .newItem) { }               // "File" removed ("New", "Open", ..)
+        	CommandGroup(replacing: .undoRedo) { }
+        	CommandGroup(replacing: .systemServices) { }
+        	CommandGroup(replacing: .windowList) { }
+        	CommandGroup(replacing: .windowSize) { }
+        	CommandGroup(replacing: .windowArrangement) { }
+        	CommandGroup(replacing: .help) { }
+        }
+//#if os(macOS)
+//        if #available(macOS 13.0, *) {
+//            .defaultSize(CGSize(width: 569, height: 656))
+//            .defaultPosition(UnitPoint(x: model.windowX, y: model.windowY))
+//        }
+//#endif
     }
+
+//    private func setupMenus() {
+//        let mainMenu = NSApp.mainMenu ?? NSMenu()
+//
+//        if let editMenuItemIndex = mainMenu.items.firstIndex(where: { $0.title == "Edit" }) {
+//            mainMenu.removeItem(at: editMenuItemIndex)
+//        }
+//
+//        NSApp.mainMenu = mainMenu
+//    }
 }
 
 struct AppView: View {
-#if MONTEREY
-#else
-    let timer = Timer.publish(every: model.logTimer ? 1E1 : 1E8,
-                              on: .main, in: .common).autoconnect()
-#endif
-
     var body: some View {
         let scaleFactor = model.fullSize ? 1 : 0.5
         VStack {

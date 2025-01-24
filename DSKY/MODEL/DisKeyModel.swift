@@ -24,44 +24,42 @@ typealias Light = (String, BackColor)
 
 typealias Display = (String, Bool)
 
-@MainActor
-@Observable
-final class DisKeyModel {
+class DisKeyModel: ObservableObject {
 
-    static let shared = DisKeyModel()
+    @MainActor static let shared = DisKeyModel()
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ .. properties relating to the application itself ..                                              ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-    public var fullSize = true
-    public var haveCmdArgs = false
+    @Published public var fullSize = true
+    @Published public var haveCmdArgs = false
+    
+    @Published public var windowX: CGFloat = -99.0
+    @Published public var windowY: CGFloat = -99.0
+    
+    @Published public var logTimer = false
 
-    public var windowX: CGFloat = -99.0
-    public var windowY: CGFloat = -99.0
-
-    public var logTimer = false
-
-    public var ch15ResetCount = 0
-
+    @Published public var ch15ResetCount = 0
+    
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ .. the fourteen annunciator lamps resentating status on the DSKY top-left ..                     ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-    public var statusLights: [Int: Light] = [
-            11: ("   ", .off),              //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
-            12: ("   ", .off),              //  ┆ UPLINK ┆ ┆  TEMP  ┆
-            13: ("   ", .off),              //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
-            14: ("   ", .off),              //  ┆ NO ATT ┆ ┆ GIMBAL ┆
-            15: ("   ", .off),              //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
-            16: ("   ", .off),              //  ┆  STBY  ┆ ┆  PROG  ┆
-            17: ("   ", .off),              //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
-                                            //  ┆KEY REL ┆ ┆RESTART ┆
-            21: ("   ", .off),              //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
-            22: ("   ", .off),              //  ┆OPR ERR ┆ ┆TRACKER ┆
-            23: ("   ", .off),              //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
-            24: ("   ", .off),              //  ┆PRIODISP┆ ┆  ALT   ┆
-            25: ("   ", .off),              //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
-            26: ("   ", .off),              //  ┆ NO DAP ┆ ┆  VEL   ┆
-            27: ("   ", .off)               //  ╰╌╌╌╌╌╌╌╌╯ ╰╌╌╌╌╌╌╌╌╯
+    @Published public var statusLights : [Int: Light] = [
+            11: ("", .off),             //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
+            12: ("", .off),             //  ┆ UPLINK ┆ ┆  TEMP  ┆
+            13: ("", .off),             //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
+            14: ("", .off),             //  ┆ NO ATT ┆ ┆ GIMBAL ┆
+            15: ("", .off),             //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
+            16: ("", .off),             //  ┆  STBY  ┆ ┆  PROG  ┆
+            17: ("", .off),             //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
+                                        //  ┆KEY REL ┆ ┆RESTART ┆
+            21: ("", .off),             //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
+            22: ("", .off),             //  ┆OPR ERR ┆ ┆TRACKER ┆
+            23: ("", .off),             //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
+            24: ("", .off),             //  ┆        ┆ ┆  ALT   ┆
+            25: ("", .off),             //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
+            26: ("", .off),             //  ┆        ┆ ┆  VEL   ┆
+            27: ("", .off)              //  ╰╌╌╌╌╌╌╌╌╯ ╰╌╌╌╌╌╌╌╌╯
         ]
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -69,18 +67,18 @@ final class DisKeyModel {
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
     public var elPowerOn = false                        // electroluminescent power (starts OFF)
 
-    public var comp: Display = ("--", false)            // numbers (none for COMP), placard=dark
-    public var prog: Display = ("__", false)
-    public var verb: Display = ("__", false)            // numbers=35, placard=green
-    public var noun: Display = ("__", false)
+    @Published public var comp: Display = ("--", false)      // numbers (none for COMP), placard=dark
+    @Published public var prog: Display = ("__", false)
+    @Published public var verb: Display = ("__", false)      // numbers=35, placard=green
+    @Published public var noun: Display = ("__", false)
 
-    public var reg1: Display = (" _____", true)
-    public var reg2: Display = (" _____", false)        // what does "false" do here?
-    public var reg3: Display = (" _____", true)
+    @Published public var reg1: Display = (" _____", true)
+    @Published public var reg2: Display = (" _____", false)  // what does "false" do here?
+    @Published public var reg3: Display = (" _____", true)
 
-    public var r1Sign = (false, false)                  // blank prefix (± or blank)
-    public var r2Sign = (false, false)
-    public var r3Sign = (false, false)
+    @Published public var r1Sign = (false, false)            // blank prefix (± or blank)
+    @Published public var r2Sign = (false, false)
+    @Published public var r3Sign = (false, false)
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ .. network imnformation for connecting to AGC ..                                                 ┆

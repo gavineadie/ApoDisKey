@@ -65,14 +65,14 @@ struct DisKeyView: View {
             }
             .padding(.top, 5.0)
         }
-        .dropDestination(for: URL.self) { urls, _ in
-            if let url = urls.first {
-                readCanned(path: url.path())
-                return true
-            } else {
-                return false
-            }
-        }
+//        .dropDestination(for: URL.self) { urls, _ in
+//            if let url = urls.first {
+//                readCanned(path: url.path())
+//                return true
+//            } else {
+//                return false
+//            }
+//        }
 
 #if os(iOS)
         .scaleEffect(min(1.2, UIScreen.main.bounds.width/660.0))

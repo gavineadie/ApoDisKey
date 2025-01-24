@@ -38,6 +38,8 @@ let panelDigitSize: CGFloat = 37.0
 
 struct DisplayView: View {
 
+    @StateObject var model = DisKeyModel.shared
+
     var body: some View {
         ZStack {
             PanelsView(interiorFill: Color(white: 0.35))
@@ -45,18 +47,18 @@ struct DisplayView: View {
             VStack {
                 ZStack {
                     VStack {
-#if MONTEREY
-                        Spacer().frame(height: 4.0)
-                        Row1(comp: model.comp, prog: model.prog)
-                        Spacer().frame(height: 8.0)
-                        Row2(verb: model.verb, noun: model.noun)
-                        Spacer().frame(height: 0)
-#else
-                        Row1(comp: model.comp, prog: model.prog)
-                        Spacer().frame(height: 12.0)
-                        Row2(verb: model.verb, noun: model.noun)
-                        Spacer().frame(height: 12.0)
-#endif
+                        if #available(macOS 13.0, *) {
+                            Spacer().frame(height: 4.0)
+                            Row1(comp: model.comp, prog: model.prog)
+                            Spacer().frame(height: 8.0)
+                            Row2(verb: model.verb, noun: model.noun)
+                            Spacer().frame(height: 0)
+                        } else {
+                            Row1(comp: model.comp, prog: model.prog)
+                            Spacer().frame(height: 12.0)
+                            Row2(verb: model.verb, noun: model.noun)
+                            Spacer().frame(height: 12.0)
+                        }
                     }
                     VStack {
                         Spacer().frame(height: 10)
@@ -304,6 +306,7 @@ struct DisplayNumbers: View {
     }
 }
 
+/*╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌*/
 extension View {
     func sevenSegRegister() -> some View {
         modifier(SevenSegRegister())
@@ -319,6 +322,7 @@ struct SevenSegRegister: ViewModifier {
     }
 }
 
+/*╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌*/
 extension View {
     func sevenSegVerbNoun() -> some View {
         modifier(SevenSegVerbNoun())
@@ -333,3 +337,15 @@ struct SevenSegVerbNoun: ViewModifier {
             .frame(width: 95.0, height: panelDigitSize)
     }
 }
+
+/*╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌*/
+//extension Scene {
+//    func defaultSizePosn() -> some Scene {
+//        if #available(macOS 13.0, *) {
+//            .defaultSize(CGSize(width: 569, height: 656))
+//            .defaultPosition(UnitPoint(x: model.windowX, y: model.windowY))
+//        } else {
+//
+//        }
+//    }
+//}
