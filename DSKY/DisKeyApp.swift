@@ -13,6 +13,8 @@ let logger = Logger(subsystem: "com.ramsaycons.ApoDisKey", category: "")
 
 @main
 struct DisKeyApp: App {
+    @State private var helpWindowController: HelpWindowController?
+    @State private var newsWindowController: NewsWindowController?
 
 #if os(macOS)
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
@@ -49,15 +51,72 @@ struct DisKeyApp: App {
   ┆ do other things as the ContentView runs ..                                                       ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 
+//    var body: some Scene {
+//        if #available(macOS 13.0, *) {
+//            WindowGroup {
+//                AppView()
+//            }
+//            .defaultSize(CGSize(width: 569, height: 656))
+//            .defaultPosition(UnitPoint(x: model.windowX, y: model.windowY))
+//        } else {
+//            WindowGroup {
+//                AppView()
+//            }
+//            .windowLevel(.normal)
+//        }
+//    }
+
     var body: some Scene {
         WindowGroup {
             AppView()
         }
-#if os(macOS)
-        .defaultSize(CGSize(width: 569, height: 656))
-        .defaultPosition(UnitPoint(x: model.windowX, y: model.windowY))
-#endif
+        .commands {
+            CommandGroup(replacing: .pasteboard) { }            // "Cut", "Copy", "Paste", ..
+            CommandGroup(replacing: .newItem) { }               // "File" removed ("New", "Open", ..)
+            CommandGroup(replacing: .undoRedo) { }
+            CommandGroup(replacing: .systemServices) { }
+            CommandGroup(replacing: .windowSize) { }
+            CommandGroup(replacing: .windowArrangement) { }
+            CommandGroup(replacing: .help) {
+                Button("ApoDisKey Help") {
+                    openHelpWindow()
+                }
+                Button("ApoDisKey News") {
+                    openNewsWindow()
+                }
+            }
+        }
+// FIXME: Work needed ..
+// #if os(macOS)
+//        if #available(macOS 13.0, *) {
+//            .defaultSize(CGSize(width: 569, height: 656))
+//            .defaultPosition(UnitPoint(x: model.windowX, y: model.windowY))
+//        }
+// #endif
+
+        if #available(macOS 13.0, *) {
+            Window("Help", id: "help") {
+                HelpView()
+            }
+        }
     }
+
+    private func openHelpWindow() {
+        if helpWindowController == nil {
+            helpWindowController = HelpWindowController()
+        }
+        helpWindowController?.showWindow(nil)
+        helpWindowController?.window?.makeKeyAndOrderFront(nil)
+    }
+
+    private func openNewsWindow() {
+        if newsWindowController == nil {
+            newsWindowController = NewsWindowController()
+        }
+        newsWindowController?.showWindow(nil)
+        newsWindowController?.window?.makeKeyAndOrderFront(nil)
+    }
+
 }
 
 struct AppView: View {

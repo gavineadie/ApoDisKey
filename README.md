@@ -64,7 +64,7 @@ come to this author via this project's
 [issues](https://github.com/gavineadie/ApoDisKey/issues)
 page.
 
-### supported macOS versions
+### Supported macOS Versions
 
 ApoDisKey runs on macOS versions 12 (Monterey) through 15 (Sequoia).
 Some non-critical features are missing when run on the older macOS versions.

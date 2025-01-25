@@ -75,7 +75,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--ip=localhost"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--port=19697"
@@ -99,7 +99,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--ip=192.168.1.100 (Mac)"
-            isEnabled = "NO">
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--ip=192.168.1.192 (iPhone)"

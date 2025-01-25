@@ -34,6 +34,9 @@ import SwiftUI
 */
 
 struct StatusView: View {
+
+    @StateObject var model = DisKeyModel.shared
+
     var body: some View {
         ZStack {
             PanelsView(interiorFill: Color(white: 0.6))

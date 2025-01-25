@@ -10,6 +10,7 @@
 // swiftlint:disable colon
 // swiftlint:disable comma
 // swiftlint:disable vertical_whitespace
+// swiftlint:disable file_length
 
 import Foundation
 

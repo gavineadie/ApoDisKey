@@ -38,6 +38,8 @@ let panelDigitSize: CGFloat = 37.0
 
 struct DisplayView: View {
 
+    @StateObject var model = DisKeyModel.shared
+
     var body: some View {
         ZStack {
             PanelsView(interiorFill: Color(white: 0.35))
@@ -335,3 +337,15 @@ struct SevenSegVerbNoun: ViewModifier {
             .frame(width: 95.0, height: panelDigitSize)
     }
 }
+
+/*╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌*/
+// extension Scene {
+//    func defaultSizePosn() -> some Scene {
+//        if #available(macOS 13.0, *) {
+//            .defaultSize(CGSize(width: 569, height: 656))
+//            .defaultPosition(UnitPoint(x: model.windowX, y: model.windowY))
+//        } else {
+//
+//        }
+//    }
+// }
