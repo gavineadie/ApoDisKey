@@ -339,7 +339,7 @@ struct SevenSegVerbNoun: ViewModifier {
 }
 
 /*╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌*/
-//extension Scene {
+// extension Scene {
 //    func defaultSizePosn() -> some Scene {
 //        if #available(macOS 13.0, *) {
 //            .defaultSize(CGSize(width: 569, height: 656))
@@ -348,4 +348,4 @@ struct SevenSegVerbNoun: ViewModifier {
 //
 //        }
 //    }
-//}
+// }

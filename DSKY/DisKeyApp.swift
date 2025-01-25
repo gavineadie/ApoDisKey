@@ -33,10 +33,10 @@ struct DisKeyApp: App {
 
     init() {
 
-        /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-         ┆ establish the global environment                                                                 ┆
-         ┆ .. read init files                                                                               ┆
-         ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ establish the global environment                                                                 ┆
+  ┆ .. read init files                                                                               ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
         extractOptions()                        // any command arguments ?
 
         if model.windowX >= 0.0 && model.windowY >= 0.0 {
@@ -47,24 +47,24 @@ struct DisKeyApp: App {
         startNetwork()
     }
 
-    /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-     ┆ do other things as the ContentView runs ..                                                       ┆
-     ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ do other things as the ContentView runs ..                                                       ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 
-    //    var body: some Scene {
-    //        if #available(macOS 13.0, *) {
-    //            WindowGroup {
-    //                AppView()
-    //            }
-    //            .defaultSize(CGSize(width: 569, height: 656))
-    //            .defaultPosition(UnitPoint(x: model.windowX, y: model.windowY))
-    //        } else {
-    //            WindowGroup {
-    //                AppView()
-    //            }
-    //            .windowLevel(.normal)
-    //        }
-    //    }
+//    var body: some Scene {
+//        if #available(macOS 13.0, *) {
+//            WindowGroup {
+//                AppView()
+//            }
+//            .defaultSize(CGSize(width: 569, height: 656))
+//            .defaultPosition(UnitPoint(x: model.windowX, y: model.windowY))
+//        } else {
+//            WindowGroup {
+//                AppView()
+//            }
+//            .windowLevel(.normal)
+//        }
+//    }
 
     var body: some Scene {
         WindowGroup {
@@ -86,13 +86,13 @@ struct DisKeyApp: App {
                 }
             }
         }
-        // FIXME: Work needed ..
-        // #if os(macOS)
-        //        if #available(macOS 13.0, *) {
-        //            .defaultSize(CGSize(width: 569, height: 656))
-        //            .defaultPosition(UnitPoint(x: model.windowX, y: model.windowY))
-        //        }
-        // #endif
+// FIXME: Work needed ..
+// #if os(macOS)
+//        if #available(macOS 13.0, *) {
+//            .defaultSize(CGSize(width: 569, height: 656))
+//            .defaultPosition(UnitPoint(x: model.windowX, y: model.windowY))
+//        }
+// #endif
 
         if #available(macOS 13.0, *) {
             Window("Help", id: "help") {
