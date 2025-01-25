@@ -32,15 +32,15 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ tf: Bool = true) {
   ┆                                                                                                  ┆
   ┆###       NOTE: don't log command that only cycle the "COMP ACTY" indicator.                      ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-	case 0o011:                 // [OUTPUT] flags for indicator lamps etc
-//          if value != 0x2000 && value != 0x2002 && value != 0x2200 && value != 0x2202 {
-//              logger.log("""
-//              »»»    DSKY 011:   \(ZeroPadWord(value)) BITS (15)       \
-//              :: \(prettyCh011(value))
-//              """)
-//          }
-		model.comp.1 = value & bit2 > 0                                     // "COMP ACTY"
-		
+    case 0o011:                 // [OUTPUT] flags for indicator lamps etc
+        if value != 0x2000 && value != 0x2002 && value != 0x2200 && value != 0x2202 {
+            logger.log("""
+            »»»    DSKY 011:    \(zeroPadWord(value)) BITS (15)      \
+            :: \(prettyCh011(value))
+            """)
+        }
+        model.comp.1 = value & bit2 > 0                                     // "COMP ACTY"
+
         model.statusLights[11]?.1 = (value & bit3 > 0) ? .white : .off      // "UPLINK
         model.statusLights[21]?.1 = (value & bit4 > 0) ? .yellow : .off     // "TEMP"
         model.statusLights[24]?.1 = (value & bit5 > 0) ? .yellow : .off     // "KEY REL"
@@ -97,10 +97,10 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ tf: Bool = true) {
   ┆          Bit 10: EL off                                                                          ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
     case 0o163:
-//            logger.log("""
-//                »»»    DSKY 163:         \(ZeroPadWord(value, to: 10)) BITS (10)      \
-//                :: \(prettyCh163(value))
-//                """)
+        logger.log("""
+            »»»    DSKY 163:         \(zeroPadWord(value, to: 10)) BITS (10)      \
+            :: \(prettyCh163(value))
+            """)
 
         model.statusLights[21]?.1 = (value & bit4 > 0) ? .yellow : .off     // Bit 4: TEMP lamp
         model.statusLights[14]?.1 = (value & bit5 > 0) ? .white : .off      // Bit 5: KEY REL lamp
@@ -144,11 +144,11 @@ func dskyInterpretation(_ code: UInt16) {
   ┆          Bit 8 lights the "TRACKER" indicator.                                                   ┆
   ┆          Bit 9 lights the "PROG" indicator.                                                      ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-//            logger.log("""
-//                ***    DSKY 010: \(ZeroPadWord(code).prefix(5))   \
-//                \(ZeroPadWord(code).dropFirst(5)) \
-//                LIGHTS (10)    :: \(prettyCh010(code & 0b0000000_111111111))
-//                """)
+        logger.log("""
+            »»»    DSKY 010: \(zeroPadWord(code).prefix(5)) \
+            \(zeroPadWord(code).dropFirst(5)) \
+            LIGHTS (10)      :: \(prettyCh010(code & 0b0000000_111111111))
+            """)
 
         model.statusLights[27]?.1 = (code & bit3 > 0) ? .yellow : .off   // 3: VEL
         model.statusLights[12]?.1 = (code & bit4 > 0) ?  .white : .off   // 4: NO ATT
@@ -304,7 +304,6 @@ func dskyInterpretation(_ code: UInt16) {
             default:
                 break
             }
-
     }
 
     return

@@ -1,7 +1,7 @@
 ## ApoDisKey
 
 <p align="center"> <img src="https://ramsaycons.com/pix/macOS-DSKY-EC234A.png"
-width="600" /> </p>
+width="400" /> </p>
 
 ### Context
 
@@ -35,30 +35,39 @@ ApoDisKey's implementation of the DSKY is similarly separated from the actual
 AGC and requires a running AGC emulator (no remaining real AGC being available)
 to communicate with.
 
-A huge effort was made several years ago to preserve the details of the AGC. The
+A huge effort started several years ago, and continues, to preserve the details of the AGC. The
 original engineering and manufacturing documents have been preserved and much of
 the software has been recovered from listings or dumped from AGC memory boards.
-This work is documented and preserved at: [The Virtual AGC
-Project](https://www.ibiblio.org/apollo/).
+This work is documented and preserved at: 
+[The Virtual AGC Project](https://www.ibiblio.org/apollo/).
 
-Included in the Virtual AGC Project is cross-platform AGC simulator was
+Included in the Virtual AGC Project is cross-platform AGC simulator which was
 developed some years ago as part of the Virtual AGC project -- it is the `yaAGC`
-program, written in C, in the Virtual AGC [GitHub
-repository](https://github.com/virtualagc/virtualagc).
+program, written in C, in the Virtual AGC 
+[GitHub repository](https://github.com/virtualagc/virtualagc).
 
-### ApoDisKey
+### Connecting ApoDisKey to `yaAGC`
 
 ApoDisKey will launch and run in the absense of an `yaAGC`, but it will be quite
 uninteresting -- rather like an unplugged regular computer keyboard.  The
 emphasis here is that ApoDisKey without `yaAGC` is nothing more than a pretty
 face!
 
-Getting `yaAGC` running is quite easy ..
+When running on a Mac, the Virtual AGC project will detect the presence of 
+ApoDisKey and make it an option to be used in place of the provided DSKY application.
+Obtaining, 
+[building and running Virtual AGC on macOS](https://www.ibiblio.org/apollo/download.html#Sequoia) 
+is well described in that project's documentation.
 
-### Connecting ApoDisKey to `yaAGC`
+Questions, issues and concerns that are related to ApoDisKey specifically should
+come to this author via this project's 
+[issues](https://github.com/gavineadie/ApoDisKey/issues)
+page.
 
-The AGC emulator, `yaAGC`, replaces the real AGC i/o hardwaring channels with four byte TCP
-packets which carry the channel number and the command value. 
+### supported macOS versions
+
+ApoDisKey runs on macOS versions 12 (Monterey) through 15 (Sequoia).
+Some non-critical features are missing when run on the older macOS versions.
 
 ### Acknowledgments
 

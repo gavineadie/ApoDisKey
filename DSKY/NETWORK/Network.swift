@@ -48,7 +48,7 @@ struct Network: Sendable {
             })
         }
     }
-    
+
     func rawReceive(length: Int) async throws -> Data? {
         try await withCheckedThrowingContinuation { continuation in
             self.connection.receive(minimumIncompleteLength: length,

@@ -116,16 +116,19 @@ let ch010Labs = [" ??? ",
                  "PRIO ",    // b1
                  "NEVER"]
 
-@available(macOS 13.0, *)
 func prettyCh010(_ code: UInt16) -> String {
-	let bitArray = zeroPadWord(code, to: 10).split(separator: "")
-	var catString = ""
+    if #available(macOS 13, *) {
 
-	for index in 0..<bitArray.count {
-		catString += (bitArray[index] == "0") ? "  ↓  " : ch010Labs[index]
-	}
+        var catString = ""
+        let bitArray = zeroPadWord(code, to: 10).split(separator: "")
+        for index in 0..<bitArray.count {
+            catString += (bitArray[index] == "0") ? "  ↓  " : ch010Labs[index]
+        }
+        return catString
 
-	return catString
+    } else {
+        return "macOS 13 or later required for '.split'"
+    }
 }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -150,28 +153,36 @@ let ch011Labs = [" ??? ",    // b8
                  " ??? ",    // b1
                  "NEVER"]
 
-@available(macOS 13.0, *)
 func prettyCh011(_ code: UInt16) -> String {
-    let bitArray = zeroPadWord(code, to: 8).split(separator: "")
-    var catString = "          "
+    if #available(macOS 13, *) {
 
-    for index in 0..<bitArray.count {
-        catString += (bitArray[index] == "0") ? "  ↓  " : ch011Labs[index]
+        var catString = "          "
+        let bitArray = zeroPadWord(code, to: 8).split(separator: "")
+
+        for index in 0..<bitArray.count {
+            catString += (bitArray[index] == "0") ? "  ↓  " : ch011Labs[index]
+        }
+        return catString
+
+    } else {
+        return "macOS 13 or later required for '.split'"
     }
-
-    return catString
 }
 
-@available(macOS 13.0, *)
 func prettyCh032(_ code: UInt16) -> String {
-    let bitArray = zeroPadWord(code).split(separator: "")
-    var catString = ""
+    if #available(macOS 13, *) {
 
-    for index in 0..<bitArray.count {
-        catString += (bitArray[index] == "0") ? "  ↓  " : "  ↑  "
+        var catString = ""
+        let bitArray = zeroPadWord(code).split(separator: "")
+
+        for index in 0..<bitArray.count {
+            catString += (bitArray[index] == "0") ? "  ↓  " : "  ↑  "
+        }
+        return catString
+
+    } else {
+        return "macOS 13 or later required for '.split'"
     }
-
-    return catString
 }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -198,16 +209,21 @@ let ch163Labs = [" EL↓ ",    // b10
                  " AGC ",    // b1
                  "NEVER"]
 
-@available(macOS 13.0, *)
 func prettyCh163(_ code: UInt16) -> String {
-    let bitArray = zeroPadWord(code, to: 10).split(separator: "")
-    var catString = (bitArray[0] == "1") ? " EL↓ " : " EL↑ "
+    if #available(macOS 13, *) {
 
-    for index in 1..<bitArray.count {
-        catString += (bitArray[index] == "0") ? "  ↓  " : ch163Labs[index]
+        let bitArray = zeroPadWord(code, to: 10).split(separator: "")
+        var catString = (bitArray[0] == "1") ? " EL↓ " : " EL↑ "
+
+        for index in 1..<bitArray.count {
+            catString += (bitArray[index] == "0") ? "  ↓  " : ch163Labs[index]
+        }
+
+        return catString
+
+    } else {
+        return "macOS 13 or later required for '.split'"
     }
-
-    return catString
 }
 
 #if os(macOS)
@@ -308,7 +324,9 @@ func extractOptions() {
             } else if arg.starts(with: "LM") {
                 model.statusLights = DisKeyModel.lunarModule0
             }
+
             model.elPowerOn = true
+
         } else if arg.hasPrefix("--ip=") {
             arg.removeFirst(5)
             model.ipAddr = arg
