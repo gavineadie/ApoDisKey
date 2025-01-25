@@ -15,6 +15,8 @@ let logger = Logger(subsystem: "com.ramsaycons.ApoDisKey", category: "")
 struct DisKeyApp: App {
 
 #if os(macOS)
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
     class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { true }
 
@@ -25,8 +27,6 @@ struct DisKeyApp: App {
             }
         }
     }
-
-    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 #endif
 
     init() {
@@ -61,12 +61,6 @@ struct DisKeyApp: App {
 }
 
 struct AppView: View {
-#if MONTEREY
-#else
-    let timer = Timer.publish(every: model.logTimer ? 1E1 : 1E8,
-                              on: .main, in: .common).autoconnect()
-#endif
-
     var body: some View {
         let scaleFactor = model.fullSize ? 1 : 0.5
         VStack {
