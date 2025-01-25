@@ -13,6 +13,8 @@ let logger = Logger(subsystem: "com.ramsaycons.ApoDisKey", category: "")
 
 @main
 struct DisKeyApp: App {
+    @State private var helpWindowController: HelpWindowController?
+    @State private var newsWindowController: NewsWindowController?
 
 #if os(macOS)
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
@@ -31,10 +33,10 @@ struct DisKeyApp: App {
 
     init() {
 
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ establish the global environment                                                                 ┆
-  ┆ .. read init files                                                                               ┆
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+        /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+         ┆ establish the global environment                                                                 ┆
+         ┆ .. read init files                                                                               ┆
+         ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
         extractOptions()                        // any command arguments ?
 
         if model.windowX >= 0.0 && model.windowY >= 0.0 {
@@ -45,56 +47,76 @@ struct DisKeyApp: App {
         startNetwork()
     }
 
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ do other things as the ContentView runs ..                                                       ┆
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+    /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+     ┆ do other things as the ContentView runs ..                                                       ┆
+     ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 
-//    var body: some Scene {
-//        if #available(macOS 13.0, *) {
-//            WindowGroup {
-//                AppView()
-//            }
-//            .defaultSize(CGSize(width: 569, height: 656))
-//            .defaultPosition(UnitPoint(x: model.windowX, y: model.windowY))
-//        } else {
-//            WindowGroup {
-//                AppView()
-//            }
-//            .windowLevel(.normal)
-//        }
-//    }
+    //    var body: some Scene {
+    //        if #available(macOS 13.0, *) {
+    //            WindowGroup {
+    //                AppView()
+    //            }
+    //            .defaultSize(CGSize(width: 569, height: 656))
+    //            .defaultPosition(UnitPoint(x: model.windowX, y: model.windowY))
+    //        } else {
+    //            WindowGroup {
+    //                AppView()
+    //            }
+    //            .windowLevel(.normal)
+    //        }
+    //    }
 
     var body: some Scene {
         WindowGroup {
             AppView()
         }
         .commands {
-        	CommandGroup(replacing: .pasteboard) { }            // "Cut", "Copy", "Paste", ..
-        	CommandGroup(replacing: .newItem) { }               // "File" removed ("New", "Open", ..)
-        	CommandGroup(replacing: .undoRedo) { }
-        	CommandGroup(replacing: .systemServices) { }
-        	CommandGroup(replacing: .windowList) { }
-        	CommandGroup(replacing: .windowSize) { }
-        	CommandGroup(replacing: .windowArrangement) { }
-        	CommandGroup(replacing: .help) { }
+            CommandGroup(replacing: .pasteboard) { }            // "Cut", "Copy", "Paste", ..
+            CommandGroup(replacing: .newItem) { }               // "File" removed ("New", "Open", ..)
+            CommandGroup(replacing: .undoRedo) { }
+            CommandGroup(replacing: .systemServices) { }
+            CommandGroup(replacing: .windowSize) { }
+            CommandGroup(replacing: .windowArrangement) { }
+            CommandGroup(replacing: .help) {
+                Button("ApoDisKey Help") {
+                    openHelpWindow()
+                }
+                Button("ApoDisKey News") {
+                    openNewsWindow()
+                }
+            }
         }
-//#if os(macOS)
-//        if #available(macOS 13.0, *) {
-//            .defaultSize(CGSize(width: 569, height: 656))
-//            .defaultPosition(UnitPoint(x: model.windowX, y: model.windowY))
-//        }
-//#endif
+        // FIXME: Work needed ..
+        // #if os(macOS)
+        //        if #available(macOS 13.0, *) {
+        //            .defaultSize(CGSize(width: 569, height: 656))
+        //            .defaultPosition(UnitPoint(x: model.windowX, y: model.windowY))
+        //        }
+        // #endif
+
+        if #available(macOS 13.0, *) {
+            Window("Help", id: "help") {
+                HelpView()
+            }
+        }
     }
 
-//    private func setupMenus() {
-//        let mainMenu = NSApp.mainMenu ?? NSMenu()
-//
-//        if let editMenuItemIndex = mainMenu.items.firstIndex(where: { $0.title == "Edit" }) {
-//            mainMenu.removeItem(at: editMenuItemIndex)
-//        }
-//
-//        NSApp.mainMenu = mainMenu
-//    }
+    private func openHelpWindow() {
+        if helpWindowController == nil {
+            helpWindowController = HelpWindowController()
+        }
+        helpWindowController?.showWindow(nil)
+        helpWindowController?.window?.makeKeyAndOrderFront(nil)
+    }
+
+    private func openNewsWindow() {
+        if newsWindowController == nil {
+            newsWindowController = NewsWindowController()
+        }
+        newsWindowController?.showWindow(nil)
+        newsWindowController?.window?.makeKeyAndOrderFront(nil)
+    }
+
 }
 
 struct AppView: View {

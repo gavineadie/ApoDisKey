@@ -30,6 +30,8 @@
 		86C4C5C02C4CE79900A4DEA1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86C4C5BF2C4CE79900A4DEA1 /* Assets.xcassets */; };
 		86C85A1B2C4F46A1002BE367 /* testLights.canned in Resources */ = {isa = PBXBuildFile; fileRef = 86C85A1A2C4F46A1002BE367 /* testLights.canned */; };
 		86CB9B5E2C45F94400968C20 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86CB9B5D2C45F94400968C20 /* Network.swift */; };
+		86CE20372D445BF000182F8B /* HelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86CE20362D445BF000182F8B /* HelpView.swift */; };
+		86CE20392D44607C00182F8B /* NewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86CE20382D44607C00182F8B /* NewsView.swift */; };
 		86E838922C3CF06400E7C573 /* DecorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E838912C3CF06400E7C573 /* DecorView.swift */; };
 		86ECA4DF2C47602F0025545C /* PacketSend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86ECA4DE2C47602F0025545C /* PacketSend.swift */; };
 		86ECA4E12C4760400025545C /* PacketRecv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86ECA4E02C4760400025545C /* PacketRecv.swift */; };
@@ -72,6 +74,8 @@
 		86C4C5BF2C4CE79900A4DEA1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		86C85A1A2C4F46A1002BE367 /* testLights.canned */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testLights.canned; sourceTree = "<group>"; };
 		86CB9B5D2C45F94400968C20 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		86CE20362D445BF000182F8B /* HelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
+		86CE20382D44607C00182F8B /* NewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsView.swift; sourceTree = "<group>"; };
 		86E838912C3CF06400E7C573 /* DecorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecorView.swift; sourceTree = "<group>"; };
 		86ECA4DE2C47602F0025545C /* PacketSend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketSend.swift; sourceTree = "<group>"; };
 		86ECA4E02C4760400025545C /* PacketRecv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketRecv.swift; sourceTree = "<group>"; };
@@ -150,6 +154,8 @@
 			isa = PBXGroup;
 			children = (
 				867EBD672C3A1E29004C4DDD /* DisKeyApp.swift */,
+				86CE20362D445BF000182F8B /* HelpView.swift */,
+				86CE20382D44607C00182F8B /* NewsView.swift */,
 				867EBD692C3A1E29004C4DDD /* DisKeyView.swift */,
 				864BD60E2C3B416D00D4C896 /* StatusView.swift */,
 				864BD6102C3B42DF00D4C896 /* DisplayView.swift */,
@@ -320,11 +326,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				867EBD6A2C3A1E29004C4DDD /* DisKeyView.swift in Sources */,
+				86CE20372D445BF000182F8B /* HelpView.swift in Sources */,
 				86A055072C405BB3007996B7 /* DisKeyModel.swift in Sources */,
 				864BD6092C3B2B9900D4C896 /* KeyPadView.swift in Sources */,
 				86E838922C3CF06400E7C573 /* DecorView.swift in Sources */,
 				86ECA4DF2C47602F0025545C /* PacketSend.swift in Sources */,
 				86ECA4E12C4760400025545C /* PacketRecv.swift in Sources */,
+				86CE20392D44607C00182F8B /* NewsView.swift in Sources */,
 				868B2B712CD0CAD200A70648 /* FileStuff.swift in Sources */,
 				86B26DB92C4CD3020021E594 /* Extensions.swift in Sources */,
 				86CB9B5E2C45F94400968C20 /* Network.swift in Sources */,

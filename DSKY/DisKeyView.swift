@@ -65,6 +65,12 @@ struct DisKeyView: View {
             }
             .padding(.top, 5.0)
         }
+        .onDrop(of: ["public.text"], isTargeted: nil) { providers in
+            logger.log("drop providers: \(providers)")
+            return true
+        }
+//        .ifMacOS_13()
+// FIXME: Work needed ..
 //        .dropDestination(for: URL.self) { urls, _ in
 //            if let url = urls.first {
 //                readCanned(path: url.path())
@@ -84,3 +90,28 @@ struct DisKeyView: View {
 #if swift(>=5.9)
 #Preview("DisKey") { DisKeyView() }
 #endif
+
+/*╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌*/
+// extension View {
+//    func ifMacOS_13() -> some View {
+//        if #available(macOS 13.0, *) {
+//            return modifier(DropDestination())
+//        } else {
+//            return self
+//        }
+//    }
+// }
+//
+// struct DropDestination: ViewModifier {
+//    func body(content: Content) -> some View {
+//        content
+//            .dropDestination(for: URL.self) { urls, _ in
+//                if let url = urls.first {
+//                    readCanned(path: url.path())
+//                    return true
+//                } else {
+//                    return false
+//                }
+//            }
+//    }
+// }
