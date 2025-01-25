@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+#if os(macOS)
 struct HelpView: View {
     var body: some View {
         VStack(spacing: 20) {
@@ -31,7 +32,7 @@ struct HelpView: View {
 
                 Since ApoDisKey is very much an addendum to the Virtual AGC, the \
                 [macOS download](https://www.ibiblio.org/apollo/download.html#Mac_OS_X) \
-                is essential reading; for the serious ApoDisKey user.
+                is essential reading for the serious ApoDisKey user.
                 """)
             .lineLimit(24)
             .multilineTextAlignment(.center)
@@ -72,3 +73,4 @@ class HelpWindowController: NSWindowController {
         fatalError("init(coder:) has not been implemented")
     }
 }
+#endif

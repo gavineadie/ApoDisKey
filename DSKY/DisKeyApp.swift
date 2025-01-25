@@ -13,8 +13,10 @@ let logger = Logger(subsystem: "com.ramsaycons.ApoDisKey", category: "")
 
 @main
 struct DisKeyApp: App {
+#if os(macOS)
     @State private var helpWindowController: HelpWindowController?
     @State private var newsWindowController: NewsWindowController?
+#endif
 
 #if os(macOS)
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
@@ -77,6 +79,7 @@ struct DisKeyApp: App {
             CommandGroup(replacing: .systemServices) { }
             CommandGroup(replacing: .windowSize) { }
             CommandGroup(replacing: .windowArrangement) { }
+#if os(macOS)
             CommandGroup(replacing: .help) {
                 Button("ApoDisKey Help") {
                     openHelpWindow()
@@ -85,6 +88,7 @@ struct DisKeyApp: App {
                     openNewsWindow()
                 }
             }
+#endif
         }
 // FIXME: Work needed ..
 // #if os(macOS)
@@ -94,13 +98,16 @@ struct DisKeyApp: App {
 //        }
 // #endif
 
+#if os(macOS)
         if #available(macOS 13.0, *) {
             Window("Help", id: "help") {
                 HelpView()
             }
         }
+#endif
     }
 
+#if os(macOS)
     private func openHelpWindow() {
         if helpWindowController == nil {
             helpWindowController = HelpWindowController()
@@ -116,7 +123,7 @@ struct DisKeyApp: App {
         newsWindowController?.showWindow(nil)
         newsWindowController?.window?.makeKeyAndOrderFront(nil)
     }
-
+#endif
 }
 
 struct AppView: View {

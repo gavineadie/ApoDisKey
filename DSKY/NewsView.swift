@@ -7,11 +7,12 @@
 
 import SwiftUI
 
+#if os(macOS)
 struct NewsView: View {
     var body: some View {
         VStack(spacing: 20) {
             Text("""
-                Jan 24, 2025:
+                Jan 27, 2025:
                    The initial release of ApoDisKey.
                 """)
             .lineLimit(24)
@@ -52,3 +53,4 @@ class NewsWindowController: NSWindowController {
         fatalError("init(coder:) has not been implemented")
     }
 }
+#endif
