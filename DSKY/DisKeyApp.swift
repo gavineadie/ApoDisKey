@@ -13,6 +13,10 @@ let logger = Logger(subsystem: "com.ramsaycons.ApoDisKey", category: "")
 
 @main
 struct DisKeyApp: App {
+#if os(macOS)
+    @State private var helpWindowController: HelpWindowController?
+    @State private var newsWindowController: NewsWindowController?
+#endif
 
 #if os(macOS)
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
@@ -53,11 +57,36 @@ struct DisKeyApp: App {
         WindowGroup {
             AppView()
         }
+        .commands {
+            CommandGroup(replacing: .pasteboard) { }            // "Cut", "Copy", "Paste", ..
+            CommandGroup(replacing: .newItem) { }               // "File" removed ("New", "Open", ..)
+            CommandGroup(replacing: .undoRedo) { }
+            CommandGroup(replacing: .systemServices) { }
+            CommandGroup(replacing: .windowSize) { }
+            CommandGroup(replacing: .windowArrangement) { }
 #if os(macOS)
         .defaultSize(CGSize(width: 569, height: 656))
         .defaultPosition(UnitPoint(x: model.windowX, y: model.windowY))
 #endif
     }
+
+#if os(macOS)
+    private func openHelpWindow() {
+        if helpWindowController == nil {
+            helpWindowController = HelpWindowController()
+        }
+        helpWindowController?.showWindow(nil)
+        helpWindowController?.window?.makeKeyAndOrderFront(nil)
+    }
+
+    private func openNewsWindow() {
+        if newsWindowController == nil {
+            newsWindowController = NewsWindowController()
+        }
+        newsWindowController?.showWindow(nil)
+        newsWindowController?.window?.makeKeyAndOrderFront(nil)
+    }
+#endif
 }
 
 struct AppView: View {
