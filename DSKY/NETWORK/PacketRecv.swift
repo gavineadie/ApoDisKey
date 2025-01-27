@@ -5,14 +5,13 @@
 //  Created by Gavin Eadie on Jul16/24 (copyright 2024-25)
 //
 
-// swiftlint:disable blanket_disable_command
-// swiftlint:disable identifier_name
-// swiftlint:disable function_body_length
-
 import Foundation
 
+// swiftlint:disable function_body_length
+// swiftlint:disable cyclomatic_complexity
+
 @MainActor
-func channelAction(_ channel: UInt16, _ value: UInt16, _ tf: Bool = true) {
+func channelAction(_ channel: UInt16, _ value: UInt16, _ boolean: Bool = true) {
 
     switch channel {
     case 0o005...0o006:
@@ -312,3 +311,6 @@ func dskyInterpretation(_ code: UInt16) {
 
     return
 }
+
+// swiftlint:enable cyclomatic_complexity
+// swiftlint:enable function_body_length

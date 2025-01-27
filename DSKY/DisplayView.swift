@@ -337,15 +337,3 @@ struct SevenSegVerbNoun: ViewModifier {
             .frame(width: 95.0, height: panelDigitSize)
     }
 }
-
-/*╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌*/
-// extension Scene {
-//    func defaultSizePosn() -> some Scene {
-//        if #available(macOS 13.0, *) {
-//            .defaultSize(CGSize(width: 569, height: 656))
-//            .defaultPosition(UnitPoint(x: model.windowX, y: model.windowY))
-//        } else {
-//
-//        }
-//    }
-// }

@@ -5,14 +5,11 @@
 //  Created by Gavin Eadie on Jul21/24 (copyright 2024-25)
 //
 
-// swiftlint:disable blanket_disable_command
-// swiftlint:disable identifier_name
-// swiftlint:disable colon
-// swiftlint:disable comma
-// swiftlint:disable vertical_whitespace
 // swiftlint:disable file_length
 
 import Foundation
+
+// swiftlint:disable colon
 
 let bit1:  UInt16 = 0b0000_0000_0000_0001
 let bit2:  UInt16 = 0b0000_0000_0000_0010
@@ -24,6 +21,8 @@ let bit7:  UInt16 = 0b0000_0000_0100_0000
 let bit8:  UInt16 = 0b0000_0000_1000_0000
 let bit9:  UInt16 = 0b0000_0001_0000_0000
 let bit10: UInt16 = 0b0000_0010_0000_0000
+
+// swiftlint:enable colon
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆                                                                                                  ┆
@@ -60,15 +59,14 @@ let bit10: UInt16 = 0b0000_0010_0000_0000
   ┆                                         +-----+-----+                                            ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 
-public func plu_min(_ pm: (Bool, Bool)) -> String {
-    switch pm {
+public func plu_min(_ plusMinus: (Bool, Bool)) -> String {
+    switch plusMinus {
     case (false, false): return " "
     case (true, false): return "+"
     case (false, true): return "-"
     case (true, true): return "-"
     }
 }
-
 
 func prettyPrint(_ data: Data) {
     logger.log("\(zeroPadByte(data[0])) \(zeroPadByte(data[1])) \(zeroPadByte(data[2])) \(zeroPadByte(data[3]))")
@@ -77,7 +75,6 @@ func prettyPrint(_ data: Data) {
 func prettyString(_ data: Data) -> String {
     "\(zeroPadByte(data[0])) \(zeroPadByte(data[1])) \(zeroPadByte(data[2])) \(zeroPadByte(data[3]))"
 }
-
 
 private func zeroPadByte(_ code: UInt8, _ length: Int = 8) -> String {
     String(("000000000" + String(UInt16(code), radix: 2)).suffix(length))
@@ -93,9 +90,13 @@ let symbolArray = ["----",
                    "3435", "3233", "2531", "2324", "2122",
                    "1415", "1213", "..11", "N1N2", "V1V2", "M1M2"]
 
+// swiftlint:disable comma
+
 let digitsDict = [  0: "_",
                     21: "0",  3: "1", 25: "2", 27: "3", 15: "4",
                     30: "5", 28: "6", 19: "7", 29: "8", 31: "9"]
+
+// swiftlint:enable comma
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆          Bit 1 lights the "PRIO DISP" indicator       -- ?                                       ┆
@@ -306,6 +307,8 @@ private struct ClickThroughBackdrop<Content: SwiftUI.View>: NSViewRepresentable 
 }
 #endif
 
+// swiftlint:disable cyclomatic_complexity
+
 @MainActor
 func extractOptions() {
 
@@ -403,5 +406,37 @@ func extractOptions() {
         model.windowY = min(camArgsOffset.y, screenAvailableHeight) / screenAvailableHeight
     }
 #endif
+
+}
+
+// swiftlint:enable cyclomatic_complexity
+
+@preconcurrency import Network
+extension NWConnection {
+
+    func rawSend(data: Data?) async throws {
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+            send(content: data, completion: .contentProcessed { error in
+                if let error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume(returning: ())
+                }
+            })
+        }
+    }
+
+    func rawReceive(length: Int) async throws -> Data {
+        try await withCheckedThrowingContinuation { continuation in
+            receive(minimumIncompleteLength: length, maximumLength: length) { data, _, _, error in
+                if let error {
+                    precondition(data == nil)
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume(returning: data!)
+                }
+            }
+        }
+    }
 
 }

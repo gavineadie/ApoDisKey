@@ -37,33 +37,12 @@ struct Network: Sendable {
         }
     }
 
-    func rawSend(data: Data?) async throws {
-        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
-            self.connection.send(content: data, completion: .contentProcessed { error in
-                if let error {
-                    continuation.resume(throwing: error)
-                } else {
-                    continuation.resume(returning: ())
-                }
-            })
-        }
+    func send(_ data: Data) async throws {
+        try await connection.rawSend(data: data)
     }
 
-    func rawReceive(length: Int) async throws -> Data? {
-        try await withCheckedThrowingContinuation { continuation in
-            self.connection.receive(minimumIncompleteLength: length,
-                    maximumLength: length) { data, _, connectionEnded, error in
-                if let error {
-                    precondition(data == nil)
-                    continuation.resume(throwing: error)
-                } else {
-                    continuation.resume(returning: data)
-                }
-                if connectionEnded {
-                    logger.log("←→ connection did end")
-                }
-            }
-        }
+    func receive(length: Int) async throws -> Data? {
+        try await connection.rawReceive(length: length)
     }
 
     @Sendable private func stateDidChange(to state: NWConnection.State) {
@@ -132,7 +111,7 @@ func startNetwork() {
         var keepGoing = true
         repeat {
             do {
-                if let rxPacket = try await model.network.rawReceive(length: 4) {
+                if let rxPacket = try await model.network.receive(length: 4) {
                     if let (channel, action, _) =
                         parseIoPacket(rxPacket) { channelAction(channel, action) }
                 }

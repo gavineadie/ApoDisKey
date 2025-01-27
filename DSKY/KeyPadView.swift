@@ -117,7 +117,7 @@ struct KeyView: View {
                     }
                     Task {
                         do {
-                            try await model.network.rawSend(data: formIoPacket(0o015, keyCode))
+                            try await model.network.send(formIoPacket(0o015, keyCode))
                         } catch {
                             logger.error("\(error.localizedDescription)")
                         }
@@ -142,7 +142,7 @@ struct KeyView: View {
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
                             Task {
                                 do {
-                                    try await model.network.rawSend(data: formIoPacket(0o032, value))
+                                    try await model.network.send(formIoPacket(0o032, value))
                                 } catch {
                                     logger.error("\(error.localizedDescription)")
                                 }
@@ -162,7 +162,7 @@ struct KeyView: View {
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
                             Task {
                                 do {
-                                    try await model.network.rawSend(data: formIoPacket(0o032, value))
+                                    try await model.network.send(formIoPacket(0o032, value))
                                 } catch {
                                     logger.error("\(error.localizedDescription)")
                                 }

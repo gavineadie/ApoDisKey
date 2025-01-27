@@ -5,9 +5,6 @@
 //  Created by Gavin Eadie on Jul11/24 (copyright 2024-25)
 //
 
-// swiftlint:disable blanket_disable_command
-// swiftlint:disable comma
-
 import Foundation
 import AVFoundation
 
@@ -88,6 +85,8 @@ class DisKeyModel: ObservableObject {
 
     public var network = setNetwork()
 }
+
+// swiftlint:disable comma
 
 extension DisKeyModel {
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -173,8 +172,9 @@ extension DisKeyModel {
         26: ("   ",            .off),
         27: ("   ",            .off)
     ]
-
 }
+
+// swiftlint:enable comma
 
 func keyText(_ code: UInt16) -> String { keyDict[code] ?? "ERROR" }
 
