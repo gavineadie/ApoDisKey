@@ -24,6 +24,25 @@ struct DisKeyApp: App {
     class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { true }
 
+        func applicationDidFinishLaunching(_ notification: Notification) {
+            if model.windowX > 0.0 && model.windowY > 0.0 {
+                DispatchQueue.main.async {
+                    if let window = NSApplication.shared.windows.first {
+                        window.setFrame(NSRect(origin: NSPoint(x: model.windowX - 0.0,
+                                                               y: model.windowY + 0.0),
+                                               size: NSSize(width: model.windowW,
+                                                            height: model.windowH)),
+                                        display: true)
+                        window.contentMaxSize = NSSize(width: model.windowW,
+                                                       height: model.windowH)
+                    }
+                }
+            }
+        }
+
+        //            .defaultSize(CGSize(width: 569, height: 656))
+        //            .defaultPosition(UnitPoint(x: model.windowX, y: model.windowY))
+
         func applicationWillTerminate(_ notification: Notification) {
             if model.windowX >= 0.0 && model.windowY >= 0.0 {
                 UserDefaults.standard.removeObject(
@@ -39,6 +58,9 @@ struct DisKeyApp: App {
   ┆ establish the global environment                                                                 ┆
   ┆ .. read init files                                                                               ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+        model.windowW = CGFloat(569)
+        model.windowH = CGFloat(656)
+
         extractOptions()                        // any command arguments ?
 
         if model.windowX >= 0.0 && model.windowY >= 0.0 {
@@ -73,8 +95,8 @@ struct DisKeyApp: App {
             AppView()
         }
         .commands {
-            CommandGroup(replacing: .pasteboard) { }            // "Cut", "Copy", "Paste", ..
-            CommandGroup(replacing: .newItem) { }               // "File" removed ("New", "Open", ..)
+            CommandGroup(replacing: .pasteboard) { }        // "Cut", "Copy", "Paste", ..
+            CommandGroup(replacing: .newItem) { }           // "File" removed ("New", "Open", ..)
             CommandGroup(replacing: .undoRedo) { }
             CommandGroup(replacing: .systemServices) { }
             CommandGroup(replacing: .windowSize) { }
@@ -131,8 +153,7 @@ struct AppView: View {
         let scaleFactor = model.fullSize ? 1 : 0.5
         VStack {
             DisKeyView()
-                .frame(width: 569 * scaleFactor,
-                       height: 656 * scaleFactor)        // 569 × 656 pixels
+                .frame(width: model.windowW, height: model.windowH)        // 569 × 656 pixels
                 .scaleEffect(scaleFactor)
 #if os(macOS)
             if model.fullSize && !model.haveCmdArgs {

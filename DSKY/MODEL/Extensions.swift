@@ -314,14 +314,6 @@ func extractOptions() {
 
     let args = CommandLine.arguments
 
-//    var ipAddr: String = ""
-//    var ipPort: UInt16 = 0
-
-#if os(macOS)
-    let screenSize: CGSize = NSScreen.main!.frame.size
-    var camArgsOffset = CGPoint(x: -999.0, y: -999.0)
-#endif
-
     for var arg in args {
         logger.info("command line argument: \(arg)")
 
@@ -351,21 +343,23 @@ func extractOptions() {
 
         } else if arg.hasPrefix("--half-size") {
             model.fullSize = false
+            model.windowW /= 2
+            model.windowH /= 2
         }
 #if os(macOS)
         if arg.hasPrefix("--x=") {
             arg.removeFirst(4)
-            camArgsOffset.x = CGFloat(Float(Int(arg) ?? -999))
+            model.windowX = CGFloat(Float(Int(arg) ?? 300))
         } else if arg.hasPrefix("--y=") {
             arg.removeFirst(4)
-            camArgsOffset.y = CGFloat(Float(Int(arg) ?? -999))
+            model.windowY = CGFloat(Float(Int(arg) ?? 100))
         }
 #endif
 
     }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ if command arguments VirtualAGC app window position are good ..                                  ┆
+  ┆ if command arguments for the VirtualAGC app window position are good ..                  SWIFTUI ┆
   ┆                                                                                                  ┆
   ┆ The range of the command argument (x,y): (0,0) to (Sx-w,Sy-h) and must be mapped the range of    ┆
   ┆ the SwiftUI UnitPoint (-1,-1) to (+1,+1) ..                                                      ┆
@@ -398,12 +392,19 @@ func extractOptions() {
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 
 #if os(macOS)
-    if camArgsOffset.x >= 0.0 && camArgsOffset.y >= 0.0 {
-        let screenAvailableWidth = CGFloat(screenSize.width - 569.0)
-        let screenAvailableHeight = CGFloat(screenSize.height - 569.0)
+    let screenSize: CGSize = NSScreen.main!.frame.size
 
-        model.windowX = min(camArgsOffset.x, screenAvailableWidth) / screenAvailableWidth
-        model.windowY = min(camArgsOffset.y, screenAvailableHeight) / screenAvailableHeight
+    if model.windowX >= 0.0 && model.windowY >= 0.0 {
+
+// SWIFTUI USAGE
+//      let screenAvailableWidth = CGFloat(screenSize.width - 569.0)
+//      let screenAvailableHeight = CGFloat(screenSize.height - 656.0)
+//
+//      model.windowX = min(model.windowX, screenAvailableWidth) / screenAvailableWidth
+//      model.windowY = min(model.windowY, screenAvailableHeight) / screenAvailableHeight
+
+// APPKIT USAGE
+        model.windowY = CGFloat(screenSize.height - model.windowH) - model.windowY
     }
 #endif
 
