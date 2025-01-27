@@ -68,6 +68,8 @@ page.
 
 ApoDisKey runs on macOS versions 12 (Monterey) through 15 (Sequoia).
 Some non-critical features are missing when run on the older macOS versions.
+Comments about this are gathered in 
+[Issue 1](https://github.com/gavineadie/ApoDisKey/issues/1)
 
 ### Acknowledgments
 
