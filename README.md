@@ -84,7 +84,7 @@ _2025-01-27_
 * v0.9.2 public release ..
 
 * Those who download ApoDiskey and run it in the absence of Virtual AGC (or, at least, the 
-  `[yaAGC](https://www.ibiblio.org/apollo/yaAGC.html#gsc.tab=0)` emulator), the application will
+  [yaAGC](https://www.ibiblio.org/apollo/yaAGC.html#gsc.tab=0) emulator), the application will
   start with a very dull appearance.
   The intent is to give the impression that the DSKY is powered off.
   In truth, there is not a lot to see or do -- it is a disconnected device.
