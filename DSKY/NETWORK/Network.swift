@@ -122,3 +122,32 @@ func startNetwork() {
         } while keepGoing
     }
 }
+
+extension NWConnection {
+
+    func rawSend(data: Data?) async throws {
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+            send(content: data, completion: .contentProcessed { error in
+                if let error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume(returning: ())
+                }
+            })
+        }
+    }
+
+    func rawReceive(length: Int) async throws -> Data {
+        try await withCheckedThrowingContinuation { continuation in
+            receive(minimumIncompleteLength: length, maximumLength: length) { data, _, _, error in
+                if let error {
+                    precondition(data == nil)
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume(returning: data!)
+                }
+            }
+        }
+    }
+
+}
