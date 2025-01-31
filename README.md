@@ -61,7 +61,7 @@ is well described in that project's documentation.
 
 Questions, issues and concerns that are related to ApoDisKey specifically should
 come to this author via this project's 
-[issues](https://github.com/gavineadie/ApoDisKey/issues)
+[discussions](https://github.com/gavineadie/ApoDisKey/discussions)
 page.
 
 ### Supported macOS Versions
