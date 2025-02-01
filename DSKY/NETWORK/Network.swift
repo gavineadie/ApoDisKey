@@ -38,11 +38,11 @@ struct Network: Sendable {
     }
 
     func send(_ data: Data) async throws {
-        try await connection.rawSend(data: data)
+        try await connection.asyncSend(data: data)
     }
 
     func receive(length: Int) async throws -> Data? {
-        try await connection.rawReceive(length: length)
+        try await connection.asyncReceive(length: length)
     }
 
     @Sendable private func stateDidChange(to state: NWConnection.State) {
@@ -57,7 +57,6 @@ struct Network: Sendable {
             logger.log("←→ .ready: The connection is established, and ready to send and receive data")
         case .failed(let error):
             logger.error("←→ .failed: \(error.localizedDescription)")
-            self.stop(error: error)
         case .cancelled:
             logger.error("←→ .cancelled: The connection has been canceled")
         @unknown default:
@@ -125,7 +124,7 @@ func startNetwork() {
 
 extension NWConnection {
 
-    func rawSend(data: Data?) async throws {
+    func asyncSend(data: Data?) async throws {
         try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
             send(content: data, completion: .contentProcessed { error in
                 if let error {
@@ -137,14 +136,17 @@ extension NWConnection {
         }
     }
 
-    func rawReceive(length: Int) async throws -> Data {
+    func asyncReceive(length: Int) async throws -> Data {
         try await withCheckedThrowingContinuation { continuation in
-            receive(minimumIncompleteLength: length, maximumLength: length) { data, _, _, error in
+            receive(minimumIncompleteLength: length, maximumLength: length) { data, _, connectionEnded, error in
+                if connectionEnded {
+                    logger.log("←→ connection did end")
+                }
                 if let error {
                     precondition(data == nil)
                     continuation.resume(throwing: error)
                 } else {
-                    continuation.resume(returning: data!)
+                    continuation.resume(returning: data ?? Data(repeating: 0, count: 4))
                 }
             }
         }
