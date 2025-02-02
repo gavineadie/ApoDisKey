@@ -61,7 +61,7 @@ struct DisKeyApp: App {
         model.windowW = CGFloat(569)
         model.windowH = CGFloat(656)
 
-        extractOptions()                        // any command arguments ?
+        extractOptions()                        // get any command arguments ..
 
         if model.windowX >= 0.0 && model.windowY >= 0.0 {
             UserDefaults.standard.removeObject(
@@ -221,7 +221,7 @@ struct MonitorView: View {
                     ipAddr=\(ipAddr, privacy: .public), \
                     ipPort=\(ipPort, privacy: .public)
                     """)
-                model.network = setNetwork(ipAddr, ipPort, start: true)
+                model.network = Network(ipAddr, ipPort, connect: true)
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ start receiving packets from the AGC ..                                                          ┆

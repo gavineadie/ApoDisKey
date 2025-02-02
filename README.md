@@ -79,9 +79,7 @@ Comments about this are gathered in
 
 ###  After Words
 
-_2025-01-27_
-
-* v0.9.2 public release ..
+_2025-01-27_ (v0.9.2 public release)
 
 * Those who download ApoDiskey and run it in the absence of Virtual AGC (or, at least, the 
   [yaAGC](https://www.ibiblio.org/apollo/yaAGC.html#gsc.tab=0) emulator), the application will
@@ -97,3 +95,7 @@ _2025-01-27_
    
    .. and, if the IP address and port number of an AGC are entered, the connect button will activate.
 
+_2025-02-01_ (v0.9.3)
+
+* If the connection to the AGC was lost (for example, if AGC was quit or crashed), ApoDiskey would
+  crash.  This release fixes that issue.

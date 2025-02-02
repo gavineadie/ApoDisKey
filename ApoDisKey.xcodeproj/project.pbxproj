@@ -198,7 +198,6 @@
 			buildConfigurationList = 867EBD892C3A1E2A004C4DDD /* Build configuration list for PBXNativeTarget "ApoDisKey" */;
 			buildPhases = (
 				867EBD602C3A1E29004C4DDD /* Sources */,
-				8656F6872D1A208200B38680 /* SwiftLint */,
 				867EBD612C3A1E29004C4DDD /* Frameworks */,
 				867EBD622C3A1E29004C4DDD /* Resources */,
 			);
@@ -295,28 +294,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		8656F6872D1A208200B38680 /* SwiftLint */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = SwiftLint;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if command -v swiftlint >/dev/null 2>&1\nthen\n    swiftlint\nelse\n    echo \"warning: `swiftlint` command not found - See https://github.com/realm/SwiftLint#installation for installation instructions.\"\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		867EBD602C3A1E29004C4DDD /* Sources */ = {

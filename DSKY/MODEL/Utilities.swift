@@ -61,10 +61,10 @@ let bit10: UInt16 = 0b0000_0010_0000_0000
 
 public func plu_min(_ plusMinus: (Bool, Bool)) -> String {
     switch plusMinus {
-    case (false, false): return " "
-    case (true, false): return "+"
-    case (false, true): return "-"
-    case (true, true): return "-"
+        case (false, false): return " "
+        case (true, false): return "+"
+        case (false, true): return "-"
+        case (true, true): return "-"
     }
 }
 

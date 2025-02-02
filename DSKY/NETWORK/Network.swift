@@ -13,7 +13,7 @@ struct Network: Sendable {
     let connection: NWConnection
     let didStopCallback: @Sendable (Error?) -> Void
 
-    init(_ host: String = "127.0.0.1", _ port: UInt16 = 19697, start: Bool = false) {
+    init(_ host: String = "127.0.0.1", _ port: UInt16 = 19697, connect: Bool = false) {
 
         self.didStopCallback = { error in
             if let error = error {
@@ -21,7 +21,7 @@ struct Network: Sendable {
             } else {
                 logger.log("←→ Connection stopped successfully.")
             }
-            exit( error == nil ? EXIT_SUCCESS : EXIT_SUCCESS )  // Notify or update UI instead of calling exit().
+//          exit( error == nil ? EXIT_SUCCESS : EXIT_SUCCESS )  // Notify or update UI instead of calling exit().
         }
 
         let tcpOptions = NWProtocolTCP.Options()
@@ -31,10 +31,7 @@ struct Network: Sendable {
                                        port: NWEndpoint.Port(rawValue: port)!,
                                        using: NWParameters(tls: nil,
                                                            tcp: tcpOptions))
-        if start {
-            self.connection.stateUpdateHandler = self.stateDidChange(to:)
-            self.connection.start(queue: .main)
-        }
+        if connect { start() }
     }
 
     func send(_ data: Data) async throws {
@@ -47,21 +44,26 @@ struct Network: Sendable {
 
     @Sendable private func stateDidChange(to state: NWConnection.State) {
         switch state {
-        case .setup:
-            logger.log("←→ .setup: The connection has been initialized but not started")
-        case .waiting(let error):
-            logger.log("←→ .waiting: \(error.localizedDescription)")
-        case .preparing:
-            logger.log("←→ .preparing: The connection in the process of being established")
-        case .ready:
-            logger.log("←→ .ready: The connection is established, and ready to send and receive data")
-        case .failed(let error):
-            logger.error("←→ .failed: \(error.localizedDescription)")
-        case .cancelled:
-            logger.error("←→ .cancelled: The connection has been canceled")
-        @unknown default:
-            fatalError("←→ network state: \(state) is not supported")  // \(String(describing: state))
+            case .setup:
+                logger.log("←→ .setup: The connection has been initialized but not started")
+            case .waiting(let error):
+                logger.log("←→ .waiting: \(error.localizedDescription)")
+            case .preparing:
+                logger.log("←→ .preparing: The connection in the process of being established")
+            case .ready:
+                logger.log("←→ .ready: The connection is established, and ready to send and receive data")
+            case .failed(let error):
+                logger.error("←→ .failed: \(error.localizedDescription)")
+            case .cancelled:
+                logger.error("←→ .cancelled: The connection has been canceled")
+            @unknown default:
+                fatalError("←→ network state: \(state) is not supported")  // \(String(describing: state))
         }
+    }
+
+    private func start() {
+        self.connection.stateUpdateHandler = self.stateDidChange(to:)
+        self.connection.start(queue: .main)
     }
 
     private func stop(error: Error?) {
@@ -70,21 +72,6 @@ struct Network: Sendable {
         self.didStopCallback(error)
     }
 
-}
-
-/*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
-  └──────────────────────────────────────────────────────────────────────────────────────────────────┘*/
-func setNetwork(start: Bool = false) -> Network {
-#if os(iOS) || os(tvOS)
-//  return Network("192.168.1.232", 19697)              // .. Ubuntu
-    return Network("192.168.1.100", 19697, start: true) // .. MaxBook
-#else
-    return Network()                                    // "localhost", 19697
-#endif
-}
-
-func setNetwork(_ ipAddr: String, _ ipPort: UInt16, start: Bool = false) -> Network {
-    return Network(ipAddr, ipPort, start: true)
 }
 
 @MainActor
@@ -99,8 +86,13 @@ func startNetwork() {
             ipAddr=\(model.ipAddr, privacy: .public), \
             ipPort=\(model.ipPort, privacy: .public)
             """)
-        model.network = setNetwork(model.ipAddr, model.ipPort, start: true)
+        model.network = Network(model.ipAddr, model.ipPort, connect: true)
     }
+#endif
+
+#if os(iOS) || os(tvOS)
+//  model.network = Network("192.168.1.232", 19697)                 // .. Ubuntu
+    model.network = Network("192.168.1.100", 19697, connect: true)  // .. MaxBook
 #endif
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -115,7 +107,7 @@ func startNetwork() {
                         parseIoPacket(rxPacket) { channelAction(channel, action) }
                 }
             } catch {
-                logger.error("\(error.localizedDescription)")
+                logger.error("←→ receive loop task: \(error.localizedDescription)")
                 keepGoing = false
             }
         } while keepGoing

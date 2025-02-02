@@ -80,12 +80,11 @@ class DisKeyModel: ObservableObject {
     @Published public var r3Sign = (false, false)
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ .. network imnformation for connecting to AGC ..                                                 ┆
+  ┆ .. network information for connecting to AGC (default values) ..                                 ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
     public var ipAddr: String = "localhost"
     public var ipPort: UInt16 = 19697
-
-    public var network = setNetwork()
+    public var network = Network()                  // initializes but doesn't start
 }
 
 // swiftlint:disable comma
