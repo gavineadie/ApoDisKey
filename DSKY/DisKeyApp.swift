@@ -39,7 +39,12 @@ struct DisKeyApp: App {
   ┆ establish the global environment                                                                 ┆
   ┆ .. read init files                                                                               ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-        extractOptions()                        // any command arguments ?
+        model.windowW = CGFloat(569)
+        model.windowH = CGFloat(656)
+
+#if os(macOS)
+        extractOptions()                        // get any command arguments ..
+#endif
 
         if model.windowX >= 0.0 && model.windowY >= 0.0 {
             UserDefaults.standard.removeObject(
@@ -65,9 +70,21 @@ struct DisKeyApp: App {
             CommandGroup(replacing: .windowSize) { }
             CommandGroup(replacing: .windowArrangement) { }
 #if os(macOS)
-        .defaultSize(CGSize(width: 569, height: 656))
-        .defaultPosition(UnitPoint(x: model.windowX, y: model.windowY))
+            CommandGroup(replacing: .help) {
+                Button("ApoDisKey Help") {
+                    openHelpWindow()
+                }
+                Button("ApoDisKey News") {
+                    openNewsWindow()
+                }
+            }
 #endif
+#if os(macOS)
+//      .defaultSize(CGSize(width: 569, height: 656))
+//      .defaultPosition(UnitPoint(x: model.windowX, y: model.windowY))
+#endif
+        }
+        Window("Help", id: "help") { HelpView() }
     }
 
 #if os(macOS)
@@ -87,6 +104,7 @@ struct DisKeyApp: App {
         newsWindowController?.window?.makeKeyAndOrderFront(nil)
     }
 #endif
+
 }
 
 struct AppView: View {
@@ -94,8 +112,7 @@ struct AppView: View {
         let scaleFactor = model.fullSize ? 1 : 0.5
         VStack {
             DisKeyView()
-                .frame(width: 569 * scaleFactor,
-                       height: 656 * scaleFactor)        // 569 × 656 pixels
+                .frame(width: model.windowW, height: model.windowH)        // 569 × 656 pixels
                 .scaleEffect(scaleFactor)
 #if os(macOS)
             if model.fullSize && !model.haveCmdArgs {
@@ -115,6 +132,7 @@ struct MonitorView: View {
 
     @State private var ipAddr: String = ""
     @State private var ipPort: UInt16 = 0
+    @State private var menuString = "Select Mission"
 
     static var integer: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -126,21 +144,24 @@ struct MonitorView: View {
     var body: some View {
         HStack {
 
-            Menu("Choose Mission") {
+            Menu(menuString) {
                 Button("Apollo CM 8-17",
                        action: {
                     model.statusLights = DisKeyModel.commandModule
                     model.elPowerOn = true
+                    menuString = "Apollo CM 8-17"
                 })
                 Button("Apollo LM 11-14",
                        action: {
                     model.statusLights = DisKeyModel.lunarModule0
                     model.elPowerOn = true
+                    menuString = "Apollo LM 11-14"
                 })
                 Button("Apollo LM 15-17",
                        action: {
                     model.statusLights = DisKeyModel.lunarModule1
                     model.elPowerOn = true
+                    menuString = "Apollo LM 15-17"
                 })
             }
 
@@ -163,7 +184,7 @@ struct MonitorView: View {
                     ipAddr=\(ipAddr, privacy: .public), \
                     ipPort=\(ipPort, privacy: .public)
                     """)
-                model.network = setNetwork(ipAddr, ipPort, start: true)
+                model.network = Network(ipAddr, ipPort, connect: true)
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ start receiving packets from the AGC ..                                                          ┆
@@ -172,12 +193,12 @@ struct MonitorView: View {
                     var keepGoing = true
                     repeat {
                         do {
-                            if let rxPacket = try await model.network.rawReceive(length: 4) {
+                            if let rxPacket = try await model.network.receive(length: 4) {
                                 if let (channel, action, _) =
                                     parseIoPacket(rxPacket) { channelAction(channel, action) }
                             }
                         } catch {
-                            logger.error("\(error.localizedDescription)")
+                            logger.error("←→ rx loop (button): \(error.localizedDescription)")
                             keepGoing = false
                         }
                     } while keepGoing
@@ -189,16 +210,15 @@ struct MonitorView: View {
                 Task {
                     let bit14: UInt16 = 0b0010_0000_0000_0000
                     do {
-                        try await model.network.rawSend(data: formIoPacket(0o0232, bit14))
+                        try await model.network.send(formIoPacket(0o0232, bit14))
                         logger.log("«««    DSKY 032:    \(zeroPadWord(bit14)) BITS (15)")
                     } catch {
                         logger.error("\(error.localizedDescription)")
                     }
                 }
+            } )
+            .disabled(ipAddr.isEmpty || ipPort == 0 || menuString == "Select Mission")
             }
-            )
-            .disabled(ipAddr.isEmpty || ipPort == 0)
-        }
         .padding(5)
         .background(.gray)
     }

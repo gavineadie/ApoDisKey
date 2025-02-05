@@ -343,9 +343,6 @@ func extractOptions() {
 
             model.haveCmdArgs = !model.ipAddr.isEmpty && model.ipPort > 0
 
-        } else if arg.hasPrefix("--log-timer") {
-            model.logTimer = true
-
         } else if arg.hasPrefix("--half-size") {
             model.fullSize = false
         }

@@ -70,10 +70,6 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "--log-timer"
-            isEnabled = "NO">
-         </CommandLineArgument>
-         <CommandLineArgument
             argument = "--ip=localhost"
             isEnabled = "YES">
          </CommandLineArgument>

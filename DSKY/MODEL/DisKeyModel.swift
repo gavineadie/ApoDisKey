@@ -5,9 +5,6 @@
 //  Created by Gavin Eadie on Jul11/24 (copyright 2024-25)
 //
 
-// swiftlint:disable blanket_disable_command
-// swiftlint:disable comma
-
 import Foundation
 import AVFoundation
 
@@ -28,7 +25,7 @@ typealias Display = (String, Bool)
 @Observable
 final class DisKeyModel {
 
-    static let shared = DisKeyModel()
+    @MainActor static let shared = DisKeyModel()
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ .. properties relating to the application itself ..                                              ┆
@@ -38,8 +35,8 @@ final class DisKeyModel {
 
     public var windowX: CGFloat = -99.0
     public var windowY: CGFloat = -99.0
-
-    public var logTimer = false
+    public var windowW: CGFloat = -99.0
+	public var windowH: CGFloat = -99.0
 
     public var ch15ResetCount = 0
 
@@ -83,12 +80,11 @@ final class DisKeyModel {
     public var r3Sign = (false, false)
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ .. network imnformation for connecting to AGC ..                                                 ┆
+  ┆ .. network information for connecting to AGC (default values) ..                                 ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
     public var ipAddr: String = "localhost"
     public var ipPort: UInt16 = 19697
-
-    public var network = setNetwork()
+    public var network = Network()                  // initializes but doesn't start
 }
 
 extension DisKeyModel {
@@ -175,7 +171,6 @@ extension DisKeyModel {
         26: ("   ",            .off),
         27: ("   ",            .off)
     ]
-
 }
 
 func keyText(_ code: UInt16) -> String { keyDict[code] ?? "ERROR" }

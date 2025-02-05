@@ -5,14 +5,10 @@
 //  Created by Gavin Eadie on Jul16/24 (copyright 2024-25)
 //
 
-// swiftlint:disable blanket_disable_command
-// swiftlint:disable identifier_name
-// swiftlint:disable function_body_length
-
 import Foundation
 
 @MainActor
-func channelAction(_ channel: UInt16, _ value: UInt16, _ tf: Bool = true) {
+func channelAction(_ channel: UInt16, _ value: UInt16, _ boolean: Bool = true) {
 
     switch channel {
     case 0o005...0o006:
@@ -34,7 +30,7 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ tf: Bool = true) {
   ┆                                                                                                  ┆
   ┆          Bit2 11 and 15 ..                                                                       ┆
   ┆                                                                                                  ┆
-  ┆###       NOTE: don't log command that only cycle the "COMP ACTY" indicator.                      ┆
+  ┆### NOTE: don't log the commands that only cycle the "COMP ACTY" indicator.                       ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
     case 0o011:                 // [OUTPUT] flags for indicator lamps etc
         if value != 0x2000 && value != 0x2002 && value != 0x2200 && value != 0x2202 {

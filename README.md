@@ -61,16 +61,41 @@ is well described in that project's documentation.
 
 Questions, issues and concerns that are related to ApoDisKey specifically should
 come to this author via this project's 
-[issues](https://github.com/gavineadie/ApoDisKey/issues)
+[discussions](https://github.com/gavineadie/ApoDisKey/discussions)
 page.
 
 ### supported macOS versions
 
 ApoDisKey runs on macOS versions 12 (Monterey) through 15 (Sequoia).
 Some non-critical features are missing when run on the older macOS versions.
+Comments about this are gathered in 
+[Issue 1](https://github.com/gavineadie/ApoDisKey/issues/1)
 
 ### Acknowledgments
 
 [The Virtual AGC Project](https://www.ibiblio.org/apollo/)
 
 [Zerlina and Gorton fonts](https://github.com/ehdorrii/dsky-fonts)
+
+###  After Words
+
+_2025-01-27_ (v0.9.2 public release)
+
+* Those who download ApoDiskey and run it in the absence of Virtual AGC (or, at least, the 
+  [yaAGC](https://www.ibiblio.org/apollo/yaAGC.html#gsc.tab=0) emulator), the application will
+  start with a very dull appearance.
+  The intent is to give the impression that the DSKY is powered off.
+  In truth, there is not a lot to see or do -- it is a disconnected device.
+    
+  In this case, a bar is presented across the bottom of the window offering: 
+
+   <p align="center"> <img src="https://ramsaycons.com/pix/macOS-DSKY-BAR-EC234A.jpg" width="600" /> </p>
+
+   .. "Choose Mission" will fill the annunciator lamp panels with mission appropriate legends.
+   
+   .. and, if the IP address and port number of an AGC are entered, the connect button will activate.
+
+_2025-02-01_ (v0.9.3)
+
+* If the connection to the AGC was lost (for example, if AGC was quit or crashed), ApoDiskey would
+  crash.  This release fixes that issue.

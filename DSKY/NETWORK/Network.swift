@@ -13,7 +13,7 @@ struct Network: Sendable {
     let connection: NWConnection
     let didStopCallback: @Sendable (Error?) -> Void
 
-    init(_ host: String = "127.0.0.1", _ port: UInt16 = 19697, start: Bool = false) {
+    init(_ host: String = "127.0.0.1", _ port: UInt16 = 19697, connect: Bool = false) {
 
         self.didStopCallback = { error in
             if let error = error {
@@ -21,7 +21,6 @@ struct Network: Sendable {
             } else {
                 logger.log("←→ Connection stopped successfully.")
             }
-            exit( error == nil ? EXIT_SUCCESS : EXIT_SUCCESS )  // Notify or update UI instead of calling exit().
         }
 
         let tcpOptions = NWProtocolTCP.Options()
@@ -31,59 +30,39 @@ struct Network: Sendable {
                                        port: NWEndpoint.Port(rawValue: port)!,
                                        using: NWParameters(tls: nil,
                                                            tcp: tcpOptions))
-        if start {
-            self.connection.stateUpdateHandler = self.stateDidChange(to:)
-            self.connection.start(queue: .main)
-        }
+        if connect { start() }
     }
 
-    func rawSend(data: Data?) async throws {
-        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
-            self.connection.send(content: data, completion: .contentProcessed { error in
-                if let error {
-                    continuation.resume(throwing: error)
-                } else {
-                    continuation.resume(returning: ())
+    func send(_ data: Data) async throws {
+        try await connection.asyncSend(data: data)
                 }
-            })
-        }
-    }
 
-    func rawReceive(length: Int) async throws -> Data? {
-        try await withCheckedThrowingContinuation { continuation in
-            self.connection.receive(minimumIncompleteLength: length,
-                    maximumLength: length) { data, _, connectionEnded, error in
-                if let error {
-                    precondition(data == nil)
-                    continuation.resume(throwing: error)
-                } else {
-                    continuation.resume(returning: data)
+    func receive(length: Int) async throws -> Data? {
+        try await connection.asyncReceive(length: length)
                 }
-                if connectionEnded {
-                    logger.log("←→ connection did end")
-                }
-            }
-        }
-    }
 
     @Sendable private func stateDidChange(to state: NWConnection.State) {
         switch state {
         case .setup:
             logger.log("←→ .setup: The connection has been initialized but not started")
-        case .waiting(let error):
-            logger.log("←→ .waiting: \(error.localizedDescription)")
         case .preparing:
             logger.log("←→ .preparing: The connection in the process of being established")
         case .ready:
             logger.log("←→ .ready: The connection is established, and ready to send and receive data")
+            case .waiting(let error):
+                logger.log("←→ .waiting: \(error.localizedDescription)")
         case .failed(let error):
             logger.error("←→ .failed: \(error.localizedDescription)")
-            self.stop(error: error)
         case .cancelled:
             logger.error("←→ .cancelled: The connection has been canceled")
         @unknown default:
             fatalError("←→ network state: \(state) is not supported")  // \(String(describing: state))
         }
+    }
+
+    private func start() {
+        self.connection.stateUpdateHandler = self.stateDidChange(to:)
+        self.connection.start(queue: .main)
     }
 
     private func stop(error: Error?) {
@@ -92,21 +71,6 @@ struct Network: Sendable {
         self.didStopCallback(error)
     }
 
-}
-
-/*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
-  └──────────────────────────────────────────────────────────────────────────────────────────────────┘*/
-func setNetwork(start: Bool = false) -> Network {
-#if os(iOS) || os(tvOS)
-//  return Network("192.168.1.232", 19697)              // .. Ubuntu
-    return Network("192.168.1.100", 19697, start: true) // .. MaxBook
-#else
-    return Network()                                    // "localhost", 19697
-#endif
-}
-
-func setNetwork(_ ipAddr: String, _ ipPort: UInt16, start: Bool = false) -> Network {
-    return Network(ipAddr, ipPort, start: true)
 }
 
 @MainActor
@@ -121,8 +85,18 @@ func startNetwork() {
             ipAddr=\(model.ipAddr, privacy: .public), \
             ipPort=\(model.ipPort, privacy: .public)
             """)
-        model.network = setNetwork(model.ipAddr, model.ipPort, start: true)
+        model.network = Network(model.ipAddr, model.ipPort, connect: true)
     }
+#endif
+
+#if os(iOS) || os(tvOS)
+    model.statusLights = DisKeyModel.lunarModule0
+    model.elPowerOn = true
+//  model.network = Network("192.168.1.232", 19697)                 // .. Ubuntu
+//  model.network = Network("192.168.1.100", 19697, connect: true)  // .. MaxBook
+    model.network = Network("192.168.1.192", 19697, connect: true)  // .. iPhone
+//  model.network = Network("192.168.1.228", 19697, connect: true)  // .. iPadM4
+//  model.network = Network("127.0.0.1", 19697, connect: true)      // .. localhost
 #endif
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -132,14 +106,46 @@ func startNetwork() {
         var keepGoing = true
         repeat {
             do {
-                if let rxPacket = try await model.network.rawReceive(length: 4) {
+                if let rxPacket = try await model.network.receive(length: 4) {
                     if let (channel, action, _) =
                         parseIoPacket(rxPacket) { channelAction(channel, action) }
                 }
             } catch {
-                logger.error("\(error.localizedDescription)")
+                logger.error("←→ rx loop (cmdarg): \(error.localizedDescription)")
                 keepGoing = false
             }
         } while keepGoing
     }
+}
+
+extension NWConnection {
+
+    func asyncSend(data: Data?) async throws {
+        try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in
+            send(content: data, completion: .contentProcessed { error in
+                if let error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume(returning: ())
+                }
+            })
+        }
+    }
+
+    func asyncReceive(length: Int) async throws -> Data {
+        try await withCheckedThrowingContinuation { continuation in
+            receive(minimumIncompleteLength: length, maximumLength: length) { data, _, connectionEnded, error in
+                if connectionEnded {
+                    logger.log("←→ connection did end")
+                    continuation.resume(throwing: NWError.posix(.ECONNRESET))
+                } else if let error {
+//                  precondition(data == nil)
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume(returning: data ?? Data(repeating: 0, count: 4))
+                }
+            }
+        }
+    }
+
 }
