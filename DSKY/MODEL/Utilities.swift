@@ -5,11 +5,7 @@
 //  Created by Gavin Eadie on Jul21/24 (copyright 2024-25)
 //
 
-// swiftlint:disable file_length
-
 import Foundation
-
-// swiftlint:disable colon
 
 let bit1:  UInt16 = 0b0000_0000_0000_0001
 let bit2:  UInt16 = 0b0000_0000_0000_0010
@@ -21,8 +17,6 @@ let bit7:  UInt16 = 0b0000_0000_0100_0000
 let bit8:  UInt16 = 0b0000_0000_1000_0000
 let bit9:  UInt16 = 0b0000_0001_0000_0000
 let bit10: UInt16 = 0b0000_0010_0000_0000
-
-// swiftlint:enable colon
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆                                                                                                  ┆
@@ -90,13 +84,9 @@ let symbolArray = ["----",
                    "3435", "3233", "2531", "2324", "2122",
                    "1415", "1213", "..11", "N1N2", "V1V2", "M1M2"]
 
-// swiftlint:disable comma
-
 let digitsDict = [  0: "_",
                     21: "0",  3: "1", 25: "2", 27: "3", 15: "4",
                     30: "5", 28: "6", 19: "7", 29: "8", 31: "9"]
-
-// swiftlint:enable comma
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆          Bit 1 lights the "PRIO DISP" indicator       -- ?                                       ┆
@@ -307,8 +297,6 @@ private struct ClickThroughBackdrop<Content: SwiftUI.View>: NSViewRepresentable 
 }
 #endif
 
-// swiftlint:disable cyclomatic_complexity
-
 @MainActor
 func extractOptions() {
 
@@ -409,5 +397,3 @@ func extractOptions() {
 #endif
 
 }
-
-// swiftlint:enable cyclomatic_complexity

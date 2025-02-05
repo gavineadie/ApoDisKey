@@ -75,8 +75,6 @@ func formIoPacket(_ channel: UInt16, _ value: UInt16) -> Data {
   ┆          (channel = zero & value = zero) signals lost connection ..                              ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 
-// swiftlint:disable large_tuple
-
 /// This function is the reverse of FormIoPacket. A 4-byte packet representing yaAGC channel i/o
 /// can be converted to an integer channel-number, value and 'u-bit'.
 func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
@@ -105,5 +103,3 @@ func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
 
     return (channel, value, (bytes[0] & 0b00100000) > 0)
 }
-
-// swiftlint:enable large_tuple

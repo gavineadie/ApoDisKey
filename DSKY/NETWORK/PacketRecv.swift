@@ -7,9 +7,6 @@
 
 import Foundation
 
-// swiftlint:disable function_body_length
-// swiftlint:disable cyclomatic_complexity
-
 @MainActor
 func channelAction(_ channel: UInt16, _ value: UInt16, _ boolean: Bool = true) {
 
@@ -33,7 +30,7 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ boolean: Bool = true) {
   ┆                                                                                                  ┆
   ┆          Bit2 11 and 15 ..                                                                       ┆
   ┆                                                                                                  ┆
-  ┆###       NOTE: don't log command that only cycle the "COMP ACTY" indicator.                      ┆
+  ┆### NOTE: don't log the commands that only cycle the "COMP ACTY" indicator.                       ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
         case 0o011:                 // [OUTPUT] flags for indicator lamps etc
             if value != 0x2000 && value != 0x2002 && value != 0x2200 && value != 0x2202 {
@@ -171,7 +168,7 @@ func dskyInterpretation(_ code: UInt16) {
   ┆                                                                                                  ┆
   ┆                               -AAAA B CCCCC DDDDD                                                ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-            let bBit: Bool = (code & 0b00000_1_00000_00000) >  0
+            let bBit: Bool =   (code & 0b00000_1_00000_00000) >  0
             let cInt: UInt16 = (code & 0b00000_0_11111_00000) >> 5
             let dInt: UInt16 = (code & 0b00000_0_00000_11111) >> 0
 
@@ -311,6 +308,3 @@ func dskyInterpretation(_ code: UInt16) {
 
     return
 }
-
-// swiftlint:enable cyclomatic_complexity
-// swiftlint:enable function_body_length

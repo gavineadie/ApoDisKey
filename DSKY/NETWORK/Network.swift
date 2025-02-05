@@ -21,7 +21,6 @@ struct Network: Sendable {
             } else {
                 logger.log("←→ Connection stopped successfully.")
             }
-//          exit( error == nil ? EXIT_SUCCESS : EXIT_SUCCESS )  // Notify or update UI instead of calling exit().
         }
 
         let tcpOptions = NWProtocolTCP.Options()
@@ -46,12 +45,12 @@ struct Network: Sendable {
         switch state {
             case .setup:
                 logger.log("←→ .setup: The connection has been initialized but not started")
-            case .waiting(let error):
-                logger.log("←→ .waiting: \(error.localizedDescription)")
             case .preparing:
                 logger.log("←→ .preparing: The connection in the process of being established")
             case .ready:
                 logger.log("←→ .ready: The connection is established, and ready to send and receive data")
+            case .waiting(let error):
+                logger.log("←→ .waiting: \(error.localizedDescription)")
             case .failed(let error):
                 logger.error("←→ .failed: \(error.localizedDescription)")
             case .cancelled:
@@ -91,8 +90,13 @@ func startNetwork() {
 #endif
 
 #if os(iOS) || os(tvOS)
+    model.statusLights = DisKeyModel.lunarModule0
+    model.elPowerOn = true
 //  model.network = Network("192.168.1.232", 19697)                 // .. Ubuntu
-    model.network = Network("192.168.1.100", 19697, connect: true)  // .. MaxBook
+//  model.network = Network("192.168.1.100", 19697, connect: true)  // .. MaxBook
+    model.network = Network("192.168.1.192", 19697, connect: true)  // .. iPhone
+//  model.network = Network("192.168.1.228", 19697, connect: true)  // .. iPadM4
+//  model.network = Network("127.0.0.1", 19697, connect: true)      // .. localhost
 #endif
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -107,7 +111,7 @@ func startNetwork() {
                         parseIoPacket(rxPacket) { channelAction(channel, action) }
                 }
             } catch {
-                logger.error("←→ receive loop task: \(error.localizedDescription)")
+                logger.error("←→ rx loop (cmdarg): \(error.localizedDescription)")
                 keepGoing = false
             }
         } while keepGoing
@@ -133,9 +137,9 @@ extension NWConnection {
             receive(minimumIncompleteLength: length, maximumLength: length) { data, _, connectionEnded, error in
                 if connectionEnded {
                     logger.log("←→ connection did end")
-                }
-                if let error {
-                    precondition(data == nil)
+                    continuation.resume(throwing: NWError.posix(.ECONNRESET))
+                } else if let error {
+//                  precondition(data == nil)
                     continuation.resume(throwing: error)
                 } else {
                     continuation.resume(returning: data ?? Data(repeating: 0, count: 4))

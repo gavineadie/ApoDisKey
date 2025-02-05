@@ -55,9 +55,9 @@ class DisKeyModel: ObservableObject {
             21: ("", .off),             //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
             22: ("", .off),             //  ┆OPR ERR ┆ ┆TRACKER ┆
             23: ("", .off),             //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
-            24: ("", .off),             //  ┆        ┆ ┆  ALT   ┆
+            24: ("", .off),             //  ┆PRIODISP┆ ┆  ALT   ┆
             25: ("", .off),             //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
-            26: ("", .off),             //  ┆        ┆ ┆  VEL   ┆
+            26: ("", .off),             //  ┆ NO DAP ┆ ┆  VEL   ┆
             27: ("", .off)              //  ╰╌╌╌╌╌╌╌╌╯ ╰╌╌╌╌╌╌╌╌╯
         ]
 
@@ -86,8 +86,6 @@ class DisKeyModel: ObservableObject {
     public var ipPort: UInt16 = 19697
     public var network = Network()                  // initializes but doesn't start
 }
-
-// swiftlint:disable comma
 
 extension DisKeyModel {
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -174,8 +172,6 @@ extension DisKeyModel {
         27: ("   ",            .off)
     ]
 }
-
-// swiftlint:enable comma
 
 func keyText(_ code: UInt16) -> String { keyDict[code] ?? "ERROR" }
 

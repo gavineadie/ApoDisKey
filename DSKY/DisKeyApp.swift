@@ -173,6 +173,7 @@ struct MonitorView: View {
 
     @State private var ipAddr: String = ""
     @State private var ipPort: UInt16 = 0
+    @State private var menuString = "Select Mission"
 
     static var integer: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -184,30 +185,33 @@ struct MonitorView: View {
     var body: some View {
         HStack {
 
-            Menu("Choose Mission") {
+            Menu(menuString) {
                 Button("Apollo CM 8-17",
                        action: {
                     model.statusLights = DisKeyModel.commandModule
                     model.elPowerOn = true
+                    menuString = "Apollo CM 8-17"
                 })
                 Button("Apollo LM 11-14",
                        action: {
                     model.statusLights = DisKeyModel.lunarModule0
                     model.elPowerOn = true
+                    menuString = "Apollo LM 11-14"
                 })
                 Button("Apollo LM 15-17",
                        action: {
                     model.statusLights = DisKeyModel.lunarModule1
                     model.elPowerOn = true
+                    menuString = "Apollo LM 15-17"
                 })
             }
 
             TextField("AGC Address", text: $ipAddr)
-            .font(.custom("Menlo", size: 12))
+                .font(.custom("Menlo", size: 12))
 
             TextField("AGC PortNum", value: $ipPort, formatter: MonitorView.integer)
-            .font(.custom("Menlo", size: 12))
-
+                .font(.custom("Menlo", size: 12))
+            
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ .. make network connection                                                                       ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
@@ -235,7 +239,7 @@ struct MonitorView: View {
                                     parseIoPacket(rxPacket) { channelAction(channel, action) }
                             }
                         } catch {
-                            logger.error("\(error.localizedDescription)")
+                            logger.error("←→ rx loop (button): \(error.localizedDescription)")
                             keepGoing = false
                         }
                     } while keepGoing
@@ -253,9 +257,8 @@ struct MonitorView: View {
                         logger.error("\(error.localizedDescription)")
                     }
                 }
-            }
-            )
-            .disabled(ipAddr.isEmpty || ipPort == 0)
+            } )
+            .disabled(ipAddr.isEmpty || ipPort == 0 || menuString == "Select Mission")
         }
         .padding(5)
         .background(.gray)
