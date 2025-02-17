@@ -40,8 +40,8 @@ struct DisKeyApp: App {
             }
         }
 
-        //            .defaultSize(CGSize(width: 569, height: 656))
-        //            .defaultPosition(UnitPoint(x: model.windowX, y: model.windowY))
+//      .defaultSize(CGSize(width: model.windowW, height: model.windowH))
+//      .defaultPosition(UnitPoint(x: model.windowX, y: model.windowY))
 
         func applicationWillTerminate(_ notification: Notification) {
             if model.windowX >= 0.0 && model.windowY >= 0.0 {
@@ -61,7 +61,9 @@ struct DisKeyApp: App {
         model.windowW = CGFloat(569)
         model.windowH = CGFloat(656)
 
+#if os(macOS)
         extractOptions()                        // get any command arguments ..
+#endif
 
         if model.windowX >= 0.0 && model.windowY >= 0.0 {
             UserDefaults.standard.removeObject(
@@ -94,6 +96,9 @@ struct DisKeyApp: App {
         WindowGroup {
             AppView()
         }
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ Menu management ..                                                                               ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
         .commands {
             CommandGroup(replacing: .pasteboard) { }        // "Cut", "Copy", "Paste", ..
             CommandGroup(replacing: .newItem) { }           // "File" removed ("New", "Open", ..)
@@ -103,12 +108,8 @@ struct DisKeyApp: App {
             CommandGroup(replacing: .windowArrangement) { }
 #if os(macOS)
             CommandGroup(replacing: .help) {
-                Button("ApoDisKey Help") {
-                    openHelpWindow()
-                }
-                Button("ApoDisKey News") {
-                    openNewsWindow()
-                }
+                Button("ApoDisKey Help") { openHelpWindow() }
+                Button("ApoDisKey News") { openNewsWindow() }
             }
 #endif
         }
@@ -120,13 +121,14 @@ struct DisKeyApp: App {
 //        }
 // #endif
 
-#if os(macOS)
-        if #available(macOS 13.0, *) {
-            Window("Help", id: "help") {
-                HelpView()
-            }
-        }
-#endif
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ This puts "Help" in the "Window" menu ..                                                         ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+//#if os(macOS)
+//        if #available(macOS 13.0, *) {
+//            Window("Help", id: "help") { HelpView() }
+//        }
+//#endif
     }
 
 #if os(macOS)
@@ -146,6 +148,7 @@ struct DisKeyApp: App {
         newsWindowController?.window?.makeKeyAndOrderFront(nil)
     }
 #endif
+
 }
 
 struct AppView: View {

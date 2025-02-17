@@ -62,10 +62,6 @@ public func plu_min(_ plusMinus: (Bool, Bool)) -> String {
     }
 }
 
-func prettyPrint(_ data: Data) {
-    logger.log("\(zeroPadByte(data[0])) \(zeroPadByte(data[1])) \(zeroPadByte(data[2])) \(zeroPadByte(data[3]))")
-}
-
 func prettyString(_ data: Data) -> String {
     "\(zeroPadByte(data[0])) \(zeroPadByte(data[1])) \(zeroPadByte(data[2])) \(zeroPadByte(data[3]))"
 }
@@ -76,6 +72,10 @@ private func zeroPadByte(_ code: UInt8, _ length: Int = 8) -> String {
 
 func zeroPadWord(_ code: UInt16, to length: Int = 15) -> String {
     String(("0000000000000000" + String(UInt16(code), radix: 2)).suffix(length))
+}
+
+func zeroPadChannel(_ channel: UInt16) -> String {
+    String(("000" + String(channel, radix: 8)).suffix(3))
 }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -325,9 +325,6 @@ func extractOptions() {
             model.ipPort = UInt16(arg)!
 
             model.haveCmdArgs = !model.ipAddr.isEmpty && model.ipPort > 0
-
-        } else if arg.hasPrefix("--log-timer") {
-            model.logTimer = true
 
         } else if arg.hasPrefix("--half-size") {
             model.fullSize = false

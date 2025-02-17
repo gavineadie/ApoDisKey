@@ -1,5 +1,5 @@
 //
-//  PacketRecv.swift
+//  ChannelAction.swift
 //  ApoDisKey
 //
 //  Created by Gavin Eadie on Jul16/24 (copyright 2024-25)
@@ -116,10 +116,10 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ boolean: Bool = true) {
             logger.log("»»» DSKY165 \(zeroPadWord(value)) TIME1")
 
         case 0o164, 0o166...0o177:
-            logger.log("»»» fiction    \(channel, format: .octal(minDigits: 3)): \(zeroPadWord(value))")
+            logger.log("»»» fiction    \(zeroPadChannel(channel)): \(zeroPadWord(value))")
 
         default:
-            logger.log("??? channel    \(channel, format: .octal(minDigits: 3)): \(zeroPadWord(value))")
+            logger.log("??? channel    \(zeroPadChannel(channel)): \(zeroPadWord(value))")
 
     }
 }
@@ -129,8 +129,9 @@ func dskyInterpretation(_ code: UInt16) {
 
     let  rowCode = (code & 0b01111_0_00000_00000) >> 11
 
-    switch rowCode {
-        case 12:
+    if rowCode == 0 { return }      // logger.log("ooo    DSKY 010: \(ZeroPadWord(code))")
+
+    if rowCode == 12 {
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ STATUS ANNUNCIATORS                                                                              ┆
   ┆                                                                                                  ┆
@@ -144,60 +145,49 @@ func dskyInterpretation(_ code: UInt16) {
   ┆          Bit 8 lights the "TRACKER" indicator.                                                   ┆
   ┆          Bit 9 lights the "PROG" indicator.                                                      ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-            logger.log("""
+        logger.log("""
                 »»»    DSKY 010: \(zeroPadWord(code).prefix(5)) \
                 \(zeroPadWord(code).dropFirst(5)) \
                 LIGHTS (10)      :: \(prettyCh010(code & 0b0000000_111111111))
                 """)
 
-            model.statusLights[27]?.1 = (code & bit3 > 0) ? .yellow : .off   // 3: VEL
-            model.statusLights[12]?.1 = (code & bit4 > 0) ?  .white : .off   // 4: NO ATT
-            model.statusLights[26]?.1 = (code & bit5 > 0) ? .yellow : .off   // 5: ALT
-            model.statusLights[22]?.1 = (code & bit6 > 0) ? .yellow : .off   // 6: GIMBAL LOCK
+        model.statusLights[27]?.1 = (code & bit3 > 0) ? .yellow : .off   // 3: VEL
+        model.statusLights[12]?.1 = (code & bit4 > 0) ?  .white : .off   // 4: NO ATT
+        model.statusLights[26]?.1 = (code & bit5 > 0) ? .yellow : .off   // 5: ALT
+        model.statusLights[22]?.1 = (code & bit6 > 0) ? .yellow : .off   // 6: GIMBAL LOCK
 
-            model.statusLights[25]?.1 = (code & bit8 > 0) ? .yellow : .off   // 8: TRACKER
-            model.statusLights[23]?.1 = (code & bit9 > 0) ? .yellow : .off   // 9: PROG
-
-        case 0:
-            return // logger.log("ooo    DSKY 010: \(ZeroPadWord(code))")
-
-        default:
+        model.statusLights[25]?.1 = (code & bit8 > 0) ? .yellow : .off   // 8: TRACKER
+        model.statusLights[23]?.1 = (code & bit9 > 0) ? .yellow : .off   // 9: PROG
+    }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ DISPLAY ELECTROLUMINESCENT LIGHTS                                                                ┆
   ┆                                                                                                  ┆
   ┆                               -AAAA B CCCCC DDDDD                                                ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-            let bBit: Bool =   (code & 0b00000_1_00000_00000) >  0
-            let cInt: UInt16 = (code & 0b00000_0_11111_00000) >> 5
-            let dInt: UInt16 = (code & 0b00000_0_00000_11111) >> 0
+    else {
+        let bBit: Bool =   (code & 0b00000_1_00000_00000) >  0
+        let cInt: UInt16 = (code & 0b00000_0_11111_00000) >> 5
+        let dInt: UInt16 = (code & 0b00000_0_00000_11111) >> 0
 
-            var aStr = "????"
-            if rowCode < symbolArray.count {
-                aStr = symbolArray[Int(rowCode)]
-            }
+        let aStr = rowCode < symbolArray.count ? symbolArray[Int(rowCode)] : "????"
+        let cStr = digitsDict[Int(cInt)] ?? "?"
+        let dStr = digitsDict[Int(dInt)] ?? "?"
 
-            let cStr = digitsDict[Int(cInt)] ?? "?"
-            let dStr = digitsDict[Int(dInt)] ?? "?"
+        logger.log("""
+            »»»    DSKY 010: \(zeroPadWord(code).prefix(4)) \
+            \(zeroPadWord(code).prefix(5).suffix(1)) \
+            \(zeroPadWord(code).dropFirst(5).dropLast(5)) \
+            \(zeroPadWord(code).dropFirst(10)) \
+            (\(aStr)) ±\(bBit ? "↑" : "↓") "\(cStr)\(dStr)\"
+            """)
 
-            logger.log("""
-                »»»    DSKY 010: \(zeroPadWord(code).prefix(4)) \
-                \(zeroPadWord(code).prefix(5).suffix(1)) \
-                \(zeroPadWord(code).dropFirst(5).dropLast(5)) \
-                \(zeroPadWord(code).dropFirst(10)) \
-                (\(aStr)) ±\(bBit ? "↑" : "↓") "\(cStr)\(dStr)\"
-                """)
-
-            switch rowCode {
-                case 9:
-                    model.noun = (cStr + dStr, true)
-                case 10:
-                    model.verb = (cStr + dStr, true)
-                case 11:
-                    model.prog = (cStr + dStr, true)
-                default:
-                    break
-            }
+        switch rowCode {
+            case 9:  model.noun = (cStr + dStr, true)
+            case 10: model.verb = (cStr + dStr, true)
+            case 11: model.prog = (cStr + dStr, true)
+            default: break
+        }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ these are " " or "+" or "-" ..                                                                   ┆
@@ -234,76 +224,75 @@ func dskyInterpretation(_ code: UInt16) {
   ┆                                                                                                  ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 
-            var reg1Bytes = model.reg1.0.map { String($0) }
-            var reg2Bytes = model.reg2.0.map { String($0) }
-            var reg3Bytes = model.reg3.0.map { String($0) }
+        var reg1Bytes: [String] = model.reg1.0.map { String($0) }
+        var reg2Bytes: [String] = model.reg2.0.map { String($0) }
+        var reg3Bytes: [String] = model.reg3.0.map { String($0) }
 
-            precondition(reg1Bytes.count == 6 && [" ", "+", "-"].contains(reg1Bytes[0]))
-            precondition(reg2Bytes.count == 6 && [" ", "+", "-"].contains(reg2Bytes[0]))
-            precondition(reg3Bytes.count == 6 && [" ", "+", "-"].contains(reg3Bytes[0]))
+        precondition(reg1Bytes.count == 6 && [" ", "+", "-"].contains(reg1Bytes[0]))
+        precondition(reg2Bytes.count == 6 && [" ", "+", "-"].contains(reg2Bytes[0]))
+        precondition(reg3Bytes.count == 6 && [" ", "+", "-"].contains(reg3Bytes[0]))
 
-            switch rowCode {
+        switch rowCode {
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ no sign bit setting ..                                                                           ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-                case 8:         // "..11"
-                    reg1Bytes[1] = dStr
-                    model.reg1.0 = reg1Bytes.joined()
+            case 8:         // "..11"
+                reg1Bytes[1] = dStr
+                model.reg1.0 = reg1Bytes.joined()
 
-                case 3:         // "2531"
-                    reg2Bytes[5] = cStr
-                    model.reg2.0 = reg2Bytes.joined()
-                    reg3Bytes[1] = dStr
-                    model.reg3.0 = reg3Bytes.joined()
+            case 3:         // "2531"
+                reg2Bytes[5] = cStr
+                model.reg2.0 = reg2Bytes.joined()
+                reg3Bytes[1] = dStr
+                model.reg3.0 = reg3Bytes.joined()
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ sign bit manipulation ..                                                                         ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-                case 7:         // "1213" & "R1+"
-                    model.r1Sign.0 = bBit
-                    reg1Bytes[0] = plu_min(model.r1Sign)
-                    reg1Bytes[2] = cStr
-                    reg1Bytes[3] = dStr
-                    model.reg1.0 = reg1Bytes.joined()
+            case 7:         // "1213" & "R1+"
+                model.r1Sign.0 = bBit
+                reg1Bytes[0] = plu_min(model.r1Sign)
+                reg1Bytes[2] = cStr
+                reg1Bytes[3] = dStr
+                model.reg1.0 = reg1Bytes.joined()
 
-                case 6:         // "1415" & "R1-"
-                    model.r1Sign.1 = bBit
-                    reg1Bytes[0] = plu_min(model.r1Sign)
-                    reg1Bytes[4] = cStr
-                    reg1Bytes[5] = dStr
-                    model.reg1.0 = reg1Bytes.joined()
+            case 6:         // "1415" & "R1-"
+                model.r1Sign.1 = bBit
+                reg1Bytes[0] = plu_min(model.r1Sign)
+                reg1Bytes[4] = cStr
+                reg1Bytes[5] = dStr
+                model.reg1.0 = reg1Bytes.joined()
 
-                case 5:         // "2122" & "R2+"
-                    model.r2Sign.0 = bBit
-                    reg2Bytes[0] = plu_min(model.r2Sign)
-                    reg2Bytes[1] = cStr
-                    reg2Bytes[2] = dStr
-                    model.reg2.0 = reg2Bytes.joined()
+            case 5:         // "2122" & "R2+"
+                model.r2Sign.0 = bBit
+                reg2Bytes[0] = plu_min(model.r2Sign)
+                reg2Bytes[1] = cStr
+                reg2Bytes[2] = dStr
+                model.reg2.0 = reg2Bytes.joined()
 
-                case 4:         // "2324" & "R2-"
-                    model.r2Sign.1 = bBit
-                    reg2Bytes[0] = plu_min(model.r2Sign)
-                    reg2Bytes[3] = cStr
-                    reg2Bytes[4] = dStr
-                    model.reg2.0 = reg2Bytes.joined()
+            case 4:         // "2324" & "R2-"
+                model.r2Sign.1 = bBit
+                reg2Bytes[0] = plu_min(model.r2Sign)
+                reg2Bytes[3] = cStr
+                reg2Bytes[4] = dStr
+                model.reg2.0 = reg2Bytes.joined()
 
-                case 2:         // "3233" & "R3+"
-                    model.r3Sign.0 = bBit
-                    reg3Bytes[0] = plu_min(model.r3Sign)
-                    reg3Bytes[2] = cStr
-                    reg3Bytes[3] = dStr
-                    model.reg3.0 = reg3Bytes.joined()
+            case 2:         // "3233" & "R3+"
+                model.r3Sign.0 = bBit
+                reg3Bytes[0] = plu_min(model.r3Sign)
+                reg3Bytes[2] = cStr
+                reg3Bytes[3] = dStr
+                model.reg3.0 = reg3Bytes.joined()
 
-                case 1:         // "3435" & "R3-"
-                    model.r3Sign.1 = bBit
-                    reg3Bytes[0] = plu_min(model.r3Sign)
-                    reg3Bytes[4] = cStr
-                    reg3Bytes[5] = dStr
-                    model.reg3.0 = reg3Bytes.joined()
+            case 1:         // "3435" & "R3-"
+                model.r3Sign.1 = bBit
+                reg3Bytes[0] = plu_min(model.r3Sign)
+                reg3Bytes[4] = cStr
+                reg3Bytes[5] = dStr
+                model.reg3.0 = reg3Bytes.joined()
 
-                default:
-                    break
-            }
+            default: break
+        }
     }
 
     return

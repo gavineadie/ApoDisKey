@@ -99,7 +99,7 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--half-size"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "--x=400"
