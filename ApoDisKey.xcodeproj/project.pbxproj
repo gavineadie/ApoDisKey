@@ -3,38 +3,8 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
-
-/* Begin PBXBuildFile section */
-		8623E1122C6B1129003B934F /* dsky.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 8623E1112C6B1129003B934F /* dsky.aiff */; };
-		862A1D272C48230500AD4352 /* PacketIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86ECA4DE2C47602F0025545C /* PacketIO.swift */; };
-		86368FF12D422090001BDD97 /* DisKeyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A055062C405BB3007996B7 /* DisKeyModel.swift */; };
-		86368FF22D4220AD001BDD97 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86CB9B5D2C45F94400968C20 /* Network.swift */; };
-		86368FF32D4220E9001BDD97 /* ChannelAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86ECA4E02C4760400025545C /* ChannelAction.swift */; };
-		864BD6092C3B2B9900D4C896 /* KeyPadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864BD6082C3B2B9900D4C896 /* KeyPadView.swift */; };
-		864BD60F2C3B416D00D4C896 /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864BD60E2C3B416D00D4C896 /* StatusView.swift */; };
-		864BD6112C3B42DF00D4C896 /* DisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864BD6102C3B42DF00D4C896 /* DisplayView.swift */; };
-		864BD6132C3B728400D4C896 /* Zerlina.otf in Resources */ = {isa = PBXBuildFile; fileRef = 864BD6122C3B728400D4C896 /* Zerlina.otf */; };
-		864BD6192C3BD69700D4C896 /* Gorton-Condensed.otf in Resources */ = {isa = PBXBuildFile; fileRef = 864BD6162C3BD69700D4C896 /* Gorton-Condensed.otf */; };
-		864BD61A2C3BD69700D4C896 /* Gorton-Normal-120.otf in Resources */ = {isa = PBXBuildFile; fileRef = 864BD6172C3BD69700D4C896 /* Gorton-Normal-120.otf */; };
-		864BD61B2C3BD69700D4C896 /* Gorton-Normal-180.otf in Resources */ = {isa = PBXBuildFile; fileRef = 864BD6182C3BD69700D4C896 /* Gorton-Normal-180.otf */; };
-		867EBD682C3A1E29004C4DDD /* DisKeyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD672C3A1E29004C4DDD /* DisKeyApp.swift */; };
-		867EBD6A2C3A1E29004C4DDD /* DisKeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD692C3A1E29004C4DDD /* DisKeyView.swift */; };
-		867EBD7A2C3A1E2A004C4DDD /* DSKYTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD792C3A1E2A004C4DDD /* DSKYTests.swift */; };
-		868B2B712CD0CAD200A70648 /* FileStuff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 868B2B6F2CD0CAD200A70648 /* FileStuff.swift */; };
-		86A055072C405BB3007996B7 /* DisKeyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A055062C405BB3007996B7 /* DisKeyModel.swift */; };
-		86B26DB92C4CD3020021E594 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B26DB82C4CD3020021E594 /* Utilities.swift */; };
-		86B26DBA2C4CD30A0021E594 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B26DB82C4CD3020021E594 /* Utilities.swift */; };
-		86C4C5C02C4CE79900A4DEA1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86C4C5BF2C4CE79900A4DEA1 /* Assets.xcassets */; };
-		86C85A1B2C4F46A1002BE367 /* testLights.canned in Resources */ = {isa = PBXBuildFile; fileRef = 86C85A1A2C4F46A1002BE367 /* testLights.canned */; };
-		86CB9B5E2C45F94400968C20 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86CB9B5D2C45F94400968C20 /* Network.swift */; };
-		86CE20372D445BF000182F8B /* HelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86CE20362D445BF000182F8B /* HelpView.swift */; };
-		86CE20392D44607C00182F8B /* NewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86CE20382D44607C00182F8B /* NewsView.swift */; };
-		86E838922C3CF06400E7C573 /* DecorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E838912C3CF06400E7C573 /* DecorView.swift */; };
-		86ECA4DF2C47602F0025545C /* PacketIO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86ECA4DE2C47602F0025545C /* PacketIO.swift */; };
-		86ECA4E12C4760400025545C /* ChannelAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86ECA4E02C4760400025545C /* ChannelAction.swift */; };
-/* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		867EBD762C3A1E2A004C4DDD /* PBXContainerItemProxy */ = {
@@ -47,35 +17,43 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		8623E1112C6B1129003B934F /* dsky.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = dsky.aiff; sourceTree = "<group>"; };
-		862A1D292C48236A00AD4352 /* DSKY.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = DSKY.xctestplan; sourceTree = "<group>"; };
-		864BD6082C3B2B9900D4C896 /* KeyPadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPadView.swift; sourceTree = "<group>"; };
-		864BD60E2C3B416D00D4C896 /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
-		864BD6102C3B42DF00D4C896 /* DisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayView.swift; sourceTree = "<group>"; };
-		864BD6122C3B728400D4C896 /* Zerlina.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zerlina.otf; sourceTree = "<group>"; };
-		864BD6142C3B771A00D4C896 /* Fonts.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Fonts.plist; sourceTree = "<group>"; };
-		864BD6162C3BD69700D4C896 /* Gorton-Condensed.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gorton-Condensed.otf"; sourceTree = "<group>"; };
-		864BD6172C3BD69700D4C896 /* Gorton-Normal-120.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gorton-Normal-120.otf"; sourceTree = "<group>"; };
-		864BD6182C3BD69700D4C896 /* Gorton-Normal-180.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gorton-Normal-180.otf"; sourceTree = "<group>"; };
 		867EBD642C3A1E29004C4DDD /* ApoDisKey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ApoDisKey.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		867EBD672C3A1E29004C4DDD /* DisKeyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisKeyApp.swift; sourceTree = "<group>"; };
-		867EBD692C3A1E29004C4DDD /* DisKeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisKeyView.swift; sourceTree = "<group>"; };
-		867EBD6D2C3A1E2A004C4DDD /* DSKY.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DSKY.entitlements; sourceTree = "<group>"; };
 		867EBD752C3A1E2A004C4DDD /* ApoDisKeyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ApoDisKeyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		867EBD792C3A1E2A004C4DDD /* DSKYTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSKYTests.swift; sourceTree = "<group>"; };
-		868B2B6F2CD0CAD200A70648 /* FileStuff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileStuff.swift; sourceTree = "<group>"; };
 		869F39962C3F337E002DD6B7 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		86A055062C405BB3007996B7 /* DisKeyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisKeyModel.swift; sourceTree = "<group>"; };
-		86B26DB82C4CD3020021E594 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
-		86C4C5BF2C4CE79900A4DEA1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		86C85A1A2C4F46A1002BE367 /* testLights.canned */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testLights.canned; sourceTree = "<group>"; };
-		86CB9B5D2C45F94400968C20 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
-		86CE20362D445BF000182F8B /* HelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
-		86CE20382D44607C00182F8B /* NewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsView.swift; sourceTree = "<group>"; };
-		86E838912C3CF06400E7C573 /* DecorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecorView.swift; sourceTree = "<group>"; };
-		86ECA4DE2C47602F0025545C /* PacketIO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketIO.swift; sourceTree = "<group>"; };
-		86ECA4E02C4760400025545C /* ChannelAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelAction.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		8693EBB62D6305A700D68111 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Fonts.plist,
+			);
+			target = 867EBD632C3A1E29004C4DDD /* ApoDisKey */;
+		};
+		8693EBB72D6305A700D68111 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				MODEL/DisKeyModel.swift,
+				MODEL/Utilities.swift,
+				NETWORK/ChannelAction.swift,
+				NETWORK/Network.swift,
+				NETWORK/PacketIO.swift,
+			);
+			target = 867EBD742C3A1E2A004C4DDD /* ApoDisKeyTests */;
+		};
+		8693EBBC2D6305BC00D68111 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				DSKYTests.swift,
+			);
+			target = 867EBD742C3A1E2A004C4DDD /* ApoDisKeyTests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		8693EB9A2D6305A700D68111 /* DSKY */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (8693EBB62D6305A700D68111 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 8693EBB72D6305A700D68111 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = DSKY; sourceTree = "<group>"; };
+		8693EBBA2D6305BC00D68111 /* DSKYTests */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (8693EBBC2D6305BC00D68111 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = DSKYTests; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		867EBD612C3A1E29004C4DDD /* Frameworks */ = {
@@ -95,42 +73,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		864143C22C4AD27300EEC7EB /* FONTS */ = {
-			isa = PBXGroup;
-			children = (
-				864BD6122C3B728400D4C896 /* Zerlina.otf */,
-				864BD6162C3BD69700D4C896 /* Gorton-Condensed.otf */,
-				864BD6172C3BD69700D4C896 /* Gorton-Normal-120.otf */,
-				864BD6182C3BD69700D4C896 /* Gorton-Normal-180.otf */,
-			);
-			path = FONTS;
-			sourceTree = "<group>";
-		};
-		864143C52C4AE79800EEC7EB /* RESOURCES */ = {
-			isa = PBXGroup;
-			children = (
-				86C85A1A2C4F46A1002BE367 /* testLights.canned */,
-				8623E1112C6B1129003B934F /* dsky.aiff */,
-			);
-			path = RESOURCES;
-			sourceTree = "<group>";
-		};
-		867D86222C489F43007CDD48 /* MODEL */ = {
-			isa = PBXGroup;
-			children = (
-				86A055062C405BB3007996B7 /* DisKeyModel.swift */,
-				86B26DB82C4CD3020021E594 /* Utilities.swift */,
-				868B2B6F2CD0CAD200A70648 /* FileStuff.swift */,
-			);
-			path = MODEL;
-			sourceTree = "<group>";
-		};
 		867EBD5B2C3A1E29004C4DDD = {
 			isa = PBXGroup;
 			children = (
 				869F39962C3F337E002DD6B7 /* README.md */,
-				867EBD662C3A1E29004C4DDD /* DSKY */,
-				867EBD782C3A1E2A004C4DDD /* DSKYTests */,
+				8693EB9A2D6305A700D68111 /* DSKY */,
+				8693EBBA2D6305BC00D68111 /* DSKYTests */,
 				867EBD652C3A1E29004C4DDD /* Products */,
 			);
 			sourceTree = "<group>";
@@ -142,47 +90,6 @@
 				867EBD752C3A1E2A004C4DDD /* ApoDisKeyTests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		867EBD662C3A1E29004C4DDD /* DSKY */ = {
-			isa = PBXGroup;
-			children = (
-				867EBD672C3A1E29004C4DDD /* DisKeyApp.swift */,
-				867EBD692C3A1E29004C4DDD /* DisKeyView.swift */,
-				864BD60E2C3B416D00D4C896 /* StatusView.swift */,
-				864BD6102C3B42DF00D4C896 /* DisplayView.swift */,
-				864BD6082C3B2B9900D4C896 /* KeyPadView.swift */,
-				86E838912C3CF06400E7C573 /* DecorView.swift */,
-				86CE20362D445BF000182F8B /* HelpView.swift */,
-				86CE20382D44607C00182F8B /* NewsView.swift */,
-				867D86222C489F43007CDD48 /* MODEL */,
-				86ECA4E42C4763E70025545C /* NETWORK */,
-				86C4C5BF2C4CE79900A4DEA1 /* Assets.xcassets */,
-				864143C52C4AE79800EEC7EB /* RESOURCES */,
-				864BD6142C3B771A00D4C896 /* Fonts.plist */,
-				864143C22C4AD27300EEC7EB /* FONTS */,
-				867EBD6D2C3A1E2A004C4DDD /* DSKY.entitlements */,
-			);
-			path = DSKY;
-			sourceTree = "<group>";
-		};
-		867EBD782C3A1E2A004C4DDD /* DSKYTests */ = {
-			isa = PBXGroup;
-			children = (
-				867EBD792C3A1E2A004C4DDD /* DSKYTests.swift */,
-				862A1D292C48236A00AD4352 /* DSKY.xctestplan */,
-			);
-			path = DSKYTests;
-			sourceTree = "<group>";
-		};
-		86ECA4E42C4763E70025545C /* NETWORK */ = {
-			isa = PBXGroup;
-			children = (
-				86CB9B5D2C45F94400968C20 /* Network.swift */,
-				86ECA4E02C4760400025545C /* ChannelAction.swift */,
-				86ECA4DE2C47602F0025545C /* PacketIO.swift */,
-			);
-			path = NETWORK;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -199,6 +106,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				8693EB9A2D6305A700D68111 /* DSKY */,
 			);
 			name = ApoDisKey;
 			packageProductDependencies = (
@@ -270,13 +180,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				864BD6192C3BD69700D4C896 /* Gorton-Condensed.otf in Resources */,
-				86C85A1B2C4F46A1002BE367 /* testLights.canned in Resources */,
-				8623E1122C6B1129003B934F /* dsky.aiff in Resources */,
-				864BD6132C3B728400D4C896 /* Zerlina.otf in Resources */,
-				864BD61A2C3BD69700D4C896 /* Gorton-Normal-120.otf in Resources */,
-				86C4C5C02C4CE79900A4DEA1 /* Assets.xcassets in Resources */,
-				864BD61B2C3BD69700D4C896 /* Gorton-Normal-180.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,20 +197,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				867EBD6A2C3A1E29004C4DDD /* DisKeyView.swift in Sources */,
-				86CE20372D445BF000182F8B /* HelpView.swift in Sources */,
-				86A055072C405BB3007996B7 /* DisKeyModel.swift in Sources */,
-				864BD6092C3B2B9900D4C896 /* KeyPadView.swift in Sources */,
-				86E838922C3CF06400E7C573 /* DecorView.swift in Sources */,
-				86ECA4DF2C47602F0025545C /* PacketIO.swift in Sources */,
-				86ECA4E12C4760400025545C /* ChannelAction.swift in Sources */,
-				86CE20392D44607C00182F8B /* NewsView.swift in Sources */,
-				868B2B712CD0CAD200A70648 /* FileStuff.swift in Sources */,
-				86B26DB92C4CD3020021E594 /* Utilities.swift in Sources */,
-				86CB9B5E2C45F94400968C20 /* Network.swift in Sources */,
-				864BD6112C3B42DF00D4C896 /* DisplayView.swift in Sources */,
-				867EBD682C3A1E29004C4DDD /* DisKeyApp.swift in Sources */,
-				864BD60F2C3B416D00D4C896 /* StatusView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -315,12 +204,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				86368FF22D4220AD001BDD97 /* Network.swift in Sources */,
-				867EBD7A2C3A1E2A004C4DDD /* DSKYTests.swift in Sources */,
-				862A1D272C48230500AD4352 /* PacketIO.swift in Sources */,
-				86368FF32D4220E9001BDD97 /* ChannelAction.swift in Sources */,
-				86368FF12D422090001BDD97 /* DisKeyModel.swift in Sources */,
-				86B26DBA2C4CD30A0021E594 /* Utilities.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
