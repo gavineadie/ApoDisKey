@@ -62,21 +62,20 @@ struct DisKeyApp: App {
         WindowGroup {
             AppView()
         }
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ Menu management ..                                                                               ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
         .commands {
-            CommandGroup(replacing: .pasteboard) { }            // "Cut", "Copy", "Paste", ..
-            CommandGroup(replacing: .newItem) { }               // "File" removed ("New", "Open", ..)
+            CommandGroup(replacing: .pasteboard) { }        // "Cut", "Copy", "Paste", ..
+            CommandGroup(replacing: .newItem) { }           // "File" removed ("New", "Open", ..)
             CommandGroup(replacing: .undoRedo) { }
             CommandGroup(replacing: .systemServices) { }
             CommandGroup(replacing: .windowSize) { }
             CommandGroup(replacing: .windowArrangement) { }
 #if os(macOS)
             CommandGroup(replacing: .help) {
-                Button("ApoDisKey Help") {
-                    openHelpWindow()
-                }
-                Button("ApoDisKey News") {
-                    openNewsWindow()
-                }
+                Button("ApoDisKey Help") { openHelpWindow() }
+                Button("ApoDisKey News") { openNewsWindow() }
             }
 #endif
 #if os(macOS)
@@ -166,11 +165,11 @@ struct MonitorView: View {
             }
 
             TextField("AGC Address", text: $ipAddr)
-            .font(.custom("Menlo", size: 12))
+                .font(.custom("Menlo", size: 12))
 
             TextField("AGC PortNum", value: $ipPort, formatter: MonitorView.integer)
-            .font(.custom("Menlo", size: 12))
-
+                .font(.custom("Menlo", size: 12))
+            
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ .. make network connection                                                                       ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
@@ -218,7 +217,7 @@ struct MonitorView: View {
                 }
             } )
             .disabled(ipAddr.isEmpty || ipPort == 0 || menuString == "Select Mission")
-            }
+        }
         .padding(5)
         .background(.gray)
     }

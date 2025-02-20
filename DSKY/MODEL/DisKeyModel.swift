@@ -21,9 +21,7 @@ typealias Light = (String, BackColor)
 
 typealias Display = (String, Bool)
 
-@MainActor
-@Observable
-final class DisKeyModel {
+@MainActor @Observable final class DisKeyModel {
 
     @MainActor static let shared = DisKeyModel()
 

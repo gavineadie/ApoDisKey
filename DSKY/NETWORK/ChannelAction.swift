@@ -1,5 +1,5 @@
 //
-//  PacketRecv.swift
+//  ChannelAction.swift
 //  ApoDisKey
 //
 //  Created by Gavin Eadie on Jul16/24 (copyright 2024-25)
@@ -11,11 +11,11 @@ import Foundation
 func channelAction(_ channel: UInt16, _ value: UInt16, _ boolean: Bool = true) {
 
     switch channel {
-    case 0o005...0o006:
-        break
+        case 0o005...0o006:
+            break
 
-    case 0o010:                 // [OUTPUT] drives DSKY electroluminescent panel
-        dskyInterpretation(value)
+        case 0o010:                 // [OUTPUT] drives DSKY electroluminescent panel
+            dskyInterpretation(value)
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ All LATCHES                                                                                      ┆
@@ -32,48 +32,48 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ boolean: Bool = true) {
   ┆                                                                                                  ┆
   ┆### NOTE: don't log the commands that only cycle the "COMP ACTY" indicator.                       ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-    case 0o011:                 // [OUTPUT] flags for indicator lamps etc
-        if value != 0x2000 && value != 0x2002 && value != 0x2200 && value != 0x2202 {
+        case 0o011:                 // [OUTPUT] flags for indicator lamps etc
+            if value != 0x2000 && value != 0x2002 && value != 0x2200 && value != 0x2202 {
+                logger.log("""
+                »»»    DSKY 011:    \(zeroPadWord(value)) BITS (15)      \
+                :: \(prettyCh011(value))
+                """)
+            }
+            model.comp.1 = value & bit2 > 0                                     // "COMP ACTY"
+
+            model.statusLights[11]?.1 = (value & bit3 > 0) ? .white : .off      // "UPLINK
+            model.statusLights[21]?.1 = (value & bit4 > 0) ? .yellow : .off     // "TEMP"
+            model.statusLights[24]?.1 = (value & bit5 > 0) ? .yellow : .off     // "KEY REL"
+            model.statusLights[14]?.1 = (value & bit7 > 0) ? .white : .off      // "OPR ERR"
+
+        case 0o012:                 // [OUTPUT] CM and LM actions ..
+            break
+
+        case 0o013:                 // [OUTPUT] DSKY lamp tests ..
+            model.statusLights[13]?.1 = (value & 0x0200 > 0) ? .white : .off    // "STBY"
+
+        case 0o014:                 // CM and LM Gyro selection ..
+            break
+
+        case 0o015:                 // [INPUT] Used for inputting keystrokes from the DSKY. ..
             logger.log("""
-            »»»    DSKY 011:    \(zeroPadWord(value)) BITS (15)      \
-            :: \(prettyCh011(value))
-            """)
-        }
-        model.comp.1 = value & bit2 > 0                                     // "COMP ACTY"
+                »»»    DSKY 015:           \(zeroPadWord(value, to: 8)) BITS (8)       \
+                :: \(value) = "\(keyText(value))"
+                """)
 
-        model.statusLights[11]?.1 = (value & bit3 > 0) ? .white : .off      // "UPLINK
-        model.statusLights[21]?.1 = (value & bit4 > 0) ? .yellow : .off     // "TEMP"
-        model.statusLights[24]?.1 = (value & bit5 > 0) ? .yellow : .off     // "KEY REL"
-        model.statusLights[14]?.1 = (value & bit7 > 0) ? .white : .off      // "OPR ERR"
+            if keyDict[value] == "RSET" {
+                model.ch15ResetCount += 1
+                if model.ch15ResetCount == 5 { exit(EXIT_SUCCESS) }             // 5 and we quit
+            }
 
-    case 0o012:                 // [OUTPUT] CM and LM actions ..
-        break
+        case 0o016...0o031:         //
+            break
 
-    case 0o013:                 // [OUTPUT] DSKY lamp tests ..
-        model.statusLights[13]?.1 = (value & 0x0200 > 0) ? .white : .off    // "STBY"
+        case 0o032:                 // [INPUT] Bit 14 UNSET indicates that the PRO key is pressed.
+            break
 
-    case 0o014:                 // CM and LM Gyro selection ..
-        break
-
-    case 0o015:                 // [INPUT] Used for inputting keystrokes from the DSKY. ..
-        logger.log("""
-            »»»    DSKY 015:           \(zeroPadWord(value, to: 8)) BITS (8)       \
-            :: \(value) = "\(keyText(value))"
-            """)
-
-        if keyDict[value] == "RSET" {
-            model.ch15ResetCount += 1
-            if model.ch15ResetCount == 5 { exit(EXIT_SUCCESS) }             // 5 and we quit
-        }
-
-    case 0o016...0o031:         //
-        break
-
-    case 0o032:                 // [INPUT] Bit 14 UNSET indicates that the PRO key is pressed.
-        break
-
-    case 0o033...0o035:         // [OUTPUT] CM and LM downlinks (ch 34, 35)
-        break
+        case 0o033...0o035:         // [OUTPUT] CM and LM downlinks (ch 34, 35)
+            break
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ This channel provides correct handling of signals which, due to hardware-implementation factors, ┆
@@ -96,30 +96,30 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ boolean: Bool = true) {
   ┆          Bit 9: STBY lamp                                                                        ┆
   ┆          Bit 10: EL off                                                                          ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-    case 0o163:
-        logger.log("""
-            »»»    DSKY 163:         \(zeroPadWord(value, to: 10)) BITS (10)      \
-            :: \(prettyCh163(value))
-            """)
+        case 0o163:
+            logger.log("""
+                »»»    DSKY 163:         \(zeroPadWord(value, to: 10)) BITS (10)      \
+                :: \(prettyCh163(value))
+                """)
 
-        model.statusLights[21]?.1 = (value & bit4 > 0) ? .yellow : .off     // Bit 4: TEMP lamp
-        model.statusLights[14]?.1 = (value & bit5 > 0) ? .white : .off      // Bit 5: KEY REL lamp
-        model.verb.1 = value & bit6 == 0                                    // Bit 6: flash V digits
-        model.noun.1 = value & bit6 == 0                                    // Bit 6: flash N digits
-        model.statusLights[15]?.1 = (value & bit7 > 0) ? .white : .off      // Bit 7: OPER ERR lamp
-        model.statusLights[24]?.1 = (value & bit8 > 0) ? .yellow : .off     // Bit 8: RESTART lamp
-        model.statusLights[13]?.1 = (value & bit9 > 0) ? .white : .off      // Bit 9: STBY lamp
+            model.statusLights[21]?.1 = (value & bit4 > 0) ? .yellow : .off     // Bit 4: TEMP lamp
+            model.statusLights[14]?.1 = (value & bit5 > 0) ? .white : .off      // Bit 5: KEY REL lamp
+            model.verb.1 = value & bit6 == 0                                    // Bit 6: flash V digits
+            model.noun.1 = value & bit6 == 0                                    // Bit 6: flash N digits
+            model.statusLights[15]?.1 = (value & bit7 > 0) ? .white : .off      // Bit 7: OPER ERR lamp
+            model.statusLights[24]?.1 = (value & bit8 > 0) ? .yellow : .off     // Bit 8: RESTART lamp
+            model.statusLights[13]?.1 = (value & bit9 > 0) ? .white : .off      // Bit 9: STBY lamp
 
-        model.elPowerOn = value & bit10 == 0                                // Bit 10: panel power
+            model.elPowerOn = value & bit10 == 0                                // Bit 10: panel power
 
-    case 0o165:
-        logger.log("»»» DSKY165 \(zeroPadWord(value)) TIME1")
+        case 0o165:
+            logger.log("»»» DSKY165 \(zeroPadWord(value)) TIME1")
 
-    case 0o164, 0o166...0o177:
-        logger.log("»»» fiction    \(channel, format: .octal(minDigits: 3)): \(zeroPadWord(value))")
+        case 0o164, 0o166...0o177:
+            logger.log("»»» fiction    \(zeroPadChannel(channel)): \(zeroPadWord(value))")
 
-    default:
-        logger.log("??? channel    \(channel, format: .octal(minDigits: 3)): \(zeroPadWord(value))")
+        default:
+            logger.log("??? channel    \(zeroPadChannel(channel)): \(zeroPadWord(value))")
 
     }
 }
@@ -129,8 +129,9 @@ func dskyInterpretation(_ code: UInt16) {
 
     let  rowCode = (code & 0b01111_0_00000_00000) >> 11
 
-    switch rowCode {
-    case 12:
+    if rowCode == 0 { return }      // logger.log("ooo    DSKY 010: \(ZeroPadWord(code))")
+
+    if rowCode == 12 {
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ STATUS ANNUNCIATORS                                                                              ┆
   ┆                                                                                                  ┆
@@ -157,47 +158,36 @@ func dskyInterpretation(_ code: UInt16) {
 
         model.statusLights[25]?.1 = (code & bit8 > 0) ? .yellow : .off   // 8: TRACKER
         model.statusLights[23]?.1 = (code & bit9 > 0) ? .yellow : .off   // 9: PROG
-
-    case 0:
-        return // logger.log("ooo    DSKY 010: \(ZeroPadWord(code))")
-
-    default:
+    }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ DISPLAY ELECTROLUMINESCENT LIGHTS                                                                ┆
   ┆                                                                                                  ┆
   ┆                               -AAAA B CCCCC DDDDD                                                ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-            let bBit: Bool = (code & 0b00000_1_00000_00000) >  0
-            let cInt: UInt16 = (code & 0b00000_0_11111_00000) >> 5
-            let dInt: UInt16 = (code & 0b00000_0_00000_11111) >> 0
+    else {
+        let bBit: Bool =   (code & 0b00000_1_00000_00000) >  0
+        let cInt: UInt16 = (code & 0b00000_0_11111_00000) >> 5
+        let dInt: UInt16 = (code & 0b00000_0_00000_11111) >> 0
 
-            var aStr = "????"
-            if rowCode < symbolArray.count {
-                aStr = symbolArray[Int(rowCode)]
-            }
+        let aStr = rowCode < symbolArray.count ? symbolArray[Int(rowCode)] : "????"
+        let cStr = digitsDict[Int(cInt)] ?? "?"
+        let dStr = digitsDict[Int(dInt)] ?? "?"
 
-            let cStr = digitsDict[Int(cInt)] ?? "?"
-            let dStr = digitsDict[Int(dInt)] ?? "?"
+        logger.log("""
+            »»»    DSKY 010: \(zeroPadWord(code).prefix(4)) \
+            \(zeroPadWord(code).prefix(5).suffix(1)) \
+            \(zeroPadWord(code).dropFirst(5).dropLast(5)) \
+            \(zeroPadWord(code).dropFirst(10)) \
+            (\(aStr)) ±\(bBit ? "↑" : "↓") "\(cStr)\(dStr)\"
+            """)
 
-            logger.log("""
-                »»»    DSKY 010: \(zeroPadWord(code).prefix(4)) \
-                \(zeroPadWord(code).prefix(5).suffix(1)) \
-                \(zeroPadWord(code).dropFirst(5).dropLast(5)) \
-                \(zeroPadWord(code).dropFirst(10)) \
-                (\(aStr)) ±\(bBit ? "↑" : "↓") "\(cStr)\(dStr)\"
-                """)
-
-            switch rowCode {
-            case 9:
-                model.noun = (cStr + dStr, true)
-            case 10:
-                model.verb = (cStr + dStr, true)
-            case 11:
-                model.prog = (cStr + dStr, true)
-            default:
-                break
-            }
+        switch rowCode {
+            case 9:  model.noun = (cStr + dStr, true)
+            case 10: model.verb = (cStr + dStr, true)
+            case 11: model.prog = (cStr + dStr, true)
+            default: break
+        }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ these are " " or "+" or "-" ..                                                                   ┆
@@ -234,15 +224,15 @@ func dskyInterpretation(_ code: UInt16) {
   ┆                                                                                                  ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 
-            var reg1Bytes = model.reg1.0.map { String($0) }
-            var reg2Bytes = model.reg2.0.map { String($0) }
-            var reg3Bytes = model.reg3.0.map { String($0) }
+        var reg1Bytes: [String] = model.reg1.0.map { String($0) }
+        var reg2Bytes: [String] = model.reg2.0.map { String($0) }
+        var reg3Bytes: [String] = model.reg3.0.map { String($0) }
 
-            precondition(reg1Bytes.count == 6 && [" ", "+", "-"].contains(reg1Bytes[0]))
-            precondition(reg2Bytes.count == 6 && [" ", "+", "-"].contains(reg2Bytes[0]))
-            precondition(reg3Bytes.count == 6 && [" ", "+", "-"].contains(reg3Bytes[0]))
+        precondition(reg1Bytes.count == 6 && [" ", "+", "-"].contains(reg1Bytes[0]))
+        precondition(reg2Bytes.count == 6 && [" ", "+", "-"].contains(reg2Bytes[0]))
+        precondition(reg3Bytes.count == 6 && [" ", "+", "-"].contains(reg3Bytes[0]))
 
-            switch rowCode {
+        switch rowCode {
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ no sign bit setting ..                                                                           ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
@@ -301,9 +291,8 @@ func dskyInterpretation(_ code: UInt16) {
                 reg3Bytes[5] = dStr
                 model.reg3.0 = reg3Bytes.joined()
 
-            default:
-                break
-            }
+            default: break
+        }
     }
 
     return

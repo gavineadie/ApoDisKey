@@ -35,28 +35,28 @@ struct Network: Sendable {
 
     func send(_ data: Data) async throws {
         try await connection.asyncSend(data: data)
-                }
+    }
 
     func receive(length: Int) async throws -> Data? {
         try await connection.asyncReceive(length: length)
-                }
+    }
 
     @Sendable private func stateDidChange(to state: NWConnection.State) {
         switch state {
-        case .setup:
-            logger.log("←→ .setup: The connection has been initialized but not started")
-        case .preparing:
-            logger.log("←→ .preparing: The connection in the process of being established")
-        case .ready:
-            logger.log("←→ .ready: The connection is established, and ready to send and receive data")
+            case .setup:
+                logger.log("←→ .setup: The connection has been initialized but not started")
+            case .preparing:
+                logger.log("←→ .preparing: The connection in the process of being established")
+            case .ready:
+                logger.log("←→ .ready: The connection is established, and ready to send and receive data")
             case .waiting(let error):
                 logger.log("←→ .waiting: \(error.localizedDescription)")
-        case .failed(let error):
-            logger.error("←→ .failed: \(error.localizedDescription)")
-        case .cancelled:
-            logger.error("←→ .cancelled: The connection has been canceled")
-        @unknown default:
-            fatalError("←→ network state: \(state) is not supported")  // \(String(describing: state))
+            case .failed(let error):
+                logger.error("←→ .failed: \(error.localizedDescription)")
+            case .cancelled:
+                logger.error("←→ .cancelled: The connection has been canceled")
+            @unknown default:
+                fatalError("←→ network state: \(state) is not supported")  // \(String(describing: state))
         }
     }
 
@@ -96,7 +96,7 @@ func startNetwork() {
 //  model.network = Network("192.168.1.100", 19697, connect: true)  // .. MaxBook
     model.network = Network("192.168.1.192", 19697, connect: true)  // .. iPhone
 //  model.network = Network("192.168.1.228", 19697, connect: true)  // .. iPadM4
-//  model.network = Network("127.0.0.1", 19697, connect: true)      // .. localhost
+    model.network = Network("127.0.0.1", 19697, connect: true)      // .. localhost
 #endif
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮

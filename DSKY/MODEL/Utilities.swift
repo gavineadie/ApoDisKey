@@ -1,16 +1,9 @@
 //
-//  Extensions.swift
+//  Utilities.swift
 //  ApoDisKey
 //
 //  Created by Gavin Eadie on Jul21/24 (copyright 2024-25)
 //
-
-// swiftlint:disable blanket_disable_command
-// swiftlint:disable identifier_name
-// swiftlint:disable colon
-// swiftlint:disable comma
-// swiftlint:disable vertical_whitespace
-// swiftlint:disable file_length
 
 import Foundation
 
@@ -60,24 +53,18 @@ let bit10: UInt16 = 0b0000_0010_0000_0000
   ┆                                         +-----+-----+                                            ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 
-public func plu_min(_ pm: (Bool, Bool)) -> String {
-    switch pm {
-    case (false, false): return " "
-    case (true, false): return "+"
-    case (false, true): return "-"
-    case (true, true): return "-"
+public func plu_min(_ plusMinus: (Bool, Bool)) -> String {
+    switch plusMinus {
+        case (false, false): return " "
+        case (true, false): return "+"
+        case (false, true): return "-"
+        case (true, true): return "-"
     }
-}
-
-
-func prettyPrint(_ data: Data) {
-    logger.log("\(zeroPadByte(data[0])) \(zeroPadByte(data[1])) \(zeroPadByte(data[2])) \(zeroPadByte(data[3]))")
 }
 
 func prettyString(_ data: Data) -> String {
     "\(zeroPadByte(data[0])) \(zeroPadByte(data[1])) \(zeroPadByte(data[2])) \(zeroPadByte(data[3]))"
 }
-
 
 private func zeroPadByte(_ code: UInt8, _ length: Int = 8) -> String {
     String(("000000000" + String(UInt16(code), radix: 2)).suffix(length))
@@ -85,6 +72,10 @@ private func zeroPadByte(_ code: UInt8, _ length: Int = 8) -> String {
 
 func zeroPadWord(_ code: UInt16, to length: Int = 15) -> String {
     String(("0000000000000000" + String(UInt16(code), radix: 2)).suffix(length))
+}
+
+func zeroPadChannel(_ channel: UInt16) -> String {
+    String(("000" + String(channel, radix: 8)).suffix(3))
 }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -345,6 +336,8 @@ func extractOptions() {
 
         } else if arg.hasPrefix("--half-size") {
             model.fullSize = false
+            model.windowW /= 2
+            model.windowH /= 2
         }
 #if os(macOS)
         if arg.hasPrefix("--x=") {
@@ -359,7 +352,7 @@ func extractOptions() {
     }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ if command arguments VirtualAGC app window position are good ..                                  ┆
+  ┆ if command arguments for the VirtualAGC app window position are good ..                  SWIFTUI ┆
   ┆                                                                                                  ┆
   ┆ The range of the command argument (x,y): (0,0) to (Sx-w,Sy-h) and must be mapped the range of    ┆
   ┆ the SwiftUI UnitPoint (-1,-1) to (+1,+1) ..                                                      ┆

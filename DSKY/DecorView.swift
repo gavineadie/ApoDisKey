@@ -179,16 +179,16 @@ func adjustDisplay(_ text: String) -> AttributedString {
     for byte in normText {
         var attrByte = AttributedString(String(byte))
         switch byte {
-        case "+", "-":
-            attrByte = AttributedString(String(byte))
-            attrByte.foregroundColor = model.elPowerOn ? displayElectro : .clear
+            case "+", "-":
+                attrByte = AttributedString(String(byte))
+                attrByte.foregroundColor = model.elPowerOn ? displayElectro : .clear
 
-        case "_":
-            attrByte = AttributedString("8")
-            attrByte.foregroundColor = Color(white: 0.37)
+            case "_":
+                attrByte = AttributedString("8")
+                attrByte.foregroundColor = Color(white: 0.37)
 
-        default:
-            attrByte.foregroundColor = displayElectro
+            default:
+                attrByte.foregroundColor = displayElectro
         }
         attrText += attrByte
     }
