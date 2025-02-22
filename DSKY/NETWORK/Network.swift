@@ -73,51 +73,6 @@ struct Network: Sendable {
 
 }
 
-@MainActor
-func startNetwork() {
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ if command arguments for network are good, use them ..                                           ┆
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-#if os(macOS)
-    if model.haveCmdArgs {
-        logger.log("""
-            →→→ cmdArgs set: \
-            ipAddr=\(model.ipAddr, privacy: .public), \
-            ipPort=\(model.ipPort, privacy: .public)
-            """)
-        model.network = Network(model.ipAddr, model.ipPort, connect: true)
-    }
-#endif
-
-#if os(iOS) || os(tvOS)
-    model.statusLights = DisKeyModel.lunarModule0
-    model.elPowerOn = true
-//  model.network = Network("192.168.1.232", 19697)                 // .. Ubuntu
-//  model.network = Network("192.168.1.100", 19697, connect: true)  // .. MaxBook
-    model.network = Network("192.168.1.192", 19697, connect: true)  // .. iPhone
-//  model.network = Network("192.168.1.228", 19697, connect: true)  // .. iPadM4
-    model.network = Network("127.0.0.1", 19697, connect: true)      // .. localhost
-#endif
-
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ start receiving packets from the AGC ..                                                          ┆
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-    Task {
-        var keepGoing = true
-        repeat {
-            do {
-                if let rxPacket = try await model.network.receive(length: 4) {
-                    if let (channel, action, _) =
-                        parseIoPacket(rxPacket) { channelAction(channel, action) }
-                }
-            } catch {
-                logger.error("←→ rx loop (cmdarg): \(error.localizedDescription)")
-                keepGoing = false
-            }
-        } while keepGoing
-    }
-}
-
 extension NWConnection {
 
     func asyncSend(data: Data?) async throws {

@@ -146,10 +146,10 @@ func dskyInterpretation(_ code: UInt16) {
   ┆          Bit 9 lights the "PROG" indicator.                                                      ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
         logger.log("""
-                »»»    DSKY 010: \(zeroPadWord(code).prefix(5)) \
-                \(zeroPadWord(code).dropFirst(5)) \
-                LIGHTS (10)      :: \(prettyCh010(code & 0b0000000_111111111))
-                """)
+            »»»    DSKY 010: \(zeroPadWord(code).prefix(5)) \
+            \(zeroPadWord(code).dropFirst(5)) \
+            LIGHTS (10)      :: \(prettyCh010(code & 0b0000000_111111111))
+            """)
 
         model.statusLights[27]?.1 = (code & bit3 > 0) ? .yellow : .off   // 3: VEL
         model.statusLights[12]?.1 = (code & bit4 > 0) ?  .white : .off   // 4: NO ATT
