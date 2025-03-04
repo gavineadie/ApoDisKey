@@ -302,9 +302,6 @@ func extractOptions() {
 
     let args = CommandLine.arguments
 
-//    var ipAddr: String = ""
-//    var ipPort: UInt16 = 0
-
 #if os(macOS)
     let screenSize: CGSize = NSScreen.main!.frame.size
     var camArgsOffset = CGPoint(x: -999.0, y: -999.0)
@@ -332,7 +329,7 @@ func extractOptions() {
             arg.removeFirst(7)
             model.ipPort = UInt16(arg)!
 
-            model.haveCmdArgs = !model.ipAddr.isEmpty && model.ipPort > 0
+            model.haveCmdArgs = model.ipAddr.isNotEmpty && model.ipPort > 0
 
         } else if arg.hasPrefix("--half-size") {
             model.fullSize = false
@@ -394,4 +391,8 @@ func extractOptions() {
     }
 #endif
 
+}
+
+extension Collection {
+    var isNotEmpty: Bool { !self.isEmpty }
 }

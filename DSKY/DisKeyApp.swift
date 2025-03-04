@@ -8,28 +8,17 @@
 import SwiftUI
 import OSLog
 
-let logger = Logger(subsystem: "com.ramsaycons.ApoDisKey", category: "")
+let logger = Logger(subsystem: "com.ramsaycons.ApoDisKey", category: "main")
 @MainActor var model = DisKeyModel.shared
 
 @main
 struct DisKeyApp: App {
-#if os(macOS)
-    @State private var helpWindowController: HelpWindowController?
-    @State private var newsWindowController: NewsWindowController?
-#endif
 
 #if os(macOS)
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { true }
-
-        func applicationWillTerminate(_ notification: Notification) {
-            if model.windowX >= 0.0 && model.windowY >= 0.0 {
-                UserDefaults.standard.removeObject(
-                    forKey: "NSWindow Frame ApoDisKey.AppView-1-AppWindow-1")
-            }
-        }
     }
 #endif
 
@@ -37,7 +26,6 @@ struct DisKeyApp: App {
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ establish the global environment                                                                 ┆
-  ┆ .. read init files                                                                               ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
         model.windowW = CGFloat(569)
         model.windowH = CGFloat(656)
@@ -46,22 +34,20 @@ struct DisKeyApp: App {
         extractOptions()                        // get any command arguments ..
 #endif
 
-        if model.windowX >= 0.0 && model.windowY >= 0.0 {
-            UserDefaults.standard.removeObject(
-                forKey: "NSWindow Frame ApoDisKey.AppView-1-AppWindow-1")
-        }
-
         startNetwork()
     }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ do other things as the ContentView runs ..                                                       ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-
     var body: some Scene {
         WindowGroup {
             AppView()
         }
+        .defaultSize(CGSize(width: model.windowW, height: model.windowH))
+#if os(macOS)
+        .defaultPosition(UnitPoint(x: model.windowX, y: model.windowY))
+#endif
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ Menu management ..                                                                               ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
@@ -78,15 +64,13 @@ struct DisKeyApp: App {
                 Button("ApoDisKey News") { openNewsWindow() }
             }
 #endif
-#if os(macOS)
-//      .defaultSize(CGSize(width: 569, height: 656))
-//      .defaultPosition(UnitPoint(x: model.windowX, y: model.windowY))
-#endif
         }
-        Window("Help", id: "help") { HelpView() }
     }
 
 #if os(macOS)
+    @State private var helpWindowController: HelpWindowController?
+    @State private var newsWindowController: NewsWindowController?
+
     private func openHelpWindow() {
         if helpWindowController == nil {
             helpWindowController = HelpWindowController()
@@ -226,3 +210,48 @@ struct MonitorView: View {
 #if swift(>=5.9)
 #Preview("Monitor") { MonitorView() }
 #endif
+
+@MainActor
+func startNetwork() {
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ if command arguments for network are good, use them ..                                           ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+#if os(macOS)
+    if model.haveCmdArgs {
+        logger.log("""
+            →→→ cmdArgs set: \
+            ipAddr=\(model.ipAddr, privacy: .public), \
+            ipPort=\(model.ipPort, privacy: .public)
+            """)
+        model.network = Network(model.ipAddr, model.ipPort, connect: true)
+    }
+#endif
+
+#if os(iOS) || os(tvOS)
+    model.statusLights = DisKeyModel.lunarModule0
+    model.elPowerOn = true
+//  model.network = Network("192.168.1.232", 19697)                 // .. Ubuntu
+    model.network = Network("192.168.1.100", 19697, connect: true)  // .. MaxBook
+//  model.network = Network("192.168.1.192", 19697, connect: true)  // .. iPhone
+//  model.network = Network("192.168.1.228", 19697, connect: true)  // .. iPadM4
+//  model.network = Network("127.0.0.1", 19697, connect: true)      // .. localhost
+#endif
+
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ start receiving packets from the AGC ..                                                          ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+    Task {
+        var keepGoing = true
+        repeat {
+            do {
+                if let rxPacket = try await model.network.receive(length: 4) {
+                    if let (channel, action, _) =
+                        parseIoPacket(rxPacket) { channelAction(channel, action) }
+                }
+            } catch {
+                logger.error("←→ rx loop (cmdarg): \(error.localizedDescription)")
+                keepGoing = false
+            }
+        } while keepGoing
+    }
+}
