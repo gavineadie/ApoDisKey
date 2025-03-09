@@ -69,16 +69,6 @@ struct DisKeyView: View {
             logger.log("drop providers: \(providers)")
             return true
         }
-//        .ifMacOS_13()
-// FIXME: Work needed ..
-//        .dropDestination(for: URL.self) { urls, _ in
-//            if let url = urls.first {
-//                readCanned(url: url)
-//                return true
-//            } else {
-//                return false
-//            }
-//        }
 
 #if os(iOS)
         .scaleEffect(min(1.2, UIScreen.main.bounds.width/660.0))

@@ -235,8 +235,8 @@ struct Register: View {
 #if swift(>=5.9)
 #Preview("REGISTERS") {
     VStack {
-        Register(state: Display(label: "+88888", off: true))
-        Register(state: Display(label: "-88888", off: true))
+        Register(state: Display(label: "+01234", off: true))
+        Register(state: Display(label: "-56789", off: true))
         Register(state: Display(label: " 00000", off: true))
     }
 }

@@ -324,7 +324,7 @@ func extractOptions() {
             arg.removeFirst(7)
             model.ipPort = UInt16(arg)!
 
-            model.haveCmdArgs = !model.ipAddr.isEmpty && model.ipPort > 0
+            model.haveCmdArgs = model.ipAddr.isNotEmpty && model.ipPort > 0
 
         } else if arg.hasPrefix("--half-size") {
             model.fullSize = false
@@ -393,4 +393,8 @@ func extractOptions() {
     }
 #endif
 
+}
+
+extension Collection {
+    var isNotEmpty: Bool { !self.isEmpty }
 }

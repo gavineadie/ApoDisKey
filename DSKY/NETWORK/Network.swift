@@ -1,6 +1,5 @@
 //
 //  Network.swift
-//  ApoDisKey
 //
 //  Created by Gavin Eadie on Jul15/24 (copyright 2024-25)
 //
@@ -94,7 +93,6 @@ extension NWConnection {
                     logger.log("←→ connection did end")
                     continuation.resume(throwing: NWError.posix(.ECONNRESET))
                 } else if let error {
-//                  precondition(data == nil)
                     continuation.resume(throwing: error)
                 } else {
                     continuation.resume(returning: data ?? Data(repeating: 0, count: 4))

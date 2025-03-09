@@ -8,15 +8,11 @@
 import SwiftUI
 import OSLog
 
-let logger = Logger(subsystem: "com.ramsaycons.ApoDisKey", category: "")
+let logger = Logger(subsystem: "com.ramsaycons.ApoDisKey", category: "main")
 @MainActor var model = DisKeyModel.shared
 
 @main
 struct DisKeyApp: App {
-#if os(macOS)
-    @State private var helpWindowController: HelpWindowController?
-    @State private var newsWindowController: NewsWindowController?
-#endif
 
 #if os(macOS)
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
@@ -24,6 +20,11 @@ struct DisKeyApp: App {
     class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { true }
 
+#if swift(<6.0)
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ .. Application did finish launching                                                              ┆
+  ┆	-- set the window size according to command args (AppKit, since old SwiftUI can't)               ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
         func applicationDidFinishLaunching(_ notification: Notification) {
             if model.windowX > 0.0 && model.windowY > 0.0 {
                 DispatchQueue.main.async {
@@ -44,11 +45,9 @@ struct DisKeyApp: App {
 //      .defaultPosition(UnitPoint(x: model.windowX, y: model.windowY))
 
         func applicationWillTerminate(_ notification: Notification) {
-            if model.windowX >= 0.0 && model.windowY >= 0.0 {
-                UserDefaults.standard.removeObject(
-                    forKey: "NSWindow Frame ApoDisKey.AppView-1-AppWindow-1")
-            }
+			deleteUserDefaults()
         }
+#endif
     }
 #endif
 
@@ -56,7 +55,6 @@ struct DisKeyApp: App {
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ establish the global environment                                                                 ┆
-  ┆ .. read init files                                                                               ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
         model.windowW = CGFloat(569)
         model.windowH = CGFloat(656)
@@ -65,10 +63,9 @@ struct DisKeyApp: App {
         extractOptions()                        // get any command arguments ..
 #endif
 
-        if model.windowX >= 0.0 && model.windowY >= 0.0 {
-            UserDefaults.standard.removeObject(
-                forKey: "NSWindow Frame ApoDisKey.AppView-1-AppWindow-1")
-        }
+#if swift(<6.0)
+		deleteUserDefaults()
+#endif
 
         startNetwork()
     }
@@ -76,22 +73,6 @@ struct DisKeyApp: App {
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ do other things as the ContentView runs ..                                                       ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-
-//    var body: some Scene {
-//        if #available(macOS 13.0, *) {
-//            WindowGroup {
-//                AppView()
-//            }
-//            .defaultSize(CGSize(width: 569, height: 656))
-//            .defaultPosition(UnitPoint(x: model.windowX, y: model.windowY))
-//        } else {
-//            WindowGroup {
-//                AppView()
-//            }
-//            .windowLevel(.normal)
-//        }
-//    }
-
     var body: some Scene {
         WindowGroup {
             AppView()
@@ -113,25 +94,12 @@ struct DisKeyApp: App {
             }
 #endif
         }
-// FIXME: Work needed ..
-// #if os(macOS)
-//        if #available(macOS 13.0, *) {
-//            .defaultSize(CGSize(width: 569, height: 656))
-//            .defaultPosition(UnitPoint(x: model.windowX, y: model.windowY))
-//        }
-// #endif
-
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ This puts "Help" in the "Window" menu ..                                                         ┆
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-//#if os(macOS)
-//        if #available(macOS 13.0, *) {
-//            Window("Help", id: "help") { HelpView() }
-//        }
-//#endif
     }
 
 #if os(macOS)
+    @State private var helpWindowController: HelpWindowController?
+    @State private var newsWindowController: NewsWindowController?
+
     private func openHelpWindow() {
         if helpWindowController == nil {
             helpWindowController = HelpWindowController()
@@ -317,3 +285,11 @@ func startNetwork() {
     }
 }
 
+#if swift(<6.0)
+@MainActor private func deleteUserDefaults() {
+	if model.windowX >= 0.0 && model.windowY >= 0.0 {
+		UserDefaults.standard.removeObject(
+			forKey: "NSWindow Frame ApoDisKey.AppView-1-AppWindow-1")
+	}
+}
+#endif
