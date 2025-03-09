@@ -19,6 +19,35 @@ struct DisKeyApp: App {
 
     class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool { true }
+
+#if swift(<6.0)
+/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
+  ┆ .. Application did finish launching                                                              ┆
+  ┆	-- set the window size according to command args (AppKit, since old SwiftUI can't)               ┆
+  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
+        func applicationDidFinishLaunching(_ notification: Notification) {
+            if model.windowX > 0.0 && model.windowY > 0.0 {
+                DispatchQueue.main.async {
+                    if let window = NSApplication.shared.windows.first {
+                        window.setFrame(NSRect(origin: NSPoint(x: model.windowX - 0.0,
+                                                               y: model.windowY + 0.0),
+                                               size: NSSize(width: model.windowW,
+                                                            height: model.windowH)),
+                                        display: true)
+                        window.contentMaxSize = NSSize(width: model.windowW,
+                                                       height: model.windowH)
+                    }
+                }
+            }
+        }
+
+//      .defaultSize(CGSize(width: model.windowW, height: model.windowH))
+//      .defaultPosition(UnitPoint(x: model.windowX, y: model.windowY))
+
+        func applicationWillTerminate(_ notification: Notification) {
+			deleteUserDefaults()
+        }
+#endif
     }
 #endif
 
@@ -32,6 +61,10 @@ struct DisKeyApp: App {
 
 #if os(macOS)
         extractOptions()                        // get any command arguments ..
+#endif
+
+#if swift(<6.0)
+		deleteUserDefaults()
 #endif
 
         startNetwork()
@@ -234,7 +267,7 @@ func startNetwork() {
     model.network = Network("192.168.1.100", 19697, connect: true)  // .. MaxBook
 //  model.network = Network("192.168.1.192", 19697, connect: true)  // .. iPhone
 //  model.network = Network("192.168.1.228", 19697, connect: true)  // .. iPadM4
-//  model.network = Network("127.0.0.1", 19697, connect: true)      // .. localhost
+    model.network = Network("127.0.0.1", 19697, connect: true)      // .. localhost
 #endif
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -255,3 +288,12 @@ func startNetwork() {
         } while keepGoing
     }
 }
+
+#if swift(<6.0)
+@MainActor private func deleteUserDefaults() {
+	if model.windowX >= 0.0 && model.windowY >= 0.0 {
+		UserDefaults.standard.removeObject(
+			forKey: "NSWindow Frame ApoDisKey.AppView-1-AppWindow-1")
+	}
+}
+#endif

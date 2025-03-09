@@ -1,6 +1,5 @@
 //
 //  PacketIO.swift
-//  ApoDisKey
 //
 //  Created by Gavin Eadie on Jul16/24 (copyright 2024-25)
 //
@@ -98,8 +97,8 @@ func parseIoPacket (_ data: Data) -> (UInt16, UInt16, Bool)? {
     UInt16(bytes[1] & UInt8(0b00111000)) >> 3
 
     let value: UInt16 =   UInt16(bytes[1] & UInt8(0b00000111)) << 12 |
-    UInt16(bytes[2] & UInt8(0b00111111)) << 6 |
-    UInt16(bytes[3] & UInt8(0b00111111))
+                          UInt16(bytes[2] & UInt8(0b00111111)) << 6 |
+                          UInt16(bytes[3] & UInt8(0b00111111))
 
     return (channel, value, (bytes[0] & 0b00100000) > 0)
 }
