@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ApolloNetwork
 import OSLog
 
 let logger = Logger(subsystem: "com.ramsaycons.ApoDisKey", category: "main")
