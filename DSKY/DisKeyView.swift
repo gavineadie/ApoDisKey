@@ -65,10 +65,6 @@ struct DisKeyView: View {
             }
             .padding(.top, 5.0)
         }
-        .onDrop(of: ["public.text"], isTargeted: nil) { providers in
-            logger.log("drop providers: \(providers)")
-            return true
-        }
 
 #if os(iOS)
         .scaleEffect(min(1.2, UIScreen.main.bounds.width/660.0))
