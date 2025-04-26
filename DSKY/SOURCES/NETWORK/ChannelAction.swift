@@ -58,7 +58,7 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ boolean: Bool = true) {
         case 0o015:                 // [INPUT] Used for inputting keystrokes from the DSKY. ..
             logger.log("""
                 »»»    DSKY 015:           \(zeroPadWord(value, to: 8)) BITS (8)       \
-                :: \(value) = "\(keyText(value))"
+                :: \(value) = "\(keyText(value).replacingOccurrences(of: "\n", with: " "))"
                 """)
 
             if keyDict[value] == "RSET" {

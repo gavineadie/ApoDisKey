@@ -109,7 +109,7 @@ struct KeyView: View {
                 }
 
                 if keyCode < 99 {
-                    logger.log("«««    \(keyText(keyCode)) (\(keyCode))")
+                    logger.log("«««    \(keyText(keyCode).replacingOccurrences(of: "\n", with: " ")) (\(keyCode))")
 
                     if let clickURL = Bundle.main.url(forResource: "dsky", withExtension: "aiff") {
                         var clickSound: SystemSoundID = 0
@@ -152,10 +152,10 @@ struct KeyView: View {
                     })
                     .onEnded( { _ in
                         if keyCode == 99 {
-                            let value: UInt16 = 0b0010_0000_0000_0000   // bit 14 - one
+                            let bit14: UInt16 = 0b0010_0000_0000_0000
 
                             logger.log("""
-                                «««    DSKY 032:    \(zeroPadWord(value)) BITS (15)      \
+                                «««    DSKY 032:    \(zeroPadWord(bit14)) BITS (15)      \
                                 :: \(keyText(keyCode)) ↑
                                 """)
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -163,7 +163,7 @@ struct KeyView: View {
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
                             Task {
                                 do {
-                                    try await model.network.send(formIoPacket(0o032, value))
+                                    try await model.network.send(formIoPacket(0o032, bit14))
                                 } catch {
                                     logger.error("\(error.localizedDescription)")
                                 }

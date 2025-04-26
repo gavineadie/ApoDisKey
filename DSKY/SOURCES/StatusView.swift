@@ -151,7 +151,7 @@ struct AnnunciatorLamp: View {
 
 #if swift(>=5.9)
 #Preview("OFF") { AnnunciatorLamp(light: ("WORDS", .off)) }
-#Preview("YELLOW") { AnnunciatorLamp(light: ("WORDS", .orange)) }
+#Preview("YELLOW") { AnnunciatorLamp(light: ("WORDS", .yellow)) }
 #Preview("WHITE") { AnnunciatorLamp(light: ("WORDS", .white)) }
 #endif
 
