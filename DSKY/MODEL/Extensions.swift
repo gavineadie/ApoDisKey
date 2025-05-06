@@ -127,7 +127,7 @@ func prettyCh010(_ code: UInt16) -> String {
         return catString
 
     } else {
-        return "macOS 13 or later required for '.split'"
+        return "macOS 13+ required for '.split'"
     }
 }
 
@@ -165,7 +165,7 @@ func prettyCh011(_ code: UInt16) -> String {
         return catString
 
     } else {
-        return "macOS 13 or later required for '.split'"
+        return "macOS 13+ required for '.split'"
     }
 }
 
@@ -181,7 +181,7 @@ func prettyCh032(_ code: UInt16) -> String {
         return catString
 
     } else {
-        return "macOS 13 or later required for '.split'"
+        return "macOS 13+ required for '.split'"
     }
 }
 
@@ -222,7 +222,7 @@ func prettyCh163(_ code: UInt16) -> String {
         return catString
 
     } else {
-        return "macOS 13 or later required for '.split'"
+        return "macOS 13+ required for '.split'"
     }
 }
 

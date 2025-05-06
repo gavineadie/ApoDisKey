@@ -15,7 +15,6 @@
 		864BD6092C3B2B9900D4C896 /* KeyPadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864BD6082C3B2B9900D4C896 /* KeyPadView.swift */; };
 		864BD60F2C3B416D00D4C896 /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864BD60E2C3B416D00D4C896 /* StatusView.swift */; };
 		864BD6112C3B42DF00D4C896 /* DisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864BD6102C3B42DF00D4C896 /* DisplayView.swift */; };
-		864BD6132C3B728400D4C896 /* Zerlina.otf in Resources */ = {isa = PBXBuildFile; fileRef = 864BD6122C3B728400D4C896 /* Zerlina.otf */; };
 		864BD6192C3BD69700D4C896 /* Gorton-Condensed.otf in Resources */ = {isa = PBXBuildFile; fileRef = 864BD6162C3BD69700D4C896 /* Gorton-Condensed.otf */; };
 		864BD61A2C3BD69700D4C896 /* Gorton-Normal-120.otf in Resources */ = {isa = PBXBuildFile; fileRef = 864BD6172C3BD69700D4C896 /* Gorton-Normal-120.otf */; };
 		864BD61B2C3BD69700D4C896 /* Gorton-Normal-180.otf in Resources */ = {isa = PBXBuildFile; fileRef = 864BD6182C3BD69700D4C896 /* Gorton-Normal-180.otf */; };
@@ -28,6 +27,7 @@
 		86A055072C405BB3007996B7 /* DisKeyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A055062C405BB3007996B7 /* DisKeyModel.swift */; };
 		86B26DB92C4CD3020021E594 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B26DB82C4CD3020021E594 /* Extensions.swift */; };
 		86B26DBA2C4CD30A0021E594 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86B26DB82C4CD3020021E594 /* Extensions.swift */; };
+		86C198D52DCAD2DA0063770D /* ZerlinaB.otf in Resources */ = {isa = PBXBuildFile; fileRef = 86C198D42DCAD2DA0063770D /* ZerlinaB.otf */; };
 		86C4C5C02C4CE79900A4DEA1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86C4C5BF2C4CE79900A4DEA1 /* Assets.xcassets */; };
 		86C85A1B2C4F46A1002BE367 /* testLights.canned in Resources */ = {isa = PBXBuildFile; fileRef = 86C85A1A2C4F46A1002BE367 /* testLights.canned */; };
 		86CB9B5E2C45F94400968C20 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86CB9B5D2C45F94400968C20 /* Network.swift */; };
@@ -53,7 +53,6 @@
 		864BD6082C3B2B9900D4C896 /* KeyPadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPadView.swift; sourceTree = "<group>"; };
 		864BD60E2C3B416D00D4C896 /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
 		864BD6102C3B42DF00D4C896 /* DisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayView.swift; sourceTree = "<group>"; };
-		864BD6122C3B728400D4C896 /* Zerlina.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Zerlina.otf; sourceTree = "<group>"; };
 		864BD6142C3B771A00D4C896 /* Fonts.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Fonts.plist; sourceTree = "<group>"; };
 		864BD6162C3BD69700D4C896 /* Gorton-Condensed.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gorton-Condensed.otf"; sourceTree = "<group>"; };
 		864BD6172C3BD69700D4C896 /* Gorton-Normal-120.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gorton-Normal-120.otf"; sourceTree = "<group>"; };
@@ -69,6 +68,7 @@
 		869F39962C3F337E002DD6B7 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		86A055062C405BB3007996B7 /* DisKeyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisKeyModel.swift; sourceTree = "<group>"; };
 		86B26DB82C4CD3020021E594 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		86C198D42DCAD2DA0063770D /* ZerlinaB.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ZerlinaB.otf; sourceTree = "<group>"; };
 		86C4C5BF2C4CE79900A4DEA1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		86C85A1A2C4F46A1002BE367 /* testLights.canned */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testLights.canned; sourceTree = "<group>"; };
 		86CB9B5D2C45F94400968C20 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
@@ -98,7 +98,7 @@
 		864143C22C4AD27300EEC7EB /* FONTS */ = {
 			isa = PBXGroup;
 			children = (
-				864BD6122C3B728400D4C896 /* Zerlina.otf */,
+				86C198D42DCAD2DA0063770D /* ZerlinaB.otf */,
 				864BD6162C3BD69700D4C896 /* Gorton-Condensed.otf */,
 				864BD6172C3BD69700D4C896 /* Gorton-Normal-120.otf */,
 				864BD6182C3BD69700D4C896 /* Gorton-Normal-180.otf */,
@@ -271,10 +271,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				864BD6192C3BD69700D4C896 /* Gorton-Condensed.otf in Resources */,
+				86C198D52DCAD2DA0063770D /* ZerlinaB.otf in Resources */,
 				867EBD932C3A5348004C4DDD /* Debug.xcassets in Resources */,
 				86C85A1B2C4F46A1002BE367 /* testLights.canned in Resources */,
 				8623E1122C6B1129003B934F /* dsky.aiff in Resources */,
-				864BD6132C3B728400D4C896 /* Zerlina.otf in Resources */,
 				864BD61A2C3BD69700D4C896 /* Gorton-Normal-120.otf in Resources */,
 				86C4C5C02C4CE79900A4DEA1 /* Assets.xcassets in Resources */,
 				864BD61B2C3BD69700D4C896 /* Gorton-Normal-180.otf in Resources */,

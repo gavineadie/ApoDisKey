@@ -47,18 +47,11 @@ struct DisplayView: View {
             VStack {
                 ZStack {
                     VStack {
-                        if #available(macOS 13.0, *) {
-                            Spacer().frame(height: 4.0)
-                            Row1(comp: model.comp, prog: model.prog)
-                            Spacer().frame(height: 8.0)
-                            Row2(verb: model.verb, noun: model.noun)
-                            Spacer().frame(height: 0)
-                        } else {
-                            Row1(comp: model.comp, prog: model.prog)
-                            Spacer().frame(height: 12.0)
-                            Row2(verb: model.verb, noun: model.noun)
-                            Spacer().frame(height: 12.0)
-                        }
+                        Spacer().frame(height: 4.0)
+                        Row1(comp: model.comp, prog: model.prog)
+                        Spacer().frame(height: 8.0)
+                        Row2(verb: model.verb, noun: model.noun)
+                        Spacer().frame(height: 0)
                     }
                     VStack {
                         Spacer().frame(height: 10)
@@ -317,7 +310,8 @@ struct SevenSegRegister: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(.custom("Zerlina", fixedSize: zerlinaFixedSize))
-            .padding(.all, -10.0)
+            .padding(.horizontal, -10.0)
+            .padding(.top, 8.0)
             .frame(width: 190.0, height: panelDigitSize)
     }
 }
