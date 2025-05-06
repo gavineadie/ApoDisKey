@@ -265,11 +265,11 @@ struct DisplayNumbers: View {
                             Text(adjustDisplay(value.0))
                                 .sevenSegRegister()
                                 .padding(.trailing, +12)
-                                .kerning(4.0)
+//                                .kerning(4.0)
                         } else {
                             Text(adjustDisplay(value.0))
                                 .sevenSegRegister()
-                                .kerning(4.0)
+//                                .kerning(4.0)
                         }
                    } else {
                        Text(adjustDisplay(value.0))
@@ -287,7 +287,7 @@ struct DisplayNumbers: View {
                     if #available(macOS 13.0, *) {
                         Text(adjustDisplay(value.1 ? value.0 : "__"))
                             .sevenSegVerbNoun()
-                            .kerning(4.0)
+//                            .kerning(4.0)
                     } else {
                         Text(adjustDisplay(value.1 ? value.0 : "__"))
                             .sevenSegVerbNoun()
@@ -297,7 +297,7 @@ struct DisplayNumbers: View {
             default:
                 Text("--------")
                     .font(.custom("Zerlina", fixedSize: zerlinaFixedSize))
-                    .kerning(4.0)
+//                    .kerning(4.0)
                     .foregroundColor(.red)
                     .frame(width: 95.0, height: panelDigitSize)
         }
@@ -315,7 +315,8 @@ struct SevenSegRegister: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(.custom("Zerlina", fixedSize: zerlinaFixedSize))
-            .padding(.all, -10.0)
+            .padding(.horizontal, -10.0)
+            .padding(.top, 8.0)
             .frame(width: 190.0, height: panelDigitSize)
     }
 }
@@ -331,7 +332,7 @@ struct SevenSegVerbNoun: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(.custom("Zerlina", fixedSize: zerlinaFixedSize))
-            .padding(.top, 8.0)
+            .padding(.top, 18.0)
             .frame(width: 95.0, height: panelDigitSize)
     }
 }
