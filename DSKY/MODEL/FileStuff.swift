@@ -47,11 +47,11 @@ import Foundation
   ┆     1.0 010 GIMBAL=ON       .15 010 NOUN=OFF        .25 010 REG1=OFF                             ┆
   ┆                                                                                                  ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-func readCanned(path: String) {
-    logger.log("canned script: \(path)")
+func readCanned(url: URL) {
+    logger.log("canned script: \"\(url.path)\"")
     do {
         var timerDeadline: TimeInterval = Date.now.timeIntervalSinceNow
-        let initContent = try String(contentsOfFile: path, encoding: .utf8)
+        let initContent = try String(contentsOf: url, encoding: .utf8)
         let lineArray = initContent.components(separatedBy: .newlines)
 
         for line in lineArray {

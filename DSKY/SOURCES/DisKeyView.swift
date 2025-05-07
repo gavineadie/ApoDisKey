@@ -69,7 +69,7 @@ struct DisKeyView: View {
 #else
         .dropDestination(for: URL.self) { urls, _ in
             if let url = urls.first {
-                readCanned(path: url.path())
+                readCanned(url: url)
                 return true
             } else {
                 return false
