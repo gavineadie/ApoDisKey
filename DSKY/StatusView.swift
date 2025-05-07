@@ -154,7 +154,7 @@ struct AnnunciatorLamp: View {
 
 #if swift(>=5.9)
 #Preview("OFF") { AnnunciatorLamp(light: ("WORDS", .off)) }
-#Preview("YELLOW") { AnnunciatorLamp(light: ("WORDS", .orange)) }
+#Preview("YELLOW") { AnnunciatorLamp(light: ("WORDS", .yellow)) }
 #Preview("WHITE") { AnnunciatorLamp(light: ("WORDS", .white)) }
 #endif
 
@@ -162,18 +162,12 @@ struct AnnunciatorLamp: View {
 private func back(_ input: (String, BackColor)) -> Color {
     if model.elPowerOn {
         switch input.1 {
-        case .off:
-            return Color(white: 0.55)
-        case .white:
-            return .white
-        case .green:
-            return .green
-        case .yellow:
-            return .yellow
-        case .orange:
-            return .orange
-        case .red:
-            return .red
+            case .off:      return Color(white: 0.55)
+            case .white:    return .white
+            case .green:    return .green
+            case .yellow:   return .yellow
+            case .orange:   return .orange
+            case .red:      return .red
         }
     } else {
         return .gray

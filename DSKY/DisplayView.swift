@@ -228,8 +228,8 @@ struct Register: View {
 #if swift(>=5.9)
 #Preview("REGISTERS") {
     VStack {
-        Register(state: Display(label: "+88888", off: true))
-        Register(state: Display(label: "-88888", off: true))
+        Register(state: Display(label: "+01234", off: true))
+        Register(state: Display(label: "-56789", off: true))
         Register(state: Display(label: " 00000", off: true))
     }
 }
@@ -260,11 +260,9 @@ struct DisplayNumbers: View {
                         Text(adjustDisplay(value.0))
                             .sevenSegRegister()
                             .padding(.trailing, +12)
-                            .kerning(4.0)
                     } else {
                         Text(adjustDisplay(value.0))
                             .sevenSegRegister()
-                            .kerning(4.0)
                     }
                } else {
                    Text(adjustDisplay(value.0))
@@ -282,7 +280,6 @@ struct DisplayNumbers: View {
                 if #available(macOS 13.0, *) {
                     Text(adjustDisplay(value.1 ? value.0 : "__"))
                         .sevenSegVerbNoun()
-                        .kerning(4.0)
                 } else {
                     Text(adjustDisplay(value.1 ? value.0 : "__"))
                         .sevenSegVerbNoun()
@@ -292,7 +289,6 @@ struct DisplayNumbers: View {
         default:
             Text("--------")
                 .font(.custom("Zerlina", fixedSize: zerlinaFixedSize))
-                .kerning(4.0)
                 .foregroundColor(.red)
                 .frame(width: 95.0, height: panelDigitSize)
         }
@@ -327,7 +323,7 @@ struct SevenSegVerbNoun: ViewModifier {
     func body(content: Content) -> some View {
         content
             .font(.custom("Zerlina", fixedSize: zerlinaFixedSize))
-            .padding(.top, 8.0)
+            .padding(.top, 18.0)
             .frame(width: 95.0, height: panelDigitSize)
     }
 }

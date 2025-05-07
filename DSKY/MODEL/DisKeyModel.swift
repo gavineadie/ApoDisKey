@@ -5,9 +5,6 @@
 //  Created by Gavin Eadie on Jul11/24 (copyright 2024-25)
 //
 
-// swiftlint:disable blanket_disable_command
-// swiftlint:disable comma
-
 import Foundation
 import AVFoundation
 
