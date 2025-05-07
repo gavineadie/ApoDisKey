@@ -98,6 +98,7 @@
 		864143C22C4AD27300EEC7EB /* FONTS */ = {
 			isa = PBXGroup;
 			children = (
+				864BD6142C3B771A00D4C896 /* Fonts.plist */,
 				86C198D42DCAD2DA0063770D /* ZerlinaB.otf */,
 				864BD6162C3BD69700D4C896 /* Gorton-Condensed.otf */,
 				864BD6172C3BD69700D4C896 /* Gorton-Normal-120.otf */,
@@ -159,7 +160,6 @@
 				867EBD922C3A5348004C4DDD /* Debug.xcassets */,
 				86C4C5BF2C4CE79900A4DEA1 /* Assets.xcassets */,
 				864143C52C4AE79800EEC7EB /* RESOURCES */,
-				864BD6142C3B771A00D4C896 /* Fonts.plist */,
 				864143C22C4AD27300EEC7EB /* FONTS */,
 				867EBD6D2C3A1E2A004C4DDD /* DSKY.entitlements */,
 			);

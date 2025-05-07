@@ -254,19 +254,14 @@ struct DisplayNumbers: View {
         case 6:
             VStack {
                 DisplaySeparator()
-
-                if #available(macOS 13.0, *) {
-                    if value.0.first == " " {
-                        Text(adjustDisplay(value.0))
-                            .sevenSegRegister()
-                            .padding(.trailing, +12)
-                    } else {
-                        Text(adjustDisplay(value.0))
-                            .sevenSegRegister()
-                    }
-               } else {
-                   Text(adjustDisplay(value.0))
-                       .sevenSegRegister()
+                
+                if value.0.first == " " {
+                    Text(adjustDisplay(value.0))
+                        .sevenSegRegister()
+                        .padding(.trailing, +12)
+                } else {
+                    Text(adjustDisplay(value.0))
+                        .sevenSegRegister()
                 }
             }
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
