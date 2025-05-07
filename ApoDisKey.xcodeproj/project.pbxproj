@@ -7,19 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8616AC652DCBC78A0097C378 /* KeyPadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8616AC622DCBC78A0097C378 /* KeyPadView.swift */; };
+		8616AC662DCBC78A0097C378 /* DecorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8616AC5E2DCBC78A0097C378 /* DecorView.swift */; };
+		8616AC672DCBC78A0097C378 /* DisKeyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8616AC5F2DCBC78A0097C378 /* DisKeyApp.swift */; };
+		8616AC682DCBC78A0097C378 /* DisKeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8616AC602DCBC78A0097C378 /* DisKeyView.swift */; };
+		8616AC692DCBC78A0097C378 /* DisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8616AC612DCBC78A0097C378 /* DisplayView.swift */; };
+		8616AC6A2DCBC78A0097C378 /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8616AC632DCBC78A0097C378 /* StatusView.swift */; };
 		861754F92C471ABB0080D82B /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86CB9B5D2C45F94400968C20 /* Network.swift */; };
 		8623E1122C6B1129003B934F /* dsky.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 8623E1112C6B1129003B934F /* dsky.aiff */; };
 		862A1D272C48230500AD4352 /* PacketSend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86ECA4DE2C47602F0025545C /* PacketSend.swift */; };
 		862A1D282C48230500AD4352 /* PacketRecv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86ECA4E02C4760400025545C /* PacketRecv.swift */; };
 		864906BE2C4C3E0E00BD22DA /* DisKeyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86A055062C405BB3007996B7 /* DisKeyModel.swift */; };
-		864BD6092C3B2B9900D4C896 /* KeyPadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864BD6082C3B2B9900D4C896 /* KeyPadView.swift */; };
-		864BD60F2C3B416D00D4C896 /* StatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864BD60E2C3B416D00D4C896 /* StatusView.swift */; };
-		864BD6112C3B42DF00D4C896 /* DisplayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 864BD6102C3B42DF00D4C896 /* DisplayView.swift */; };
 		864BD6192C3BD69700D4C896 /* Gorton-Condensed.otf in Resources */ = {isa = PBXBuildFile; fileRef = 864BD6162C3BD69700D4C896 /* Gorton-Condensed.otf */; };
 		864BD61A2C3BD69700D4C896 /* Gorton-Normal-120.otf in Resources */ = {isa = PBXBuildFile; fileRef = 864BD6172C3BD69700D4C896 /* Gorton-Normal-120.otf */; };
 		864BD61B2C3BD69700D4C896 /* Gorton-Normal-180.otf in Resources */ = {isa = PBXBuildFile; fileRef = 864BD6182C3BD69700D4C896 /* Gorton-Normal-180.otf */; };
-		867EBD682C3A1E29004C4DDD /* DisKeyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD672C3A1E29004C4DDD /* DisKeyApp.swift */; };
-		867EBD6A2C3A1E29004C4DDD /* DisKeyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD692C3A1E29004C4DDD /* DisKeyView.swift */; };
 		867EBD7A2C3A1E2A004C4DDD /* DSKYTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 867EBD792C3A1E2A004C4DDD /* DSKYTests.swift */; };
 		867EBD932C3A5348004C4DDD /* Debug.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 867EBD922C3A5348004C4DDD /* Debug.xcassets */; };
 		868B2B702CD0CAD200A70648 /* FileStuff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 868B2B6F2CD0CAD200A70648 /* FileStuff.swift */; };
@@ -31,7 +32,6 @@
 		86C4C5C02C4CE79900A4DEA1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86C4C5BF2C4CE79900A4DEA1 /* Assets.xcassets */; };
 		86C85A1B2C4F46A1002BE367 /* testLights.canned in Resources */ = {isa = PBXBuildFile; fileRef = 86C85A1A2C4F46A1002BE367 /* testLights.canned */; };
 		86CB9B5E2C45F94400968C20 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86CB9B5D2C45F94400968C20 /* Network.swift */; };
-		86E838922C3CF06400E7C573 /* DecorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86E838912C3CF06400E7C573 /* DecorView.swift */; };
 		86ECA4DF2C47602F0025545C /* PacketSend.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86ECA4DE2C47602F0025545C /* PacketSend.swift */; };
 		86ECA4E12C4760400025545C /* PacketRecv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86ECA4E02C4760400025545C /* PacketRecv.swift */; };
 /* End PBXBuildFile section */
@@ -47,19 +47,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8616AC5E2DCBC78A0097C378 /* DecorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecorView.swift; sourceTree = "<group>"; };
+		8616AC5F2DCBC78A0097C378 /* DisKeyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisKeyApp.swift; sourceTree = "<group>"; };
+		8616AC602DCBC78A0097C378 /* DisKeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisKeyView.swift; sourceTree = "<group>"; };
+		8616AC612DCBC78A0097C378 /* DisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayView.swift; sourceTree = "<group>"; };
+		8616AC622DCBC78A0097C378 /* KeyPadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPadView.swift; sourceTree = "<group>"; };
+		8616AC632DCBC78A0097C378 /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusView.swift; sourceTree = "<group>"; };
 		8623E1112C6B1129003B934F /* dsky.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = dsky.aiff; sourceTree = "<group>"; };
 		862A1D292C48236A00AD4352 /* DSKY.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = DSKY.xctestplan; sourceTree = "<group>"; };
 		864906BD2C4C365D00BD22DA /* CHANGES.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGES.md; sourceTree = "<group>"; };
-		864BD6082C3B2B9900D4C896 /* KeyPadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = KeyPadView.swift; path = SOURCES/KeyPadView.swift; sourceTree = "<group>"; };
-		864BD60E2C3B416D00D4C896 /* StatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StatusView.swift; path = SOURCES/StatusView.swift; sourceTree = "<group>"; };
-		864BD6102C3B42DF00D4C896 /* DisplayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DisplayView.swift; path = SOURCES/DisplayView.swift; sourceTree = "<group>"; };
 		864BD6142C3B771A00D4C896 /* Fonts.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Fonts.plist; sourceTree = "<group>"; };
 		864BD6162C3BD69700D4C896 /* Gorton-Condensed.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gorton-Condensed.otf"; sourceTree = "<group>"; };
 		864BD6172C3BD69700D4C896 /* Gorton-Normal-120.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gorton-Normal-120.otf"; sourceTree = "<group>"; };
 		864BD6182C3BD69700D4C896 /* Gorton-Normal-180.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Gorton-Normal-180.otf"; sourceTree = "<group>"; };
 		867EBD642C3A1E29004C4DDD /* ApoDisKey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ApoDisKey.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		867EBD672C3A1E29004C4DDD /* DisKeyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DisKeyApp.swift; path = SOURCES/DisKeyApp.swift; sourceTree = "<group>"; };
-		867EBD692C3A1E29004C4DDD /* DisKeyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DisKeyView.swift; path = SOURCES/DisKeyView.swift; sourceTree = "<group>"; };
 		867EBD6D2C3A1E2A004C4DDD /* DSKY.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DSKY.entitlements; sourceTree = "<group>"; };
 		867EBD752C3A1E2A004C4DDD /* ApoDisKeyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ApoDisKeyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		867EBD792C3A1E2A004C4DDD /* DSKYTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSKYTests.swift; sourceTree = "<group>"; };
@@ -72,7 +73,6 @@
 		86C4C5BF2C4CE79900A4DEA1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		86C85A1A2C4F46A1002BE367 /* testLights.canned */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testLights.canned; sourceTree = "<group>"; };
 		86CB9B5D2C45F94400968C20 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
-		86E838912C3CF06400E7C573 /* DecorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DecorView.swift; path = SOURCES/DecorView.swift; sourceTree = "<group>"; };
 		86ECA4DE2C47602F0025545C /* PacketSend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketSend.swift; sourceTree = "<group>"; };
 		86ECA4E02C4760400025545C /* PacketRecv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketRecv.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -95,6 +95,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8616AC642DCBC78A0097C378 /* SOURCES */ = {
+			isa = PBXGroup;
+			children = (
+				8616AC5E2DCBC78A0097C378 /* DecorView.swift */,
+				8616AC5F2DCBC78A0097C378 /* DisKeyApp.swift */,
+				8616AC602DCBC78A0097C378 /* DisKeyView.swift */,
+				8616AC612DCBC78A0097C378 /* DisplayView.swift */,
+				8616AC622DCBC78A0097C378 /* KeyPadView.swift */,
+				8616AC632DCBC78A0097C378 /* StatusView.swift */,
+			);
+			path = SOURCES;
+			sourceTree = "<group>";
+		};
 		864143C22C4AD27300EEC7EB /* FONTS */ = {
 			isa = PBXGroup;
 			children = (
@@ -149,12 +162,7 @@
 		867EBD662C3A1E29004C4DDD /* DSKY */ = {
 			isa = PBXGroup;
 			children = (
-				867EBD672C3A1E29004C4DDD /* DisKeyApp.swift */,
-				867EBD692C3A1E29004C4DDD /* DisKeyView.swift */,
-				864BD60E2C3B416D00D4C896 /* StatusView.swift */,
-				864BD6102C3B42DF00D4C896 /* DisplayView.swift */,
-				864BD6082C3B2B9900D4C896 /* KeyPadView.swift */,
-				86E838912C3CF06400E7C573 /* DecorView.swift */,
+				8616AC642DCBC78A0097C378 /* SOURCES */,
 				867D86222C489F43007CDD48 /* MODEL */,
 				86ECA4E42C4763E70025545C /* NETWORK */,
 				867EBD922C3A5348004C4DDD /* Debug.xcassets */,
@@ -295,18 +303,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				867EBD6A2C3A1E29004C4DDD /* DisKeyView.swift in Sources */,
+				8616AC652DCBC78A0097C378 /* KeyPadView.swift in Sources */,
+				8616AC662DCBC78A0097C378 /* DecorView.swift in Sources */,
+				8616AC672DCBC78A0097C378 /* DisKeyApp.swift in Sources */,
+				8616AC682DCBC78A0097C378 /* DisKeyView.swift in Sources */,
+				8616AC692DCBC78A0097C378 /* DisplayView.swift in Sources */,
+				8616AC6A2DCBC78A0097C378 /* StatusView.swift in Sources */,
 				86A055072C405BB3007996B7 /* DisKeyModel.swift in Sources */,
-				864BD6092C3B2B9900D4C896 /* KeyPadView.swift in Sources */,
-				86E838922C3CF06400E7C573 /* DecorView.swift in Sources */,
 				86ECA4DF2C47602F0025545C /* PacketSend.swift in Sources */,
 				86ECA4E12C4760400025545C /* PacketRecv.swift in Sources */,
 				868B2B712CD0CAD200A70648 /* FileStuff.swift in Sources */,
 				86B26DB92C4CD3020021E594 /* Extensions.swift in Sources */,
 				86CB9B5E2C45F94400968C20 /* Network.swift in Sources */,
-				864BD6112C3B42DF00D4C896 /* DisplayView.swift in Sources */,
-				867EBD682C3A1E29004C4DDD /* DisKeyApp.swift in Sources */,
-				864BD60F2C3B416D00D4C896 /* StatusView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
