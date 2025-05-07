@@ -45,19 +45,12 @@ struct DisplayView: View {
             VStack {
                 ZStack {
                     VStack {
-                        if #available(macOS 13.0, *) {
-                            Spacer().frame(height: 4.0)
-                            Row1(comp: model.comp, prog: model.prog)
-                            Spacer().frame(height: 8.0)
-                            Row2(verb: model.verb, noun: model.noun)
-                            Spacer().frame(height: 0)
-                        } else {
-                            Row1(comp: model.comp, prog: model.prog)
-                            Spacer().frame(height: 12.0)
-                            Row2(verb: model.verb, noun: model.noun)
-                            Spacer().frame(height: 12.0)
-                        }
-                    }
+						Spacer().frame(height: 4.0)
+						Row1(comp: model.comp, prog: model.prog)
+						Spacer().frame(height: 8.0)
+						Row2(verb: model.verb, noun: model.noun)
+						Spacer().frame(height: 0)
+					}
                     VStack {
                         Spacer().frame(height: 10)
                         LittleWhiteCircle()
@@ -265,11 +258,9 @@ struct DisplayNumbers: View {
                             Text(adjustDisplay(value.0))
                                 .sevenSegRegister()
                                 .padding(.trailing, +12)
-//                                .kerning(4.0)
                         } else {
                             Text(adjustDisplay(value.0))
                                 .sevenSegRegister()
-//                                .kerning(4.0)
                         }
                    } else {
                        Text(adjustDisplay(value.0))
@@ -287,7 +278,6 @@ struct DisplayNumbers: View {
                     if #available(macOS 13.0, *) {
                         Text(adjustDisplay(value.1 ? value.0 : "__"))
                             .sevenSegVerbNoun()
-//                            .kerning(4.0)
                     } else {
                         Text(adjustDisplay(value.1 ? value.0 : "__"))
                             .sevenSegVerbNoun()
@@ -297,7 +287,6 @@ struct DisplayNumbers: View {
             default:
                 Text("--------")
                     .font(.custom("Zerlina", fixedSize: zerlinaFixedSize))
-//                    .kerning(4.0)
                     .foregroundColor(.red)
                     .frame(width: 95.0, height: panelDigitSize)
         }
