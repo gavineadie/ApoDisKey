@@ -53,9 +53,9 @@ class DisKeyModel: ObservableObject {
             21: ("", .off),             //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
             22: ("", .off),             //  ┆OPR ERR ┆ ┆TRACKER ┆
             23: ("", .off),             //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
-            24: ("", .off),             //  ┆        ┆ ┆  ALT   ┆
+            24: ("", .off),             //  ┆PRIODISP┆ ┆  ALT   ┆
             25: ("", .off),             //  ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮
-            26: ("", .off),             //  ┆        ┆ ┆  VEL   ┆
+            26: ("", .off),             //  ┆ NO DAP ┆ ┆  VEL   ┆
             27: ("", .off)              //  ╰╌╌╌╌╌╌╌╌╯ ╰╌╌╌╌╌╌╌╌╯
         ]
 
@@ -78,7 +78,7 @@ class DisKeyModel: ObservableObject {
     @Published public var r3Sign = (false, false)
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ .. network imnformation for connecting to AGC ..                                                 ┆
+  ┆ .. network information for connecting to AGC (default values) ..                                 ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
     public var ipAddr: String = "localhost"
     public var ipPort: UInt16 = 19697
@@ -169,7 +169,6 @@ extension DisKeyModel {
         26: ("   ",            .off),
         27: ("   ",            .off)
     ]
-
 }
 
 func keyText(_ code: UInt16) -> String { keyDict[code] ?? "ERROR" }

@@ -35,7 +35,9 @@ import SwiftUI
 
 struct StatusView: View {
 
+#if swift(<6.0)
     @ObservedObject var model = DisKeyModel.shared
+#endif
 
     var body: some View {
         ZStack {

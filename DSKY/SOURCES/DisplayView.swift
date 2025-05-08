@@ -38,8 +38,10 @@ let panelDigitSize: CGFloat = 37.0
 
 struct DisplayView: View {
 
+#if swift(<6.0)
     @StateObject var model = DisKeyModel.shared
-
+#endif
+    
     var body: some View {
         ZStack {
             PanelsView(interiorFill: Color(white: 0.35))
