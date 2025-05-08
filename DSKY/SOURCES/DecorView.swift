@@ -58,7 +58,7 @@ var keyPadBaselineOffset: CGFloat {
     if #available(macOS 13.0, *) {
         return -4.0
     } else {
-        return -2.0
+        return +2.0
     }
 }
 

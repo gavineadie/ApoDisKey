@@ -74,7 +74,7 @@ typealias Display = (String, Bool)
     public var reg2: Display = (" _____", false)        // what does "false" do here?
     public var reg3: Display = (" _____", true)
 
-    public var r1Sign = (false, false)                  // blank prefix (± or blank)
+    public var r1Sign = (false, false)                	// blank prefix (± or blank)
     public var r2Sign = (false, false)
     public var r3Sign = (false, false)
 
@@ -83,7 +83,7 @@ typealias Display = (String, Bool)
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
     public var ipAddr: String = "localhost"
     public var ipPort: UInt16 = 19697
-    public var network = Network()                  // initializes but doesn't start
+    public var network = Network()                  	// initializes but doesn't start
 }
 
 extension DisKeyModel {
