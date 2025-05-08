@@ -82,8 +82,7 @@ struct KeyView: View {
   ┆ .. single characters are ~28 points and words are ~12 points                                     ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
         let fontSize: CGFloat = model.fullSize ?
-                                    (keyGlyph.count == 1 ? 24.2 : 11.1) :
-                                    (keyGlyph.count == 1 ? 32.2 : 15.1)
+                                    (keyGlyph.count == 1 ? 24 : 11) : (keyGlyph.count == 1 ? 32 : 15)
         let fontName = keyGlyph.count == 1 ? "Gorton-Normal-120" : "Gorton-Normal-180"
 
         Text(keyGlyph)

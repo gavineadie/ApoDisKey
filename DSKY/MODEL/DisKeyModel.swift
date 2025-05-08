@@ -62,18 +62,18 @@ class DisKeyModel: ObservableObject {
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ .. the electroluminescent DSKY top-right panel (initial values are cleared when AGC connects) .. ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-    public var elPowerOn = false                        // electroluminescent power (starts OFF)
+    public var elPowerOn = false                            // electroluminescent power (starts OFF)
 
-    @Published public var comp: Display = ("--", false)      // numbers (none for COMP), placard=dark
+    @Published public var comp: Display = ("--", false)     // numbers (none for COMP), placard=dark
     @Published public var prog: Display = ("__", false)
-    @Published public var verb: Display = ("__", false)      // numbers=35, placard=green
+    @Published public var verb: Display = ("__", false)     // numbers=35, placard=green
     @Published public var noun: Display = ("__", false)
 
     @Published public var reg1: Display = (" _____", true)
-    @Published public var reg2: Display = (" _____", false)  // what does "false" do here?
+    @Published public var reg2: Display = (" _____", false) // what does "false" do here?
     @Published public var reg3: Display = (" _____", true)
 
-    @Published public var r1Sign = (false, false)            // blank prefix (± or blank)
+    @Published public var r1Sign = (false, false)           // blank prefix (± or blank)
     @Published public var r2Sign = (false, false)
     @Published public var r3Sign = (false, false)
 
@@ -82,7 +82,6 @@ class DisKeyModel: ObservableObject {
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
     public var ipAddr: String = "localhost"
     public var ipPort: UInt16 = 19697
-
     public var network = setNetwork()
 }
 
