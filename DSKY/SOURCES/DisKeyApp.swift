@@ -178,8 +178,9 @@ struct MonitorView: View {
                     repeat {
                         do {
                             if let rxPacket = try await model.network.receive(length: 4) {
-                                if let (channel, action, _) =
-                                    parseIoPacket(rxPacket) { channelAction(channel, action) }
+                                if let (channel, action, _) = parseIoPacket(rxPacket) {
+                                    channelAction(channel, action)
+                                }
                             }
                         } catch {
                             logger.error("←→ rx loop (button): \(error.localizedDescription)")
@@ -246,8 +247,9 @@ func startNetwork() {
         repeat {
             do {
                 if let rxPacket = try await model.network.receive(length: 4) {
-                    if let (channel, action, _) =
-                        parseIoPacket(rxPacket) { channelAction(channel, action) }
+                    if let (channel, action, _) = parseIoPacket(rxPacket) {
+                        channelAction(channel, action)
+                    }
                 }
             } catch {
                 logger.error("←→ rx loop (cmdarg): \(error.localizedDescription)")
