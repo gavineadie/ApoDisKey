@@ -65,7 +65,7 @@ struct KeyPadView: View {
                 KeyView(keyCode: 18) // "RSET"
             }
         }
-        .padding(.top, 16)
+        .padding(.top, keyPadPaddingTop)
     }
 }
 

@@ -18,6 +18,13 @@ var panelExSizeH: CGFloat {
     }
 }
 let panelInset: CGFloat = 26.0
+var panelPaddingTop: CGFloat {
+    if #available(macOS 13.0, *) {
+        return 10.0
+    } else {
+        return 6.0
+    }
+}
 
 // annunciator lamp panel dimensions
 
@@ -53,12 +60,18 @@ let displayElectro = Color(red: 0.1, green: 0.8, blue: 0.1)
 let keyTextColorLit = Color(white: 0.9)
 let keyTextColorOff = Color(white: 0.7)
 let keyPadColor = Color(white: 0.25)
-
 var keyPadBaselineOffset: CGFloat {
     if #available(macOS 13.0, *) {
         return 0
     } else {
         return +2.0
+    }
+}
+var keyPadPaddingTop: CGFloat {
+    if #available(macOS 13.0, *) {
+        return 16.0
+    } else {
+        return 12.0
     }
 }
 
