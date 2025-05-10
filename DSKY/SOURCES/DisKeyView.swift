@@ -63,7 +63,7 @@ struct DisKeyView: View {
 
                 KeyPadView()
             }
-            .padding(.top, 5.0)
+            .padding(.top, panelPaddingTop)
         }
         .dropDestination(for: URL.self) { urls, _ in
             if let url = urls.first {
