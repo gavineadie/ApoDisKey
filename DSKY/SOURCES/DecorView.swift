@@ -56,7 +56,7 @@ let keyPadColor = Color(white: 0.25)
 
 var keyPadBaselineOffset: CGFloat {
     if #available(macOS 13.0, *) {
-        return -4.0
+        return 0
     } else {
         return +2.0
     }
@@ -67,9 +67,9 @@ let zerlinaTracking: CGFloat = 4.0
 
 // keypad dimensions
 
-let keyPadSize: CGFloat = 73.0
+let keyPadSize: CGFloat = 74.0
 let keyPadding: CGFloat = -2.0
-let keyCorner: CGFloat = 3.0
+let keyCorner: CGFloat = 5.0
 
 /*
             ╭───────────────────────╮
@@ -116,8 +116,7 @@ struct PanelsView: View {
                 .frame(width: panelExSizeW,
                        height: panelExSizeH)
                 .shadow(color: Color.black.opacity(0.6),
-                        radius: 1.0,
-                        x: 3.0, y: 3.0)
+                        radius: 1, x: 3, y: 2)
 
             RoundedRectangle(cornerRadius: 6)               // inner
                 .fill(interiorFill)

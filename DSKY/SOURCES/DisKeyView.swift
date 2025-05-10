@@ -63,7 +63,7 @@ struct DisKeyView: View {
 
                 KeyPadView()
             }
-            .padding(.top, 5.0)
+            .padding(.top, 10)
         }
 #if MONTEREY
 #else

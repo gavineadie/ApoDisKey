@@ -99,3 +99,7 @@ _2025-02-01_ (v0.9.3)
 
 * If the connection to the AGC was lost (for example, if AGC was quit or crashed), ApoDiskey would
   crash.  This release fixes that issue.
+
+_2025-05-08_ (v0.9.7)
+
+* The Zerlina font was edited to stop unsightly clipping of the top-right corner of digits.

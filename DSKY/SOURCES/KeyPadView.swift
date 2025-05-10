@@ -65,7 +65,7 @@ struct KeyPadView: View {
                 KeyView(keyCode: 18) // "RSET"
             }
         }
-        .padding(.top, 16.0)
+        .padding(.top, 16)
     }
 }
 
@@ -97,6 +97,8 @@ struct KeyView: View {
             .background(keyPadColor)
             .padding(.all, keyPadding)
             .cornerRadius(keyCorner)
+            .shadow(color: Color.white.opacity(0.3),
+                    radius: 1, x: -1, y: -1)
 #if os(macOS)
             .acceptClickThrough()
 #endif
