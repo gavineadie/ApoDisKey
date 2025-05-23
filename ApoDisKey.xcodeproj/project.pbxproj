@@ -46,6 +46,7 @@
 		86ED58222D8517B7008727D5 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				SOURCES/MODEL/DisKeyBits.swift,
 				SOURCES/MODEL/DisKeyModel.swift,
 				SOURCES/MODEL/Utilities.swift,
 				SOURCES/NETWORK/ChannelAction.swift,

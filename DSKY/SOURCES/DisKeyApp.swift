@@ -193,10 +193,10 @@ struct MonitorView: View {
   ┆ send a u-bit channel command to indicate channel 0o032 sends bit-14 to the AGC ..                ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
                 Task {
-                    let bit14: UInt16 = 0b0010_0000_0000_0000
+                    let value: UInt16 = 0b0010_0000_0000_0000
                     do {
-                        try await model.network.send(formIoPacket(0o0232, bit14))
-                        logger.log("«««    DSKY 032:    \(zeroPadWord(bit14)) BITS (15)")
+                        try await model.network.send(formIoPacket(0o0232, value))
+                        logger.log("«««    DSKY 032:    \(zeroPadWord(value)) BITS (15)")
                     } catch {
                         logger.error("\(error.localizedDescription)")
                     }

@@ -153,10 +153,10 @@ struct KeyView: View {
                     })
                     .onEnded( { _ in
                         if keyCode == 99 {
-                            let bit14: UInt16 = 0b0010_0000_0000_0000
+                            let value: UInt16 = 0b0010_0000_0000_0000
 
                             logger.log("""
-                                «««    DSKY 032:    \(zeroPadWord(bit14)) BITS (15)      \
+                                «««    DSKY 032:    \(zeroPadWord(value)) BITS (15)      \
                                 :: \(keyText(keyCode)) ↑
                                 """)
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -164,7 +164,7 @@ struct KeyView: View {
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
                             Task {
                                 do {
-                                    try await model.network.send(formIoPacket(0o032, bit14))
+                                    try await model.network.send(formIoPacket(0o032, value))
                                 } catch {
                                     logger.error("\(error.localizedDescription)")
                                 }

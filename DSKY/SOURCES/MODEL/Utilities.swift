@@ -7,17 +7,6 @@
 
 import Foundation
 
-let bit1:  UInt16 = 0b0000_0000_0000_0001
-let bit2:  UInt16 = 0b0000_0000_0000_0010
-let bit3:  UInt16 = 0b0000_0000_0000_0100
-let bit4:  UInt16 = 0b0000_0000_0000_1000
-let bit5:  UInt16 = 0b0000_0000_0001_0000
-let bit6:  UInt16 = 0b0000_0000_0010_0000
-let bit7:  UInt16 = 0b0000_0000_0100_0000
-let bit8:  UInt16 = 0b0000_0000_1000_0000
-let bit9:  UInt16 = 0b0000_0001_0000_0000
-let bit10: UInt16 = 0b0000_0010_0000_0000
-
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆                                                                                                  ┆
   ┆ The sign (or blank) characters, which can be "+" or "-" or " " is based of the 0/1 values of     ┆

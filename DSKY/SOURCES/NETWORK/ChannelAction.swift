@@ -33,27 +33,37 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ boolean: Bool = true) {
   ┆### NOTE: don't log the commands that only cycle the "COMP ACTY" indicator.                       ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
         case 0o011:                 // [OUTPUT] flags for indicator lamps etc
-            if value != 0x2000 && value != 0x2002 && value != 0x2200 && value != 0x2202 {
+            if !DSKYBits.shouldFilterChannel011Log(value: value) {
                 logger.log("""
                 »»»    DSKY 011:    \(zeroPadWord(value)) BITS (15)      \
                 :: \(prettyCh011(value))
                 """)
             }
-            model.comp.1 = value & bit2 > 0                                     // "COMP ACTY"
 
-            model.statusLights[11]?.1 = (value & bit3 > 0) ? .white : .off      // "UPLINK
-            model.statusLights[21]?.1 = (value & bit4 > 0) ? .yellow : .off     // "TEMP"
-            model.statusLights[24]?.1 = (value & bit5 > 0) ? .yellow : .off     // "KEY REL"
-            model.statusLights[14]?.1 = (value & bit7 > 0) ? .white : .off      // "OPR ERR"
+            model.comp.1 = value & DSKYBits.Channel011.compActivity > 0
 
-        case 0o012:                 // [OUTPUT] CM and LM actions ..
-            break
+            model.statusLights[11]?.1 = (value & DSKYBits.Channel011.uplinkActivity > 0) ? .white : .off
+            model.statusLights[21]?.1 = (value & DSKYBits.Channel011.tempWarning > 0) ? .yellow : .off
+            model.statusLights[24]?.1 = (value & DSKYBits.Channel011.keyRelease > 0) ? .yellow : .off
+            model.statusLights[14]?.1 = (value & DSKYBits.Channel011.operatorError > 0) ? .white : .off
+
+//        case 0o011:                 // [OUTPUT] flags for indicator lamps etc
+//
+//            if ![0x2000, 0x2002, 0x2200, 0x2202].contains(value) {
+//                logger.log("""
+//                »»»    DSKY 011:    \(zeroPadWord(value)) BITS (15)      \
+//                :: \(prettyCh011(value))
+//                """)
+//            }
+//            model.comp.1 = value & bit2 > 0                                     // "COMP ACTY"
+//
+//            model.statusLights[11]?.1 = (value & bit3 > 0) ? .white : .off      // "UPLINK
+//            model.statusLights[21]?.1 = (value & bit4 > 0) ? .yellow : .off     // "TEMP"
+//            model.statusLights[24]?.1 = (value & bit5 > 0) ? .yellow : .off     // "KEY REL"
+//            model.statusLights[14]?.1 = (value & bit7 > 0) ? .white : .off      // "OPR ERR"
 
         case 0o013:                 // [OUTPUT] DSKY lamp tests ..
-            model.statusLights[13]?.1 = (value & 0x0200 > 0) ? .white : .off    // "STBY"
-
-        case 0o014:                 // CM and LM Gyro selection ..
-            break
+            model.statusLights[13]?.1 = (value & DSKYBits.Channel013.standby > 0) ? .white : .off
 
         case 0o015:                 // [INPUT] Used for inputting keystrokes from the DSKY. ..
             logger.log("""
@@ -66,13 +76,12 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ boolean: Bool = true) {
                 if model.ch15ResetCount == 5 { exit(EXIT_SUCCESS) }             // 5 and we quit
             }
 
-        case 0o016...0o031:         //
-            break
+        case 0o012,                 // [OUTPUT] CM and LM actions ..
+            0o014,                 // CM and LM Gyro selection ..
+            0o016...0o031,
+            0o032,                 // [INPUT] Bit 14 UNSET indicates that the PRO key is pressed.
+            0o033...0o035:         // [OUTPUT] CM and LM downlinks (ch 34, 35)
 
-        case 0o032:                 // [INPUT] Bit 14 UNSET indicates that the PRO key is pressed.
-            break
-
-        case 0o033...0o035:         // [OUTPUT] CM and LM downlinks (ch 34, 35)
             break
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -102,15 +111,15 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ boolean: Bool = true) {
                 :: \(prettyCh163(value))
                 """)
 
-            model.statusLights[21]?.1 = (value & bit4 > 0) ? .yellow : .off     // Bit 4: TEMP lamp
-            model.statusLights[14]?.1 = (value & bit5 > 0) ? .white : .off      // Bit 5: KEY REL lamp
-            model.verb.1 = value & bit6 == 0                                    // Bit 6: flash V digits
-            model.noun.1 = value & bit6 == 0                                    // Bit 6: flash N digits
-            model.statusLights[15]?.1 = (value & bit7 > 0) ? .white : .off      // Bit 7: OPER ERR lamp
-            model.statusLights[24]?.1 = (value & bit8 > 0) ? .yellow : .off     // Bit 8: RESTART lamp
-            model.statusLights[13]?.1 = (value & bit9 > 0) ? .white : .off      // Bit 9: STBY lamp
+            model.statusLights[21]?.1 = (value & DSKYBits.Channel163.tempLamp > 0) ? .yellow : .off
+            model.statusLights[14]?.1 = (value & DSKYBits.Channel163.keyRelLamp > 0) ? .white : .off
+            model.verb.1 = value & DSKYBits.Channel163.verbNounFlash == 0
+            model.noun.1 = value & DSKYBits.Channel163.verbNounFlash == 0
+            model.statusLights[15]?.1 = (value & DSKYBits.Channel163.operErrorLamp > 0) ? .white : .off
+            model.statusLights[24]?.1 = (value & DSKYBits.Channel163.restartLamp > 0) ? .yellow : .off
+            model.statusLights[13]?.1 = (value & DSKYBits.Channel163.standbyLamp > 0) ? .white : .off
 
-            model.elPowerOn = value & bit10 == 0                                // Bit 10: panel power
+            model.elPowerOn = value & DSKYBits.Channel163.elPowerOff == 0  
 
         case 0o165:
             logger.log("»»» DSKY165 \(zeroPadWord(value)) TIME1")
@@ -151,13 +160,13 @@ func dskyInterpretation(_ code: UInt16) {
             LIGHTS (10)      :: \(prettyCh010(code & 0b0000000_111111111))
             """)
 
-        model.statusLights[27]?.1 = (code & bit3 > 0) ? .yellow : .off   // 3: VEL
-        model.statusLights[12]?.1 = (code & bit4 > 0) ?  .white : .off   // 4: NO ATT
-        model.statusLights[26]?.1 = (code & bit5 > 0) ? .yellow : .off   // 5: ALT
-        model.statusLights[22]?.1 = (code & bit6 > 0) ? .yellow : .off   // 6: GIMBAL LOCK
+        model.statusLights[27]?.1 = (code & DSKYBits.Channel010_Lights.velocity > 0) ? .yellow : .off
+        model.statusLights[12]?.1 = (code & DSKYBits.Channel010_Lights.noAttitude > 0) ?  .white : .off
+        model.statusLights[26]?.1 = (code & DSKYBits.Channel010_Lights.altitude > 0) ? .yellow : .off  
+        model.statusLights[22]?.1 = (code & DSKYBits.Channel010_Lights.gimbalLock > 0) ? .yellow : .off
 
-        model.statusLights[25]?.1 = (code & bit8 > 0) ? .yellow : .off   // 8: TRACKER
-        model.statusLights[23]?.1 = (code & bit9 > 0) ? .yellow : .off   // 9: PROG
+        model.statusLights[25]?.1 = (code & DSKYBits.Channel010_Lights.tracker > 0) ? .yellow : .off   
+        model.statusLights[23]?.1 = (code & DSKYBits.Channel010_Lights.program > 0) ? .yellow : .off   
     }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -228,7 +237,11 @@ func dskyInterpretation(_ code: UInt16) {
         var reg2Bytes: [String] = model.reg2.0.map { String($0) }
         var reg3Bytes: [String] = model.reg3.0.map { String($0) }
 
-        precondition(reg1Bytes.count == 6 && [" ", "+", "-"].contains(reg1Bytes[0]))
+        guard reg1Bytes.count == 6, [" ", "+", "-"].contains(reg1Bytes[0]) else {
+            logger.error("ERROR: Invalid register format for reg1: \(model.reg1.0)")
+            return
+        }
+//        precondition(reg1Bytes.count == 6 && [" ", "+", "-"].contains(reg1Bytes[0]))
         precondition(reg2Bytes.count == 6 && [" ", "+", "-"].contains(reg2Bytes[0]))
         precondition(reg3Bytes.count == 6 && [" ", "+", "-"].contains(reg3Bytes[0]))
 
@@ -297,3 +310,42 @@ func dskyInterpretation(_ code: UInt16) {
 
     return
 }
+
+private func updateRegister(_ register: inout String,
+                            signState: inout (Bool, Bool),
+                            positions: [Int],
+                            values: [String],
+                            signBit: Bool?) {
+    var bytes = register.map { String($0) }
+
+    if let signBit = signBit {
+        signState.0 = signBit  // or signState.1 based on context
+        bytes[0] = plu_min(signState)
+    }
+
+    for (position, value) in zip(positions, values) {
+        bytes[position] = value
+    }
+
+    register = bytes.joined()
+}
+
+// Claude.AI suggests:
+//
+// 4. Switch Statement Optimization
+//    The large switch in dskyInterpretation could benefit from a lookup table for the register cases:
+
+/*
+private struct RegisterConfig {
+    let signIndex: Int          // 0 for positive, 1 for negative
+    let positions: [Int]
+    let registerKeyPath: WritableKeyPath<Model, String>
+    let signKeyPath: WritableKeyPath<Model, (Bool, Bool)>
+}
+
+private let registerConfigs: [Int: RegisterConfig] = [
+    7: RegisterConfig(signIndex: 0, positions: [2, 3],
+                      registerKeyPath: \.reg1.0, signKeyPath: \.r1Sign),
+    // ... other configs
+]
+*/
