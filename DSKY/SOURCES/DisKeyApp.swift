@@ -174,19 +174,16 @@ struct MonitorView: View {
   ┆ start receiving packets from the AGC ..                                                          ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
                 Task {
-                    var keepGoing = true
-                    repeat {
+                    while true {
                         do {
-                            if let rxPacket = try await model.network.receive(length: 4) {
-                                if let (channel, action, _) = parseIoPacket(rxPacket) {
-                                    channelAction(channel, action)
-                                }
+                            if let (channel, action, _) = parseIoPacket(try await model.network.receive(length: 4)) {
+                                channelAction(channel, action)
                             }
                         } catch {
-                            logger.error("←→ rx loop (button): \(error.localizedDescription)")
-                            keepGoing = false
+                            logger.error("←→ rx loop exit: \(error.localizedDescription)")
+                            break
                         }
-                    } while keepGoing
+                    }
                 }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
@@ -243,18 +240,15 @@ func startNetwork() {
   ┆ start receiving packets from the AGC ..                                                          ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
     Task {
-        var keepGoing = true
-        repeat {
+        while true {
             do {
-                if let rxPacket = try await model.network.receive(length: 4) {
-                    if let (channel, action, _) = parseIoPacket(rxPacket) {
-                        channelAction(channel, action)
-                    }
+                if let (channel, action, _) = parseIoPacket(try await model.network.receive(length: 4)) {
+                    channelAction(channel, action)
                 }
             } catch {
-                logger.error("←→ rx loop (cmdarg): \(error.localizedDescription)")
-                keepGoing = false
+                logger.error("←→ rx loop exit: \(error.localizedDescription)")
+                break
             }
-        } while keepGoing
+        }
     }
 }
