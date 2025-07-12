@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/gavineadie/ApolloNetwork.git",
       "state" : {
-        "revision" : "3a0f9707ba94bf503e7fd4e2b1791ae7dc161af4",
-        "version" : "0.1.0"
+        "revision" : "255b0665b48ece9c161d4768e2ba4718ab19a5cc",
+        "version" : "0.1.1"
       }
     }
   ],

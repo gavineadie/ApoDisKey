@@ -263,9 +263,7 @@ extension SwiftUI.View {
 
 private struct ClickThroughBackdrop<Content: SwiftUI.View>: NSViewRepresentable {
     final class Backdrop: NSHostingView<Content> {
-        override func acceptsFirstMouse(for event: NSEvent?) -> Bool {
-            return true
-        }
+        override func acceptsFirstMouse(for event: NSEvent?) -> Bool { return true }
     }
 
     let content: Content
