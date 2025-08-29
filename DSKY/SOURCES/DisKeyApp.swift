@@ -176,9 +176,9 @@ struct MonitorView: View {
                 Task {
                     while true {
                         do {
-                            if let (channel, action, _) = parseIoPacket(try await model.network.receive(length: 4)) {
+                            let (channel, action, _) = try parseIoPacket(try await model.network.receive(length: 4))
                                 channelAction(channel, action)
-                            }
+
                         } catch {
                             logger.error("←→ rx loop exit: \(error.localizedDescription)")
                             break
@@ -242,9 +242,9 @@ func startNetwork() {
     Task {
         while true {
             do {
-                if let (channel, action, _) = parseIoPacket(try await model.network.receive(length: 4)) {
-                    channelAction(channel, action)
-                }
+                let (channel, action, _) = try parseIoPacket(try await model.network.receive(length: 4))
+                channelAction(channel, action)
+            } catch PacketError.ignore_FF_FF_FF_FF {
             } catch {
                 logger.error("←→ rx loop exit: \(error.localizedDescription)")
                 break
