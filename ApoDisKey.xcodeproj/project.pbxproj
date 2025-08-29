@@ -7,9 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		86517AA52D8BAAC8000AE65D /* ApolloNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 86517AA42D8BAAC8000AE65D /* ApolloNetwork */; };
-		86783C0A2D85119900DF3448 /* ApolloNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 86783C092D85119900DF3448 /* ApolloNetwork */; };
-		86B1206F2D85321D00ED86BC /* ApolloNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 86B1206E2D85321D00ED86BC /* ApolloNetwork */; };
+		869CC0A02E6136700073C454 /* ApolloNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 869CC09F2E6136700073C454 /* ApolloNetwork */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,9 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				86517AA52D8BAAC8000AE65D /* ApolloNetwork in Frameworks */,
-				86B1206F2D85321D00ED86BC /* ApolloNetwork in Frameworks */,
-				86783C0A2D85119900DF3448 /* ApolloNetwork in Frameworks */,
+				869CC0A02E6136700073C454 /* ApolloNetwork in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,9 +116,7 @@
 			);
 			name = ApoDisKey;
 			packageProductDependencies = (
-				86783C092D85119900DF3448 /* ApolloNetwork */,
-				86B1206E2D85321D00ED86BC /* ApolloNetwork */,
-				86517AA42D8BAAC8000AE65D /* ApolloNetwork */,
+				869CC09F2E6136700073C454 /* ApolloNetwork */,
 			);
 			productName = DSKY;
 			productReference = 867EBD642C3A1E29004C4DDD /* ApoDisKey.app */;
@@ -175,7 +169,7 @@
 			);
 			mainGroup = 867EBD5B2C3A1E29004C4DDD;
 			packageReferences = (
-				86517AA32D8BAAC8000AE65D /* XCRemoteSwiftPackageReference "ApolloNetwork" */,
+				869CC09E2E6136700073C454 /* XCRemoteSwiftPackageReference "ApolloNetwork" */,
 			);
 			productRefGroup = 867EBD652C3A1E29004C4DDD /* Products */;
 			projectDirPath = "";
@@ -358,7 +352,7 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = DSKY/DSKY.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = AY235;
+				CURRENT_PROJECT_VERSION = UG285;
 				DEAD_CODE_STRIPPING = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -394,7 +388,7 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = DSKY/DSKY.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = AY235;
+				CURRENT_PROJECT_VERSION = UG285;
 				DEAD_CODE_STRIPPING = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -497,9 +491,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		86517AA32D8BAAC8000AE65D /* XCRemoteSwiftPackageReference "ApolloNetwork" */ = {
+		869CC09E2E6136700073C454 /* XCRemoteSwiftPackageReference "ApolloNetwork" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/gavineadie/ApolloNetwork.git";
+			repositoryURL = "https://github.com/gavineadie/ApolloNetwork";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 0.1.0;
@@ -508,17 +502,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		86517AA42D8BAAC8000AE65D /* ApolloNetwork */ = {
+		869CC09F2E6136700073C454 /* ApolloNetwork */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 86517AA32D8BAAC8000AE65D /* XCRemoteSwiftPackageReference "ApolloNetwork" */;
-			productName = ApolloNetwork;
-		};
-		86783C092D85119900DF3448 /* ApolloNetwork */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = ApolloNetwork;
-		};
-		86B1206E2D85321D00ED86BC /* ApolloNetwork */ = {
-			isa = XCSwiftPackageProductDependency;
+			package = 869CC09E2E6136700073C454 /* XCRemoteSwiftPackageReference "ApolloNetwork" */;
 			productName = ApolloNetwork;
 		};
 /* End XCSwiftPackageProductDependency section */
