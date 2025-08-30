@@ -10,6 +10,7 @@ import ApolloNetwork
 import OSLog
 
 let logger = Logger(subsystem: "com.ramsaycons.ApoDisKey", category: "main")
+
 @MainActor var model = DisKeyModel.shared
 
 @main
@@ -233,7 +234,7 @@ func startNetwork() {
     model.network = Network("192.168.1.100", 19697, connect: true)  // .. MaxBook
 //  model.network = Network("192.168.1.192", 19697, connect: true)  // .. iPhone
 //  model.network = Network("192.168.1.228", 19697, connect: true)  // .. iPadM4
-    model.network = Network("127.0.0.1", 19697, connect: true)      // .. localhost
+//  model.network = Network("127.0.0.1",     19697, connect: true)  // .. localhost
 #endif
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
