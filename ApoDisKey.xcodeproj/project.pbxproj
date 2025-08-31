@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		869CC0A02E6136700073C454 /* ApolloNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 869CC09F2E6136700073C454 /* ApolloNetwork */; };
+		86CA771B2E64254F008DFF15 /* ApolloNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 86CA771A2E64254F008DFF15 /* ApolloNetwork */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +38,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				FONTS/Fonts.plist,
+				SOURCES/NETWORK/NetworkManager.swift,
 			);
 			target = 867EBD632C3A1E29004C4DDD /* ApoDisKey */;
 		};
@@ -63,7 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				869CC0A02E6136700073C454 /* ApolloNetwork in Frameworks */,
+				86CA771B2E64254F008DFF15 /* ApolloNetwork in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,7 +117,7 @@
 			);
 			name = ApoDisKey;
 			packageProductDependencies = (
-				869CC09F2E6136700073C454 /* ApolloNetwork */,
+				86CA771A2E64254F008DFF15 /* ApolloNetwork */,
 			);
 			productName = DSKY;
 			productReference = 867EBD642C3A1E29004C4DDD /* ApoDisKey.app */;
@@ -169,7 +170,7 @@
 			);
 			mainGroup = 867EBD5B2C3A1E29004C4DDD;
 			packageReferences = (
-				869CC09E2E6136700073C454 /* XCRemoteSwiftPackageReference "ApolloNetwork" */,
+				86CA77192E64254F008DFF15 /* XCRemoteSwiftPackageReference "ApolloNetwork" */,
 			);
 			productRefGroup = 867EBD652C3A1E29004C4DDD /* Products */;
 			projectDirPath = "";
@@ -491,7 +492,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		869CC09E2E6136700073C454 /* XCRemoteSwiftPackageReference "ApolloNetwork" */ = {
+		86CA77192E64254F008DFF15 /* XCRemoteSwiftPackageReference "ApolloNetwork" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/gavineadie/ApolloNetwork";
 			requirement = {
@@ -502,9 +503,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		869CC09F2E6136700073C454 /* ApolloNetwork */ = {
+		86CA771A2E64254F008DFF15 /* ApolloNetwork */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 869CC09E2E6136700073C454 /* XCRemoteSwiftPackageReference "ApolloNetwork" */;
+			package = 86CA77192E64254F008DFF15 /* XCRemoteSwiftPackageReference "ApolloNetwork" */;
 			productName = ApolloNetwork;
 		};
 /* End XCSwiftPackageProductDependency section */

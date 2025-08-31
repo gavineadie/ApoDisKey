@@ -169,7 +169,8 @@ struct MonitorView: View {
                     ipAddr=\(ipAddr, privacy: .public), \
                     ipPort=\(ipPort, privacy: .public)
                     """)
-                model.network = Network(ipAddr, ipPort, connect: true)
+                model.network = Network(ipAddr, ipPort)
+                model.network.start()
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ start receiving packets from the AGC ..                                                          ┆
@@ -223,7 +224,8 @@ func startNetwork() {
             ipAddr=\(model.ipAddr, privacy: .public), \
             ipPort=\(model.ipPort, privacy: .public)
             """)
-        model.network = Network(model.ipAddr, model.ipPort, connect: true)
+        model.network = Network(model.ipAddr, model.ipPort)
+        model.network.start()
     }
 #endif
 
