@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		862D71062E666F19001E0EAA /* ApoDisKey.icon in Resources */ = {isa = PBXBuildFile; fileRef = 862D71052E666F19001E0EAA /* ApoDisKey.icon */; };
 		86CA771B2E64254F008DFF15 /* ApolloNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 86CA771A2E64254F008DFF15 /* ApolloNetwork */; };
 /* End PBXBuildFile section */
 
@@ -21,6 +22,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		862D71052E666F19001E0EAA /* ApoDisKey.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = ApoDisKey.icon; sourceTree = "<group>"; };
 		867EBD642C3A1E29004C4DDD /* ApoDisKey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ApoDisKey.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		867EBD752C3A1E2A004C4DDD /* ApoDisKeyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ApoDisKeyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		869F39962C3F337E002DD6B7 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 		867EBD5B2C3A1E29004C4DDD = {
 			isa = PBXGroup;
 			children = (
+				862D71052E666F19001E0EAA /* ApoDisKey.icon */,
 				869F39962C3F337E002DD6B7 /* README.md */,
 				86ED58052D8517B7008727D5 /* DSKY */,
 				86ED57D12D8516EA008727D5 /* DSKYTests */,
@@ -187,6 +190,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				862D71062E666F19001E0EAA /* ApoDisKey.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,7 +255,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = AY235;
+				CURRENT_PROJECT_VERSION = EP015;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = CXE9ZR7J3U;
@@ -280,6 +284,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ramsaycons.ApoDisKey;
 				PRODUCT_NAME = ApoDisKey;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 6.0;
@@ -315,7 +320,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = AY235;
+				CURRENT_PROJECT_VERSION = EP015;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = CXE9ZR7J3U;
@@ -337,6 +342,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ramsaycons.ApoDisKey;
 				PRODUCT_NAME = ApoDisKey;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 6.0;
 				TVOS_DEPLOYMENT_TARGET = 16.6;
@@ -353,7 +359,6 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = DSKY/DSKY.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = UG285;
 				DEAD_CODE_STRIPPING = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -389,7 +394,6 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = DSKY/DSKY.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = UG285;
 				DEAD_CODE_STRIPPING = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;

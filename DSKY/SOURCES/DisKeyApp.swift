@@ -233,10 +233,11 @@ func startNetwork() {
     model.statusLights = DisKeyModel.lunarModule0
     model.elPowerOn = true
 //  model.network = Network("192.168.1.232", 19697)                 // .. Ubuntu
-    model.network = Network("192.168.1.100", 19697, connect: true)  // .. MaxBook
-//  model.network = Network("192.168.1.192", 19697, connect: true)  // .. iPhone
-//  model.network = Network("192.168.1.228", 19697, connect: true)  // .. iPadM4
-//  model.network = Network("127.0.0.1",     19697, connect: true)  // .. localhost
+    model.network = Network("192.168.1.100", 19697)                 // .. MaxBook
+//  model.network = Network("192.168.1.192", 19697)                 // .. iPhone
+//  model.network = Network("192.168.1.228", 19697)                 // .. iPadM4
+//  model.network = Network("127.0.0.1",     19697)                 // .. localhost
+    model.network.start()
 #endif
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
