@@ -50,7 +50,7 @@ struct DisplayView: View {
                 ZStack {
                     VStack {
 						Spacer().frame(height: 4.0)
-						Row1(comp: model.comp, prog: model.prog)
+						Row1(comp: model.comp, prog: model.mode)
 						Spacer().frame(height: 8.0)
 						Row2(verb: model.verb, noun: model.noun)
 						Spacer().frame(height: 0)
@@ -97,8 +97,8 @@ struct DisplayView: View {
   ┆                                                                                                  ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 struct Row1: View {
-    var comp: Display = ("  ", false)
-    var prog: Display = ("__", false)
+    var comp: Nums = ("  ", false)
+    var prog: Nums = ("__", false)
 
     var body: some View {
         HStack(alignment: .top) {
@@ -114,7 +114,7 @@ struct Row1: View {
 #endif
 
 struct Comp: View {
-    var state: Display
+    var state: Nums
 
     var body: some View {
         VStack {
@@ -144,8 +144,8 @@ struct Comp: View {
   ┆                                                                                                  ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 struct Row2: View {
-    var verb: Display = ("__", false)
-    var noun: Display = ("__", false)
+    var verb: Nums = ("__", false)
+    var noun: Nums = ("__", false)
 
     var body: some View {
         HStack {
@@ -169,7 +169,7 @@ struct Row2: View {
 
 struct TwoDigit: View {
     var label: String
-    var value: Display
+    var value: Nums
 
     var body: some View {
         VStack {
@@ -220,7 +220,7 @@ struct DisplayPlacard: View {
   ┆ +---------------------------+                                                                    ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 struct Register: View {
-    var state: Display
+    var state: Nums
 
     var body: some View {
         DisplayNumbers(value: state)
@@ -230,9 +230,9 @@ struct Register: View {
 #if swift(>=5.9)
 #Preview("REGISTERS") {
     VStack {
-        Register(state: Display(label: "+01234", off: true))
-        Register(state: Display(label: "-56789", off: true))
-        Register(state: Display(label: " 00000", off: true))
+        Register(state: Nums("+01234", false))
+        Register(state: Nums("-56789", false))
+        Register(state: Nums(" 00000", false))
     }
 }
 #endif
@@ -243,7 +243,7 @@ struct Register: View {
   │     for registers (5 digits with possible "±" or " " preceding ..                                │
   └──────────────────────────────────────────────────────────────────────────────────────────────────┘*/
 struct DisplayNumbers: View {
-    var value: Display
+    var value: Nums
 
     var body: some View {
 
@@ -274,13 +274,8 @@ struct DisplayNumbers: View {
                     Text(value.0)
                         .frame(width: 95.0, height: 2.0)
                 } else {
-                    if #available(macOS 13.0, *) {
-                        Text(adjustDisplay(value.1 ? value.0 : "__"))
-                            .sevenSegVerbNoun()
-                    } else {
-                        Text(adjustDisplay(value.1 ? value.0 : "__"))
-                            .sevenSegVerbNoun()
-                    }
+                    Text(adjustDisplay(value.1 ? value.0 : "__"))
+                        .sevenSegVerbNoun()
                 }
 
             default:

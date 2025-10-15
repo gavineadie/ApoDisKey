@@ -7,15 +7,6 @@
 
 import Foundation
 
-private func logDSKY(_ channelOctal: String, bitsLabel: String? = nil, value: UInt16, pretty: String? = nil, note: String? = nil) {
-    let word = (bitsLabel == "10") ? zeroPadWord(value, to: 10) : (bitsLabel == "8") ? zeroPadWord(value, to: 8) : zeroPadWord(value)
-    var line = "»»» DSKY \(channelOctal): \(word)"
-    if let bitsLabel = bitsLabel { line += " BITS (\(bitsLabel))" }
-    if let pretty = pretty { line += " :: \(pretty)" }
-    if let note = note { line += " :: \(note)" }
-    logger.log("\(line)")
-}
-
 // Centralized mapping for DSKY status lamp indices
 private enum StatusLamp: CustomStringConvertible {
     case uplinkActivity    // index 11
@@ -95,12 +86,13 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ boolean: Bool = true) {
 
         case 0o011:                 // [OUTPUT] flags for indicator lamps etc
             if !DSKY.shouldFilterChannel011Log(value: value) {
-                logDSKY("011", bitsLabel: "15", value: value, pretty: prettyCh011(value))
+                logDSKY("011", bitsLabel: "15",
+                        value: value, pretty: prettyCh011(value))
             }
 
             model.comp.1 = value & DSKY.Ch011.compActivity > 0
 
-            setLamp(.uplinkActivity, to: (value & DSKY.Ch011.uplinkActivity > 0) ? .white : .off, reason: "CH011")
+            setLamp(.uplinkActivity, to: (value & DSKY.Ch011.uplinkActivity > 0) ? .white  : .off, reason: "CH011")
             setLamp(.tempWarning,    to: (value & DSKY.Ch011.tempWarning    > 0) ? .yellow : .off, reason: "CH011")
             setLamp(.keyRelease,     to: (value & DSKY.Ch011.keyRelease     > 0) ? .yellow : .off, reason: "CH011")
             setLamp(.operatorError,  to: (value & DSKY.Ch011.operatorError  > 0) ? .white  : .off, reason: "CH011")
@@ -129,11 +121,11 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ boolean: Bool = true) {
             logDSKY("163", bitsLabel: "10",
                     value: value, pretty: prettyCh163(value))
 
-            setLamp(.tempWarning, to: (value & DSKY.Ch163.tempLamp      > 0) ? .yellow : .off, reason: "CH163")
-            setLamp(.keyRelease,  to: (value & DSKY.Ch163.keyRelLamp    > 0) ? .white  : .off, reason: "CH163")
-            setLamp(.operError,   to: (value & DSKY.Ch163.operErrorLamp > 0) ? .white  : .off, reason: "CH163")
-            setLamp(.restart,     to: (value & DSKY.Ch163.restartLamp   > 0) ? .yellow : .off, reason: "CH163")
-            setLamp(.standby,     to: (value & DSKY.Ch163.standbyLamp   > 0) ? .white  : .off, reason: "CH163")
+            setLamp(.tempWarning, to: (value & DSKY.Ch163.tempLamp    > 0) ? .yellow : .off, reason: "CH163")
+            setLamp(.keyRelease,  to: (value & DSKY.Ch163.keyRelLamp  > 0) ? .white  : .off, reason: "CH163")
+            setLamp(.operError,   to: (value & DSKY.Ch163.operErrLamp > 0) ? .white  : .off, reason: "CH163")
+            setLamp(.restart,     to: (value & DSKY.Ch163.restartLamp > 0) ? .yellow : .off, reason: "CH163")
+            setLamp(.standby,     to: (value & DSKY.Ch163.standbyLamp > 0) ? .white  : .off, reason: "CH163")
 
             model.verb.1 = value & DSKY.Ch163.verbNounFlash == 0
             model.noun.1 = value & DSKY.Ch163.verbNounFlash == 0
@@ -169,12 +161,12 @@ func dskyInterpretation(_ code: UInt16) {
                 value: code & 0b00000001_11111111,
                 pretty: prettyCh010(code & 0b00000001_11111111))
 
-        setLamp(.velocity,    to: (code & DSKY.Ch010_Lights.velocity    > 0) ? .yellow : .off, reason: "CH010")
-        setLamp(.noAttitude,  to: (code & DSKY.Ch010_Lights.noAttitude  > 0) ? .white  : .off, reason: "CH010")
-        setLamp(.altitude,    to: (code & DSKY.Ch010_Lights.altitude    > 0) ? .yellow : .off, reason: "CH010")
-        setLamp(.gimbalLock,  to: (code & DSKY.Ch010_Lights.gimbalLock  > 0) ? .yellow : .off, reason: "CH010")
-        setLamp(.tracker,     to: (code & DSKY.Ch010_Lights.tracker     > 0) ? .yellow : .off, reason: "CH010")
-        setLamp(.program,     to: (code & DSKY.Ch010_Lights.program     > 0) ? .yellow : .off, reason: "CH010")
+        setLamp(.velocity,    to: (code & DSKY.Ch010_Lights.velocity   > 0) ? .yellow : .off, reason: "CH010")
+        setLamp(.noAttitude,  to: (code & DSKY.Ch010_Lights.noAttitude > 0) ? .white  : .off, reason: "CH010")
+        setLamp(.altitude,    to: (code & DSKY.Ch010_Lights.altitude   > 0) ? .yellow : .off, reason: "CH010")
+        setLamp(.gimbalLock,  to: (code & DSKY.Ch010_Lights.gimbalLock > 0) ? .yellow : .off, reason: "CH010")
+        setLamp(.tracker,     to: (code & DSKY.Ch010_Lights.tracker    > 0) ? .yellow : .off, reason: "CH010")
+        setLamp(.program,     to: (code & DSKY.Ch010_Lights.program    > 0) ? .yellow : .off, reason: "CH010")
     } else {
         let bBit: Bool =   (code & 0b00000_1_00000_00000) >  0
         let cInt: UInt16 = (code & 0b00000_0_11111_00000) >> 5
@@ -190,7 +182,7 @@ func dskyInterpretation(_ code: UInt16) {
         switch rowCode {
             case 9:  model.noun = (cStr + dStr, true)
             case 10: model.verb = (cStr + dStr, true)
-            case 11: model.prog = (cStr + dStr, true)
+            case 11: model.mode = (cStr + dStr, true)
             default: break
         }
 
@@ -271,49 +263,32 @@ func dskyInterpretation(_ code: UInt16) {
     return
 }
 
-private func updateRegister(_ register: inout String,
-                            signState: inout (Bool, Bool),
-                            positions: [Int],
-                            values: [String],
-                            signBit: Bool?) {
-    var bytes = register.map { String($0) }
-
-    if let signBit = signBit {
-        signState.0 = signBit  // or signState.1 based on context
-        bytes[0] = plu_min(signState)
-    }
-
-    for (position, value) in zip(positions, values) {
-        bytes[position] = value
-    }
-
-    register = bytes.joined()
+private func logDSKY(_ channel: String,
+                     bitsLabel: String? = nil,
+                     value: UInt16,
+                     pretty: String? = nil,
+                     note: String? = nil) {
+    let word = (bitsLabel == "10") ? zeroPadWord(value, to: 10) :
+    (bitsLabel == "8") ? zeroPadWord(value, to: 8) :
+    zeroPadWord(value)
+    var line = "»»» DSKY \(channel): \(word)"
+    if let bitsLabel = bitsLabel { line += " BITS (\(bitsLabel))" }
+    if let pretty = pretty { line += " :: \(pretty)" }
+    if let note = note { line += " :: \(note)" }
+    logger.log("\(line)")
 }
 
-// Claude.AI suggests:
-//
-// 4. Switch Statement Optimization
-//    The large switch in dskyInterpretation could benefit from a lookup table for the register cases:
-
-/*
-private struct RegisterConfig {
-    let signIndex: Int          // 0 for positive, 1 for negative
-    let positions: [Int]
-    let registerKeyPath: WritableKeyPath<Model, String>
-    let signKeyPath: WritableKeyPath<Model, (Bool, Bool)>
-}
-
-private let registerConfigs: [Int: RegisterConfig] = [
-    7: RegisterConfig(signIndex: 0, positions: [2, 3],
-                      registerKeyPath: \.reg1.0, signKeyPath: \.r1Sign),
-    // ... other configs
-]
-*/
-
-private func setLamp(_ lamp: StatusLamp, to color: BackColor, reason: String) {
+private func setLamp(_ lamp: StatusLamp,
+                     to color: BackColor,
+                     reason: String) {
     let index = StatusLamp.index(for: lamp)
     if let current = model.lights[index]?.1, current != color {
-        logger.log("Lamp[\(index)] \(lamp) \(String(describing: current)) → \(String(describing: color)) via \(reason)")
+        logger.log("""
+            Lamp[\(index)] \(lamp) \
+            \(String(describing: current)) → \(String(describing: color)) \
+            via \(reason)")
+            """
+        )
     }
     model.lights[lamp]?.1 = color
 }

@@ -19,7 +19,7 @@ public enum BackColor {
 }
 
 typealias Lamp = (String, BackColor)
-typealias Display = (String, Bool)
+typealias Nums = (String, Bool)
 
 @Observable final class DisKeyModel {
 
@@ -64,14 +64,14 @@ typealias Display = (String, Bool)
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
     public var elPowerOn = false                        // electroluminescent power (starts OFF)
 
-    public var comp: Display = ("--", false)            // numbers (none for COMP), placard=dark
-    public var prog: Display = ("__", false)
-    public var verb: Display = ("__", false)            // numbers=35, placard=green
-    public var noun: Display = ("__", false)
+    public var comp: Nums = ("--", false)            // numbers (none for COMP), placard=dark
+    public var mode: Nums = ("__", false)
+    public var verb: Nums = ("__", false)            // numbers=35, placard=green
+    public var noun: Nums = ("__", false)
 
-    public var reg1: Display = (" _____", true)
-    public var reg2: Display = (" _____", false)        // what does "false" do here?
-    public var reg3: Display = (" _____", true)
+    public var reg1: Nums = (" _____", false)        // true/false not used for registers
+    public var reg2: Nums = (" _____", false)        //
+    public var reg3: Nums = (" _____", false)        //
 
     public var r1Sign = (false, false)                	// blank prefix (± or blank)
     public var r2Sign = (false, false)

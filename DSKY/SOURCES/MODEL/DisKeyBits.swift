@@ -102,7 +102,7 @@ struct DSKY {
         static let tempLamp = bit04        // TEMP lamp (with flashing)
         static let keyRelLamp = bit05      // KEY REL lamp (with flashing)
         static let verbNounFlash = bit06   // VERB/NOUN flash control
-        static let operErrorLamp = bit07   // OPER ERR lamp (with flashing)
+        static let operErrLamp = bit07   // OPER ERR lamp (with flashing)
         static let restartLamp = bit08     // RESTART lamp
         static let standbyLamp = bit09     // STBY lamp
         static let elPowerOff = bit10      // EL panel power (inverted logic)
