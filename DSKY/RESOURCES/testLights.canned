@@ -24,7 +24,7 @@
 1.0 163 00000_00000_00000       #   EL↑
 1.0 163 00000_01110_11000       #   EL↑ STBY RSRT OPER   ↓  KREL TEMP   ↓    ↓    ↓
 
-                                # channel 163 (Annunicator Lamps)
+                                # channel 163 (Annunciator Lamps)
                                 #
                                 #           ┌───────────────────────┐
                                 #           │ ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮ │

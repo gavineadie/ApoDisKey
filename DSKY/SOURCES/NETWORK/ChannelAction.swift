@@ -7,7 +7,83 @@
 
 import Foundation
 
-@MainActor
+private func logDSKY(_ channelOctal: String, bitsLabel: String? = nil, value: UInt16, pretty: String? = nil, note: String? = nil) {
+    let word = (bitsLabel == "10") ? zeroPadWord(value, to: 10) : (bitsLabel == "8") ? zeroPadWord(value, to: 8) : zeroPadWord(value)
+    var line = "»»» DSKY \(channelOctal): \(word)"
+    if let bitsLabel = bitsLabel { line += " BITS (\(bitsLabel))" }
+    if let pretty = pretty { line += " :: \(pretty)" }
+    if let note = note { line += " :: \(note)" }
+    logger.log("\(line)")
+}
+
+// Centralized mapping for DSKY status lamp indices
+private enum StatusLamp: CustomStringConvertible {
+    case uplinkActivity    // index 11
+    case noAttitude        // index 12
+    case standby           // index 13
+    case operatorError     // index 14
+    case operError         // alias if needed (kept separate for clarity)
+    case keyRelease        // index 24 (011 semantics) / restart (163 semantics), see mapping
+    case tempWarning       // index 21
+    case velocity          // index 27
+    case altitude          // index 26
+    case gimbalLock        // index 22
+    case tracker           // index 25
+    case program           // index 23
+    case restart           // index 24
+
+    var description: String {
+        switch self {
+            case .uplinkActivity: return "Uplink Activity"
+            case .noAttitude:     return "No Attitude"
+            case .standby:        return "Standby"
+            case .operatorError:  return "Operator Error"
+            case .operError:      return "Oper Error"
+            case .keyRelease:     return "Key Release"
+            case .tempWarning:    return "Temp Warning"
+            case .altitude:       return "Altitude"
+            case .velocity:       return "Velocity"
+            case .gimbalLock:     return "Gimbal Lock"
+            case .tracker:        return "Tracker"
+            case .program:        return "Program"
+            case .restart:        return "Restart"
+        }
+    }
+}
+
+private extension Dictionary where Key == Int, Value == (String, BackColor) {
+    subscript(_ lamp: StatusLamp) -> (String, BackColor)? {
+        get {
+            self[StatusLamp.index(for: lamp)]
+        }
+        set {
+            if let newValue = newValue {
+                self[StatusLamp.index(for: lamp)] = newValue
+            }
+        }
+    }
+}
+
+private extension StatusLamp {
+    static func index(for lamp: StatusLamp) -> Int {
+        switch lamp {
+        case .uplinkActivity: return 11
+        case .noAttitude:     return 12
+        case .standby:        return 13
+        case .operatorError:  return 14
+        case .operError:      return 15 // used in channel 163 mapping in existing code
+        case .tempWarning:    return 21
+        case .altitude:       return 26
+        case .velocity:       return 27
+        case .gimbalLock:     return 22
+        case .tracker:        return 25
+        case .program:        return 23
+        case .keyRelease:     return 24
+        case .restart:        return 24
+        }
+    }
+}
+
 func channelAction(_ channel: UInt16, _ value: UInt16, _ boolean: Bool = true) {
 
     switch channel {
@@ -17,59 +93,25 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ boolean: Bool = true) {
         case 0o010:                 // [OUTPUT] drives DSKY electroluminescent panel
             dskyInterpretation(value)
 
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ All LATCHES                                                                                      ┆
-  ┆                                                                                                  ┆
-  ┆          Bit 2: Lights the "COMP ACTY" indicator.                                                ┆
-  ┆          Bit 3: Lights the "UPLINK ACTY" indicator.                                              ┆
-  ┆          Bit 4: Lights the "TEMP" indicator.                                                     ┆
-  ┆          Bit 5: Lights the "KEY REL" indicator.                                                  ┆
-  ┆          Bit 6: Flashes the VERB/NOUN display areas.                                             ┆
-  ┆                 This means to flash the digits in the NOUN and VERB areas.                       ┆
-  ┆          Bit 7: Lights the "OPR ERR" indicator.                                                  ┆
-  ┆                                                                                                  ┆
-  ┆          Bit2 11 and 15 ..                                                                       ┆
-  ┆                                                                                                  ┆
-  ┆### NOTE: don't log the commands that only cycle the "COMP ACTY" indicator.                       ┆
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
         case 0o011:                 // [OUTPUT] flags for indicator lamps etc
-            if !DSKYBits.shouldFilterChannel011Log(value: value) {
-                logger.log("""
-                »»»    DSKY 011:    \(zeroPadWord(value)) BITS (15)      \
-                :: \(prettyCh011(value))
-                """)
+            if !DSKY.shouldFilterChannel011Log(value: value) {
+                logDSKY("011", bitsLabel: "15", value: value, pretty: prettyCh011(value))
             }
 
-            model.comp.1 = value & DSKYBits.Channel011.compActivity > 0
+            model.comp.1 = value & DSKY.Ch011.compActivity > 0
 
-            model.statusLights[11]?.1 = (value & DSKYBits.Channel011.uplinkActivity > 0) ? .white : .off
-            model.statusLights[21]?.1 = (value & DSKYBits.Channel011.tempWarning > 0) ? .yellow : .off
-            model.statusLights[24]?.1 = (value & DSKYBits.Channel011.keyRelease > 0) ? .yellow : .off
-            model.statusLights[14]?.1 = (value & DSKYBits.Channel011.operatorError > 0) ? .white : .off
-
-//        case 0o011:                 // [OUTPUT] flags for indicator lamps etc
-//
-//            if ![0x2000, 0x2002, 0x2200, 0x2202].contains(value) {
-//                logger.log("""
-//                »»»    DSKY 011:    \(zeroPadWord(value)) BITS (15)      \
-//                :: \(prettyCh011(value))
-//                """)
-//            }
-//            model.comp.1 = value & bit2 > 0                                     // "COMP ACTY"
-//
-//            model.statusLights[11]?.1 = (value & bit3 > 0) ? .white : .off      // "UPLINK
-//            model.statusLights[21]?.1 = (value & bit4 > 0) ? .yellow : .off     // "TEMP"
-//            model.statusLights[24]?.1 = (value & bit5 > 0) ? .yellow : .off     // "KEY REL"
-//            model.statusLights[14]?.1 = (value & bit7 > 0) ? .white : .off      // "OPR ERR"
+            setLamp(.uplinkActivity, to: (value & DSKY.Ch011.uplinkActivity > 0) ? .white : .off, reason: "CH011")
+            setLamp(.tempWarning,    to: (value & DSKY.Ch011.tempWarning    > 0) ? .yellow : .off, reason: "CH011")
+            setLamp(.keyRelease,     to: (value & DSKY.Ch011.keyRelease     > 0) ? .yellow : .off, reason: "CH011")
+            setLamp(.operatorError,  to: (value & DSKY.Ch011.operatorError  > 0) ? .white  : .off, reason: "CH011")
 
         case 0o013:                 // [OUTPUT] DSKY lamp tests ..
-            model.statusLights[13]?.1 = (value & DSKYBits.Channel013.standby > 0) ? .white : .off
+            setLamp(.standby, to: (value & DSKY.Ch013.standby > 0) ? .white : .off, reason: "CH013")
 
         case 0o015:                 // [INPUT] Used for inputting keystrokes from the DSKY. ..
-            logger.log("""
-                »»»    DSKY 015:           \(zeroPadWord(value, to: 8)) BITS (8)       \
-                :: \(value) = "\(keyText(value).replacingOccurrences(of: "\n", with: " "))"
-                """)
+            let keyString = keyText(value).replacingOccurrences(of: "\n", with: " ")
+            logDSKY("015", bitsLabel: "8",
+                    value: value, note: "\(value) = \"\(keyString)\"")
 
             if keyDict[value] == "RSET" {
                 model.ch15ResetCount += 1
@@ -77,104 +119,63 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ boolean: Bool = true) {
             }
 
         case 0o012,                 // [OUTPUT] CM and LM actions ..
-            0o014,                 // CM and LM Gyro selection ..
-            0o016...0o031,
-            0o032,                 // [INPUT] Bit 14 UNSET indicates that the PRO key is pressed.
-            0o033...0o035:         // [OUTPUT] CM and LM downlinks (ch 34, 35)
-
+             0o014,                 // CM and LM Gyro selection ..
+             0o016...0o031,
+             0o032,                 // [INPUT] Bit 14 UNSET indicates that the PRO key is pressed.
+             0o033...0o035:         // [OUTPUT] CM and LM downlinks (ch 34, 35)
             break
 
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ This channel provides correct handling of signals which, due to hardware-implementation factors, ┆
-  ┆ are not provided to the DSKY precisely according to the values the AGC writes to the associated  ┆
-  ┆ output channels (011 and 013).  In other words, it accounts for hardware handling of the signals ┆
-  ┆ after leaving the AGC's output registers.  For example, channel 10 has KEY REL and OPER ERR bits ┆
-  ┆ that tell whether the KEY REL and OPER ERR signals are logically active or not, but don't        ┆
-  ┆ account for the fact that in addition to the logical state of the signals, they are modulated    ┆
-  ┆ by a square wave (to induce flashing) before reaching the DSKY.                                  ┆
-  ┆                                                                                                  ┆
-  ┆ Channel 163 models this flashing.                                                                ┆
-  ┆                                                                                                  ┆
-  ┆          Bit 1: AGC warning                                                                      ┆
-  ┆          Bits 2-3 ..                                                                             ┆
-  ┆          Bit 4: TEMP lamp                                                                        ┆
-  ┆          Bit 5: KEY REL lamp                                                                     ┆
-  ┆          Bit 6: VERB/NOUN flash                                                                  ┆
-  ┆          Bit 7: OPER ERR lamp                                                                    ┆
-  ┆          Bit 8: RESTART lamp                                                                     ┆
-  ┆          Bit 9: STBY lamp                                                                        ┆
-  ┆          Bit 10: EL off                                                                          ┆
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
         case 0o163:
-            logger.log("""
-                »»»    DSKY 163:         \(zeroPadWord(value, to: 10)) BITS (10)      \
-                :: \(prettyCh163(value))
-                """)
+            logDSKY("163", bitsLabel: "10",
+                    value: value, pretty: prettyCh163(value))
 
-            model.statusLights[21]?.1 = (value & DSKYBits.Channel163.tempLamp > 0) ? .yellow : .off
-            model.statusLights[14]?.1 = (value & DSKYBits.Channel163.keyRelLamp > 0) ? .white : .off
-            model.verb.1 = value & DSKYBits.Channel163.verbNounFlash == 0
-            model.noun.1 = value & DSKYBits.Channel163.verbNounFlash == 0
-            model.statusLights[15]?.1 = (value & DSKYBits.Channel163.operErrorLamp > 0) ? .white : .off
-            model.statusLights[24]?.1 = (value & DSKYBits.Channel163.restartLamp > 0) ? .yellow : .off
-            model.statusLights[13]?.1 = (value & DSKYBits.Channel163.standbyLamp > 0) ? .white : .off
+            setLamp(.tempWarning, to: (value & DSKY.Ch163.tempLamp      > 0) ? .yellow : .off, reason: "CH163")
+            setLamp(.keyRelease,  to: (value & DSKY.Ch163.keyRelLamp    > 0) ? .white  : .off, reason: "CH163")
+            setLamp(.operError,   to: (value & DSKY.Ch163.operErrorLamp > 0) ? .white  : .off, reason: "CH163")
+            setLamp(.restart,     to: (value & DSKY.Ch163.restartLamp   > 0) ? .yellow : .off, reason: "CH163")
+            setLamp(.standby,     to: (value & DSKY.Ch163.standbyLamp   > 0) ? .white  : .off, reason: "CH163")
 
-            model.elPowerOn = value & DSKYBits.Channel163.elPowerOff == 0  
+            model.verb.1 = value & DSKY.Ch163.verbNounFlash == 0
+            model.noun.1 = value & DSKY.Ch163.verbNounFlash == 0
+
+            let newELPowerOn = value & DSKY.Ch163.elPowerOff == 0
+            if model.elPowerOn != newELPowerOn {
+                logger.log("EL Power: \(newELPowerOn ? "ON" : "OFF") via CH163")
+            }
+            model.elPowerOn = newELPowerOn
 
         case 0o165:
-            logger.log("»»» DSKY165 \(zeroPadWord(value)) TIME1")
+            logDSKY("165", value: value, note: "TIME1")
 
         case 0o164, 0o166...0o177:
-            logger.log("»»» fiction    \(zeroPadChannel(channel)): \(zeroPadWord(value))")
+            let chOct = String(format: "%03o", channel)
+            logDSKY(chOct, value: value, note: "fiction")
 
         default:
-            logger.log("??? channel    \(zeroPadChannel(channel)): \(zeroPadWord(value))")
+            let chOct = String(format: "%03o", channel)
+            logDSKY(chOct, value: value, note: "unhandled channel")
 
     }
 }
 
-@MainActor
 func dskyInterpretation(_ code: UInt16) {
 
-    let  rowCode = (code & 0b01111_0_00000_00000) >> 11
+    let rowCode = DSKY.extractRowCode(from: code)
 
     if rowCode == 0 { return }      // logger.log("ooo    DSKY 010: \(ZeroPadWord(code))")
 
     if rowCode == 12 {
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ STATUS ANNUNCIATORS                                                                              ┆
-  ┆                                                                                                  ┆
-  ┆          Bit 1 lights the "PRIO DISP" indicator.                                                 ┆
-  ┆          Bit 2 lights the "NO DAP" indicator.                                                    ┆
-  ┆          Bit 3 lights the "VEL" indicator.                                                       ┆
-  ┆          Bit 4 lights the "NO ATT" indicator.                                                    ┆
-  ┆          Bit 5 lights the "ALT" indicator.                                                       ┆
-  ┆          Bit 6 lights the "GIMBAL LOCK" indicator.                                               ┆
-  ┆          Bit 7 . . .                                                                             ┆
-  ┆          Bit 8 lights the "TRACKER" indicator.                                                   ┆
-  ┆          Bit 9 lights the "PROG" indicator.                                                      ┆
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-        logger.log("""
-            »»»    DSKY 010: \(zeroPadWord(code).prefix(5)) \
-            \(zeroPadWord(code).dropFirst(5)) \
-            LIGHTS (10)      :: \(prettyCh010(code & 0b0000000_111111111))
-            """)
+        logDSKY("010", bitsLabel: "10",
+                value: code & 0b00000001_11111111,
+                pretty: prettyCh010(code & 0b00000001_11111111))
 
-        model.statusLights[27]?.1 = (code & DSKYBits.Channel010_Lights.velocity > 0) ? .yellow : .off
-        model.statusLights[12]?.1 = (code & DSKYBits.Channel010_Lights.noAttitude > 0) ?  .white : .off
-        model.statusLights[26]?.1 = (code & DSKYBits.Channel010_Lights.altitude > 0) ? .yellow : .off  
-        model.statusLights[22]?.1 = (code & DSKYBits.Channel010_Lights.gimbalLock > 0) ? .yellow : .off
-
-        model.statusLights[25]?.1 = (code & DSKYBits.Channel010_Lights.tracker > 0) ? .yellow : .off   
-        model.statusLights[23]?.1 = (code & DSKYBits.Channel010_Lights.program > 0) ? .yellow : .off   
-    }
-
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ DISPLAY ELECTROLUMINESCENT LIGHTS                                                                ┆
-  ┆                                                                                                  ┆
-  ┆                               -AAAA B CCCCC DDDDD                                                ┆
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-    else {
+        setLamp(.velocity,    to: (code & DSKY.Ch010_Lights.velocity    > 0) ? .yellow : .off, reason: "CH010")
+        setLamp(.noAttitude,  to: (code & DSKY.Ch010_Lights.noAttitude  > 0) ? .white  : .off, reason: "CH010")
+        setLamp(.altitude,    to: (code & DSKY.Ch010_Lights.altitude    > 0) ? .yellow : .off, reason: "CH010")
+        setLamp(.gimbalLock,  to: (code & DSKY.Ch010_Lights.gimbalLock  > 0) ? .yellow : .off, reason: "CH010")
+        setLamp(.tracker,     to: (code & DSKY.Ch010_Lights.tracker     > 0) ? .yellow : .off, reason: "CH010")
+        setLamp(.program,     to: (code & DSKY.Ch010_Lights.program     > 0) ? .yellow : .off, reason: "CH010")
+    } else {
         let bBit: Bool =   (code & 0b00000_1_00000_00000) >  0
         let cInt: UInt16 = (code & 0b00000_0_11111_00000) >> 5
         let dInt: UInt16 = (code & 0b00000_0_00000_11111) >> 0
@@ -183,13 +184,8 @@ func dskyInterpretation(_ code: UInt16) {
         let cStr = digitsDict[Int(cInt)] ?? "?"
         let dStr = digitsDict[Int(dInt)] ?? "?"
 
-        logger.log("""
-            »»»    DSKY 010: \(zeroPadWord(code).prefix(4)) \
-            \(zeroPadWord(code).prefix(5).suffix(1)) \
-            \(zeroPadWord(code).dropFirst(5).dropLast(5)) \
-            \(zeroPadWord(code).dropFirst(10)) \
-            (\(aStr)) ±\(bBit ? "↑" : "↓") "\(cStr)\(dStr)\"
-            """)
+        let seg = "(\(aStr)) ±\(bBit ? "↑" : "↓") \"\(cStr)\(dStr)\""
+        logDSKY("010", value: code, note: seg)
 
         switch rowCode {
             case 9:  model.noun = (cStr + dStr, true)
@@ -197,41 +193,6 @@ func dskyInterpretation(_ code: UInt16) {
             case 11: model.prog = (cStr + dStr, true)
             default: break
         }
-
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ these are " " or "+" or "-" ..                                                                   ┆
-  ┆                                                                                                  ┆
-  ┆ B sets or resets a +/- sign                                                                      ┆
-  ┆                                                                                                  ┆
-  ┆ It is unclear to me how the +/- signs can be blanked, using the commands outlined below. It      ┆
-  ┆ seems as though it would involve sending two output-channel commands, (say) with both 1+ and     ┆
-  ┆ 1- bits zeroed.                                                                                  ┆
-  ┆                                                                                                  ┆
-  ┆ (That is the approach taken in yaDSKY: for each sign bit, the most recent 1+ and 1- flags are    ┆
-  ┆ saved. If both are 0, then the +/- sign is blank; if 1+ is set and 1- is not, then the '+' sign  ┆
-  ┆ is displayed; if just the 1- flag is set, or if both 1+ and 1- flags are set, the '-' sign is    ┆
-  ┆ displayed.)                                                                                      ┆
-  ┆                                                                                                  ┆
-  ┆ +↑ = "+"                                                                                         ┆
-  ┆       +↓ = "+" (+↓ means don't change)                                                           ┆
-  ┆       -↓ = " " (-↓ after +↓ = " ")                                                               ┆
-  ┆                                                                                                  ┆
-  ┆ -↑ = "-"                                                                                         ┆
-  ┆       -↓ = leave the "-"                                                                         ┆
-  ┆       +↓ = " " (+↓ after -↓ = " ")                                                               ┆
-  ┆                                                                                                  ┆
-  ┆                                                                                                  ┆
-  ┆ "-" +     THIS IS PRETTY HORRIBLE .. THERE MUST BE A BETTER WAY                                  ┆
-  ┆                                                                                                  ┆
-  ┆ from: https://www.ibiblio.org/apollo/Documents/R-693-GSOP-Skylark1-Section2-DataLinks.pdf        ┆
-  ┆                                                                                                  ┆
-  ┆     Bit 11 of some of the DSPTABs contains discrete information, a one indicating that the       ┆
-  ┆     discrete is on. For example, a one in bit 11 of DSPTAB+1 indicates that R3 has a plus sign.  ┆
-  ┆                                                                                                  ┆
-  ┆     If the sign bits associated with a given register are both zeros, then the content of that   ┆
-  ┆     particular register is octal; if either is set, the register content is decimal data.        ┆
-  ┆                                                                                                  ┆
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
 
         var reg1Bytes: [String] = model.reg1.0.map { String($0) }
         var reg2Bytes: [String] = model.reg2.0.map { String($0) }
@@ -241,14 +202,16 @@ func dskyInterpretation(_ code: UInt16) {
             logger.error("ERROR: Invalid register format for reg1: \(model.reg1.0)")
             return
         }
-//        precondition(reg1Bytes.count == 6 && [" ", "+", "-"].contains(reg1Bytes[0]))
-        precondition(reg2Bytes.count == 6 && [" ", "+", "-"].contains(reg2Bytes[0]))
-        precondition(reg3Bytes.count == 6 && [" ", "+", "-"].contains(reg3Bytes[0]))
+        guard reg2Bytes.count == 6, [" ", "+", "-"].contains(reg2Bytes[0]) else {
+            logger.error("ERROR: Invalid register format for reg2: \(model.reg2.0)")
+            return
+        }
+        guard reg3Bytes.count == 6, [" ", "+", "-"].contains(reg3Bytes[0]) else {
+            logger.error("ERROR: Invalid register format for reg3: \(model.reg3.0)")
+            return
+        }
 
         switch rowCode {
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ no sign bit setting ..                                                                           ┆
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
             case 8:         // "..11"
                 reg1Bytes[1] = dStr
                 model.reg1.0 = reg1Bytes.joined()
@@ -259,9 +222,6 @@ func dskyInterpretation(_ code: UInt16) {
                 reg3Bytes[1] = dStr
                 model.reg3.0 = reg3Bytes.joined()
 
-/*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ sign bit manipulation ..                                                                         ┆
-  ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
             case 7:         // "1213" & "R1+"
                 model.r1Sign.0 = bBit
                 reg1Bytes[0] = plu_min(model.r1Sign)
@@ -349,3 +309,11 @@ private let registerConfigs: [Int: RegisterConfig] = [
     // ... other configs
 ]
 */
+
+private func setLamp(_ lamp: StatusLamp, to color: BackColor, reason: String) {
+    let index = StatusLamp.index(for: lamp)
+    if let current = model.lights[index]?.1, current != color {
+        logger.log("Lamp[\(index)] \(lamp) \(String(describing: current)) → \(String(describing: color)) via \(reason)")
+    }
+    model.lights[lamp]?.1 = color
+}

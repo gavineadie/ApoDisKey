@@ -6,11 +6,9 @@
 //
 
 import Testing
-import OSLog
 @testable import ApoDisKey
 
-let logger = Logger(subsystem: "com.ramsaycons.ApoDisKey", category: "TEST")
-@MainActor var model = DisKeyModel.shared
+var model = DisKeyModel.shared
 
 @Suite(.serialized)
 class ApoDisKeyTests {

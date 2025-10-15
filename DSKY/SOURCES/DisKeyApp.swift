@@ -11,7 +11,7 @@ import OSLog
 
 let logger = Logger(subsystem: "com.ramsaycons.ApoDisKey", category: "main")
 
-@MainActor var model = DisKeyModel.shared
+var model = DisKeyModel.shared
 
 @main
 struct DisKeyApp: App {
@@ -132,19 +132,19 @@ struct MonitorView: View {
             Menu(menuString) {
                 Button("Apollo CM 8-17",
                        action: {
-                    model.statusLights = DisKeyModel.commandModule
+                    model.lights = DisKeyModel.commandModule
                     model.elPowerOn = true
                     menuString = "Apollo CM 8-17"
                 })
                 Button("Apollo LM 11-14",
                        action: {
-                    model.statusLights = DisKeyModel.lunarModule0
+                    model.lights = DisKeyModel.lunarModule0
                     model.elPowerOn = true
                     menuString = "Apollo LM 11-14"
                 })
                 Button("Apollo LM 15-17",
                        action: {
-                    model.statusLights = DisKeyModel.lunarModule1
+                    model.lights = DisKeyModel.lunarModule1
                     model.elPowerOn = true
                     menuString = "Apollo LM 15-17"
                 })
@@ -212,7 +212,6 @@ struct MonitorView: View {
 #Preview("Monitor") { MonitorView() }
 #endif
 
-@MainActor
 func startNetwork() {
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ if command arguments for network are good, use them ..                                           ┆

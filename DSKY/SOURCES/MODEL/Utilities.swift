@@ -284,7 +284,6 @@ private struct ClickThroughBackdrop<Content: SwiftUI.View>: NSViewRepresentable 
 }
 #endif
 
-@MainActor
 func extractOptions() {
 
     let args = CommandLine.arguments
@@ -300,11 +299,11 @@ func extractOptions() {
         if arg.hasPrefix("--cfg=") {
             arg.removeFirst(6)
             if arg.starts(with: "CM") {
-                model.statusLights = DisKeyModel.commandModule
+                model.lights = DisKeyModel.commandModule
             } else if arg.starts(with: "LM1") {
-                model.statusLights = DisKeyModel.lunarModule1
+                model.lights = DisKeyModel.lunarModule1
             } else if arg.starts(with: "LM") {
-                model.statusLights = DisKeyModel.lunarModule0
+                model.lights = DisKeyModel.lunarModule0
             }
 
             model.elPowerOn = true

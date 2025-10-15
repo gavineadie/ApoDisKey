@@ -46,66 +46,66 @@ struct StatusView: View {
             if #available(macOS 13.0, *) {
                 Grid {
                     GridRow {
-                        AnnunciatorLamp(light: model.statusLights[11]!)
-                        AnnunciatorLamp(light: model.statusLights[21]!)
+                        AnnunciatorLamp(light: model.lights[11]!)
+                        AnnunciatorLamp(light: model.lights[21]!)
                     }
                     GridRow {
-                        AnnunciatorLamp(light: model.statusLights[12]!)
-                        AnnunciatorLamp(light: model.statusLights[22]!)
+                        AnnunciatorLamp(light: model.lights[12]!)
+                        AnnunciatorLamp(light: model.lights[22]!)
                     }
                     GridRow {
-                        AnnunciatorLamp(light: model.statusLights[13]!)
-                        AnnunciatorLamp(light: model.statusLights[23]!)
+                        AnnunciatorLamp(light: model.lights[13]!)
+                        AnnunciatorLamp(light: model.lights[23]!)
                     }
                     GridRow {
-                        AnnunciatorLamp(light: model.statusLights[14]!)
-                        AnnunciatorLamp(light: model.statusLights[24]!)
+                        AnnunciatorLamp(light: model.lights[14]!)
+                        AnnunciatorLamp(light: model.lights[24]!)
                     }
                     GridRow {
-                        AnnunciatorLamp(light: model.statusLights[15]!)
-                        AnnunciatorLamp(light: model.statusLights[25]!)
+                        AnnunciatorLamp(light: model.lights[15]!)
+                        AnnunciatorLamp(light: model.lights[25]!)
                     }
                     GridRow {
-                        AnnunciatorLamp(light: model.statusLights[16]!)
-                        AnnunciatorLamp(light: model.statusLights[26]!)
+                        AnnunciatorLamp(light: model.lights[16]!)
+                        AnnunciatorLamp(light: model.lights[26]!)
                     }
                     GridRow {
-                        AnnunciatorLamp(light: model.statusLights[17]!)
-                        AnnunciatorLamp(light: model.statusLights[27]!)
+                        AnnunciatorLamp(light: model.lights[17]!)
+                        AnnunciatorLamp(light: model.lights[27]!)
                     }
                 }
             } else {
                 VStack {
                     HStack {
-                        AnnunciatorLamp(light: model.statusLights[11]!)
-                        AnnunciatorLamp(light: model.statusLights[21]!)
+                        AnnunciatorLamp(light: model.lights[11]!)
+                        AnnunciatorLamp(light: model.lights[21]!)
                     }
 
                     HStack {
-                        AnnunciatorLamp(light: model.statusLights[12]!)
-                        AnnunciatorLamp(light: model.statusLights[22]!)
+                        AnnunciatorLamp(light: model.lights[12]!)
+                        AnnunciatorLamp(light: model.lights[22]!)
                     }
 
                     HStack {
-                        AnnunciatorLamp(light: model.statusLights[13]!)
-                        AnnunciatorLamp(light: model.statusLights[23]!)
+                        AnnunciatorLamp(light: model.lights[13]!)
+                        AnnunciatorLamp(light: model.lights[23]!)
                     }
                     HStack {
-                        AnnunciatorLamp(light: model.statusLights[14]!)
-                        AnnunciatorLamp(light: model.statusLights[24]!)
+                        AnnunciatorLamp(light: model.lights[14]!)
+                        AnnunciatorLamp(light: model.lights[24]!)
                     }
                     HStack {
-                        AnnunciatorLamp(light: model.statusLights[15]!)
-                        AnnunciatorLamp(light: model.statusLights[25]!)
+                        AnnunciatorLamp(light: model.lights[15]!)
+                        AnnunciatorLamp(light: model.lights[25]!)
                     }
                     HStack {
-                        AnnunciatorLamp(light: model.statusLights[16]!)
-                        AnnunciatorLamp(light: model.statusLights[26]!)
+                        AnnunciatorLamp(light: model.lights[16]!)
+                        AnnunciatorLamp(light: model.lights[26]!)
                     }
 
                     HStack {
-                        AnnunciatorLamp(light: model.statusLights[17]!)
-                        AnnunciatorLamp(light: model.statusLights[27]!)
+                        AnnunciatorLamp(light: model.lights[17]!)
+                        AnnunciatorLamp(light: model.lights[27]!)
                     }
                 }
             }
@@ -132,7 +132,7 @@ struct StatusView: View {
 */
 
 struct AnnunciatorLamp: View {
-    var light: Light
+    var light: Lamp
 
     var body: some View {
         ZStack {
@@ -160,7 +160,6 @@ struct AnnunciatorLamp: View {
 #Preview("WHITE") { AnnunciatorLamp(light: ("WORDS", .white)) }
 #endif
 
-@MainActor
 private func back(_ input: (String, BackColor)) -> Color {
     if model.elPowerOn {
         switch input.1 {
