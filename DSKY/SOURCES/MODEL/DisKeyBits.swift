@@ -27,19 +27,6 @@ struct DSKY {
     static let bit14: UInt16 = 0x2000
     static let bit15: UInt16 = 0x4000
 
-    // MARK: - Channel 010 Status Annunciators (when rowCode == 12)
-    struct Ch010_Lights {
-        static let priorityDisplay = bit01  // "PRIO DISP"
-        static let noDAP = bit02            // "NO DAP"
-        static let velocity = bit03         // "VEL"
-        static let noAttitude = bit04       // "NO ATT"
-        static let altitude = bit05         // "ALT"
-        static let gimbalLock = bit06       // "GIMBAL LOCK"
-                                            // bit7 unused
-        static let tracker = bit08          // "TRACKER"
-        static let program = bit09          // "PROG"
-    }
-
     // MARK: - Channel 010 Display Encoding
     struct Ch010_Display {
         static let rowCodeMask: UInt16 = 0b01111_0_00000_00000
@@ -72,6 +59,19 @@ struct DSKY {
         }
     }
 
+    // MARK: - Channel 010 Status Annunciators (when rowCode == 12)
+    struct Ch010_Lights {
+        static let priorityDisplay = bit01  // "PRIO DISP"
+        static let noDAP = bit02            // "NO DAP"
+        static let velocity = bit03         // "VEL"
+        static let noAttitude = bit04       // "NO ATT"
+        static let altitude = bit05         // "ALT"
+        static let gimbalLock = bit06       // "GIMBAL LOCK"
+                                            // bit7 unused
+        static let tracker = bit08          // "TRACKER"
+        static let program = bit09          // "PROG"
+    }
+
     // MARK: - Channel 011 (Output flags for indicator lamps)
     struct Ch011 {
         static let compActivity = bit02     // "COMP ACTY" light
@@ -87,32 +87,32 @@ struct DSKY {
 
     // MARK: - Channel 013 (DSKY lamp tests)
     struct Ch013 {
-        static let standby = bit10         // "STBY" light
+        static let standby = bit10          // "STBY" light
     }
 
     // MARK: - Channel 032 (Input)
     struct Ch032 {
-        static let proKeyPressed = bit14   // PRO key state (inverted - UNSET means pressed)
+        static let proKeyPressed = bit14    // PRO key state (inverted - UNSET means pressed)
     }
 
     // MARK: - Channel 163 (Hardware-corrected signals with flashing)
     struct Ch163 {
-        static let agcWarning = bit01      // AGC warning
-                                           // bits 2-3 unused
-        static let tempLamp = bit04        // TEMP lamp (with flashing)
-        static let keyRelLamp = bit05      // KEY REL lamp (with flashing)
-        static let verbNounFlash = bit06   // VERB/NOUN flash control
-        static let operErrLamp = bit07   // OPER ERR lamp (with flashing)
-        static let restartLamp = bit08     // RESTART lamp
-        static let standbyLamp = bit09     // STBY lamp
-        static let elPowerOff = bit10      // EL panel power (inverted logic)
+        static let agcWarning = bit01       // AGC warning
+                                            // bits 2-3 unused
+        static let tempLamp = bit04         // TEMP lamp (with flashing)
+        static let keyRelLamp = bit05       // KEY REL lamp (with flashing)
+        static let verbNounFlash = bit06    // VERB/NOUN flash control
+        static let operErrLamp = bit07      // OPER ERR lamp (with flashing)
+        static let restartLamp = bit08      // RESTART lamp
+        static let standbyLamp = bit09      // STBY lamp
+        static let elPowerOff = bit10       // EL panel power (inverted logic)
     }
 }
 
 // MARK: - Convenience Extensions
 extension DSKY {
 
-    /// Extract row code from channel 010 value
+    /// Extract row code from channel 010₈ value
     static func extractRowCode(from value: UInt16) -> UInt16 {
         (value & Ch010_Display.rowCodeMask) >> Ch010_Display.rowCodeShift
     }
@@ -133,7 +133,7 @@ extension DSKY {
     }
 
     /// Check if a channel 011 value should be filtered from logging (COMP ACTY cycling)
-    static func shouldFilterChannel011Log(value: UInt16) -> Bool {
+    static func shouldLogCh011CompActy(value: UInt16) -> Bool {
         Ch011.compActivityCycleValues.contains(value)
     }
 }

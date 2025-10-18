@@ -11,7 +11,7 @@ import OSLog
 
 let logger = Logger(subsystem: "com.ramsaycons.ApoDisKey", category: "main")
 
-var model = DisKeyModel.shared
+let model = DisKeyModel.shared
 
 @main
 struct DisKeyApp: App {
@@ -109,9 +109,7 @@ struct AppView: View {
     }
 }
 
-#if swift(>=5.9)
 #Preview("AppView") { AppView() }
-#endif
 
 struct MonitorView: View {
 
@@ -132,19 +130,19 @@ struct MonitorView: View {
             Menu(menuString) {
                 Button("Apollo CM 8-17",
                        action: {
-                    model.lights = DisKeyModel.commandModule
+                    model.cmLamps()
                     model.elPowerOn = true
                     menuString = "Apollo CM 8-17"
                 })
                 Button("Apollo LM 11-14",
                        action: {
-                    model.lights = DisKeyModel.lunarModule0
+                    model.lm0Lamps()
                     model.elPowerOn = true
                     menuString = "Apollo LM 11-14"
                 })
                 Button("Apollo LM 15-17",
                        action: {
-                    model.lights = DisKeyModel.lunarModule1
+                    model.lm1Lamps()
                     model.elPowerOn = true
                     menuString = "Apollo LM 15-17"
                 })

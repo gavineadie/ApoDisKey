@@ -85,7 +85,7 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ boolean: Bool = true) {
             dskyInterpretation(value)
 
         case 0o011:                 // [OUTPUT] flags for indicator lamps etc
-            if !DSKY.shouldFilterChannel011Log(value: value) {
+            if DSKY.shouldLogCh011CompActy(value: value) {
                 logDSKY("011", bitsLabel: "15",
                         value: value, pretty: prettyCh011(value))
             }
@@ -117,6 +117,9 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ boolean: Bool = true) {
              0o033...0o035:         // [OUTPUT] CM and LM downlinks (ch 34, 35)
             break
 
+        case 0o077:                 // [OUTPUT] source of a hardware restart ..
+            logDSKY("077", value: value, note: "H/W RESET")
+
         case 0o163:
             logDSKY("163", bitsLabel: "10",
                     value: value, pretty: prettyCh163(value))
@@ -140,12 +143,10 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ boolean: Bool = true) {
             logDSKY("165", value: value, note: "TIME1")
 
         case 0o164, 0o166...0o177:
-            let chOct = String(format: "%03o", channel)
-            logDSKY(chOct, value: value, note: "fiction")
+            logDSKY(String(format: "%03o", channel), value: value, note: "fiction")
 
         default:
-            let chOct = String(format: "%03o", channel)
-            logDSKY(chOct, value: value, note: "unhandled channel")
+            logDSKY(String(format: "%03o", channel), value: value, note: "unknown")
 
     }
 }
@@ -284,9 +285,8 @@ private func setLamp(_ lamp: StatusLamp,
     let index = StatusLamp.index(for: lamp)
     if let current = model.lights[index]?.1, current != color {
         logger.log("""
-            Lamp[\(index)] \(lamp) \
-            \(String(describing: current)) → \(String(describing: color)) \
-            via \(reason)")
+            Lamp: \(lamp) [\(String(describing: current))→\(String(describing: color))] \
+            via \(reason)
             """
         )
     }

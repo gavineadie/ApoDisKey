@@ -8,7 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		862D71062E666F19001E0EAA /* ApoDisKey.icon in Resources */ = {isa = PBXBuildFile; fileRef = 862D71052E666F19001E0EAA /* ApoDisKey.icon */; };
-		86CA771B2E64254F008DFF15 /* ApolloNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 86CA771A2E64254F008DFF15 /* ApolloNetwork */; };
+		862F89E72EA024DB00AD6F66 /* ApolloNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 862F89E62EA024DB00AD6F66 /* ApolloNetwork */; };
+		862F8A2B2EA029E700AD6F66 /* ApolloNetwork in Frameworks */ = {isa = PBXBuildFile; productRef = 862F8A2A2EA029E700AD6F66 /* ApolloNetwork */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,7 +67,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				86CA771B2E64254F008DFF15 /* ApolloNetwork in Frameworks */,
+				862F89E72EA024DB00AD6F66 /* ApolloNetwork in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,12 +75,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				862F8A2B2EA029E700AD6F66 /* ApolloNetwork in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		862F8A292EA029E700AD6F66 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		867EBD5B2C3A1E29004C4DDD = {
 			isa = PBXGroup;
 			children = (
@@ -87,6 +96,7 @@
 				869F39962C3F337E002DD6B7 /* README.md */,
 				86ED58052D8517B7008727D5 /* DSKY */,
 				86ED57D12D8516EA008727D5 /* DSKYTests */,
+				862F8A292EA029E700AD6F66 /* Frameworks */,
 				867EBD652C3A1E29004C4DDD /* Products */,
 			);
 			sourceTree = "<group>";
@@ -120,7 +130,7 @@
 			);
 			name = ApoDisKey;
 			packageProductDependencies = (
-				86CA771A2E64254F008DFF15 /* ApolloNetwork */,
+				862F89E62EA024DB00AD6F66 /* ApolloNetwork */,
 			);
 			productName = DSKY;
 			productReference = 867EBD642C3A1E29004C4DDD /* ApoDisKey.app */;
@@ -173,7 +183,7 @@
 			);
 			mainGroup = 867EBD5B2C3A1E29004C4DDD;
 			packageReferences = (
-				86CA77192E64254F008DFF15 /* XCRemoteSwiftPackageReference "ApolloNetwork" */,
+				862F89E52EA024DB00AD6F66 /* XCRemoteSwiftPackageReference "ApolloNetwork" */,
 			);
 			productRefGroup = 867EBD652C3A1E29004C4DDD /* Products */;
 			projectDirPath = "";
@@ -235,11 +245,9 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CURRENT_PROJECT_VERSION = EP225;
+				CURRENT_PROJECT_VERSION = CT155;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = CXE9ZR7J3U;
 				ENABLE_TESTABILITY = YES;
@@ -251,14 +259,15 @@
 				INFOPLIST_FILE = DSKY/FONTS/Fonts.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 0.9.8;
+				MARKETING_VERSION = 0.9.9;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ramsaycons.ApoDisKey;
 				PRODUCT_NAME = ApoDisKey;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_VERSION = 6.0;
 				TVOS_DEPLOYMENT_TARGET = 16.6;
 				WATCHOS_DEPLOYMENT_TARGET = 10.6;
@@ -272,22 +281,21 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CURRENT_PROJECT_VERSION = EP225;
+				CURRENT_PROJECT_VERSION = CT155;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = CXE9ZR7J3U;
 				INFOPLIST_FILE = DSKY/FONTS/Fonts.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 0.9.8;
+				MARKETING_VERSION = 0.9.9;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ramsaycons.ApoDisKey;
 				PRODUCT_NAME = ApoDisKey;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
-				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_INCLUDE_PATHS = "";
 				SWIFT_VERSION = 6.0;
 				TVOS_DEPLOYMENT_TARGET = 16.6;
 				WATCHOS_DEPLOYMENT_TARGET = 10.6;
@@ -300,7 +308,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = DSKY/DSKY.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
@@ -308,7 +315,6 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
-				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = ApoDisKey;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
@@ -324,7 +330,6 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MARKETING_VERSION = 0.9.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ramsaycons.ApoDisKey;
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -338,7 +343,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
-				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_ENTITLEMENTS = DSKY/DSKY.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEAD_CODE_STRIPPING = YES;
@@ -346,7 +350,6 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
 				ENABLE_PREVIEWS = YES;
-				ENABLE_USER_SELECTED_FILES = readonly;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = ApoDisKey;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
@@ -362,7 +365,6 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MARKETING_VERSION = 0.9.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ramsaycons.ApoDisKey;
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
@@ -377,12 +379,10 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ramsaycons.DSKYTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -398,12 +398,10 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ramsaycons.DSKYTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -446,7 +444,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		86CA77192E64254F008DFF15 /* XCRemoteSwiftPackageReference "ApolloNetwork" */ = {
+		862F89E52EA024DB00AD6F66 /* XCRemoteSwiftPackageReference "ApolloNetwork" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/gavineadie/ApolloNetwork";
 			requirement = {
@@ -457,9 +455,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		86CA771A2E64254F008DFF15 /* ApolloNetwork */ = {
+		862F89E62EA024DB00AD6F66 /* ApolloNetwork */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 86CA77192E64254F008DFF15 /* XCRemoteSwiftPackageReference "ApolloNetwork" */;
+			package = 862F89E52EA024DB00AD6F66 /* XCRemoteSwiftPackageReference "ApolloNetwork" */;
+			productName = ApolloNetwork;
+		};
+		862F8A2A2EA029E700AD6F66 /* ApolloNetwork */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 862F89E52EA024DB00AD6F66 /* XCRemoteSwiftPackageReference "ApolloNetwork" */;
 			productName = ApolloNetwork;
 		};
 /* End XCSwiftPackageProductDependency section */

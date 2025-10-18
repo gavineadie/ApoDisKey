@@ -7,6 +7,10 @@
 
 import Foundation
 
+extension Collection {
+    var isNotEmpty: Bool { !self.isEmpty }
+}
+
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆                                                                                                  ┆
   ┆ The sign (or blank) characters, which can be "+" or "-" or " " is based of the 0/1 values of     ┆
@@ -51,21 +55,21 @@ public func plu_min(_ plusMinus: (Bool, Bool)) -> String {
     }
 }
 
-func prettyString(_ data: Data) -> String {
-    "\(zeroPadByte(data[0])) \(zeroPadByte(data[1])) \(zeroPadByte(data[2])) \(zeroPadByte(data[3]))"
-}
-
-private func zeroPadByte(_ code: UInt8, _ length: Int = 8) -> String {
-    String(("000000000" + String(UInt16(code), radix: 2)).suffix(length))
-}
+//func prettyString(_ data: Data) -> String {
+//    "\(zeroPadByte(data[0])) \(zeroPadByte(data[1])) \(zeroPadByte(data[2])) \(zeroPadByte(data[3]))"
+//}
+//
+//private func zeroPadByte(_ code: UInt8, _ length: Int = 8) -> String {
+//    String(("000000000" + String(UInt16(code), radix: 2)).suffix(length))
+//}
 
 func zeroPadWord(_ code: UInt16, to length: Int = 15) -> String {
     String(("0000000000000000" + String(UInt16(code), radix: 2)).suffix(length))
 }
 
-func zeroPadChannel(_ channel: UInt16) -> String {
-    String(("000" + String(channel, radix: 8)).suffix(3))
-}
+//func zeroPadChannel(_ channel: UInt16) -> String {
+//    String(("000" + String(channel, radix: 8)).suffix(3))
+//}
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
@@ -74,8 +78,8 @@ let symbolArray = ["----",
                    "1415", "1213", "..11", "N1N2", "V1V2", "M1M2"]
 
 let digitsDict = [  0: "_",
-                    21: "0",  3: "1", 25: "2", 27: "3", 15: "4",
-                    30: "5", 28: "6", 19: "7", 29: "8", 31: "9"]
+                   21: "0",  3: "1", 25: "2", 27: "3", 15: "4",
+                   30: "5", 28: "6", 19: "7", 29: "8", 31: "9"]
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆          Bit 1 lights the "PRIO DISP" indicator       -- ?                                       ┆
@@ -91,25 +95,23 @@ let digitsDict = [  0: "_",
   ┆ Note:                     "TEMP" and                                                             ┆
   ┆                           "RESTART" are not controlled here                                      ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-let ch010Labs = [" ??? ",
-                 "PROG ",    // b9
-                 "TRAK ",    // b8
-                 " b7? ",    // b7
-                 "GMBL ",    // b6
-                 " ALT ",    // b5
-                 "~ATT ",    // b4
-                 " VEL ",    // b3
-                 "~DAP ",    // b2
-                 "PRIO ",    // b1
-                 "NEVER"]
-
 func prettyCh010(_ code: UInt16) -> String {
     if #available(macOS 13, *) {
 
         var catString = ""
         let bitArray = zeroPadWord(code, to: 10).split(separator: "")
         for index in 0..<bitArray.count {
-            catString += (bitArray[index] == "0") ? "  ↓  " : ch010Labs[index]
+            catString += (bitArray[index] == "0") ? "  ↓  " : [" ??? ",
+                                                               "PROG ",    // b9
+                                                               "TRAK ",    // b8
+                                                               " b7? ",    // b7
+                                                               "GMBL ",    // b6
+                                                               " ALT ",    // b5
+                                                               "~ATT ",    // b4
+                                                               " VEL ",    // b3
+                                                               "~DAP ",    // b2
+                                                               "PRIO ",    // b1
+                                                               "NEVER"][index]
         }
         return catString
 
@@ -130,16 +132,6 @@ func prettyCh010(_ code: UInt16) -> String {
   ┆                 This means to flash the digits in the NOUN and VERB areas.                       ┆
   ┆          Bit 7: Lights the "OPR ERR" indicator.                                                  ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-let ch011Labs = [" ??? ",    // b8
-                 "OPER ",    // b7
-                 "V+N↕︎ ",    // b6
-                 "KREL ",    // b5
-                 "TEMP ",    // b4
-                 "UPLK ",    // b3
-                 "COMP ",    // b2
-                 " ??? ",    // b1
-                 "NEVER"]
-
 func prettyCh011(_ code: UInt16) -> String {
     if #available(macOS 13, *) {
 
@@ -147,7 +139,15 @@ func prettyCh011(_ code: UInt16) -> String {
         let bitArray = zeroPadWord(code, to: 8).split(separator: "")
 
         for index in 0..<bitArray.count {
-            catString += (bitArray[index] == "0") ? "  ↓  " : ch011Labs[index]
+            catString += (bitArray[index] == "0") ? "  ↓  " : [" ??? ",    // b8
+                                                               "OPER ",    // b7
+                                                               "V+N↕︎ ",    // b6
+                                                               "KREL ",    // b5
+                                                               "TEMP ",    // b4
+                                                               "UPLK ",    // b3
+                                                               "COMP ",    // b2
+                                                               " ??? ",    // b1
+                                                               "NEVER"][index]
         }
         return catString
 
@@ -184,105 +184,26 @@ func prettyCh032(_ code: UInt16) -> String {
   ┆          Bit 9:       STBY lamp                                                                  ┆
   ┆          Bit 10:     EL off                                                                      ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-let ch163Labs = [" EL↓ ",    // b10
-                 "STBY ",    // b9
-                 "RSRT ",    // b8
-                 "OPER ",    // b7
-                 "V+N↕︎ ",    // b6
-                 "KREL ",    // b5
-                 "TEMP ",    // b4
-                 "  3  ",    // b3
-                 "  2  ",    // b2
-                 " AGC ",    // b1
-                 "NEVER"]
-
 func prettyCh163(_ code: UInt16) -> String {
-    if #available(macOS 13, *) {
+    let bitArray = zeroPadWord(code, to: 10).split(separator: "")
+    var catString = (bitArray[0] == "1") ? " EL↓ " : " EL↑ "
 
-        let bitArray = zeroPadWord(code, to: 10).split(separator: "")
-        var catString = (bitArray[0] == "1") ? " EL↓ " : " EL↑ "
-
-        for index in 1..<bitArray.count {
-            catString += (bitArray[index] == "0") ? "  ↓  " : ch163Labs[index]
-        }
-
-        return catString
-
-    } else {
-        return "macOS 13 or later required for '.split'"
+    for index in 1..<bitArray.count {
+        catString += (bitArray[index] == "0") ? "  ↓  " : [" EL↓ ",    // b10
+                                                           "STBY ",    // b9
+                                                           "RSRT ",    // b8
+                                                           "OPER ",    // b7
+                                                           "V+N↕︎ ",    // b6
+                                                           "KREL ",    // b5
+                                                           "TEMP ",    // b4
+                                                           "  3  ",    // b3
+                                                           "  2  ",    // b2
+                                                           " AGC ",    // b1
+                                                           "NEVER"][index]
     }
+
+    return catString
 }
-
-#if os(macOS)
-/*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
-  │  https://christiantietze.de/posts/2024/04/enable-swiftui-button-click-through-inactive-windows/  │
-  └──────────────────────────────────────────────────────────────────────────────────────────────────┘*/
-import SwiftUI
-extension SwiftUI.View {
-    /// Enable the view to receive "first mouse" events.
-    ///
-    /// "First mouse" is the click into an inactive window that brings it to
-    /// the front (activates it) and potentially triggers whatever control was
-    /// clicked on. Controls that do support this are "click-through", because
-    /// you can click on the inactive window, "through" its activation
-    /// process, into the control.
-    ///
-    /// ## Using Buttons
-    ///
-    /// Wrap a button like this to make it respond to first clicks. The first
-    /// mouse acceptance of this wrapper makes the button perform its action:
-    ///
-    /// ```swift
-    /// Button { ... } label: { ... }
-    ///     .style(.plain) // Style breaks default click-through
-    ///     .acceptClickThrough() // Enables click-through again
-    /// ```
-    ///
-    /// > Note: You need to stay somewhat close to the button. You can use
-    ///         an `HStack`/`VStack` that wrap buttons, but not on a stack
-    ///         that wraps custom views that contain the button 2+ levels deep.
-    ///
-    /// ## Using other tap gesture-enabled controls
-    ///
-    /// This also propagates "first mouse" tap gestures to interactive
-    /// controls that are not buttons:
-    ///
-    /// ```swift
-    /// VStack {
-    ///     ForEach(...) { item in
-    ///          CustomViewWithoutButtons(item)
-    ///             .acceptClickThrough()
-    ///             .onTapGesture { ... }
-    ///     }
-    /// }
-    /// ```
-    public func acceptClickThrough() -> some View {
-        ClickThroughBackdrop(self)
-    }
-}
-
-private struct ClickThroughBackdrop<Content: SwiftUI.View>: NSViewRepresentable {
-    final class Backdrop: NSHostingView<Content> {
-        override func acceptsFirstMouse(for event: NSEvent?) -> Bool { return true }
-    }
-
-    let content: Content
-
-    init(_ content: Content) {
-        self.content = content
-    }
-
-    func makeNSView(context: Context) -> Backdrop {
-        let backdrop = Backdrop(rootView: content)
-        backdrop.translatesAutoresizingMaskIntoConstraints = false
-        return backdrop
-    }
-
-    func updateNSView(_ nsView: Backdrop, context: Context) {
-        nsView.rootView = content
-    }
-}
-#endif
 
 func extractOptions() {
 
@@ -299,11 +220,11 @@ func extractOptions() {
         if arg.hasPrefix("--cfg=") {
             arg.removeFirst(6)
             if arg.starts(with: "CM") {
-                model.lights = DisKeyModel.commandModule
+                model.cmLamps()
             } else if arg.starts(with: "LM1") {
-                model.lights = DisKeyModel.lunarModule1
+                model.lm1Lamps()
             } else if arg.starts(with: "LM") {
-                model.lights = DisKeyModel.lunarModule0
+                model.lm0Lamps()
             }
 
             model.elPowerOn = true
@@ -379,6 +300,73 @@ func extractOptions() {
 
 }
 
-extension Collection {
-    var isNotEmpty: Bool { !self.isEmpty }
+#if os(macOS)
+/*┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
+  │  https://christiantietze.de/posts/2024/04/enable-swiftui-button-click-through-inactive-windows/  │
+  └──────────────────────────────────────────────────────────────────────────────────────────────────┘*/
+import SwiftUI
+extension SwiftUI.View {
+    /// Enable the view to receive "first mouse" events.
+    ///
+    /// "First mouse" is the click into an inactive window that brings it to
+    /// the front (activates it) and potentially triggers whatever control was
+    /// clicked on. Controls that do support this are "click-through", because
+    /// you can click on the inactive window, "through" its activation
+    /// process, into the control.
+    ///
+    /// ## Using Buttons
+    ///
+    /// Wrap a button like this to make it respond to first clicks. The first
+    /// mouse acceptance of this wrapper makes the button perform its action:
+    ///
+    /// ```swift
+    /// Button { ... } label: { ... }
+    ///     .style(.plain) // Style breaks default click-through
+    ///     .acceptClickThrough() // Enables click-through again
+    /// ```
+    ///
+    /// > Note: You need to stay somewhat close to the button. You can use
+    ///         an `HStack`/`VStack` that wrap buttons, but not on a stack
+    ///         that wraps custom views that contain the button 2+ levels deep.
+    ///
+    /// ## Using other tap gesture-enabled controls
+    ///
+    /// This also propagates "first mouse" tap gestures to interactive
+    /// controls that are not buttons:
+    ///
+    /// ```swift
+    /// VStack {
+    ///     ForEach(...) { item in
+    ///          CustomViewWithoutButtons(item)
+    ///             .acceptClickThrough()
+    ///             .onTapGesture { ... }
+    ///     }
+    /// }
+    /// ```
+    public func acceptClickThrough() -> some View {
+        ClickThroughBackdrop(self)
+    }
 }
+
+private struct ClickThroughBackdrop<Content: SwiftUI.View>: NSViewRepresentable {
+    final class Backdrop: NSHostingView<Content> {
+        override func acceptsFirstMouse(for event: NSEvent?) -> Bool { return true }
+    }
+
+    let content: Content
+
+    init(_ content: Content) {
+        self.content = content
+    }
+
+    func makeNSView(context: Context) -> Backdrop {
+        let backdrop = Backdrop(rootView: content)
+        backdrop.translatesAutoresizingMaskIntoConstraints = false
+        return backdrop
+    }
+
+    func updateNSView(_ nsView: Backdrop, context: Context) {
+        nsView.rootView = content
+    }
+}
+#endif

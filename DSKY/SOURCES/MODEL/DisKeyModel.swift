@@ -89,65 +89,71 @@ extension DisKeyModel {
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆  set light label texts for Apollo 11 • Command Module                          (Apollo CM 11-17) ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-    static let commandModule: [Int: Lamp] = [
-        11: ("UPLINK\nACTY",   .off),
-        12: ("NO ATT",         .off),
-        13: ("STBY",           .off),
-        14: ("KEY REL",        .off),
-        15: ("OPR ERR",        .off),
-        16: (" ",              .off),
-        17: (" ",              .off),
+    func cmLamps() {
+        lights = [
+            11: ("UPLINK\nACTY",   .off),
+            12: ("NO ATT",         .off),
+            13: ("STBY",           .off),
+            14: ("KEY REL",        .off),
+            15: ("OPR ERR",        .off),
+            16: (" ",              .off),
+            17: (" ",              .off),
 
-        21: ("TEMP",           .off),
-        22: ("GIMBAL\nLOCK",   .off),
-        23: ("PROG",           .off),
-        24: ("RESTART",        .off),
-        25: ("TRACKER",        .off),
-        26: (" ",              .off),
-        27: (" ",              .off)
-    ]
+            21: ("TEMP",           .off),
+            22: ("GIMBAL\nLOCK",   .off),
+            23: ("PROG",           .off),
+            24: ("RESTART",        .off),
+            25: ("TRACKER",        .off),
+            26: (" ",              .off),
+            27: (" ",              .off)
+        ]
+    }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ set light label texts for Apollo 11 • Lunar Module (Luminary099)               (Apollo LM 11-14) ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-    static let lunarModule0: [Int: Lamp] = [
-        11: ("UPLINK\nACTY",   .off),
-        12: ("NO ATT",         .off),
-        13: ("STBY",           .off),
-        14: ("KEY REL",        .off),
-        15: ("OPR ERR",        .off),
-        16: (" ",              .off),
-        17: (" ",              .off),
+    func lm0Lamps() {
+        lights = [
+            11: ("UPLINK\nACTY",   .off),
+            12: ("NO ATT",         .off),
+            13: ("STBY",           .off),
+            14: ("KEY REL",        .off),
+            15: ("OPR ERR",        .off),
+            16: (" ",              .off),
+            17: (" ",              .off),
 
-        21: ("TEMP",           .off),
-        22: ("GIMBAL\nLOCK",   .off),
-        23: ("PROG",           .off),
-        24: ("RESTART",        .off),
-        25: ("TRACKER",        .off),
-        26: ("ALT",            .off),
-        27: ("VEL",            .off)
-    ]
+            21: ("TEMP",           .off),
+            22: ("GIMBAL\nLOCK",   .off),
+            23: ("PROG",           .off),
+            24: ("RESTART",        .off),
+            25: ("TRACKER",        .off),
+            26: ("ALT",            .off),
+            27: ("VEL",            .off)
+        ]
+    }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆ set light label texts for Apollo 11 • Lunar Module                             (Apollo LM 15-17) ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
-    static let lunarModule1: [Int: Lamp] = [
-        11: ("UPLINK\nACTY",   .off),
-        12: ("NO ATT",         .off),
-        13: ("STBY",           .off),
-        14: ("KEY REL",        .off),
-        15: ("OPR ERR",        .off),
-        16: ("PRIO DISP",      .off),
-        17: ("NO DAP",         .off),
-
-        21: ("TEMP",           .off),
-        22: ("GIMBAL\nLOCK",   .off),
-        23: ("PROG",           .off),
-        24: ("RESTART",        .off),
-        25: ("TRACKER",        .off),
-        26: ("ALT",            .off),
-        27: ("VEL",            .off)
-    ]
+    func lm1Lamps() {
+        lights = [
+            11: ("UPLINK\nACTY",   .off),
+            12: ("NO ATT",         .off),
+            13: ("STBY",           .off),
+            14: ("KEY REL",        .off),
+            15: ("OPR ERR",        .off),
+            16: ("PRIO DISP",      .off),
+            17: ("NO DAP",         .off),
+            
+            21: ("TEMP",           .off),
+            22: ("GIMBAL\nLOCK",   .off),
+            23: ("PROG",           .off),
+            24: ("RESTART",        .off),
+            25: ("TRACKER",        .off),
+            26: ("ALT",            .off),
+            27: ("VEL",            .off)
+        ]
+    }
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
   ┆  set light label texts "powered off" mode ..                                                     ┆
