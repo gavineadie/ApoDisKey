@@ -178,7 +178,7 @@ struct MonitorView: View {
                         do {
                             let (channel, action, _) = try parseIoPacket(try await model.network.receive(length: 4))
                                 channelAction(channel, action)
-
+                        } catch PacketError.ignore_FF_FF_FF_FF {
                         } catch {
                             logger.error("←→ rx loop exit: \(error.localizedDescription)")
                             break
