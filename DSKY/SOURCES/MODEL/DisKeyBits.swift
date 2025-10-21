@@ -80,9 +80,6 @@ struct DSKY {
         static let keyRelease = bit05       // "KEY REL" light
         static let verbNounFlash = bit06    // Flash VERB/NOUN displays
         static let operatorError = bit07    // "OPR ERR" light
-
-        // Filter values for COMP ACTY cycling (don't log these)
-        static let compActivityCycleValues: Set<UInt16> = [0x2000, 0x2002, 0x2200, 0x2202]
     }
 
     // MARK: - Channel 013 (DSKY lamp tests)
@@ -130,10 +127,5 @@ extension DSKY {
     /// Extract right digit from channel 010 value
     static func extractRightDigit(from value: UInt16) -> UInt16 {
         (value & Ch010_Display.rightDigitMask) >> Ch010_Display.rightDigitShift
-    }
-
-    /// Check if a channel 011 value should be filtered from logging (COMP ACTY cycling)
-    static func shouldLogCh011CompActy(value: UInt16) -> Bool {
-        Ch011.compActivityCycleValues.contains(value)
     }
 }

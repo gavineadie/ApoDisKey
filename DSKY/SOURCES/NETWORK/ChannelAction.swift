@@ -85,7 +85,7 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ boolean: Bool = true) {
             dskyInterpretation(value)
 
         case 0o011:                 // [OUTPUT] flags for indicator lamps etc
-            if DSKY.shouldLogCh011CompActy(value: value) {
+            if value != 0x2000 && value != 0x2002 && value != 0x2200 && value != 0x2202 {
                 logDSKY("011", bitsLabel: "15",
                         value: value, pretty: prettyCh011(value))
             }
