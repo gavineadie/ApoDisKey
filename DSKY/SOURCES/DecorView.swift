@@ -25,6 +25,8 @@ var panelPaddingTop: CGFloat {
         return 6.0
     }
 }
+/// Main panel corner radius for DSKY display
+let panelCornerRadius: CGFloat = 18.0
 
 // annunciator lamp panel dimensions
 

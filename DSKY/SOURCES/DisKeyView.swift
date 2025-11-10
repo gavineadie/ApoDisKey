@@ -75,9 +75,9 @@ struct DisKeyView: View {
         }
 
 #if os(iOS)
+        // Scale effect for iOS devices relative to screen width
         .scaleEffect(min(1.2, UIScreen.main.bounds.width/660.0))
 #endif
-
     }
 }
 

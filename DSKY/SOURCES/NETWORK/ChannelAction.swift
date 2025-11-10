@@ -85,7 +85,7 @@ func channelAction(_ channel: UInt16, _ value: UInt16, _ boolean: Bool = true) {
             dskyInterpretation(value)
 
         case 0o011:                 // [OUTPUT] flags for indicator lamps etc
-            if value != 0x2000 && value != 0x2002 && value != 0x2200 && value != 0x2202 {
+            if (value & 0b1101111111111101) != 0x0000 {        // if not COMP_ACTY
                 logDSKY("011", bitsLabel: "15",
                         value: value, pretty: prettyCh011(value))
             }
@@ -270,12 +270,12 @@ private func logDSKY(_ channel: String,
                      pretty: String? = nil,
                      note: String? = nil) {
     let word = (bitsLabel == "10") ? zeroPadWord(value, to: 10) :
-    (bitsLabel == "8") ? zeroPadWord(value, to: 8) :
-    zeroPadWord(value)
+               (bitsLabel == "8") ? zeroPadWord(value, to: 8) :
+                                    zeroPadWord(value)
     var line = "»»» DSKY \(channel): \(word)"
     if let bitsLabel = bitsLabel { line += " BITS (\(bitsLabel))" }
-    if let pretty = pretty { line += " :: \(pretty)" }
-    if let note = note { line += " :: \(note)" }
+    if let pretty { line += " :: \(pretty)" }
+    if let note { line += " :: \(note)" }
     logger.log("\(line)")
 }
 

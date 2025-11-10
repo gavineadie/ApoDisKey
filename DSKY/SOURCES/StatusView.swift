@@ -9,10 +9,10 @@ import SwiftUI
 
 /*
             ┌───────────────────────┐
-            │ ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮<--- exterior color (edge)
+            │ ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮ <--- exterior color (edge)
             │ ┆ UPLINK ┆ ┆  TEMP  ┆ │
             │ ╰╌╌╌╌╌╌╌╌╯ ╰╌╌╌╌╌╌╌╌╯ │
-            │ ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮ │   interior color: Color(white: 0.6)
+            │ ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮ │    interior color: Color(white: 0.6)
             │ ┆ NO ATT ┆ ┆ GIMBAL ┆ │
             │ ╰╌╌╌╌╌╌╌╌╯ ╰╌╌╌╌╌╌╌╌╯ │
             │ ╭╌╌╌╌╌╌╌╌╮ ╭╌╌╌╌╌╌╌╌╮ │

@@ -10,7 +10,7 @@ import SwiftUI
 #if os(macOS)
 struct HelpView: View {
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 30) {
             Text("""
                 **[ApoDisKey](https://github.com/gavineadie/ApoDisKey/blob/main/README.md)** \
                 emulates the display and keyboard of the NASA Apollo Guidance Computer.
@@ -41,7 +41,7 @@ struct HelpView: View {
             }
         }
         .padding()
-        .frame(minWidth: 480, minHeight: 360)
+        .frame(minWidth: 480, minHeight: 400)
     }
 }
 

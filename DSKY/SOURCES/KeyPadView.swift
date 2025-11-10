@@ -31,39 +31,39 @@ struct KeyPadView: View {
     var body: some View {
         HStack(alignment: .center) {
             VStack(alignment: .center) {
-                KeyView(keyCode: 17) // "VERB"
-                KeyView(keyCode: 31) // "NOUN"
+                KeyView(keyCode: 17)        // "VERB"
+                KeyView(keyCode: 31)        // "NOUN"
             }
 
             VStack(alignment: .center) {
                 HStack(alignment: .center) {
-                    KeyView(keyCode: 26) //  "+"
-                    KeyView(keyCode: 07) //  "7"
-                    KeyView(keyCode: 08) //  "8"
-                    KeyView(keyCode: 09) //  "9"
-                    KeyView(keyCode: 30) //  "CLR"
+                    KeyView(keyCode: 26)    //  "+"
+                    KeyView(keyCode: 07)    //  "7"
+                    KeyView(keyCode: 08)    //  "8"
+                    KeyView(keyCode: 09)    //  "9"
+                    KeyView(keyCode: 30)    //  "CLR"
                 }
 
                 HStack(alignment: .center) {
-                    KeyView(keyCode: 27) //  "-"
-                    KeyView(keyCode: 04) //  "4"
-                    KeyView(keyCode: 05) //  "5"
-                    KeyView(keyCode: 06) //  "6"
-                    KeyView(keyCode: 99) //  "PRO" << cheat
+                    KeyView(keyCode: 27)    //  "-"
+                    KeyView(keyCode: 04)    //  "4"
+                    KeyView(keyCode: 05)    //  "5"
+                    KeyView(keyCode: 06)    //  "6"
+                    KeyView(keyCode: 99)    //  "PRO" << cheat
                 }
 
                 HStack(alignment: .center) {
-                    KeyView(keyCode: 16) //  "0"
-                    KeyView(keyCode: 01) //  "1"
-                    KeyView(keyCode: 02) //  "2"
-                    KeyView(keyCode: 03) //  "3"
-                    KeyView(keyCode: 25) //  "KEY REL"
+                    KeyView(keyCode: 16)    //  "0"
+                    KeyView(keyCode: 01)    //  "1"
+                    KeyView(keyCode: 02)    //  "2"
+                    KeyView(keyCode: 03)    //  "3"
+                    KeyView(keyCode: 25)    //  "KEY REL"
                 }
             }
 
             VStack(alignment: .center) {
-                KeyView(keyCode: 28) // "ENTR"
-                KeyView(keyCode: 18) // "RSET"
+                KeyView(keyCode: 28)        // "ENTR"
+                KeyView(keyCode: 18)        // "RSET"
             }
         }
         .padding(.top, keyPadPaddingTop)
