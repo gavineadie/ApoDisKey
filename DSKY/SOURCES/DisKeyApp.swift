@@ -171,13 +171,13 @@ struct MonitorView: View {
                 model.network.start()
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ start receiving packets from the AGC ..                                                          ┆
+  ┆ start continually receiving packets from the AGC ..                                              ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
                 Task {
                     while true {
                         do {
-                            let (channel, action, _) = try parseIoPacket(try await model.network.receive(length: 4))
-                                channelAction(channel, action)
+                            let (channel, action) = try parseIoPacket(try await model.network.receive(length: 4))
+                            channelAction(channel, action)
                         } catch PacketError.ignore_FF_FF_FF_FF {
                         } catch {
                             logger.error("←→ rx loop exit: \(error.localizedDescription)")
@@ -227,7 +227,7 @@ func startNetwork() {
 #endif
 
 #if os(iOS) || os(tvOS)
-    model.statusLights = DisKeyModel.lunarModule0
+    model.lm0Lamps()
     model.elPowerOn = true
 //  model.network = Network("192.168.1.232", 19697)                 // .. Ubuntu
     model.network = Network("192.168.1.100", 19697)                 // .. MaxBook
@@ -238,12 +238,12 @@ func startNetwork() {
 #endif
 
 /*╭╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╮
-  ┆ start receiving packets from the AGC ..                                                          ┆
+  ┆ start continually receiving packets from the AGC ..                                              ┆
   ╰╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╌╯*/
     Task {
         while true {
             do {
-                let (channel, action, _) = try parseIoPacket(try await model.network.receive(length: 4))
+                let (channel, action) = try parseIoPacket(try await model.network.receive(length: 4))
                 channelAction(channel, action)
             } catch PacketError.ignore_FF_FF_FF_FF {
             } catch {
