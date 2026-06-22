@@ -112,7 +112,7 @@ struct KeyView: View {
                 if keyCode < 99 {
                     logger.log("«««    \(keyText(keyCode).replacingOccurrences(of: "\n", with: " ")) (\(keyCode))")
 
-                    if let clickURL = Bundle.main.url(forResource: "dsky", withExtension: "aiff") {
+                    if let clickURL = Bundle.main.url(forResource: "button_press", withExtension: "aiff") {
                         var clickSound: SystemSoundID = 0
                         AudioServicesCreateSystemSoundID(clickURL as CFURL, &clickSound)
                         AudioServicesPlaySystemSound(clickSound)
