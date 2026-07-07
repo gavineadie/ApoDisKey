@@ -38,71 +38,35 @@ struct StatusView: View {
     var body: some View {
         ZStack {
             PanelsView(interiorFill: Color(white: 0.6))
-
-            if #available(macOS 13.0, *) {
-                Grid {
-                    GridRow {
-                        AnnunciatorLamp(light: model.lights[11]!)
-                        AnnunciatorLamp(light: model.lights[21]!)
-                    }
-                    GridRow {
-                        AnnunciatorLamp(light: model.lights[12]!)
-                        AnnunciatorLamp(light: model.lights[22]!)
-                    }
-                    GridRow {
-                        AnnunciatorLamp(light: model.lights[13]!)
-                        AnnunciatorLamp(light: model.lights[23]!)
-                    }
-                    GridRow {
-                        AnnunciatorLamp(light: model.lights[14]!)
-                        AnnunciatorLamp(light: model.lights[24]!)
-                    }
-                    GridRow {
-                        AnnunciatorLamp(light: model.lights[15]!)
-                        AnnunciatorLamp(light: model.lights[25]!)
-                    }
-                    GridRow {
-                        AnnunciatorLamp(light: model.lights[16]!)
-                        AnnunciatorLamp(light: model.lights[26]!)
-                    }
-                    GridRow {
-                        AnnunciatorLamp(light: model.lights[17]!)
-                        AnnunciatorLamp(light: model.lights[27]!)
-                    }
+            
+            Grid {
+                GridRow {
+                    AnnunciatorLamp(light: model.lights[11]!)
+                    AnnunciatorLamp(light: model.lights[21]!)
                 }
-            } else {
-                VStack {
-                    HStack {
-                        AnnunciatorLamp(light: model.lights[11]!)
-                        AnnunciatorLamp(light: model.lights[21]!)
-                    }
-
-                    HStack {
-                        AnnunciatorLamp(light: model.lights[12]!)
-                        AnnunciatorLamp(light: model.lights[22]!)
-                    }
-
-                    HStack {
-                        AnnunciatorLamp(light: model.lights[13]!)
-                        AnnunciatorLamp(light: model.lights[23]!)
-                    }
-                    HStack {
-                        AnnunciatorLamp(light: model.lights[14]!)
-                        AnnunciatorLamp(light: model.lights[24]!)
-                    }
-                    HStack {
-                        AnnunciatorLamp(light: model.lights[15]!)
-                        AnnunciatorLamp(light: model.lights[25]!)
-                    }
-                    HStack {
-                        AnnunciatorLamp(light: model.lights[16]!)
-                        AnnunciatorLamp(light: model.lights[26]!)
-                    }
-
-                    HStack {
-                        AnnunciatorLamp(light: model.lights[17]!)
-                        AnnunciatorLamp(light: model.lights[27]!)
-                    }
+                GridRow {
+                    AnnunciatorLamp(light: model.lights[12]!)
+                    AnnunciatorLamp(light: model.lights[22]!)
+                }
+                GridRow {
+                    AnnunciatorLamp(light: model.lights[13]!)
+                    AnnunciatorLamp(light: model.lights[23]!)
+                }
+                GridRow {
+                    AnnunciatorLamp(light: model.lights[14]!)
+                    AnnunciatorLamp(light: model.lights[24]!)
+                }
+                GridRow {
+                    AnnunciatorLamp(light: model.lights[15]!)
+                    AnnunciatorLamp(light: model.lights[25]!)
+                }
+                GridRow {
+                    AnnunciatorLamp(light: model.lights[16]!)
+                    AnnunciatorLamp(light: model.lights[26]!)
+                }
+                GridRow {
+                    AnnunciatorLamp(light: model.lights[17]!)
+                    AnnunciatorLamp(light: model.lights[27]!)
                 }
             }
         }

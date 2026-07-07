@@ -1,46 +1,86 @@
-//
-//  NetworkManager.swift
-//  ApoDisKey
-//
-//  Created by Gavin Eadie on 7/11/25.
-//
-
 import Foundation
+import OSLog
 import ApolloNetwork
 
-actor NetworkManager {
-    private var network: Network?
+@MainActor
+final class NetworkManager: ObservableObject {
+    static let shared = NetworkManager()
 
-    func connect(ipAddr: String, port: UInt16) async throws {
-        network = Network(ipAddr, port, connect: true)
+    private let logger = Logger(subsystem: "com.ramsaycons.ApoDisKey", category: "NetworkManager")
+
+    @Published private(set) var isReady: Bool = false
+    @Published private(set) var isReceiving: Bool = false
+    @Published private(set) var host: String = ""
+    @Published private(set) var port: UInt16 = 0
+
+    private var network: Network?
+    private var receiveTask: Task<Void, Never>?
+
+    func connect(host: String, port: UInt16) {
+        // Cancel any existing session
+        disconnect()
+
+        self.host = host
+        self.port = port
+        let connection = Network(host, port)
+        self.network = connection
+        connection.start()
+
+        // Optimistically set readiness; will adjust via polling state
+        updateReadyState()
+        startReceiveLoop()
     }
 
-    func receive(length: Int) async throws -> Data {
-        guard let network else { throw NetworkError.notConnected }
-        return try await network.receive(length: length)
+    func useExistingAndStart(host: String, port: UInt16) {
+        // Helper used by startNetwork() when cmd args or platform defaults exist
+        connect(host: host, port: port)
+    }
+
+    func disconnect() {
+        receiveTask?.cancel()
+        receiveTask = nil
+        isReceiving = false
+        isReady = false
+        network = nil
     }
 
     func send(_ data: Data) async throws {
-        guard let network else { throw NetworkError.notConnected }
+        guard let network else { throw NSError(domain: "NetworkManager", code: -1, userInfo: [NSLocalizedDescriptionKey: "No connection"]) }
         try await network.send(data)
     }
-    
-    func state() async -> NetworkState {
-        guard let network else { return NetworkState.none }
-        return NetworkState.ready
+
+    private func startReceiveLoop() {
+        guard let network else { return }
+        if receiveTask != nil { return } // already running
+
+        isReceiving = true
+        receiveTask = Task { [weak self] in
+            guard let self else { return }
+            while !Task.isCancelled {
+                // Update readiness each iteration
+                self.updateReadyState()
+                do {
+                    let data = try await network.receive(length: 4)
+                    let (channel, action) = try parseIoPacket(data)
+                    channelAction(channel, action)
+                } catch PacketError.ignore_FF_FF_FF_FF {
+                    continue
+                } catch {
+                    self.logger.error("←→ rx loop exit: \(error.localizedDescription)")
+                    break
+                }
+            }
+            await MainActor.run {
+                self.isReceiving = false
+            }
+        }
     }
-}
 
-enum NetworkError: Error {
-    case notConnected
-}
-
-enum NetworkState {
-    case none
-    case setup
-    case preparing
-    case ready
-    case waiting
-    case failed
-    case cancelled
+    private func updateReadyState() {
+        if let network {
+            isReady = (network.state == .ready)
+        } else {
+            isReady = false
+        }
+    }
 }

@@ -71,9 +71,9 @@ typealias Nums = (String, Bool)
 
     public var reg1: Nums = (" _____", false)        // true/false not used for registers
     public var reg2: Nums = (" _____", false)        //
-    public var reg3: Nums = (" _____", false)        //
+    public var reg3: Nums = (" _____", false)    	 //
 
-    public var r1Sign = (false, false)                	// blank prefix (± or blank)
+    public var r1Sign = (false, false)               // blank prefix (± or blank)
     public var r2Sign = (false, false)
     public var r3Sign = (false, false)
 
